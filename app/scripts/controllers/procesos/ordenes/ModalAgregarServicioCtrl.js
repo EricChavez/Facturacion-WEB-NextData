@@ -15,14 +15,13 @@
     vm.realizar = true;
 
     this.$onInit = function () {
-      console.log(items);
+     
       ordenesFactory.dimeServicio(items.contrato).then(function (data) {
         vm.servicios = data.GetDime_Que_servicio_Tiene_clienteListResult;
       });
     }
 
-    function changeTrabajo() {
-      console.log(vm.selectedServicio.clv_tipser, $localStorage.currentUser.tipoUsuario);
+    function changeTrabajo() {   
       ordenesFactory.muestraTrabajo(vm.selectedServicio.clv_tipser, $localStorage.currentUser.tipoUsuario).then(function (data) {
         vm.tipoTrabajo = data.GetMUESTRATRABAJOSPorTipoUsuarioListResult;
       });
@@ -41,7 +40,7 @@
             clave: items.clv_orden,
             trabajo: vm.selectedTrabajo.Clv_Trabajo,
             observaciones: vm.observaciones,
-            SeRealiza: realiza
+            seRealiza: realiza
           };
           console.log(detalle);
           ordenesFactory.addDetalleOrden(detalle).then(function (data) {
@@ -84,6 +83,8 @@
               items.clv_detalle_orden = vm.clv_detalle_orden;
               items.descripcion = vm.selectedTrabajo.Descripcion.toLowerCase();
               items.servicio = vm.selectedServicio;
+              //alert(vm.selectedTrabajo.Descripcion)
+              console.log(items);
               var modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
@@ -122,7 +123,7 @@
               vm.selectedTrabajo.Descripcion.toLowerCase().includes('rrout')
             ) {
               vm.NOM = vm.selectedTrabajo.Descripcion.split(' ');
-              alert('abre modal');
+             
               var items_ = {
                 'Op': 'N',
                 'Trabajo': vm.NOM[0],
@@ -150,9 +151,9 @@
 
 
             } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('canex')) {
-              console.log('canex');
+             
             } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('ecabl') || vm.selectedTrabajo.Descripcion.toLowerCase().includes('econt')) {
-              console.log('ecotl');
+            
             } else {          
 
             }

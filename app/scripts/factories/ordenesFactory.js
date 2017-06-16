@@ -348,10 +348,8 @@ angular
 
     factory.GetChecaMotivoCanServ = function (ClvOrden) {
       var deferred = $q.defer();
-      var Parametros = {
-        'objCambia_Tipo_cablemodem': {
-          'ClvOrden': ClvOrden
-        }
+      var Parametros = {       
+          'ClvOrden': ClvOrden      
       };
       var config = {
         headers: {
@@ -845,6 +843,7 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
+      console.log(Parametros);
       $http.post(globalService.getUrl() + paths.addDetalleOrden, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {

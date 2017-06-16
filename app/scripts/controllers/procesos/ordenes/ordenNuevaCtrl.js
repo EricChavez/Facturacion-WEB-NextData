@@ -104,8 +104,7 @@
 
 
 
-    function Guardar() {
-    
+    function Guardar() {    
       // ngNotify.set('No hay conceptos en el detalle de la orden', 'error')
       ordenesFactory.GetDime_Que_servicio_Tiene_cliente(vm.contratoBueno).then(function (response) {
        
@@ -130,12 +129,12 @@
                     ordenesFactory.GetChecaMotivoCanServ(vm.clv_orden).then(function (result) {
                      
                       if (result.GetChecaMotivoCanServResult.Res == 1) {
-
+                        var ClvOrden=vm.clv_orden;
                         var modalInstance = $uibModal.open({
                           animation: true,
                           ariaLabelledBy: 'modal-title',
                           ariaDescribedBy: 'modal-body',
-                          templateUrl: 'views/corporativa/modalMotivoCanMaestro.html',
+                          templateUrl: 'views/procesos/modalMotivoCancelacion.html',
                           controller: 'modalMotivoCanCtrl',
                           controllerAs: '$ctrl',
                           backdrop: 'static',
@@ -143,8 +142,8 @@
                           class: 'modal-backdrop fade',
                           size: 'md',
                           resolve: {
-                            ticket: function () {
-                              return ticket;
+                            ClvOrden: function () {
+                              return ClvOrden;
                             }
                           }
                         });
