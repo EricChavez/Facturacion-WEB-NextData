@@ -9,7 +9,7 @@ angular
 			buscarAtencion: '/uspBuscaLLamadasDeInternet/GetuspBuscaLLamadasDeInternetList',
 			colonias: '/uspConsultaColonias/GetuspConsultaColoniasList',
 			serviciosNuevo: '/MuestraTipSerPrincipal2/GetMuestraTipSerPrincipal2List',
-			buscarCliente: '/uspBuscaContratoSeparado2/GetuspBuscaContratoSeparado2List',
+			buscarCliente: '/uspBuscaContratoSeparado2/GetuspBuscaContratoSeparado2List',//Telefono
 			servicioCliente: '/DameSerDelCliFac/GetDameSerDelCliFacList',
 			clasificacionProblemas: '/uspConsultaTblClasificacionProblemas/GetuspConsultaTblClasificacionProblemasList',
 			MuestraTrabajos: '/MUESTRATRABAJOSQUEJAS/GetMUESTRATRABAJOSQUEJASList',

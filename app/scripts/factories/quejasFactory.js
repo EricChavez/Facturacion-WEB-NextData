@@ -10,7 +10,7 @@ angular
 			ObtenLista: '/BuscaQuejasSeparado2/GetBuscaQuejasSeparado2List',
 			ValidaQueja: '/ValidaQuejaCompaniaAdic/GetDeepValidaQuejaCompaniaAdic',
 			BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
-			ConsultaQueja: '/Quejas/GetQuejasList',
+			ConsultaQueja: '/Quejas/GetQuejasList',//checar
 			ObtenTecnicos: '/Muestra_Tecnicos_Almacen/GetMuestra_Tecnicos_AlmacenList',
 			ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
 			UpdateQuejas: '/Quejas/UpdateQuejas',
