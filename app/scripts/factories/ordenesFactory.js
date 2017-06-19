@@ -54,17 +54,41 @@ angular
       GetVALIDADECODERS: '/VALIDADECODERS/GetVALIDADECODERS',
       GetReporteOrdenServicio: '/OrdSer/GetReporteOrdenServicio',
       ConsultaOrdSer: '/ConsultaOrdSer/GetDeepConsultaOrdSer',
-      MuestraRelOrdenesTecnicos: '/MuestraRelOrdenesTecnicos/GetMuestraRelOrdenesTecnicosList'
+      MuestraRelOrdenesTecnicos: '/MuestraRelOrdenesTecnicos/GetMuestraRelOrdenesTecnicosList',
+      AddInsertMotCanServ: '/InsertMotCanServ/AddInsertMotCanServ'
+    };
+
+
+    factory.AddInsertMotCanServ = function (ClvOrdSer, Clv_MotCan) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'objInsertMotCanServ': {
+          'ClvOrdSer': ClvOrdSer,
+          'Clv_MotCan': Clv_MotCan
+        }
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.AddInsertMotCanServ, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
     };
 
 
 
 
-     factory.GetMUESTRAIPAQU_porSOL = function (ClvDetOs, ClvOS) {
+    factory.GetMUESTRAIPAQU_porSOL = function (ClvDetOs, ClvOS) {
       var deferred = $q.defer();
       var Parametros = {
         'ClvDetOs': ClvDetOs,
-        'ClvOS':ClvOS
+        'ClvOS': ClvOS
       };
       var config = {
         headers: {
@@ -338,7 +362,7 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.get(globalService.getUrl() + paths.GetConMotCanList, JSON.stringify(Parametros), config).then(function (response) {
+      $http.get(globalService.getUrl() + paths.GetConMotCanList, config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response.data);
@@ -348,8 +372,8 @@ angular
 
     factory.GetChecaMotivoCanServ = function (ClvOrden) {
       var deferred = $q.defer();
-      var Parametros = {       
-          'ClvOrden': ClvOrden      
+      var Parametros = {
+        'ClvOrden': ClvOrden
       };
       var config = {
         headers: {

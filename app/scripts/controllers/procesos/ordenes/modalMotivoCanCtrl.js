@@ -14,22 +14,26 @@
     vm.Titulo = 'Motivo de la cancelación';
 
     this.$onInit = function () {
-     alert('modal');
+      alert('modal');
 
-     ordenesFactory.GetConMotCanList().then(function (data) {
-      console.log(data);
-     });
-      
+      ordenesFactory.GetConMotCanList().then(function (data) {
+        vm.motivos = data.GetConMotCanListResult;
+      });
+
     }
 
     function cancel() {
-      $uibModalInstance.dismiss('cancel');
+      
     }
 
     function ok() {
 
+      ordenesFactory.AddInsertMotCanServ(ClvOrden,vm.motcan.Clv_MOTCAN).then(function(data){
       $uibModalInstance.dismiss('cancel');
-      $rootScope.$emit('ChecaMotivoCancelacion', cliente);
+      $rootScope.$emit('ChecaMotivoCancelacion');
+      });
+
+     
     }
   }
 })();
