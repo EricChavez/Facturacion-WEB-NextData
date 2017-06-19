@@ -379,14 +379,14 @@
           x.Descripcion.toLowerCase().includes('cadig') ||
           x.Descripcion.toLowerCase().includes('canet')
         ) {
-          console.log(vm.clv_detalle,vm.clv_orden,vm.contratoBueno);
+          console.log(vm.clv_detalle, vm.clv_orden, vm.contratoBueno);
           ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
             console.log(data);
             var items = {
               clv_detalle_orden: vm.clv_detalle,
               clv_orden: vm.clv_orden,
               contrato: vm.contratoBueno,
-              isUpdate: true,
+              isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
               datosCamdo: data.GetDeepCAMDOResult
             };
             console.log(items);
