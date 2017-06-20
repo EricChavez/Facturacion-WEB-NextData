@@ -5,8 +5,8 @@
 		.module('softvApp')
 		.controller('OrdenesServicioCtrl', OrdenesServicioCtrl);
 
-	OrdenesServicioCtrl.inject = ['$state', 'ngNotify', '$location', 'ordenesFactory'];
-	function OrdenesServicioCtrl($state, ngNotify, $location, ordenesFactory) {
+	OrdenesServicioCtrl.inject = ['$state', 'ngNotify', '$location', 'ordenesFactory', '$uibModal'];
+	function OrdenesServicioCtrl($state, ngNotify, $location, ordenesFactory, $uibModal) {
 		var vm = this;
 		vm.showdatosPlaza = false;
 		vm.cambioPlaza = cambioPlaza;
@@ -19,6 +19,7 @@
 		vm.buscarColonia = buscarColonia;
 		vm.buscarSetup = buscarSetup;
 		vm.buscarStatus = buscarStatus;
+		vm.DetalleOrden = DetalleOrden;
 
 		this.$onInit = function () {
 			ordenesFactory.getPlazas().then(function (data) {
@@ -32,6 +33,7 @@
 			ordenesFactory.getUsuarios().then(function (data) {
 				vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
 				vm.selectedUsuario = vm.usuarios[0];
+				
 			});
 			var obj = {
 				op: 6,
@@ -50,6 +52,33 @@
 			};
 			ordenesFactory.buscarOrdenes(obj).then(function (data) {
 				vm.ordenes = data.GetuspBuscaOrdSer_BuscaOrdSerSeparado2ListResult;
+				//console.log(data);
+			});
+		}
+
+		function DetalleOrden(obj){
+			AbrirOrden(obj.Clv_Orden);
+		}
+
+		function AbrirOrden(Clave_Orden){
+			var options = {};
+			options.Clave_Orden = Clave_Orden;
+			//console.log(options);
+			var modalInstance = $uibModal.open({
+				animation: vm.animationsEnabled,
+				ariaLabelledBy: 'modal-title',
+				ariaDescribedBy: 'modal-body',
+				templateUrl: 'views/procesos/ModalDetalleOrden.html',
+				controller: 'ModalDetalleOrdenCtrl',
+				controllerAs: 'ctrl',
+				backdrop: 'static',
+				keyboard: true,
+				size: 'lg',
+				resolve: {
+					options: function () {
+						return options;
+					}
+				}
 			});
 		}
 
