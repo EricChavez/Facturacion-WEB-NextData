@@ -24,10 +24,12 @@ angular
             vm.Numero = detalle.NUMERO;
             vm.Colonia = detalle.COLONIA;
             vm.Ciudad = detalle.CIUDAD;
+            vm.Telefono = 123456;
             atencionFactory.getServiciosCliente(contrato).then(function (data) {
               vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 
               quejasFactory.ConsultaQueja($stateParams.id).then(function (data) {
+                console.log(data);
                 var detqueja = data.GetQuejasListResult[0];
                 vm.UsuarioGenero = detqueja.UsuarioGenero;
                 vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
@@ -236,7 +238,7 @@ angular
           vm.IDetProblema = true;
           vm.IClasproblema = true;
           vm.Iprobreal = true;
-          vm.Iobser = true;
+          vm.Iobser = true; 
           vm.IEstatus = true;
           vm.Iejecucion = 'input-yellow';
           vm.Ivisita = 'input-normal';
@@ -249,13 +251,13 @@ angular
           vm.FVisita2 = true;
           vm.FVisita3 = true;
           vm.FProceso = true;
-          vm.Itrabajo = true
+          vm.Itrabajo = false;
           vm.Iprioridad = true;
           vm.IDetProblema = true;
           vm.IClasproblema = true;
           vm.Iprobreal = false;
           vm.Iobser = true;
-          vm.IEstatus = true;
+          vm.IEstatus = false;
           vm.Iejecucion = 'input-yellow';
           vm.Ivisita = 'input-normal';
           vm.Iproceso = 'input-normal';
@@ -346,9 +348,13 @@ angular
                   }
                 }
               } else if (vm.Estatus.Clave == 'V') {
-                if (vm.visita1 == undefined && vm.visita2 == undefined && vm.visita3 == undefined) {
+                if (vm.visita1 == undefined) {
                   ngNotify.set('Seleccione la fecha de visita1', 'error');
-                } else {
+                }else if(vm.visita2 == undefined){
+                  ngNotify.set('Seleccione la fecha de visita2', 'error');
+                }else if(vm.visita3 == undefined){
+                  ngNotify.set('Seleccione la fecha de visita3', 'error');
+                }else {
                   //ValidaFecha();
                 }
               } else if (vm.Estatus.Clave == 'S') {

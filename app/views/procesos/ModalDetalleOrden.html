@@ -1,0 +1,164 @@
+<style type="text/css">
+  .scrollDiv {
+    height: 400px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  .scrollDiv2 {
+    height: 120px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  .scrollDiv3 {
+    height: 300px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+</style>
+
+<div class="modal-header style-default-light">
+  <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
+   <h4 class="modal-title">Detalle Orden de Servicio #{{ctrl.Clv_Orden}}</h4>
+</div>
+
+<div class="modal-body" style="padding-top:20px;">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="col-md-18">
+        <div class="col-md-3">
+          <small><b># Orden:</b></small>
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.Clv_Orden" disabled>
+        </div>
+        <div class="col-md-3">
+          <small><b>No. contrato:</b></small>
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.ContratoCom" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-18">
+        <div class="col-md-3">
+          <small><b># folio de bitácora:</b></small>
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.NoBitacora" disabled>
+        </div>
+        <div class="col-md-3">
+          <small><b>Status:</b></small>
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.Estatus.Nombre" disabled>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-6">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="col-md-12">
+        <b style="font-size: 12px; color: #06599a;"><i class="md md-perm-identity"></i>Información del Cliente</b>
+        <br>
+        <strong>Distribuidor:</strong> <small>{{ctrl.datosCli.Compania}}</small><br>
+        <p>
+          <strong>Nombre:</strong> {{ctrl.datosCli.NOMBRE}}
+          <br>
+          <strong>Dirección:</strong> {{ctrl.datosCli.CALLE +' '+ ctrl.datosCli.NUMERO +' '+ ctrl.datosCli.COLONIA +' '+ ctrl.datosCli.CIUDAD}}<br>
+          
+        </p>
+      </div>
+      <div class="col-md-12">
+        <b style="font-size: 12px; color: #06599a;"><i class="md md-settings-remote"></i> Servicios asignados</b>
+        <br>
+        <div class="card wrapper scrollDiv2" style="background: #DDEAE9">
+          <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in ctrl.servicios">{{ x.Servicio }} <br></span></p>
+        </div>
+        <div class="col-md-12">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.Tip_Ser.Nombre" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 text-center">
+      <b style="font-size: 12px; color: #06599a;"><i class="md md-access-time"></i> Fechas de:</b>
+      <br>
+      <br>
+      <div class="form-group">
+        <label for="regular13" class="col-sm-4 control-label">Solicitud</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.Fec_Sol" style="font-size:10px;" ui-mask="99/99/9999" disabled>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="regular13" class="col-sm-4 control-label">Visita 1</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.Visita1" style="font-size:10px;" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" disabled>
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="regular13" class="col-sm-4 control-label">Visita 2</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control input-sm" ng-model="ctrl.Visita2" style="font-size:10px;" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" disabled>
+          </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="regular13" class="col-sm-4 control-label">Ejecución real</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control input-sm" ng-model="ctrl.Fec_Eje" style="font-size:10px;" placeholder="DD/MM/YYYY" ui-mask="99/99/9999" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="col-md-6">
+        <small>Técnico:</small>
+        <input type="text" class="form-control input-sm" ng-model="ctrl.NombreTecnico" style="font-size:10px;" disabled>
+      </div>
+      <div class="col-md-6">
+        <small>Observaciones:</small>
+        <input type="text" class="form-control input-sm" ng-model="ctrl.Obs" style="font-size:10px;" disabled>
+      </div>
+      <br>
+      <br>
+      <div class="col-md-12">
+        <table class="table" style="font-size:11px;">
+            <thead>
+              <th>Descripción</th>
+              <th>Acción</th>
+              <th>Observacíones</th>
+              <th>Recibir</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="x in ctrl.trabajosTabla">
+                <td>{{ x.Descripcion }}</td>
+                <td><button class="btn btn-info btn-xs" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion,x)" disabled>{{ x.Accion }}</button></td>
+                <td>{{ x.Obs }}</td>
+                <td>
+                  <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
+								<input type="checkbox" name="inlineRadioOptions" ng-model="x.SeRealiza" disabled><span></span>
+							</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default-bright btn-sm" type="button" ng-click="ctrl.cancel()">Cerrar</button>
+</div>

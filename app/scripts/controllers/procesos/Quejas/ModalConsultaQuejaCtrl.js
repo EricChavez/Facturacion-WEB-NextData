@@ -14,7 +14,7 @@ angular
 			param.servicio = vm.Servicio;
 			param.op = 0;
 			atencionFactory.buscarCliente(param).then(function(data) {
-				console.log(data);
+				//console.log(data);
 				var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
 				var contrato = detalle.ContratoBueno;
 				vm.GlobalContrato = contrato;
@@ -23,6 +23,7 @@ angular
 				vm.Numero = detalle.NUMERO;
 				vm.Colonia = detalle.COLONIA;
 				vm.Ciudad = detalle.CIUDAD;
+				vm.Telefono = 12345;
 				atencionFactory.getServiciosCliente(contrato).then(function(data) {
 					vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 
