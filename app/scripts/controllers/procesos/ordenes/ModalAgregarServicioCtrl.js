@@ -51,7 +51,9 @@
               ngNotify.set('La baja de cablemodem se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
             } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('bapar')) {
               ngNotify.set('La baja de aparato digital se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
-            } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('camdo') || vm.selectedTrabajo.Descripcion.toLowerCase().includes('cadig') || vm.selectedTrabajo.Descripcion.toLowerCase().includes('canet')) {
+            } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('camdo') || 
+            vm.selectedTrabajo.Descripcion.toLowerCase().includes('cadig') ||
+             vm.selectedTrabajo.Descripcion.toLowerCase().includes('canet')) {
               items.clv_detalle_orden = vm.clv_detalle_orden;
               items.isUpdate = false;
               var modalInstance = $uibModal.open({
@@ -129,7 +131,8 @@
                 'Trabajo': vm.NOM[0],
                 'Contrato': items.contrato,
                 'ClvTecnico': items.clv_tecnico,
-                'Clave': items.clv_orden
+                'Clave': items.clv_orden,
+                'ClvOrden':items.clv_orden
               };
 
               var modalInstance = $uibModal.open({

@@ -186,7 +186,10 @@
             <tbody>
               <tr ng-repeat="x in $ctrl.trabajosTabla">
                 <td>{{ x.Descripcion }}</td>
-                <td><button class="btn btn-info btn-xs" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button></td>
+                <td>
+                  <button class="btn btn-info btn-xs" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
+                  <button class="btn btn-info btn-xs" ng-if="x.Accion == ' '">NO ASIGNABLE</button>
+                  </td>
                 <td>{{ x.Obs }}</td>
                 <td>
                   <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
