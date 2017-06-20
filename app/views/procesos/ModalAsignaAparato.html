@@ -4,7 +4,14 @@
         <h4 class="modal-title">Selecciona el Aparato</h4>
     </div>
     <div class="modal-body">
-        
+        <select 
+       name="aparato2"
+       class="form-control input-sm" 
+        ng-options="item as item.Descripcion for item in ctrl.aparatos2 track by item.ContratoAnt"
+        validate-on="dirty"
+                    required-message="'Este campo es obligatorio.'"
+                    required
+         ng-model="ctrl.aparato2"></select>
         
        <select 
        name="aparato"

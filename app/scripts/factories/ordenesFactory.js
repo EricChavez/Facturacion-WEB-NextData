@@ -55,8 +55,61 @@ angular
       GetReporteOrdenServicio: '/OrdSer/GetReporteOrdenServicio',
       ConsultaOrdSer: '/ConsultaOrdSer/GetDeepConsultaOrdSer',
       MuestraRelOrdenesTecnicos: '/MuestraRelOrdenesTecnicos/GetMuestraRelOrdenesTecnicosList',
-      AddInsertMotCanServ: '/InsertMotCanServ/AddInsertMotCanServ'
+      AddInsertMotCanServ: '/InsertMotCanServ/AddInsertMotCanServ',
+      GetSP_ValidaGuardaOrdSerAparatos:'/OrdSer/GetSP_ValidaGuardaOrdSerAparatos',
+      GetValidaOrdSerManuales:'/ValidaOrdSerManuales/GetValidaOrdSerManuales'
     };
+
+    
+
+
+   factory.GetValidaOrdSerManuales = function (ClvOrdSer) {
+      var deferred = $q.defer();
+      var Parametros = {        
+          'ClvOrdSer': ClvOrdSer        
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.GetValidaOrdSerManuales, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
+
+    factory.GetSP_ValidaGuardaOrdSerAparatos = function (CLV_ORDEN, OPCION,STATUS,OP2,Clv_Tecnico) {
+      var deferred = $q.defer();
+      var Parametros = {        
+          'CLV_ORDEN': CLV_ORDEN,
+          'OPCION': OPCION,
+          'STATUS':STATUS,
+          'OP2': OP2 ,
+          'Clv_Tecnico': Clv_Tecnico     
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.GetSP_ValidaGuardaOrdSerAparatos, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
 
 
     factory.AddInsertMotCanServ = function (ClvOrdSer, Clv_MotCan) {
@@ -335,7 +388,7 @@ angular
         'objNueRelOrdenUsuario': {
           'ClvOrden': ClvOrden,
           'ClvUsuario': $localStorage.currentUser.IdUsuario,
-          'Status': "P"
+          'Status': 'P'
         }
 
       };
@@ -355,7 +408,7 @@ angular
 
 
 
-    factory.GetConMotCanList = function (ClvOrden) {
+    factory.GetConMotCanList = function () {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -649,6 +702,7 @@ angular
         'Trabajo': obj.Trabajo,
         'Contrato': obj.Contrato,
         'ClvTecnico': obj.ClvTecnico,
+        'ClvOrden':obj.ClvOrden,
         'Clave': obj.Clave
       };
       console.log(Parametros);

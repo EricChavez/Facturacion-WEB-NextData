@@ -131,7 +131,8 @@
                 'Trabajo': vm.NOM[0],
                 'Contrato': items.contrato,
                 'ClvTecnico': items.clv_tecnico,
-                'Clave': items.clv_orden
+                'Clave': items.clv_orden,
+                'ClvOrden':items.clv_orden
               };
 
               var modalInstance = $uibModal.open({

@@ -59,6 +59,9 @@
 
 
     function GuardaDetalle() {
+
+    ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
+    console.log(response);
       ordenesFactory.AddNueRelOrdenUsuario(vm.clv_orden).then(function (data) {
 
         var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
@@ -104,6 +107,7 @@
             });
           }
         });
+      });
       });
     }
 
@@ -407,6 +411,60 @@
               }
             });
           });
+
+
+
+
+
+        }
+        else if(
+           x.Descripcion.toLowerCase().includes('iante') ||
+              x.Descripcion.toLowerCase().includes('inlnb') ||
+              x.Descripcion.toLowerCase().includes('iapar') ||
+              x.Descripcion.toLowerCase().includes('riapar') ||
+              x.Descripcion.toLowerCase().includes('iantx') ||
+              x.Descripcion.toLowerCase().includes('iradi') ||
+              x.Descripcion.toLowerCase().includes('irout') ||
+              x.Descripcion.toLowerCase().includes('icabm') ||
+              x.Descripcion.toLowerCase().includes('ecabl') ||
+              x.Descripcion.toLowerCase().includes('econt') ||
+              x.Descripcion.toLowerCase().includes('rante') ||
+              x.Descripcion.toLowerCase().includes('relnb') ||
+              x.Descripcion.toLowerCase().includes('rcabl') ||
+              x.Descripcion.toLowerCase().includes('rcont') ||
+              x.Descripcion.toLowerCase().includes('rapar') ||
+              x.Descripcion.toLowerCase().includes('rantx') ||
+              x.Descripcion.toLowerCase().includes('retca') ||
+              x.Descripcion.toLowerCase().includes('rradi') || 
+              x.Descripcion.toLowerCase().includes('rrout')
+        ){
+             vm.NOM = x.Descripcion.split(' ');
+             
+              var items_ = {
+                'Op': 'N',
+                'Trabajo': vm.NOM[0],
+                'Contrato': vm.contratoBueno,
+                'ClvTecnico': 0,
+                'Clave': vm.Clave
+              };
+              console.log(items);
+
+              var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'views/procesos/ModalAsignaAparato.html',
+                controller: 'ModalAsignaAparatoCtrl',
+                controllerAs: 'ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'md',
+                resolve: {
+                  items: function () {
+                    return items_;
+                  }
+                }
+              });
 
 
 
