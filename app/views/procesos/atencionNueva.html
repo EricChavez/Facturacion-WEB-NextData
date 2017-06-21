@@ -32,10 +32,12 @@
 
     </header>
     <div class="tools">
-      <div class="btn-group">
+      
         <button class="btn btn-info btn-sm" ng-show="$ctrl.MostrarGuardar" ng-click="$ctrl.GuardarLlamada()">Guardar llamada</button>
         <button class="btn btn-warning btn-sm" ng-show="$ctrl.MostrarEditar" ng-click="$ctrl.EditaLlamada()">Editar llamada</button>
-      </div>
+        <button type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
+      
+      
     </div>
   </div>
   <div class="card-body">
@@ -96,6 +98,7 @@
           <p><b>Calle: </b>{{$ctrl.Calle}} <b>#:</b>{{$ctrl.Numero}}</p>
           <p><b>Colonia: </b>{{$ctrl.Colonia}}</p>
           <p><b>Ciudad: </b>{{$ctrl.Ciudad}}</p>
+          <p><b>Teléfono: </b>{{$ctrl.Telefono}}</p>
         </div>
       </div>
       <div class="col-md-3 text-center" style="font-size:14px; color: #06599a;">

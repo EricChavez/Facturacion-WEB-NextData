@@ -33,6 +33,7 @@ angular
 						vm.Hora = datos.HoraInicial;
 						vm.clv_queja = datos.clv_queja;
 						vm.Turno = datos.Turno;
+						vm.Telefono = 123;
 						vm.UsuarioGenero = datos.UsuarioGenero;
 						for (var a = 0; a < vm.Trabajos.length; a++) {
 							if (vm.Trabajos[a].CLV_TRABAJO == datos.Clv_trabajo) {
