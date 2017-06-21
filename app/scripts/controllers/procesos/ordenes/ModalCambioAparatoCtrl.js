@@ -3,17 +3,19 @@
 
   angular
     .module('softvApp')
-    .controller('ModalAsignaAparatoCtrl', ModalAsignaAparatoCtrl);
+    .controller('ModalCambioAparatoCtrl', ModalCambioAparatoCtrl);
 
   ModalAsignaAparatoCtrl.inject = ['$uibModal', '$uibModalInstance', 'ordenesFactory', 'items', '$rootScope', 'ngNotify'];
 
-  function ModalAsignaAparatoCtrl($uibModal, $uibModalInstance, ordenesFactory, items, $rootScope, ngNotify, $localStorage) {
+  function ModalCambioAparatoCtrl($uibModal, $uibModalInstance, ordenesFactory, items, $rootScope, ngNotify, $localStorage) {
     var vm = this;
     vm.cancel = cancel;
     vm.guardar = guardar;
-    vm.cambio = false;
+    vm.cambio = true;
+
 
     this.$onInit = function () {
+
 
       var Parametros = {
         'Op': items.Op,
@@ -21,7 +23,7 @@
         'Contrato': items.Contrato,
         'ClvTecnico': items.ClvTecnico,
         'Clave': items.Clave,
-        'ClvOrden':items.ClvOrden
+        'ClvOrden': items.ClvOrden
       };
       console.log(Parametros);
       ordenesFactory.MUESTRAAPARATOS_DISCPONIBLES(Parametros).then(function (resp) {
@@ -33,34 +35,59 @@
           'Contrato': items.Contrato,
           'ClvTecnico': 0,
           'Clave': items.Clave,
-          'ClvOrden':items.ClvOrden
+          'ClvOrden': items.ClvOrden
         };
         console.log(Parametros2);
 
         ordenesFactory.MUESTRAAPARATOS_DISCPONIBLES(Parametros2).then(function (result) {
           console.log(result);
           vm.aparatos2 = result.GetMUESTRAAPARATOS_DISCPONIBLESListResult;
+          ordenesFactory.SP_StatusAparatos().then(function (data) {
+            vm.listastatus = data.GetSP_StatusAparatosResult;
+
+            if(items.Trabajo=='CANTX'){
+              vm.label1='Antena asignada Acualmente';
+              vm.label2='Seleccione el status de la antena';
+              vm.label3='Seleccione la antena a instalar';
+            }
+            else if(items.Trabajo=='CCABM'){
+              vm.label1='Cablemódem asignado Acualmente';
+              vm.label2='Seleccione el status del Cablemódem';
+              vm.label3='Seleccione el Cablemódem a instalar';
+            }else{
+
+            }
+
+          });
         });
+
+
 
       });
     }
 
+
+
+
+
     function guardar() {
 
-      var obj = {
+        var obj = {
         'Clave': items.Clave,
         'Trabajo': items.Trabajo,
         'ClvOrden': items.ClvOrden,
         'ContratoNet': vm.aparato2.ContratoAnt,
         'ClvAparato': vm.aparato.ContratoAnt,
         'Op':  items.Op,
-        'Status': 'I'
+        'Status': vm.status.Clv_StatusCableModem
       }
 
       ordenesFactory.AddSP_GuardaIAPARATOS(obj).then(function (data) {
         $rootScope.$emit('actualiza_tablaServicios');
         $uibModalInstance.dismiss('cancel');
       });
+
+
     }
 
     function cancel() {

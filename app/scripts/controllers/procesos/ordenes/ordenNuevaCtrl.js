@@ -32,7 +32,7 @@
 
 
     function ImprimeOrden(clv_orden) {
-      alert(clv_orden);
+    
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -304,7 +304,7 @@
     });
 
     $rootScope.$on('actualiza_tablaServicios', function () {
-      alert('actualiza');
+      
       actualizarTablaServicios();
     });
 

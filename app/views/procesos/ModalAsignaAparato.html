@@ -4,6 +4,7 @@
         <h4 class="modal-title">Selecciona el Aparato</h4>
     </div>
     <div class="modal-body">
+        <b ng-show="ctrl.cambio">{{ctrl.label1}}</b>
         <select 
        name="aparato2"
        class="form-control input-sm" 
@@ -12,7 +13,8 @@
                     required-message="'Este campo es obligatorio.'"
                     required
          ng-model="ctrl.aparato2"></select>
-        
+         <br>
+        <b ng-show="ctrl.cambio">{{ctrl.label2}}</b>
        <select 
        name="aparato"
        class="form-control input-sm" 
@@ -21,6 +23,17 @@
                     required-message="'Este campo es obligatorio.'"
                     required
          ng-model="ctrl.aparato"></select>
+
+  <br>
+     <b ng-show="ctrl.cambio">{{ctrl.label3}}</b>
+          <select 
+       name="status"
+       class="form-control input-sm" 
+        ng-options="item as item.Concepto for item in ctrl.listastatus track by item.Clv_StatusCableModem"
+        validate-on="dirty"
+                    required-message="'Este campo es obligatorio.'"
+                    required
+         ng-model="ctrl.status" ng-show="ctrl.cambio"></select>
       
     </div>
     <div class="modal-footer">
