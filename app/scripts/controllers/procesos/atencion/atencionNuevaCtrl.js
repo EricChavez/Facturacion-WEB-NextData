@@ -209,16 +209,17 @@ angular
 		}
 
 		function EnterContrato(event) {
+			if (event.keyCode == 13) {
 			if (vm.selectedServicio == null) {
 				ngNotify.set('Seleccione el servicio que tiene el cliente', 'error');
 				return;
 			}
-			if (event.keyCode == 13) {
-				if (vm.contrato == null || vm.contrato == '') {
+			
+				if (vm.contratoSelected == null || vm.contratoSelected == '') {
 					ngNotify.set('Coloque un contrato válido', 'error');
 					return;
 				}
-				var res = vm.contrato.split("-");
+				var res = vm.contratoSelected.split("-");
 
 				if (res.length == 1) {
 					ngNotify.set('Coloque un contrato válido ej. 15-1', 'error');
@@ -230,9 +231,10 @@ angular
 				vm.DireccionCliente = 'No especificado';
 				vm.ServiciosCliente = [];
 				var param = {};
-				param.contrato = vm.contrato;
+				param.contrato = vm.contratoSelected;
 				param.servicio = vm.selectedServicio.Clv_TipSerPrincipal;
 				param.op = 0;
+				console.log(param);
 				atencionFactory.buscarCliente(param).then(function(data) {
 					console.log(data);
 					var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];

@@ -58,7 +58,12 @@ angular
       AddInsertMotCanServ: '/InsertMotCanServ/AddInsertMotCanServ',
       GetSP_ValidaGuardaOrdSerAparatos: '/OrdSer/GetSP_ValidaGuardaOrdSerAparatos',
       GetValidaOrdSerManuales: '/ValidaOrdSerManuales/GetValidaOrdSerManuales',
-      SP_StatusAparatos: '/OrdSer/GetSP_StatusAparatos'
+      SP_StatusAparatos: '/OrdSer/GetSP_StatusAparatos',
+      Getsp_validaEliminarOrden: '/OrdSer/Getsp_validaEliminarOrdenser',
+      AddGuardaMovSist: '/GuardaMovSist/AddGuardaMovSist',
+      DeleteOrdSer: '/OrdSer/DeleteOrdSer',
+      AddMovSist: '/MovSist/AddMovSist'
+
     };
 
 
@@ -77,6 +82,116 @@ angular
       });
       return deferred.promise;
     };
+
+
+
+
+
+    factory.Getsp_validaEliminarOrden = function () {
+
+      console.log($localStorage.currentUser.usuario);
+      var deferred = $q.defer();
+      var Parametros = {
+        'sp_validaEliminarOrdenEntity':{
+           'ClvUsuario': $localStorage.currentUser.usuario,
+           'Activo':1
+        }
+        
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+       console.log($localStorage.currentUser.token);
+      console.log(JSON.stringify(Parametros));
+      $http.post(globalService.getUrl() + paths.Getsp_validaEliminarOrden, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+    factory.AddMovSist = function (contrato,control,Pantalla,CLV_ORDEN) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'objMovSist': {
+          'usuario': $localStorage.currentUser.usuario,
+          'contrato':contrato ,
+          'Sistema':'SOFTVWEB' ,
+          'Pantalla':Pantalla ,
+          'control': control,
+          'valorant': '',
+          'valornuevo':CLV_ORDEN
+        }
+
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.AddMovSist, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
+
+    factory.AddGuardaMovSist = function (ClvOrdSer) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'objGuardaMovSist': {
+          'Op': 0,
+          'Usuario': $localStorage.currentUser.Usuario,
+          'ClvOrdSer': ClvOrdSer
+        }
+
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.AddGuardaMovSist, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+    factory.DeleteOrdSer = function (ClvOrdSer) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'clv_orden': ClvOrdSer
+
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.DeleteOrdSer, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
 
 
 

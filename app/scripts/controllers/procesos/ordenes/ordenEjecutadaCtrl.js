@@ -29,6 +29,8 @@
     vm.blockVista = false;
     vm.blockTecnico = false;
     vm.fechas = fechas;
+    vm.soyEjecucion=true;
+    vm.Eliminar=Eliminar;
     init(vm.claveOrden);
 
     function init(orden) {
@@ -52,11 +54,11 @@
         if (vm.datosOrden.Visita2 != '01/01/1900') {
           vm.Visita2 = vm.datosOrden.Visita2;
         }
-        if (vm.status == 'E') {
-          vm.blockEjecutada = true;
-          vm.blockPendiente = true;
-          vm.blockVista = true;
+        if(vm.status=='P'){
+          vm.status='E';
+          vm.blockEjecucion=false;
         }
+        
       });
       ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
         vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
@@ -393,11 +395,44 @@ vm.NOM = x.Descripcion.split(' ');
     }
 
 
+   function Eliminar(){
+      
+
+      ordenesFactory.Getsp_validaEliminarOrden().then(function(data){
+      if(data.Getsp_validaEliminarOrdenserResult.Activo==1){
+
+        ordenesFactory.AddGuardaMovSist(vm.clv_orden).then(function(data){
+              ordenesFactory.DeleteOrdSer(vm.clv_orden).then(function(data){
+                         
+                   ordenesFactory.AddMovSist( vm.contratoBueno,'Se eliminó orden de servicio','FrmOrdenes',vm.clv_orden).then(function(response){
+                        ngNotify.set('La orden se elimino correctamente', 'success');
+                   });
+                        
+             });
+
+              
+        });
+       
+      }else{
+         ngNotify.set('No tiene permisos para eliminar la orden', 'error');
+      }
+
+      });
+     
+
+   }
+
+
 
 
 
     function EjecutaOrden() {
+      
 
+     if(vm.status=='P'){
+      ngNotify.set('Marque la opcion ejecutada o visita   para continuar', 'error');
+       return;
+     }
 
       console.log(vm.clv_orden);
       console.log(vm.status);
