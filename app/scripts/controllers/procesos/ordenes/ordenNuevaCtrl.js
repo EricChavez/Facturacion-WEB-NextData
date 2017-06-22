@@ -29,6 +29,7 @@
     vm.blockVista1 = true;
     vm.blockVista2 = true;
     vm.blockEjecucionReal = true;
+    vm.soyEjecucion=false;
 
 
     function ImprimeOrden(clv_orden) {

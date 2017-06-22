@@ -40,6 +40,8 @@
         ordenesFactory.MUESTRAAPARATOS_DISCPONIBLES(Parametros2).then(function (result) {
           console.log(result);
           vm.aparatos2 = result.GetMUESTRAAPARATOS_DISCPONIBLESListResult;
+          vm.label1='Aparatos por asignar';
+          vm.label2='Seleccione el Aparato:'
         });
 
       });

@@ -5,7 +5,7 @@
     .module('softvApp')
     .controller('ModalCambioAparatoCtrl', ModalCambioAparatoCtrl);
 
-  ModalAsignaAparatoCtrl.inject = ['$uibModal', '$uibModalInstance', 'ordenesFactory', 'items', '$rootScope', 'ngNotify'];
+  ModalCambioAparatoCtrl.inject = ['$uibModal', '$uibModalInstance', 'ordenesFactory', 'items', '$rootScope', 'ngNotify'];
 
   function ModalCambioAparatoCtrl($uibModal, $uibModalInstance, ordenesFactory, items, $rootScope, ngNotify, $localStorage) {
     var vm = this;
@@ -43,6 +43,7 @@
           console.log(result);
           vm.aparatos2 = result.GetMUESTRAAPARATOS_DISCPONIBLESListResult;
           ordenesFactory.SP_StatusAparatos().then(function (data) {
+            console.log(data);
             vm.listastatus = data.GetSP_StatusAparatosResult;
 
             if(items.Trabajo=='CANTX'){

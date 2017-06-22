@@ -17,6 +17,7 @@
     overflow-x: hidden;
   }
 
+
 </style>
 
 <div class="card animated fadeIn fast" style="margin-top:20px;">
@@ -28,6 +29,7 @@
     </header>
     <div class="tools">
       <button class="btn btn-default btn-sm" type="button" ui-sref="home.procesos.ordenes">Cancelar</button>
+      <button ng-if="$ctrl.soyEjecucion==true" class="btn btn-danger btn-sm" type="button" ng-click="$ctrl.Eliminar();"><i  class="fa fa-trash"></i>Eliminar</button>
       <button class="btn btn-primary btn-sm" ng-click="$ctrl.Guardar();" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
     </div>
@@ -122,7 +124,7 @@
               <div class="form-control-line"></div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group animated flash">
             <label for="regular13" class="col-sm-4 control-label">Ejecución</label>
             <div class="col-sm-8">
               <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Eje" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucion"
