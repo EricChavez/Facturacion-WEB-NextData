@@ -26,7 +26,7 @@
 			<div class="card panel">
 				<div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
 				 aria-expanded="false">
-					<header>Buscar atención</header>
+					<header><i class="fa fa-search"></i> atención</header>
 					<div class="tools">
 						<a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
 					</div>
@@ -34,7 +34,8 @@
 				<div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
 					<div class="panel-body">
 						<uib-tabset active="active">
-							<uib-tab index="0" heading="Detalle">
+							<uib-tab index="0">
+								<uib-tab-heading><i class="md md-receipt"></i> Detalle</uib-tab-heading>
 								<br/>
 								<form angular-validator-submit="$ctrl.bucarUsuario()" name="DetalleForm" novalidate angular-validator>
 									<div class="col-md-6">
@@ -96,7 +97,8 @@
 									</footer>
 								</form>
 							</uib-tab>
-							<uib-tab index="1" heading="Contrato">
+							<uib-tab index="1" heading="">
+								<uib-tab-heading><i class="md md-content-paste"></i> Contrato</uib-tab-heading>
 								<br/>
 								<div class="row">
 									<div class="col-md-4">
@@ -125,7 +127,8 @@
 
 							</uib-tab>
 
-							<uib-tab index="2" heading="Dirección">
+							<uib-tab index="2">
+								<uib-tab-heading><i class="fa fa-home"></i> Dirección</uib-tab-heading>
 								<br/>
 								<form ng-submit="$ctrl.buscarColonia()">
 									<div class="row">
@@ -163,7 +166,8 @@
 									</footer>
 								</form>
 							</uib-tab>
-							<uib-tab index="3" heading="Nombre">
+							<uib-tab index="3">
+								<uib-tab-heading><i class="fa fa-user"></i> Nombre</uib-tab-heading>
 								<br/>
 								<form ng-submit="$ctrl.buscarNombres()">
 									<div class="row">

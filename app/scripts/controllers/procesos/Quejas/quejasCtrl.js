@@ -430,7 +430,7 @@ angular
 		var vm = this;
 		InitalData();
 
-		vm.Titulo = 'Quejas area técnica'
+		vm.Titulo = 'Quejas área técnica'
 		vm.BuscaReporte = BuscaReporte;
 		vm.BuscaContrato = BuscaContrato;
 		vm.BuscaporNombre = BuscaporNombre;
