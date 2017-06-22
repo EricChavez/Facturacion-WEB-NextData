@@ -62,23 +62,23 @@
       <div class="row" style="padding: 10px;
     border: 1px solid #e5e6e6;">
 
-        <div class="col-md-4" style="font-size:12px;">
+        <div class="col-md-2" style="font-size:12px;">
 
           <div class="col-md-12 text-center" style="font-size:14px; color: #06599a;">
             <button type="button" class="btn btn-block ink-reaction btn-flat btn-info"><i class="md md-account-box"></i> Suscriptor</button>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-4">
             <b>Tipo de servicio</b>
             <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-options="item as item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal"
               ng-disabled="true">
                <option value="">Selecciona</option>
                              </select>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <b>Clave</b>
             <input class="form-control input-sm" ng-disabled="true" ng-model="$ctrl.clv_queja">
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <b>Contrato</b>
             <input class="form-control input-sm" ng-model="$ctrl.contrato" ng-disabled="true">
           </div>
@@ -93,7 +93,7 @@
         
         </div>
 
-        <div class="col-md-4 form-group" style="font-size:12px;">
+        <div class="col-md-3 " style="font-size:12px;">
 
           <div class="col-md-12 text-center " style="font-size:14px; color: #06599a;">
             <button type="button" class="btn btn-block ink-reaction btn-flat btn-info"><i class="fa fa-clock-o"></i> Fechas</button>
@@ -134,6 +134,13 @@
             <input type="text" class="form-control input-sm" ng-model="$ctrl.Horavisita2" ng-class="$ctrl.Ivisita2" placeholder="hh:mm AA"
               ui-mask="99:99 AA" model-view-value="true" ng-disabled="$ctrl.FVisita2">
           </div>
+          
+         
+        </div>
+         
+         <div class="col-md-3" style="font-size:12px;">
+
+         <br>
           <div class="col-md-5"><b>Visita3</b></div>
           <div class="col-md-4">
             <input type="text" class="form-control input-sm" ng-model="$ctrl.Fechavisita3" ng-class="$ctrl.Ivisita3" placeholder="DD/MM/YYYY"
@@ -162,7 +169,11 @@
               model-view-value="true" ng-disabled="true">
           </div>
         </div>
-        <div class="col-md-4" style="font-size:12px;">
+         
+
+
+
+        <div class="col-md-3" style="font-size:12px;">
 
           <div class="col-md-12 text-center" style="font-size:14px; color: #06599a;">
             <button type="button" class="btn btn-block ink-reaction btn-flat btn-info"><i class="md md-assignment-ind"></i> Asignación</button>
@@ -213,7 +224,11 @@
           <div class="col-md-6">
 
             <b>Clasificación del problema</b>
-            <select class="form-control input-sm" ng-disabled="$ctrl.IClasproblema" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"></select>
+            <select class="form-control input-sm"  
+            ng-model="$ctrl.Problema"
+             ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"
+             name="problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty"
+             ></select>
           </div>
           <div class="col-md-6">
             <b> Prioridad</b>
