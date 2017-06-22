@@ -5,7 +5,7 @@ angular
 
 		function initialData() {
 			var obje = {};
-			obje.servicio = 3;
+			obje.servicio = 0;
 			obje.op = 3;
 			obje.colonia = 0;
 			atencionFactory.buscarCliente(obje).then(function(data) {
@@ -16,7 +16,7 @@ angular
 		function BusquedaporContrato() {
 			var obje = {};
 			obje.contrato = vm.BUcontrato;
-			obje.servicio = 3;
+			obje.servicio = 0;
 			obje.colonia = 0;
 			obje.op = 0;
 			atencionFactory.buscarCliente(obje).then(function(data) {
@@ -30,7 +30,7 @@ angular
 			obje.paterno = vm.BUapaterno;
 			obje.materno = vm.BUamaterno;
 			obje.colonia = 0;
-			obje.servicio = 3;
+			obje.servicio = 0;
 			obje.op = 1;
 			atencionFactory.buscarCliente(obje).then(function(data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
@@ -39,7 +39,7 @@ angular
 
 		function BusquedaporDireccion() {
 			var obje = {};
-			obje.servicio = 3;
+			obje.servicio = 0;
 			obje.calle = vm.BUcalle;
 			obje.numero = vm.BUnumero;
 			obje.colonia = 0;
@@ -52,7 +52,7 @@ angular
 
 		function BusquedaporAparato() {
 			var obje = {};
-			obje.servicio = 3;
+			obje.servicio = 0;
 			obje.setupbox = vm.BUaparato;
 			obje.op = 5;
 			obje.colonia = 0;

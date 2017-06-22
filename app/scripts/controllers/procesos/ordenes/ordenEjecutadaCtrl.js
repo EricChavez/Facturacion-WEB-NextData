@@ -29,6 +29,8 @@
     vm.blockVista = false;
     vm.blockTecnico = false;
     vm.fechas = fechas;
+    vm.soyEjecucion=true;
+    vm.Eliminar=Eliminar;
     init(vm.claveOrden);
 
     function init(orden) {
@@ -52,11 +54,11 @@
         if (vm.datosOrden.Visita2 != '01/01/1900') {
           vm.Visita2 = vm.datosOrden.Visita2;
         }
-        if (vm.status == 'E') {
-          vm.blockEjecutada = true;
-          vm.blockPendiente = true;
-          vm.blockVista = true;
+        if(vm.status=='P'){
+          vm.status='E';
+          vm.blockEjecucion=false;
         }
+        
       });
       ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
         vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
@@ -112,15 +114,17 @@
     function detalleTrabajo(trabajo, x) {
       console.log(trabajo);
       console.log(x);
-      if (vm.selectedTecnico == undefined) {
-        ngNotify.set('Selecciona un técnico.', 'warn');
-      }
+      if (trabajo != null) {
 
-      
+        if (vm.selectedTecnico == undefined) {
+          ngNotify.set('Selecciona un técnico.', 'warn');
+        }
+
+
 
         var items = {};
         items.contrato = vm.contratoBueno;
-      
+
         if (x.Descripcion.toLowerCase().includes('ipaqu') ||
           x.Descripcion.toLowerCase().includes('bpaqu') ||
           x.Descripcion.toLowerCase().includes('dpaqu') ||
@@ -243,13 +247,50 @@
 
 
 
+        }else if(
+             x.Descripcion.toLowerCase().includes('ccabm') ||
+             x.Descripcion.toLowerCase().includes('cantx')
+        ){
+          
+vm.NOM = x.Descripcion.split(' ');
+
+          var items_ = {
+            'Op': 'M',
+            'Trabajo': vm.NOM[0],
+            'Contrato': vm.contratoBueno,
+            'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
+            'Clave': x.Clave,
+            'ClvOrden': x.Clv_Orden
+          };
+          console.log(items);
+
+          var modalInstance = $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'views/procesos/ModalAsignaAparato.html',
+            controller: 'ModalCambioAparatoCtrl',
+            controllerAs: 'ctrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'md',
+            resolve: {
+              items: function () {
+                return items_;
+              }
+            }
+          });
+
+
+          
+
         }
-   
 
 
 
 
 
+      }
     }
 
     function fechas() {
@@ -317,8 +358,8 @@
                       if (data.GetDeepImprime_OrdenResult.Imprime == 1) {
                         ngNotify.set('La orden es de proceso automático por lo cual no se imprimió', 'error');
                       } else {
-                        alert('se imprimira');
-                        ImprimeOrden(vm.clv_orden);
+                        $state.go('home.procesos.ordenes')
+                        ngNotify.set('La orden se ha ejecutado correctamente', 'success');
                       }
 
                     })
@@ -333,7 +374,7 @@
     }
 
     function ImprimeOrden(clv_orden) {
-      alert(clv_orden);
+     
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -354,68 +395,101 @@
     }
 
 
+   function Eliminar(){
+      
+
+      ordenesFactory.Getsp_validaEliminarOrden().then(function(data){
+      if(data.Getsp_validaEliminarOrdenserResult.Activo==1){
+
+        ordenesFactory.AddGuardaMovSist(vm.clv_orden).then(function(data){
+              ordenesFactory.DeleteOrdSer(vm.clv_orden).then(function(data){
+                         
+                   ordenesFactory.AddMovSist( vm.contratoBueno,'Se eliminó orden de servicio','FrmOrdenes',vm.clv_orden).then(function(response){
+                        ngNotify.set('La orden se elimino correctamente', 'success');
+                   });
+                        
+             });
+
+              
+        });
+       
+      }else{
+         ngNotify.set('No tiene permisos para eliminar la orden', 'error');
+      }
+
+      });
+     
+
+   }
+
+
 
 
 
     function EjecutaOrden() {
       
-       
-        console.log(vm.clv_orden);
-        console.log(vm.status);
-        console.log(vm.selectedTecnico.CLV_TECNICO);
-        
-        ordenesFactory.GetSP_ValidaGuardaOrdSerAparatos(vm.clv_orden, 'M', vm.status, 0, vm.selectedTecnico.CLV_TECNICO).then(function (data) {
-          if (data.GetSP_ValidaGuardaOrdSerAparatosResult != '') {
-            ngNotify.set(data.GetSP_ValidaGuardaOrdSerAparatosResult, 'warn');
-            return;
-          } else {
 
-            ordenesFactory.GetValida_DetOrden(vm.clv_orden).then(function (response) {
+     if(vm.status=='P'){
+      ngNotify.set('Marque la opcion ejecutada o visita   para continuar', 'error');
+       return;
+     }
 
-              if (response.GetValida_DetOrdenResult.Validacion == 0) {
-                ngNotify.set('Se requiere tener datos en el detalle de la orden', 'error');
-                return;
-              } else {
+      console.log(vm.clv_orden);
+      console.log(vm.status);
+      console.log(vm.selectedTecnico.CLV_TECNICO);
 
-                ordenesFactory.GetCheca_si_tiene_camdo(vm.clv_orden).then(function (camdo) {
-                  if (camdo.GetCheca_si_tiene_camdoResult.Error > 0) {
-                    ngNotify.set('Se requiere que capture el nuevo domicilio', 'error');
-                  } else {
-                    ordenesFactory.GetChecaMotivoCanServ(vm.clv_orden).then(function (result) {
-                      if (result.GetChecaMotivoCanServResult.Res == 1) {
-                        var ClvOrden = vm.clv_orden;
-                        var modalInstance = $uibModal.open({
-                          animation: true,
-                          ariaLabelledBy: 'modal-title',
-                          ariaDescribedBy: 'modal-body',
-                          templateUrl: 'views/procesos/modalMotivoCancelacion.html',
-                          controller: 'modalMotivoCanCtrl',
-                          controllerAs: '$ctrl',
-                          backdrop: 'static',
-                          keyboard: false,
-                          class: 'modal-backdrop fade',
-                          size: 'md',
-                          resolve: {
-                            ClvOrden: function () {
-                              return ClvOrden;
-                            }
+      ordenesFactory.GetSP_ValidaGuardaOrdSerAparatos(vm.clv_orden, 'M', vm.status, 0, vm.selectedTecnico.CLV_TECNICO).then(function (data) {
+        if (data.GetSP_ValidaGuardaOrdSerAparatosResult != '') {
+          ngNotify.set(data.GetSP_ValidaGuardaOrdSerAparatosResult, 'warn');
+          return;
+        } else {
+
+          ordenesFactory.GetValida_DetOrden(vm.clv_orden).then(function (response) {
+
+            if (response.GetValida_DetOrdenResult.Validacion == 0) {
+              ngNotify.set('Se requiere tener datos en el detalle de la orden', 'error');
+              return;
+            } else {
+
+              ordenesFactory.GetCheca_si_tiene_camdo(vm.clv_orden).then(function (camdo) {
+                if (camdo.GetCheca_si_tiene_camdoResult.Error > 0) {
+                  ngNotify.set('Se requiere que capture el nuevo domicilio', 'error');
+                } else {
+                  ordenesFactory.GetChecaMotivoCanServ(vm.clv_orden).then(function (result) {
+                    if (result.GetChecaMotivoCanServResult.Res == 1) {
+                      var ClvOrden = vm.clv_orden;
+                      var modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'views/procesos/modalMotivoCancelacion.html',
+                        controller: 'modalMotivoCanCtrl',
+                        controllerAs: '$ctrl',
+                        backdrop: 'static',
+                        keyboard: false,
+                        class: 'modal-backdrop fade',
+                        size: 'md',
+                        resolve: {
+                          ClvOrden: function () {
+                            return ClvOrden;
                           }
-                        });
-                      } else {
-                        GuardaDetalle();
-                      }
-                    });
-                  }
-                });
+                        }
+                      });
+                    } else {
+                      GuardaDetalle();
+                    }
+                  });
+                }
+              });
 
-              }
+            }
 
 
-            });
-          }
+          });
+        }
 
-        });
-     
+      });
+
     }
 
   }

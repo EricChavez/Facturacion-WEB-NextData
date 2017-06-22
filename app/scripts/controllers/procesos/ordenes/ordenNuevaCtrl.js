@@ -29,10 +29,11 @@
     vm.blockVista1 = true;
     vm.blockVista2 = true;
     vm.blockEjecucionReal = true;
+    vm.soyEjecucion=false;
 
 
     function ImprimeOrden(clv_orden) {
-      alert(clv_orden);
+    
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -304,7 +305,7 @@
     });
 
     $rootScope.$on('actualiza_tablaServicios', function () {
-      alert('actualiza');
+      
       actualizarTablaServicios();
     });
 
