@@ -24,7 +24,8 @@ angular
 			ActualizaLlamada: '/LLamadasdeInternet/UpdateLLamadasdeInternet',
 			ActualizaQuejaCallCenter: '/Actualizar_quejasCallCenter/GetDeepActualizar_quejasCallCenter',
 			ConsultaColoniasPorUsuario: '/uspConsultaColoniasPorUsuario/GetuspConsultaColoniasPorUsuarioList',
-			ConsultaLLamada: '/LLamadasdeInternet/GetLLamadasdeInternetList'
+			ConsultaLLamada: '/LLamadasdeInternet/GetLLamadasdeInternetList',
+			getDimeSiHayReporte:'/Quejas/GetSiHayQueja'
 
 		};
 		var factory = {};
@@ -501,6 +502,24 @@ angular
 			return deferred.promise;
 		};
 
+
+		factory.getDimeSiHayReporte = function(contrato) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Contrato': contrato,
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.getDimeSiHayReporte, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+			return deferred.promise;
+		};
 
 
 		return factory;

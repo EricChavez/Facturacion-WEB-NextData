@@ -198,14 +198,24 @@ angular
 			vm.Colonia = detalle.COLONIA;
 			vm.Ciudad = detalle.CIUDAD;
 			//vm.DireccionCliente = "Calle:" + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
+			MuestraMensajeQueja(contrato);
 			atencionFactory.getServiciosCliente(contrato).then(function(data) {
 				vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 			});
 		})
 
-		function MuestraMensajeQueja() {
-			vm.MuestraMensajeQueja = true;
-			vm.MensajeQueja = "El cliente cuenta con una Queja pendiente"
+		function MuestraMensajeQueja(contrato) {
+		//	vm.MuestraMensajeQueja = true;
+		//	vm.MensajeQueja = "El cliente cuenta con una Queja pendiente"
+				atencionFactory.getDimeSiHayReporte(contrato).then(function(data) {		
+				var laQueja = data.GetSiHayQuejaResult[0].Clv_Queja;
+				var elConcepto = data.GetSiHayQuejaResult[0].Concepto;				
+				if (laQueja > 0 )
+				{
+					ngNotify.set('El cliente cuenta con el reporte pendiente #'+ laQueja +' de ' + elConcepto, 'error');
+					return;
+				}			
+			});
 		}
 
 		function EnterContrato(event) {
