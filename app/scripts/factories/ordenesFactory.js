@@ -62,7 +62,8 @@ angular
       Getsp_validaEliminarOrden: '/OrdSer/Getsp_validaEliminarOrdenser',
       AddGuardaMovSist: '/GuardaMovSist/AddGuardaMovSist',
       DeleteOrdSer: '/OrdSer/DeleteOrdSer',
-      AddMovSist: '/MovSist/AddMovSist'
+      AddMovSist: '/MovSist/AddMovSist',
+      DeleteDetOrdSer: '/DetOrdSer/DeleteDetOrdSer'
 
     };
 
@@ -86,25 +87,45 @@ angular
 
 
 
-
-    factory.Getsp_validaEliminarOrden = function () {
-
-      console.log($localStorage.currentUser.usuario);
+    factory.DeleteDetOrdSer = function (Clave) {
       var deferred = $q.defer();
       var Parametros = {
-        'sp_validaEliminarOrdenEntity':{
-           'ClvUsuario': $localStorage.currentUser.usuario,
-           'Activo':1
-        }
-        
+        'Clave': Clave
       };
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
         }
       };
-       console.log($localStorage.currentUser.token);
-      console.log(JSON.stringify(Parametros));
+      $http.post(globalService.getUrl() + paths.DeleteDetOrdSer, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
+
+    factory.Getsp_validaEliminarOrden = function () {
+
+     
+      var deferred = $q.defer();
+      var Parametros = {
+        'sp_validaEliminarOrdenEntity': {
+          'ClvUsuario': $localStorage.currentUser.usuario,
+          'Activo': 1
+        }
+
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      
       $http.post(globalService.getUrl() + paths.Getsp_validaEliminarOrden, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -115,17 +136,17 @@ angular
     };
 
 
-    factory.AddMovSist = function (contrato,control,Pantalla,CLV_ORDEN) {
+    factory.AddMovSist = function (contrato, control, Pantalla, CLV_ORDEN) {
       var deferred = $q.defer();
       var Parametros = {
         'objMovSist': {
           'usuario': $localStorage.currentUser.usuario,
-          'contrato':contrato ,
-          'Sistema':'SOFTVWEB' ,
-          'Pantalla':Pantalla ,
+          'contrato': contrato,
+          'Sistema': 'SOFTVWEB',
+          'Pantalla': Pantalla,
           'control': control,
           'valorant': '',
-          'valornuevo':CLV_ORDEN
+          'valornuevo': CLV_ORDEN
         }
 
       };
@@ -731,7 +752,7 @@ angular
         'Op': 0
 
       };
-      console.log(Parametros);
+     
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -758,7 +779,7 @@ angular
         'Clv_UnicaNet': obj.Clv_UnicaNet,
         'Op': 0
       };
-      console.log(Parametros);
+     
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -783,7 +804,7 @@ angular
         'Clv_UnicaNet': obj.Clv_UnicaNet,
         'Op': 0
       };
-      console.log(Parametros);
+      
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -811,7 +832,7 @@ angular
         }
 
       };
-      console.log(Parametros);
+     
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -839,7 +860,7 @@ angular
         'ClvOrden': obj.ClvOrden,
         'Clave': obj.Clave
       };
-      console.log(Parametros);
+      
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -869,7 +890,7 @@ angular
         }
 
       };
-      console.log(JSON.stringify(Parametros));
+      
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -1055,7 +1076,7 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-      console.log(Parametros);
+      
       $http.post(globalService.getUrl() + paths.addDetalleOrden, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {

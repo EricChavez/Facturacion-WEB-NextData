@@ -45,8 +45,8 @@
       <div class="col-md-2">
         <h4>Buscar Cliente</h4>
       </div>
-      <div class="col-md-2"><input type="text" ng-model="$ctrl.contratoSelected" class="form-control" placeholder="Ingresa contrato" ng-keyup="$ctrl.EnterContrato($event)"></div>
-      <div class="col-md-2"> <button ng-disabled="{{$ctrl.bloquearContrato}}" ng-click="$ctrl.BuscaCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default"><i class="fa fa-search"></i></button></div>
+      <div class="col-md-2"><input type="text" ng-disabled="$ctrl.BloquearElementos" ng-model="$ctrl.contratoSelected" class="form-control" placeholder="Ingresa contrato" ng-keyup="$ctrl.EnterContrato($event)"></div>
+      <div class="col-md-2"> <button ng-disabled="$ctrl.BloquearElementos" ng-click="$ctrl.BuscaCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default"><i class="fa fa-search"></i></button></div>
       <div class="col-md-2">
        <b><i class="md md-av-timer" ></i> Hora Inicial:</b>
           <input type="text" ng-model="$ctrl.Hora" class="form-control input-sm" disabled="">
@@ -66,23 +66,38 @@
         <div class="col-md-6">
           <input id="textinput" name="textinput" style="color:red !important; font-weight: bold;" type="text" ng-model="$ctrl.NumeroLlamada" class="form-control input-sm" disabled="">
         </div>
-        <div class="col-md-12">
+       
+        
+           <div class="col-md-6">
+          <strong class="" style="margin-top: 10px;"># Reporte:</strong>
+        </div>
+        <div class="col-md-6">
+          <input id="textinput" name="textinput" style="color:red !important; font-weight: bold;" type="text" ng-model="$ctrl.clv_queja" class="form-control input-sm" disabled="">
+        </div>
+
+        
+         <div class="col-md-6">
           <strong class="" style="margin-top: 10px;">Tipo de servicio:</strong>
         </div>
-        <div class="col-md-12">
-          <select class="form-control input-sm" ng-model="$ctrl.selectedServicio" ng-change="$ctrl.CambioServicio($ctrl.selectedServicio)"
+        <div class="col-md-6">
+          <select class="form-control input-sm" ng-model="$ctrl.selectedServicio"
+           ng-change="$ctrl.CambioServicio($ctrl.selectedServicio)"
+           ng-disabled="$ctrl.BloquearElementos"
             ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal"></select>
         </div>
+        
+
+
         <div class="col-md-12">
           <br>
           <strong class="" style="margin-top: 10px;">Tipo de atención:</strong>
         </div>
         <div class="col-md-12">
           <label class="radio-inline radio-styled radio-warning">
-											<input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" ng-value="'telefonica'"><span>Via Telefónica</span>
+											<input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" value="T"><span>Via Telefónica</span>
 										</label>
           <label class="radio-inline radio-styled radio-warning">
-										<input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" ng-value="'web'"><span>En el Sitio</span>
+										<input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" value="S"><span>En el Sitio</span>
 									</label>
         </div>
       </div>

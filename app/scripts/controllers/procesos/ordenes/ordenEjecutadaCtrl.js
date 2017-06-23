@@ -41,6 +41,8 @@
         vm.contrato = data.GetDeepConsultaOrdSerResult.ContratoCom;
         vm.status = data.GetDeepConsultaOrdSerResult.STATUS;
         vm.Clv_TipSer = data.GetDeepConsultaOrdSerResult.Clv_TipSer;
+        vm.Fec_Sol=vm.datosOrden.Fec_Sol;
+        vm.observaciones=vm.datosOrden.Obs;
         ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
           vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
         });
@@ -112,8 +114,7 @@
     }
 
     function detalleTrabajo(trabajo, x) {
-      console.log(trabajo);
-      console.log(x);
+      
       if (trabajo != null) {
 
         if (vm.selectedTecnico == undefined) {
@@ -160,9 +161,9 @@
           x.Descripcion.toLowerCase().includes('cadig') ||
           x.Descripcion.toLowerCase().includes('canet')
         ) {
-          console.log(vm.clv_detalle, vm.clv_orden, vm.contratoBueno);
+          
           ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
-            console.log(data);
+            
             var items = {
               clv_detalle_orden: vm.clv_detalle,
               clv_orden: vm.clv_orden,
@@ -170,7 +171,7 @@
               isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
               datosCamdo: data.GetDeepCAMDOResult
             };
-            console.log(items);
+            
             var modalInstance = $uibModal.open({
               animation: true,
               ariaLabelledBy: 'modal-title',
@@ -224,7 +225,7 @@
             'Clave': x.Clave,
             'ClvOrden': x.Clv_Orden
           };
-          console.log(items);
+          
 
           var modalInstance = $uibModal.open({
             animation: true,
@@ -262,7 +263,7 @@ vm.NOM = x.Descripcion.split(' ');
             'Clave': x.Clave,
             'ClvOrden': x.Clv_Orden
           };
-          console.log(items);
+        
 
           var modalInstance = $uibModal.open({
             animation: true,
@@ -323,7 +324,7 @@ vm.NOM = x.Descripcion.split(' ');
     function GuardaDetalle() {
 
       ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
-        console.log(response);
+        
         ordenesFactory.AddNueRelOrdenUsuario(vm.clv_orden).then(function (data) {
 
           var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
@@ -405,6 +406,7 @@ vm.NOM = x.Descripcion.split(' ');
               ordenesFactory.DeleteOrdSer(vm.clv_orden).then(function(data){
                          
                    ordenesFactory.AddMovSist( vm.contratoBueno,'Se eliminó orden de servicio','FrmOrdenes',vm.clv_orden).then(function(response){
+                         $state.go('home.procesos.ordenes');
                         ngNotify.set('La orden se elimino correctamente', 'success');
                    });
                         
@@ -427,17 +429,10 @@ vm.NOM = x.Descripcion.split(' ');
 
 
     function EjecutaOrden() {
-      
-
-     if(vm.status=='P'){
+        if(vm.status=='P'){
       ngNotify.set('Marque la opcion ejecutada o visita   para continuar', 'error');
        return;
      }
-
-      console.log(vm.clv_orden);
-      console.log(vm.status);
-      console.log(vm.selectedTecnico.CLV_TECNICO);
-
       ordenesFactory.GetSP_ValidaGuardaOrdSerAparatos(vm.clv_orden, 'M', vm.status, 0, vm.selectedTecnico.CLV_TECNICO).then(function (data) {
         if (data.GetSP_ValidaGuardaOrdSerAparatosResult != '') {
           ngNotify.set(data.GetSP_ValidaGuardaOrdSerAparatosResult, 'warn');

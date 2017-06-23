@@ -43,15 +43,23 @@
             seRealiza: realiza
           };
           console.log(detalle);
+
+           if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('bcabm')) {
+              ngNotify.set('La baja de cablemodem se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
+              return;
+            } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('bapar')) {
+              ngNotify.set('La baja de aparato digital se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
+              return;
+            }
+
+
+
+
           ordenesFactory.addDetalleOrden(detalle).then(function (data) {
             vm.clv_detalle_orden = data.AddDetOrdSerResult;
 
             $rootScope.$emit('detalle_orden', vm.clv_detalle_orden);
-            if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('bcabm')) {
-              ngNotify.set('La baja de cablemodem se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
-            } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('bapar')) {
-              ngNotify.set('La baja de aparato digital se genera de forma automática en el momento que todos los servicios pasen a baja.', 'info');
-            } else if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('camdo') || 
+             if (vm.selectedTrabajo.Descripcion.toLowerCase().includes('camdo') || 
             vm.selectedTrabajo.Descripcion.toLowerCase().includes('cadig') ||
              vm.selectedTrabajo.Descripcion.toLowerCase().includes('canet')) {
               items.clv_detalle_orden = vm.clv_detalle_orden;

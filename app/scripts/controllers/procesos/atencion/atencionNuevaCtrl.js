@@ -237,11 +237,17 @@ angular
 				console.log(param);
 				atencionFactory.buscarCliente(param).then(function(data) {
 					console.log(data);
+                   if(data.GetuspBuscaContratoSeparado2ListResult.length==0){
+                      ngNotify.set('El cliente no tiene contratado el servicio, seleccione otro tipo por favor.', 'error');
+					  return;
+				   }
+
+
 					var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
 					var contrato = detalle.ContratoBueno;
 					vm.GlobalContrato = contrato;
 					atencionFactory.ValidaContrato(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal).then(function(data) {
-
+                        console.log(data);
 						if (data.GetuspContratoServListResult[0].Pasa == true) {
 							MuestraMensajeQueja();
 							vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
@@ -359,4 +365,5 @@ angular
 		vm.Hora = $filter('date')(new Date(), 'HH:mm:ss');
 		vm.Fecha = $filter('date')(new Date(), 'dd-MM-yyyy');
 		vm.CancelaReporte = CancelaReporte;
+		vm.BloquearElementos=false; 
 	});
