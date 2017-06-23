@@ -202,71 +202,27 @@ angular
       });
     }
 
-
-    function TransformaFecha() {
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth() + 1;
-      var yyyy = today.getFullYear();
-      if (dd < 10) {
-        dd = '0' + dd;
-      }
-      if (mm < 10) {
-        mm = '0' + mm;
-      }
-      var today = dd + '/' + mm + '/' + yyyy;
-      return today;
-    }
-
-    function formatocorrecto(date) {
-      var myString = date,
-        correctFormat = myString.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
-        myDate = new Date(correctFormat);
-      return myString;
-    }
-
-    function parseMDY(s) {
-      var b = s.split(/\D/);
-      console.log(b);
-      //return new Date(b[2],b[1], b[0]);
+    function toDate(dateStr) {
+      var parts = dateStr.split("/");
+      return new Date(parts[2], parts[1] - 1, parts[0]);
     }
 
 
     function ValidaFecha(date) {
-     
-     // var fechaproceso = formatocorrecto(date);
-      var fechahoy = new Date();
-       var fechaproceso=parseMDY(date);      
-      console.log(fechaproceso);
-      console.log(fechahoy);
-     
-      /*var count=0;
-      var fechaHoy= TransformaFecha();
-      var castfechaingreso=date.replace('/','').replace('/','');
-      var castfechaHoy=date.replace('/','').replace('/','')
-      console.log(castfechaingreso);
-      console.log(castfechaHoy);
-  
 
-       if (date >=fechaHoy ) {
-         
-       }else{
-         alert('La fecha es menor');
-         count=count+1;
-       }
-       if(castfechaingreso!=castfechaHoy){
-         alert('La fechas no son iguales');
-          count=count+1;
-       }
-       alert(count);   
-      if (count==0) {
-        alert('valido');
+      var fecha = date;
+      var fechaHoy = new Date();
+      var castfecha = toDate(fecha);
+
+      if (fechaHoy.toDateString() === castfecha.toDateString() || fechaHoy.toDateString() > castfecha.toDateString()) {
+        console.log('pasa');
         return true;
       } else {
-        alert('no valido');
+        console.log('no pasa');
         return false;
-        
-      }*/
+
+      }
+
 
     }
 
@@ -422,7 +378,7 @@ angular
               }
 
 
-              return;
+              //return;
 
               var obj = {};
               obj.Clv_Queja = vm.clv_queja;
