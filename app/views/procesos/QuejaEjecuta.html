@@ -26,7 +26,7 @@
 
       </header>
       <div class="tools">
-        <button type="submit" ng-show="$ctrl.BtnGuarda" class="btn btn-success btn-sm">Guardar</button>
+        <button type="submit"  class="btn btn-success btn-sm">Guardar</button>
         <button type="button" ui-sref="home.procesos.reportes" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
       </div>
     </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="col-md-3">
 
-          <select class="form-control input-sm" name="Estatus" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" ng-class="$ctrl.ISelectEstatus"
+          <select class="form-control input-sm" name="Estatus"  ng-model="$ctrl.Estatus" ng-class="$ctrl.ISelectEstatus"
             ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
                                      <!-- <option value="">Selecciona estatus</option>-->
                         </select>
@@ -260,7 +260,7 @@
             <div class="col-md-6">
               <b>Tipo solución</b>
               <select class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" required validate-on="dirty"
-                ng-disabled="$ctrl.Itrabajo" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
+                ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
                     <option value="">selecciona</option>
                       </select>
             </div>
