@@ -1,7 +1,7 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('QuejaEjecutaCtrl', function ($state, ngNotify, $location, $uibModal, $stateParams, atencionFactory, quejasFactory) {
+  .controller('QuejaEjecutaCtrl', function ($state, ngNotify, $location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
 
     function InitalData() {
       vm.clv_queja = $stateParams.id;
@@ -101,12 +101,9 @@ angular
                 vm.ProblemaReal = detqueja.Solucion;
                 vm.Visita = detqueja.Visita;
                 vm.Clv_status = detqueja.Status;
-                for (var t = 0; t < vm.Status.length; t++) {
-                  if (vm.Status[t].Clave == 'E') {
-                    vm.Estatus = vm.Status[t];
+                vm.Estatus = 'E';
+                Bloqueo(true);
 
-                  }
-                }
 
 
                 quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function (data) {
@@ -144,6 +141,10 @@ angular
                       vm.Servicio = vm.Servicios[a];
                     }
                   }
+                });
+
+                ordenesFactory.serviciosCliente(vm.GlobalContrato).then(function (data) {
+                  vm.servicioscli = data.GetDameSerDelCliFacListResult;
                 });
 
                 atencionFactory.GetClasificacionProblemas().then(function (data) {
@@ -234,19 +235,19 @@ angular
 
       console.log(_fechaHoy, _fechaIngresada, _fechasolicitud)
 
-      if ((_fechaIngresada > _fechasolicitud && _fechaIngresada < _fechaHoy)|| _fechasolicitud.toDateString() === _fechaIngresada.toDateString() ) {
+      if ((_fechaIngresada > _fechasolicitud && _fechaIngresada < _fechaHoy) || _fechasolicitud.toDateString() === _fechaIngresada.toDateString()) {
         console.log(true);
         return true;
 
       } else {
         console.log(false);
-        false;
+        return false;
       }
 
     }
 
     function Bloqueo(aplicabloqueo) {
-      if (vm.Estatus.Clave == 'E') {
+      if (vm.Estatus == 'E') {
         vm.FEjecucion = false;
         vm.FVisita1 = true;
         vm.FVisita2 = true;
@@ -255,7 +256,7 @@ angular
         vm.Iejecucion = 'input-yellow';
         vm.Ivisita = 'input-normal';
         vm.Iproceso = 'input-normal';
-      } else if (vm.Estatus.Clave == 'V') {
+      } else if (vm.Estatus == 'V') {
 
         vm.FEjecucion = true;
         vm.FProceso = true;
@@ -290,7 +291,7 @@ angular
           vm.Ivisita3 = 'input-normal';
         }
 
-      } else if (vm.Estatus.Clave == 'S') {
+      } else if (vm.Estatus == 'S') {
 
         vm.FEjecucion = true
         vm.FVisita1 = true;
@@ -307,7 +308,7 @@ angular
     }
 
     function CambiaEstatus() {
-      Bloqueo(false);
+      Bloqueo();
     }
 
     function Ejecutaqueja() {
@@ -316,7 +317,7 @@ angular
           quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function (bloqueado) {
             if (bloqueado.GetDeepBuscaBloqueadoResult.Bloqueado == 0) {
 
-              if (vm.Estatus.Clave == 'E') {
+              if (vm.Estatus == 'E') {
                 alert('ejecutado');
                 if (vm.FechaEjecucion == undefined) {
                   ngNotify.set('Seleccione la fecha de ejecución', 'error');
@@ -328,7 +329,7 @@ angular
                     return;
                   }
                 }
-              } else if (vm.Estatus.Clave == 'V') {
+              } else if (vm.Estatus == 'V') {
 
                 if (vm.Fechavisita1 != undefined &&
                   vm.Fechavisita2 == undefined &&
@@ -342,28 +343,28 @@ angular
                   vm.Fechavisita3 == undefined) {
 
                   if (ValidaFecha(vm.Fechavisita2, vm.FechaSolicitud) == false) {
-                    ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
+                    ngNotify.set('La fecha de visita no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
                     return;
                   }
                 } else if (vm.Fechavisita1 != undefined &&
                   vm.Fechavisita2 != undefined &&
                   vm.Fechavisita3 != undefined) {
                   if (ValidaFecha(vm.Fechavisita3, vm.FechaSolicitud) == false) {
-                    ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
+                    ngNotify.set('La fecha de visita no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
                     return;
                   }
                 }
 
-              } else if (vm.Estatus.Clave == 'S') {
+              } else if (vm.Estatus == 'S') {
 
                 if (ValidaFecha(vm.FechaProceso, vm.FechaSolicitud) == false) {
-                  ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
+                  ngNotify.set('La fecha de proceso no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
                   return;
                 }
 
-              }             
+              }
 
-              if (vm.Estatus.Clave == 'E') {
+              if (vm.Estatus == 'E') {
                 var obj = {};
                 obj.Clv_Queja = vm.clv_queja;
                 obj.Status = 'E';
@@ -383,12 +384,12 @@ angular
                 obj.Solucion = vm.ProblemaReal;
                 console.log(obj);
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
-                 
+
                   ngNotify.set('La queja se aplicó  correctamente', 'success');
-                   $state.go('home.procesos.reportes');
+                  $state.go('home.procesos.reportes');
                 });
               }
-              if (vm.Estatus.Clave == 'V') {
+              if (vm.Estatus == 'V') {
                 var obj = {};
                 obj.Clv_Queja = vm.clv_queja;
                 obj.Status = 'V';
@@ -408,13 +409,13 @@ angular
                 obj.Solucion = vm.ProblemaReal;
                 console.log(obj);
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
-                
+
                   ngNotify.set('La queja se aplicó  correctamente', 'success');
-                    $state.go('home.procesos.reportes');
+                  $state.go('home.procesos.reportes');
                 });
 
               }
-              if (vm.Estatus.Clave == 'S') {
+              if (vm.Estatus == 'S') {
                 var obj = {};
                 obj.Clv_Queja = vm.clv_queja;
                 obj.Status = 'S';
@@ -435,9 +436,9 @@ angular
 
                 console.log(obj);
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
-                 
+
                   ngNotify.set('La queja se aplicó  correctamente', 'success');
-                   $state.go('home.procesos.reportes');
+                  $state.go('home.procesos.reportes');
                 });
 
               }
@@ -456,6 +457,33 @@ angular
           ngNotify.set('La Queja pertenece  a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
         }
       });
+    }
+
+
+    function MuestraAgenda() {
+
+      var options = {};
+      options.TecnicoAgenda = vm.TecnicoAgenda;
+      options.TurnoAgenda = vm.TurnoAgenda;
+      options.FechaAgenda = vm.FechaAgenda;
+      options.ComentarioAgenda = vm.ComentarioAgenda;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/procesos/ModalAgenda.html',
+        controller: 'ModalAgendaQuejaCtrl',
+        controllerAs: 'ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'sm',
+        resolve: {
+          options: function () {
+            return options;
+          }
+        }
+      });
+
     }
 
     function DescargaMaterial() {
@@ -477,31 +505,19 @@ angular
       });
     }
     var vm = this;
-    vm.Status = [{
-        'Clave': 'V',
-        'Nombre': 'Con visita'
-      },
-      {
-        'Clave': 'E',
-        'Nombre': 'Ejecutada'
-      },
-      {
-        'Clave': 'S',
-        'Nombre': 'En Proceso'
-      }
-    ];
+   
     InitalData();
     vm.Titulo = 'Ejecutar Queja';
     vm.abrirBonificacion = abrirBonificacion;
     vm.CambiaEstatus = CambiaEstatus;
     vm.Ejecutaqueja = Ejecutaqueja;
     vm.DescargaMaterial = DescargaMaterial;
-
+    vm.MuestraAgenda = MuestraAgenda;
     vm.Iprioridad = true;
     vm.IDetProblema = true;
     vm.IClasproblema = true;
     vm.Iprobreal = false;
     vm.Iobser = true;
     vm.IEstatus = true;
-    vm.Status.Clave = 'E';
+
   });
