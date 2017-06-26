@@ -1,23 +1,28 @@
 'use strict';
 angular
-  .module('softvApp')
-  .factory('quejasFactory', function ($http, $q, globalService, $localStorage) {
-    var factory = {};
-    var paths = {
-      MuestraPlazas: '/Muestra_Compania_RelUsuario/GetMuestra_Compania_RelUsuarioList',
-      ObtenServicios: '/MuestraTipSerPrincipal/GetMuestraTipSerPrincipalList',
-      ObtenColonias: '/uspConsultaColonias/GetuspConsultaColoniasList',
-      ObtenLista: '/BuscaQuejasSeparado2/GetBuscaQuejasSeparado2List',
-      ValidaQueja: '/ValidaQuejaCompaniaAdic/GetDeepValidaQuejaCompaniaAdic',
-      BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
-      ConsultaQueja: '/Quejas/GetQuejasList', //checar
-      ObtenTecnicos: '/Muestra_Tecnicos_Almacen/GetMuestra_Tecnicos_AlmacenList',
-      ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
-      UpdateQuejas: '/Quejas/UpdateQuejas',
-      DameBonificacion: '/DameBonificacion/GetDameBonificacionList',
-      EliminaQueja: '/uspBorraQuejasOrdenes/GetDeepuspBorraQuejasOrdenes',
       GetuspInseraTblRelQuejaProblema: '/Quejas/GetuspInseraTblRelQuejaProblema'
-    };
+	.module('softvApp')
+	.factory('quejasFactory', function($http, $q, globalService, $localStorage) {
+		var factory = {};
+		var paths = {
+			MuestraPlazas: '/Muestra_Compania_RelUsuario/GetMuestra_Compania_RelUsuarioList',
+			ObtenServicios: '/MuestraTipSerPrincipal/GetMuestraTipSerPrincipalList',
+			ObtenColonias: '/uspConsultaColonias/GetuspConsultaColoniasList',
+			ObtenLista: '/BuscaQuejasSeparado2/GetBuscaQuejasSeparado2List',
+			ValidaQueja: '/ValidaQuejaCompaniaAdic/GetDeepValidaQuejaCompaniaAdic',
+			BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
+			ConsultaQueja: '/Quejas/GetQuejasList',//checar
+			ObtenTecnicos: '/Muestra_Tecnicos_Almacen/GetMuestra_Tecnicos_AlmacenList',
+			ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
+			UpdateQuejas: '/Quejas/UpdateQuejas',
+			DameBonificacion: '/DameBonificacion/GetDameBonificacionList',
+			EliminaQueja: '/uspBorraQuejasOrdenes/GetDeepuspBorraQuejasOrdenes',
+			DamePrecioBonificacion: '/DameBonificacion/GetDamePrecioBonificaciob',
+			InsertaBonificacion: '/DameBonificacion/AddBonificacion',
+			DameImporteFactura: '/DameBonificacion/GetImporteFactura',
+			EliminaBonificacion:'/DameBonificacion/DeleteBonificacion'
+			
+		};
 
     factory.ObtenPrioridad = function () {
       var deferred = $q.defer();
@@ -111,17 +116,37 @@ angular
       var Parametros = {
         'Contrato': contrato,
 
-      };
-      var config = {
-        headers: {
-          'Authorization': $localStorage.currentUser.token
-        }
-      };
-      $http.post(globalService.getUrl() + paths.BuscaBloqueado, JSON.stringify(Parametros), config).then(function (response) {
-        deferred.resolve(response.data);
-      }).catch(function (response) {
-        deferred.reject(response.data);
-      });
+		factory.ObtenLista = function(object) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_TipSer': object.Clv_TipSer,
+				'Clv_Queja': object.Clv_Queja,
+				'Contrato': object.Contrato,
+				'NOMBRE': object.NOMBRE,
+				'AP': object.AP,
+				'AM': object.AM,
+				'CALLE': object.CALLE,
+				'NUMERO': object.NUMERO,
+				'SetupBox': object.SetupBox,
+				'Status': object.Status,
+				'Op': object.Op,
+				'ClvColonia': object.ClvColonia,
+				'IdCompania': object.IdCompania,
+				'ClvUsuario': $localStorage.currentUser.idUsuario,
+				'SoloNivel2': object.SoloNivel2,
+				'NoTicket': object.NoTicket
+			};
+			
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.ObtenLista, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
 
       return deferred.promise;
     };
@@ -280,62 +305,109 @@ angular
           'IdUsuario': $localStorage.currentUser.idUsuario
         }
 
-      };
-      var config = {
-        headers: {
-          'Authorization': $localStorage.currentUser.token
-        }
-      };
+		factory.DamePrecioBonificacion = function(queja, dias) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_queja': queja,
+				'dias': dias
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.DamePrecioBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
 
-      console.log(JSON.stringify(Parametros));
-      $http.post(globalService.getUrl() + paths.UpdateQuejas, JSON.stringify(Parametros), config).then(function (response) {
-        deferred.resolve(response.data);
-      }).catch(function (response) {
-        deferred.reject(response.data);
-      });
-
-      return deferred.promise;
-    };
-
-    factory.DameBonificacion = function (queja) {
-      var deferred = $q.defer();
-      var Parametros = {
-        'Clv_queja': queja
-      };
-      var config = {
-        headers: {
-          'Authorization': $localStorage.currentUser.token
-        }
-      };
-      $http.post(globalService.getUrl() + paths.DameBonificacion, JSON.stringify(Parametros), config).then(function (response) {
-        deferred.resolve(response.data);
-      }).catch(function (response) {
-        deferred.reject(response.data);
-      });
+			return deferred.promise;
+		};
 
       return deferred.promise;
     };
 
+		factory.InsertaBonificacion = function(queja, dias, comentario, BndPorMonto, CantidadMonto, ImporteFac) {
 
-    factory.EliminaQueja = function (queja) {
-      var deferred = $q.defer();
-      var Parametros = {
-        'ClvQueja': queja,
-        'ClvUsuario': $localStorage.currentUser.idUsuario
-      };
-      var config = {
-        headers: {
-          'Authorization': $localStorage.currentUser.token
-        }
-      };
-      $http.post(globalService.getUrl() + paths.EliminaQueja, JSON.stringify(Parametros), config).then(function (response) {
-        deferred.resolve(response.data);
-      }).catch(function (response) {
-        deferred.reject(response.data);
-      });
+			var deferred = $q.defer();
 
-      return deferred.promise;
-    };
+			var Parametros = {
+				'objBonificacion': {
+						'Clv_queja': queja,
+						'dias': dias,
+						'comentario': comentario,
+						'ClvUsuario':  $localStorage.currentUser.idUsuario,
+						'BndPorMonto': BndPorMonto,
+						'Monto': CantidadMonto,
+						'Montofac': ImporteFac			
+					}
+				};
+
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.InsertaBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
+
+
+		factory.DameImporteFactura = function(queja, BndPorMonto) {
+		
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_queja': queja,
+				'BndPorMonto': BndPorMonto
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.DameImporteFactura, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.EliminaBonificacion = function(queja) {
+		
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_queja': queja,
+				'ClvUsuario': $localStorage.currentUser.idUsuario
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.EliminaBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
+
+		return factory;
+	});
 
 
 

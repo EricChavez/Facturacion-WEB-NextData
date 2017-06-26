@@ -2,7 +2,7 @@
   <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
   <h4 class="modal-title">Busca Cliente</h4>
 </div>
-<div class="modal-body" style="padding-top:20px;">
+<div class="modal-body" style="padding-top:20px;>
 
   <div class="panel-group" id="accordion3">
     <div class="card panel">
@@ -92,15 +92,15 @@
 
 
 
-  <div class="row">
+  <div class="row" style="margin-left:4px; margin-right: 4px; margin-bottom: 5px">
 
-    <table class="table" style="    font-size: 10px;">
-      <thead>
+    <table class="table" style="font-size: 11px">
+      <thead style="font-size: 12.5px">
         <tr>
-          <th>#Llamada</th>
-          <th>Fecha</th>
           <th>Contrato</th>
           <th>Nombre</th>
+          <th>Apellido Paterno</th>
+          <th>Apellido Materno</th>
           <th>Domicilio</th>
           <th>Acciones</th>
         </tr>
@@ -110,7 +110,7 @@
           <td class="text-center" colspan="6">SIN REGISTROS</td>
         </tr>
         <tr dir-paginate="x in ctrl.Clientes|itemsPerPage:8" ng-if="ctrl.Clientes.length > 0">
-          <td>{{ x.CONTRATO }}</td>
+          <td align="center">{{ x.CONTRATO }}</td>
           <td>{{ x.Nombre }}</td>
           <td>{{ x.Apellido_Paterno }}</td>
           <td>{{ x.Apellido_Materno }}</td>
@@ -119,7 +119,7 @@
         </tr>
       </tbody>
     </table>
-    <div style="margin-top:-40px;">
+    <div style="margin-left:5px; margin-right: 5px; margin-top:-30px;">
       <dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="ctrl.Clientes.length > 0">
       </dir-pagination-controls>
     </div>
