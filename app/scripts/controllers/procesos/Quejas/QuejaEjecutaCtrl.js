@@ -180,30 +180,30 @@ angular
     }
 
 
-   function abrirBonificacion() {
-			var detalle = {};
-			detalle.Block = true;
-			detalle.Queja = vm.clv_queja;
-			var modalInstance = $uibModal.open({
-				animation: vm.animationsEnabled,
-				ariaLabelledBy: 'modal-title',
-				ariaDescribedBy: 'modal-body',
-				templateUrl: 'views/procesos/ModalBonificacion.html',
-				controller: 'ModalBonificacionCtrl',
-				controllerAs: 'ctrl',
-				backdrop: 'static',
-				keyboard: false,
-				size: 'md',
-				resolve: {
-					detalle: function() {
-						return detalle;
-					}
-				}
-			});
-		}
+    function abrirBonificacion() {
+      var detalle = {};
+      detalle.Block = true;
+      detalle.Queja = vm.clv_queja;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/procesos/ModalBonificacion.html',
+        controller: 'ModalBonificacionCtrl',
+        controllerAs: 'ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'md',
+        resolve: {
+          detalle: function () {
+            return detalle;
+          }
+        }
+      });
+    }
 
 
-    function ValidaFecha(date) {
+    function TransformaFecha() {
       var today = new Date();
       var dd = today.getDate();
       var mm = today.getMonth() + 1;
@@ -215,12 +215,58 @@ angular
         mm = '0' + mm;
       }
       var today = dd + '/' + mm + '/' + yyyy;
-      console.log(today);
-      if (today >= date) {
+      return today;
+    }
+
+    function formatocorrecto(date) {
+      var myString = date,
+        correctFormat = myString.replace(/(\d+)\/(\d+)\/(\d+)/, "$3/$2/$1"),
+        myDate = new Date(correctFormat);
+      return myString;
+    }
+
+    function parseMDY(s) {
+      var b = s.split(/\D/);
+      console.log(b);
+      //return new Date(b[2],b[1], b[0]);
+    }
+
+
+    function ValidaFecha(date) {
+     
+     // var fechaproceso = formatocorrecto(date);
+      var fechahoy = new Date();
+       var fechaproceso=parseMDY(date);      
+      console.log(fechaproceso);
+      console.log(fechahoy);
+     
+      /*var count=0;
+      var fechaHoy= TransformaFecha();
+      var castfechaingreso=date.replace('/','').replace('/','');
+      var castfechaHoy=date.replace('/','').replace('/','')
+      console.log(castfechaingreso);
+      console.log(castfechaHoy);
+  
+
+       if (date >=fechaHoy ) {
+         
+       }else{
+         alert('La fecha es menor');
+         count=count+1;
+       }
+       if(castfechaingreso!=castfechaHoy){
+         alert('La fechas no son iguales');
+          count=count+1;
+       }
+       alert(count);   
+      if (count==0) {
+        alert('valido');
         return true;
       } else {
+        alert('no valido');
         return false;
-      }
+        
+      }*/
 
     }
 
@@ -238,7 +284,7 @@ angular
           vm.IDetProblema = true;
           vm.IClasproblema = true;
           vm.Iprobreal = true;
-          vm.Iobser = true; 
+          vm.Iobser = true;
           vm.IEstatus = true;
           vm.Iejecucion = 'input-yellow';
           vm.Ivisita = 'input-normal';
@@ -338,35 +384,45 @@ angular
         if (data.GetDeepValidaQuejaCompaniaAdicResult.Valida == 0) {
           quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function (bloqueado) {
             if (bloqueado.GetDeepBuscaBloqueadoResult.Bloqueado == 0) {
-              if (vm.Estatus.Clave == 'E' || vm.Estatus.Clave == 'P') {
+
+              if (vm.Estatus.Clave == 'E') {
                 if (vm.FechaEjecucion == undefined) {
                   ngNotify.set('Seleccione la fecha de ejecución', 'error');
                   return;
                 } else {
-                  if (ValidaFecha(vm.FechaEjecucion)) {
+                  if (ValidaFecha(vm.FechaEjecucion) == false) {
                     ngNotify.set('Seleccione una fecha mayor o igual a la actual', 'error');
+                    return;
                   }
                 }
               } else if (vm.Estatus.Clave == 'V') {
-                if (vm.visita1 == undefined) {
+                if (vm.visita1 == undefined && vm.visita2 == undefined && vm.visita3 == undefined) {
                   ngNotify.set('Seleccione la fecha de visita1', 'error');
-                }else if(vm.visita2 == undefined){
-                  ngNotify.set('Seleccione la fecha de visita2', 'error');
-                }else if(vm.visita3 == undefined){
-                  ngNotify.set('Seleccione la fecha de visita3', 'error');
-                }else {
-                  //ValidaFecha();
+                  return;
+                } else {
+                  if (ValidaFecha(vm.FechaEjecucion) == false) {
+                    ngNotify.set('Seleccione una fecha mayor o igual a la actual', 'error');
+                    return;
+                  }
                 }
+
               } else if (vm.Estatus.Clave == 'S') {
                 if (vm.FechaProceso == undefined) {
                   ngNotify.set('Seleccione la fecha de proceso', 'error');
+                  return;
                 } else {
-                  ValidaFecha(vm.FechaProceso);
+                  if (ValidaFecha(vm.FechaProceso) == false) {
+                    ngNotify.set('Seleccione una fecha mayor o igual a la actual', 'error');
+                    return;
+                  }
                 }
               } else {
                 ngNotify.set('Seleccione un estatus', 'error');
+                return;
               }
 
+
+              return;
 
               var obj = {};
               obj.Clv_Queja = vm.clv_queja;
@@ -387,8 +443,8 @@ angular
               obj.Solucion = vm.ProblemaReal;
 
               console.log(obj);
-              quejasFactory.UpdateQuejas(obj).then(function(data) {
-              	ngNotify.set('La queja se aplicó  correctamente', 'success');
+              quejasFactory.UpdateQuejas(obj).then(function (data) {
+                ngNotify.set('La queja se aplicó  correctamente', 'success');
               });
 
             } else {
