@@ -1,9 +1,10 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('ModalAgendaCtrl', function ($uibModalInstance, $uibModal, options, atencionFactory, $rootScope, ngNotify, $localStorage, $state) {
+  .controller('ModalAgendaCtrl', function ($uibModalInstance, $uibModal, options, quejasFactory, atencionFactory, $rootScope, ngNotify, $localStorage, $state) {
 
     function initialData() {
+      console.log('options', options);
       atencionFactory.MuestraTecnicosAlmacen(options.Contrato).then(function (data) {
         vm.Tecnicos = data.GetMuestra_Tecnicos_AlmacenListResult;
         atencionFactory.ConsultaTurnos().then(function (data) {
@@ -15,7 +16,7 @@ angular
 
     function ok() {
       console.log(options);
-    
+
       if (vm.TecnicoAgenda == null || vm.TecnicoAgenda == undefined) {
         ngNotify.set('Selecciona un técnico para continuar', 'error');
         return;
@@ -32,7 +33,7 @@ angular
       var parametrosQUEJA = {
         'Clv_TipSer': options.CLV_TIPSER,
         'Contrato': options.Contrato,
-        'Problema': options.Descripcion,
+        'Problema': options.Problema,
         'Solucion': options.Solucion,
         'Clv_Trabajo': options.Clv_Trabajo,
         'clvPrioridadQueja': options.clvPrioridadQueja,
@@ -45,36 +46,48 @@ angular
         'clvProblema': options.clvProblema
       };
 
-      var parametrosLlamada = {
-        'clv_llamada': options.clv_llamada,
-        'Descripcion': options.Descripcion,
-        'Solucion': options.Solucion,
-        'Clv_trabajo': options.Clv_Trabajo,
-        'clv_queja': options.clv_queja,
-        'CLV_TIPSER': options.CLV_TIPSER,
-        'Turno': vm.TurnoAgenda.ID
-      };
-
-	  console.log(parametrosQUEJA);
-	  console.log(parametrosLlamada);
-
- 
       if (options.clv_queja == 0) {
         atencionFactory.AgregaQueja(parametrosQUEJA).then(function (data) {
-          var clv_queja = data.AddQuejasResult;         
-           parametrosLlamada.clv_queja=clv_queja;
+          vm.clv_queja = data.AddQuejasResult;
+
+          var parametrosLlamada = {
+            'clv_llamada': options.clv_llamada,
+            'Descripcion': options.Problema,
+            'Solucion': options.Solucion,
+            'Clv_trabajo': options.Clv_Trabajo,
+            'clv_queja': vm.clv_queja,
+            'CLV_TIPSER': options.CLV_TIPSER,
+            'Turno': vm.TurnoAgenda.ID
+          };
+
           atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
-            var iduser = $localStorage.currentUser.idUsuario;
-            if (iduser == 53) {
-              atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
-                ngNotify.set('El # de reportes es el: ' + clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada);
-                $state.go('home.procesos.atencion');
-              });
-            }
-            $uibModalInstance.dismiss('cancel');
-            ngNotify.set('El # de reportes es el: ' + clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada, 'grimace');
-            $state.go('home.procesos.atencion');
+
+
+            var Parametrosrel = {
+              'clvLlamada': options.clv_llamada,
+              'clvQueja': vm.clv_queja,
+              'clvProblema': options.clvProblema,
+              'opAccion': 2
+            };
+
+           
+              $uibModalInstance.dismiss('cancel');
+              ngNotify.set('El # de reportes es el: ' + vm.clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada, 'grimace');
+              $state.go('home.procesos.atencion');
+
+           
+
+
           });
+
+
+
+
+
+
+
+
+
         });
       } else {
         ngNotify.set('No se puede realizar una queja, ya que La llamada ya presenta una queja.', 'error');
@@ -113,3 +126,12 @@ angular
     vm.ok = ok;
     initialData();
   });
+
+
+/*var iduser = $localStorage.currentUser.idUsuario;
+              if (iduser == 53) {
+                atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
+                  ngNotify.set('El # de reportes es el: ' + vm.clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada);
+                  $state.go('home.procesos.atencion');
+                });
+              }*/

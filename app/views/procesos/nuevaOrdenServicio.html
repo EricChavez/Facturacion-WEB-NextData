@@ -19,7 +19,7 @@
 
 
 </style>
-
+ <form angular-validator-submit="$ctrl.Guardar()" name="QuejaForm" novalidate angular-validator>
 <div class="card animated fadeIn fast" style="margin-top:20px;">
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
@@ -30,7 +30,7 @@
     <div class="tools">
       <button class="btn btn-default btn-sm" type="button" ui-sref="home.procesos.ordenes">Cancelar</button>
       <button ng-if="$ctrl.soyEjecucion==true" class="btn btn-danger btn-sm" type="button" ng-click="$ctrl.Eliminar();"><i  class="fa fa-trash"></i>Eliminar</button>
-      <button class="btn btn-primary btn-sm" ng-click="$ctrl.Guardar();" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+      <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
     </div>
   </div>
@@ -53,7 +53,7 @@
           </div>
           <div class="col-md-3" style="margin-left: -20px;">
             <div>
-              <button ng-click="$ctrl.buscarCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default" ng-disabled="$ctrl.block"><i class="fa fa-search"></i></button>
+              <button type="button" ng-click="$ctrl.buscarCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default" ng-disabled="$ctrl.block"><i class="fa fa-search"></i></button>
             </div>
           </div>
         </div>
@@ -115,39 +115,51 @@
       <div class="col-md-3 text-center">
         <b style="font-size: 14px;
     color: #06599a;"><i class="md md-access-time"></i> Fechas de:</b><br><br>
-        <form class="form-horizontal" role="form">
+        <div class="form-horizontal" role="form">
           <div class="form-group">
             <label for="regular13" class="col-sm-4 control-label">Solicitud</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Sol" style="font-size:12px;" ng-disabled="$ctrl.blockSolicitud"
+              <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Sol"
+               style="font-size:12px;" ng-disabled="$ctrl.blockSolicitud"
                 placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
               <div class="form-control-line"></div>
             </div>
           </div>
-          <div class="form-group animated flash">
+          <div class="form-group ">
             <label for="regular13" class="col-sm-4 control-label">Ejecución</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Eje" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucion"
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+              <input type="text" name='fejecucion' class="form-control input-sm" ng-model="$ctrl.Fec_Eje" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucion"
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" ng-required="!$ctrl.blockEjecucion"
+                 model-view-value="true"
+                validate-on="dirty" required-message="' La Fecha es obligatoria.'"
+                >
               <div class="form-control-line"></div>
             </div>
           </div>
           <div class="form-group">
             <label for="regular13" class="col-sm-4 control-label">Visita 1</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control input-sm" ng-model="$ctrl.Visita1" style="font-size:12px;" ng-disabled="$ctrl.blockVista1"
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+              <input type="text" class="form-control input-sm"
+              name="fechavisita1"
+               ng-model="$ctrl.Visita1" style="font-size:12px;" ng-disabled="$ctrl.blockVista1"
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" ng-required="!$ctrl.blockVista1"
+                validate-on="dirty" required-message="'La fecha es obligatoria.'"
+                >
               <div class="form-control-line"></div>
             </div>
           </div>
 
-        </form>
-        <form class="form-horizontal" role="form">
+        </div>
+        <div class="form-horizontal" role="form">
           <div class="form-group">
             <label for="regular13" class="col-sm-4 control-label">Visita 2</label>
             <div class="col-sm-8">
               <input type="text" class="form-control input-sm" ng-model="$ctrl.Visita2" style="font-size:12px;" ng-disabled="$ctrl.blockVista2"
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" 
+                name="fechavisita2"
+                ng-required="!$ctrl.blockVista2"
+                validate-on="dirty" required-message="'La fecha es obligatoria.'"
+                >
               <div class="form-control-line"></div>
             </div>
           </div>
@@ -159,14 +171,14 @@
               <div class="form-control-line"></div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
       <div class="col-md-6">
         <div class="col-md-6">
           <small>Técnico:</small>
-          <select validate-on="dirty" name="tecnico" class="form-control input-sm" ng-model="$ctrl.selectedTecnico" ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
-            required-message="'Error!, Este campo es obligatorio.'" required ng-disabled="$ctrl.blockTecnico">
-					<option value="" disabled selected>Seleccione el técnico</option>
+          <select  name="tecnico" class="form-control input-sm" ng-model="$ctrl.selectedTecnico" ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
+            validate-on="dirty" required-message="'Error!, Este campo es obligatorio.'" ng-required="!$ctrl.blockTecnico" ng-disabled="$ctrl.blockTecnico">
+					<option value=""  selected>Seleccione el técnico</option>
 				</select>
         </div>
         <div class="col-md-6">
@@ -174,7 +186,7 @@
           <input type="text" class="form-control" ng-model="$ctrl.observaciones" ng-disabled="true">
         </div>
 		<div class="col-md-12">
-			 <button class="btn btn-success btn-xs" ng-click="$ctrl.agregar()" ng-disabled="$ctrl.block">Agregar servicio</button>
+			 <button type="button" class="btn btn-success btn-xs" ng-click="$ctrl.agregar()" ng-disabled="$ctrl.block">Agregar servicio</button>
 		</div>
         <div class="col-md-12">
           <table class="table" style="font-size:11px;">
@@ -189,8 +201,8 @@
               <tr ng-repeat="x in $ctrl.trabajosTabla">
                 <td>{{ x.Descripcion }}</td>
                 <td>
-                  <button class="btn btn-info btn-xs" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
-                  <button class="btn btn-info btn-xs" ng-if="x.Accion == ' '">NO ASIGNABLE</button>
+                  <button type="button" class="btn btn-info btn-xs" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
+                  <button type="button" class="btn btn-info btn-xs" ng-if="x.Accion == ' '">NO ASIGNABLE</button>
                   </td>
                 <td>{{ x.Obs }}</td>
                 <td>
@@ -220,3 +232,4 @@
 
  
 </div>
+</form>

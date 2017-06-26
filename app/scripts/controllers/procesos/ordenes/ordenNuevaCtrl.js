@@ -31,7 +31,7 @@
     vm.blockEjecucionReal = true;
     vm.soyEjecucion = false;
     vm.EliminaQueja = EliminaQueja;
-    vm.Fec_Sol=$filter('date')(vm.fecha, 'dd/MM/yyyy');
+    vm.Fec_Sol = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 
 
     function ImprimeOrden(clv_orden) {
@@ -63,7 +63,7 @@
 
     function GuardaDetalle() {
 
-      ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {        
+      ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
         ordenesFactory.AddNueRelOrdenUsuario(vm.clv_orden).then(function (data) {
 
           var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
@@ -96,7 +96,7 @@
                     ordenesFactory.Imprime_Orden(vm.clv_orden).then(function (data) {
                       if (data.GetDeepImprime_OrdenResult.Imprime == 1) {
                         ngNotify.set('La orden es de proceso automático por lo cual no se imprimió', 'error');
-                      } else {                        
+                      } else {
                         ImprimeOrden(vm.clv_orden);
                       }
 
@@ -114,8 +114,8 @@
 
     function EliminaQueja(object) {
       ordenesFactory.DeleteDetOrdSer(object.Clave).then(function (data) {
-          actualizarTablaServicios();
-           ngNotify.set('Se ha eliminado el servicio correctamente', 'success');
+        actualizarTablaServicios();
+        ngNotify.set('Se ha eliminado el servicio correctamente', 'success');
       });
     }
 
@@ -200,24 +200,50 @@
       if (vm.contratoBueno == undefined || vm.contratoBueno == '') {
         ngNotify.set('Seleccione un cliente válido.', 'error')
       } else {
- ordenesFactory.GetDime_Que_servicio_Tiene_cliente(vm.contratoBueno).then(function(data){
-       
-       if(data.GetDime_Que_servicio_Tiene_clienteResult==null){
-         ngNotify.set('El cliente no tiene servicios activos para generarle ordenes de servicio','warn');
-         return;
-       }
+        ordenesFactory.GetDime_Que_servicio_Tiene_cliente(vm.contratoBueno).then(function (data) {
+
+          if (data.GetDime_Que_servicio_Tiene_clienteResult == null) {
+            ngNotify.set('El cliente no tiene servicios activos para generarle ordenes de servicio', 'warn');
+            return;
+          }
 
 
-        var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
-        var orden = {
-          contrato: vm.contratoBueno,
-          fecha: fecha,
-          observaciones: vm.observaciones
-        };
-     
-        if (vm.clv_orden == 0) {
-          ordenesFactory.addOrdenServicio(orden).then(function (data) {
-            vm.clv_orden = data.AddOrdSerResult;
+          var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
+          var orden = {
+            contrato: vm.contratoBueno,
+            fecha: fecha,
+            observaciones: vm.observaciones
+          };
+
+          if (vm.clv_orden == 0) {
+            ordenesFactory.addOrdenServicio(orden).then(function (data) {
+              vm.clv_orden = data.AddOrdSerResult;
+              var items = {
+                contrato: vm.contratoBueno,
+                clv_orden: vm.clv_orden,
+                clv_tecnico: vm.clv_tecnico
+              };
+
+
+              var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'views/procesos/ModalAgregarServicio.html',
+                controller: 'ModalAgregarServicioCtrl',
+                controllerAs: '$ctrl',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'md',
+                resolve: {
+                  items: function () {
+                    return items;
+                  }
+                }
+              });
+            });
+          } else {
+
             var items = {
               contrato: vm.contratoBueno,
               clv_orden: vm.clv_orden,
@@ -241,38 +267,12 @@
                 }
               }
             });
-          });
-        } else {
 
-          var items = {
-            contrato: vm.contratoBueno,
-            clv_orden: vm.clv_orden,
-            clv_tecnico: vm.clv_tecnico
-          };
-
-
-          var modalInstance = $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/procesos/ModalAgregarServicio.html',
-            controller: 'ModalAgregarServicioCtrl',
-            controllerAs: '$ctrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'md',
-            resolve: {
-              items: function () {
-                return items;
-              }
-            }
-          });
-
-        }
+          }
 
 
 
-});
+        });
       }
     }
 
@@ -326,7 +326,7 @@
 
     function actualizarTablaServicios() {
       ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
-       
+
         vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
       });
     }
@@ -357,10 +357,7 @@
     }
 
     function detalleTrabajo(trabajo, x) {
-
-
       ordenesFactory.GetDime_Que_servicio_Tiene_cliente(vm.contratoBueno).then(function (response) {
-
         var items = {};
         items.contrato = vm.contratoBueno;
         vm.clv_servicio_cliente = response.GetDime_Que_servicio_Tiene_clienteResult.clv_tipser;
@@ -399,9 +396,9 @@
           x.Descripcion.toLowerCase().includes('cadig') ||
           x.Descripcion.toLowerCase().includes('canet')
         ) {
-         
+
           ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
-            
+
             var items = {
               clv_detalle_orden: vm.clv_detalle,
               clv_orden: vm.clv_orden,
@@ -409,7 +406,7 @@
               isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
               datosCamdo: data.GetDeepCAMDOResult
             };
-          
+
             var modalInstance = $uibModal.open({
               animation: true,
               ariaLabelledBy: 'modal-title',
@@ -462,7 +459,7 @@
             'ClvTecnico': 0,
             'Clave': vm.Clave
           };
-         
+
 
           var modalInstance = $uibModal.open({
             animation: true,

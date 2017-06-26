@@ -187,7 +187,7 @@
               <th>Calle</th>
               <th>Numero</th>
               <th>No.Ticket</th>
-              <th>Bonificar</th>
+            <!--  <th>Bonificar</th>-->
               <th>Ejecutar</th>
               <th>Opciones</th>
             </tr>
@@ -201,11 +201,11 @@
               <td>{{x.CALLE}}</td>
               <td>{{x.NUMERO}}</td>
               <td>{{x.NoTicket}}</td>
-              <td>
+              <!--<td>
                 <button class="btn btn-info btn-xs" ng-click="$ctrl.abrirBonificacion(x)"><i class="fa fa-money"></i> Bonifica</button>
-              </td>
+              </td>-->
               <td>
-                <a ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
+                <a ng-if="x.Status!='E'" ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
               </td>
               <td>
                 <button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" ng-click="$ctrl.abrirDetalleQueja(x);" title="" data-original-title="Detalle de queja"><i class="md md-content-paste"></i></button>
