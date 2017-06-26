@@ -3,30 +3,75 @@
   <h4 class="modal-title"><i class="fa fa-thumb-tack"></i>Descarga material técnicos</h4>
 </div>
 <div class="modal-body" style="padding-top:20px;">
-  <div class="row text-center">
-    No.Bitacora
+  <div class="row">
+    <div class="col-sm-2">
+      <p>No.Bitacora:</p>
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" ng-model="ctrl.No_Bitacora">
+    </div>
   </div>
+
   <div class="row">
     <div class="col-md-4">
       <p>Clasificación del material</p>
-      <select class="form-control" name="">
-
+      
+      <select 
+        class="form-control" 
+        name="material" 
+        ng-model="ctrl.SlctMaterial" 
+        ng-options="M.Descripcion for M in ctrl.Material track by M.catTipoArticuloClave"
+        ng-change="ctrl.BuscarNombreArticulo()">
       </select>
-    </div>
-    <div class="col-md-4">
-      <p>Descripción de articulo</p>
-      <select class="form-control" name="">
 
-      </select>
-    </div>
-    <div class="col-md-2">
-      <p>cantidad</p>
-      <input type="number" class="form-control" ng-model="ctrl.cantidad">
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-info btn-sm" value="" ng-click="ctrl.AgregarItem()">Agregar</button>
     </div>
   </div>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <p>Descripción de articulo</p>
+      <select 
+        class="form-control" 
+        name="articulo"
+        ng-model="ctrl.SlctArticulo"
+        ng-options="A.Nombre for A in ctrl.DescripcionArticulo track by A.IdArticulo"
+        ng-change="">
+      </select>
+    </div>
+    
+    <div class="col-md-4">
+      <p>cantidad</p>
+      <input type="number" class="form-control" ng-model="ctrl.CantidadDescarga">
+    </div>
+    
+    <div class="col-md-1">
+      <br>
+      <p>Interior</p>
+      <br>
+      <p>Exterior</p>
+    </div>
+
+    <div class="col-md-1">
+      <p>Inicial</p>
+      <input type="number" class="form-control" ng-model="ctrl.cantidad">
+      <input type="number" class="form-control" ng-model="ctrl.cantidad">
+    </div>
+    <div class="col-md-1">
+      <p>Final</p>
+      <input type="number" class="form-control" ng-model="ctrl.cantidad">
+       <input type="number" class="form-control" ng-model="ctrl.cantidad">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <button class="btn btn-info btn-sm" value="" ng-click="ctrl.AgregarArticulo()">Agregar</button>
+    </div>
+  </div>
+
+  <br>
+
   <div class="row">
     <table class="table">
       <thead>
