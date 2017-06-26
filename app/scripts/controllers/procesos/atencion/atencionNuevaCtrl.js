@@ -209,16 +209,17 @@ angular
 		}
 
 		function EnterContrato(event) {
+			if (event.keyCode == 13) {
 			if (vm.selectedServicio == null) {
 				ngNotify.set('Seleccione el servicio que tiene el cliente', 'error');
 				return;
 			}
-			if (event.keyCode == 13) {
-				if (vm.contrato == null || vm.contrato == '') {
+			
+				if (vm.contratoSelected == null || vm.contratoSelected == '') {
 					ngNotify.set('Coloque un contrato válido', 'error');
 					return;
 				}
-				var res = vm.contrato.split("-");
+				var res = vm.contratoSelected.split("-");
 
 				if (res.length == 1) {
 					ngNotify.set('Coloque un contrato válido ej. 15-1', 'error');
@@ -230,16 +231,23 @@ angular
 				vm.DireccionCliente = 'No especificado';
 				vm.ServiciosCliente = [];
 				var param = {};
-				param.contrato = vm.contrato;
+				param.contrato = vm.contratoSelected;
 				param.servicio = vm.selectedServicio.Clv_TipSerPrincipal;
 				param.op = 0;
+				console.log(param);
 				atencionFactory.buscarCliente(param).then(function(data) {
 					console.log(data);
+                   if(data.GetuspBuscaContratoSeparado2ListResult.length==0){
+                      ngNotify.set('El cliente no tiene contratado el servicio, seleccione otro tipo por favor.', 'error');
+					  return;
+				   }
+
+
 					var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
 					var contrato = detalle.ContratoBueno;
 					vm.GlobalContrato = contrato;
 					atencionFactory.ValidaContrato(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal).then(function(data) {
-
+                        console.log(data);
 						if (data.GetuspContratoServListResult[0].Pasa == true) {
 							MuestraMensajeQueja();
 							vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
@@ -357,4 +365,5 @@ angular
 		vm.Hora = $filter('date')(new Date(), 'HH:mm:ss');
 		vm.Fecha = $filter('date')(new Date(), 'dd-MM-yyyy');
 		vm.CancelaReporte = CancelaReporte;
+		vm.BloquearElementos=false; 
 	});

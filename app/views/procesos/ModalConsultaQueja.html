@@ -53,7 +53,8 @@
                   <b>Nombre: </b>{{$ctrl.NombreCliente}} <br>
                   <b>Calle: </b>{{$ctrl.Calle}} <b>#:</b>{{$ctrl.Numero}}<br>
                   <b>Colonia: </b>{{$ctrl.Colonia}}<br>
-                  <b>Ciudad: </b>{{$ctrl.Ciudad}}
+                  <b>Ciudad: </b>{{$ctrl.Ciudad}}<br>
+                  <b>Telefóno: </b>{{$ctrl.Telefono}}
 
                 </div>
               </div>
@@ -130,47 +131,47 @@
         Técnico
       </div>
       <div class="col-md-9">
-        <input type="text" class="form-control input-sm" ng-model="$ctrl.TecnicoAgenda">
+        <input type="text" class="form-control input-sm" ng-model="$ctrl.TecnicoAgenda" ng-disabled="true">
       </div>
       <div class="col-md-3">
         Turno
       </div>
       <div class="col-md-9">
-        <input type="text" class="form-control input-sm" ng-model="$ctrl.TurnoAgenda">
+        <input type="text" class="form-control input-sm" ng-model="$ctrl.TurnoAgenda" ng-disabled="true">
       </div>
       <div class="col-md-3">
         Fecha
       </div>
       <div class="col-md-9">
-        <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaAgenda">
+        <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaAgenda" ng-disabled="true">
       </div>
       <div class="col-md-12">
         <b>Observaciones</b>
       </div>
       <div class="col-md-12">
-        <textarea type="text" class="form-control input-sm " ng-model="$ctrl.ComentarioAgenda"></textarea>
+        <textarea type="text" class="form-control input-sm " ng-model="$ctrl.ComentarioAgenda" ng-disabled="true"></textarea>
       </div>
     </div>
     <div class="col-md-5" style="font-size: 10px;">
       <div class="col-md-8">
 
         <b>Clasificación del problema</b>
-        <select class="form-control input-sm" ng-disabled="$ctrl.IClasproblema" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"></select>
+        <select class="form-control input-sm" ng-disabled="true" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"></select>
       </div>
       <div class="col-md-4">
         <b> Prioridad</b>
-        <select class="form-control input-sm" name="Prioridad" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprioridad" ng-model="$ctrl.Prioridad" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
+        <select  ng-disabled="true" class="form-control input-sm" name="Prioridad" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprioridad" ng-model="$ctrl.Prioridad" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
         <option value="">selecciona</option>
                   </select>
       </div>
       <div class="col-md-12">
         <b>Reporte del cliente</b>
-        <textarea class="form-control input-sm" ng-disabled="$ctrl.IDetProblema" ng-model="$ctrl.DetalleProblema">
+        <textarea class="form-control input-sm" ng-disabled="true" ng-model="$ctrl.DetalleProblema">
                       </textarea>
       </div>
       <div class="col-md-12">
         <b> Observaciones</b>
-        <textarea class="form-control input-sm" ng-model="$ctrl.Observaciones" ng-disabled="$ctrl.Iobser">
+        <textarea class="form-control input-sm" ng-model="$ctrl.Observaciones" ng-disabled="true">
 
                   </textarea>
       </div>
@@ -178,17 +179,17 @@
     <div class="col-md-4" style="font-size: 10px;">
       <div class="col-md-8">
         <b>Tipo solución</b>
-        <select class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Itrabajo" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
+        <select class="form-control input-sm" name="solucion" ng-disabled="true" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Itrabajo" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
                   <option value="">selecciona</option>
                     </select>
       </div>
       <div class="col-md-4">
         <label class="checkbox-inline checkbox-styled checkbox-success">
-                                                              <input type="checkbox" ng-model="$ctrl.Visita" value="option3" ng-checked="$ctrl.VisitaC"><span>Requirió visita</span>
+                                                              <input type="checkbox" ng-model="$ctrl.Visita" value="option3" ng-checked="$ctrl.VisitaC" ng-disabled="true"><span>Requirió visita</span>
                                                           </label> </div>
       <div class="col-md-12">
         <b> Problema real:</b>
-        <textarea class="form-control input-sm" name="Problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprobreal" ng-model="$ctrl.ProblemaReal" placeholder="Redacta brevemente el problema real que derivo la queja">
+        <textarea ng-disabled="true" class="form-control input-sm" name="Problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-disabled="$ctrl.Iprobreal" ng-model="$ctrl.ProblemaReal" placeholder="Redacta brevemente el problema real que derivo la queja">
 
                     </textarea>
       </div>

@@ -3081,7 +3081,7 @@ fieldset[disabled] .form-inverse .form-group .form-control {
 }
 .has-error .form-control ~ label,
 .has-error .form-control ~ .form-control-line {
-  color: inherit;
+  color:  red;
 }
 .has-error .form-control ~ label:after,
 .has-error .form-control ~ .form-control-line:after {

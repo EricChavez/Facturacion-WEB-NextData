@@ -1,0 +1,56 @@
+<form angular-validator-submit="ctrl.guardar()" name="contratoForm" novalidate angular-validator>
+  <div class="modal-header">
+    <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
+    <h4 class="modal-title">Selecciona el Aparato</h4>
+  </div>
+  <div class="modal-body">
+
+   <div class="row">
+    <div class="col-md-12">
+      <label ng-show="ctrl.cambio" class="col-md-5 control-label blod">{{ctrl.label1}}</label>
+      <label ng-if="ctrl.cambio==false" class="col-md-5 control-label blod">{{ctrl.label1}}</label>
+      <div class="col-md-7" style="padding-left:-10px;">
+        <select class="form-control input-sm" name="aparato2" validate-on="dirty" ng-model="ctrl.aparato2" ng-options="item as item.Descripcion for item in ctrl.aparatos2 track by item.ContratoAnt"
+          required-message="'Este aparato es obligatorio.'" required>
+                <option value="">selecciona</option>
+            </select>
+      </div>
+    </div>
+
+<br>
+    <div class="col-md-12">
+        <br>
+      <label ng-show="ctrl.cambio" class="col-md-5 control-label blod">{{ctrl.label3}}</label>
+      <label ng-if="ctrl.cambio==false" class="col-md-5 control-label blod">{{ctrl.label3}}</label>
+      <div class="col-md-7" style="padding-left:-10px;">
+        <select class="form-control input-sm" name="aparato" validate-on="dirty" ng-model="ctrl.aparato" ng-options="item as item.Descripcion for item in ctrl.aparatos track by item.ContratoAnt"
+          required-message="'Este aparato es obligatorio.'" required>
+                <option value="">selecciona</option>
+            </select>
+      </div>
+    </div>
+    <br>
+    <div class="col-md-12">
+        <br>
+      <label ng-show="ctrl.cambio" class="col-md-5 control-label blod">{{ctrl.label2}}</label>
+      <label ng-if="ctrl.cambio==false" class="col-md-5 control-label blod">{{ctrl.label2}}</label>
+      <div class="col-md-7" style="padding-left:-10px;">
+        <select name="status" class="form-control input-sm" ng-options="item as item.Concepto for item in ctrl.listastatus track by item.Clv_StatusCableModem"
+          validate-on="dirty" required-message="'Este estatus es obligatorio.'" ng-required="ctrl.cambio" ng-model="ctrl.status" ng-show="ctrl.cambio">
+        <option value="">Selecciona</option>
+         </select>
+      </div>
+    </div>
+
+
+   </div>
+
+
+
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+    <button class="btn btn-primary btn-sm" type="submit">Aceptar</button>
+  </div>
+</form>

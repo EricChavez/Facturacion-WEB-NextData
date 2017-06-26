@@ -1,197 +1,232 @@
 <style type="text/css">
-	.scrollDiv {
-		height: 400px;
-		overflow: auto;
-		overflow-x: hidden;
-	}
-	
-	.scrollDiv2 {
-		height: 120px;
-		overflow: auto;
-		overflow-x: hidden;
-	}
-	
-	.scrollDiv3 {
-		height: 300px;
-		overflow: auto;
-		overflow-x: hidden;
-	}
+  .scrollDiv {
+    height: 400px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  .scrollDiv2 {
+    height: 120px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+  .scrollDiv3 {
+    height: 300px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+
 </style>
-
+ <form angular-validator-submit="$ctrl.Guardar()" name="QuejaForm" novalidate angular-validator>
 <div class="card animated fadeIn fast" style="margin-top:20px;">
-	<div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
-		<header>
-			<strong style="font-weight:bold; border:none; margin-left:10px;">Procesos>Nueva Orden</strong>
-			<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos</a>><a href="#" class="paginaActiva">Ordenes de Servicio>Nueva Orden</a></small>
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Procesos{{$ctrl.titulo}}</strong>
+<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos ></a><a href="#" class="paginaActiva">Ordenes de Servicio{{$ctrl.titulo}}</a></small>
 
-		</header>
-		<div class="tools">
-			<button class="btn btn-default btn-sm" type="button" ui-sref="home.procesos.ordenes">Cancelar</button>
-			<button class="btn btn-primary btn-sm" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-		</div>
-	</div>
-	<div class="card-body">
-		<div class="row">
-			<div class="col-md-5">
-				<div class="col-md-12">
-					<div class="col-md-2">
-						<small><b>Servicios:</b></small>
-					</div>
-					<div class="col-md-3">
-						<input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.clv_orden" disabled>
-					</div>
-					<div class="col-md-4">
-						<form angular-validator-submit="$ctrl.buscarContrato()" name="contratoForm" novalidate angular-validator>
-							<input type="text" 
-							placeholder="No. contrato" 
-							class="form-control input-sm" 
-							ng-model="$ctrl.contrato"
-							name="contrato"
-							validate-on="dirty"
-							placeholder="Contrato"
-							ng-pattern = "/^[0-9]+([-][0-9]+)?$/"
-							required-message="'Este campo es obligatorio.'"
-							autocomplete="off"
-							invalid-message = "'Formato de contrato inválido.'">
-						</form>
-					</div>
-					<div class="col-md-3" style="margin-left: -20px;">
-						<div>
-							<button ng-click="$ctrl.buscarCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default"><i class="fa fa-search"></i></button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<input type="text" class="form-control input-sm" placeholder="# folio de bitácora" ng-model="$ctrl.bitacora" disabled>
-			</div>
-			<div class="col-md-5">
-				<div class="col-md-12">
-					<div class="col-md-3">
-						<small><b>Status:</small></b></p>
-					</div>
-					<div class="col-md-3">
-						<label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" value="P" ng-model="$ctrl.status" disabled><span>Pendiente</span>
-					</label>
-					</div>
-					<div class="col-md-3">
-						<label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" value="E" ng-model="$ctrl.status" disabled><span>Ejecutada</span>
-					</label>
-					</div>
-					<div class="col-md-3">
-						<label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" value="V" ng-model="$ctrl.status" disabled><span>Visitada</span>
-					</label>
-					</div>
-				</div>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-md-4">
-				<b><i class="md md-perm-identity"></i> Información del Cliente</b><br>
-				<strong>Distribuidor:</strong> {{$ctrl.datosCli.Compania}}<br>
-				<p><strong>Nombre:</strong> {{$ctrl.datosCli.NOMBRE}}<br>
-					<strong>Dirección:</strong> {{$ctrl.datosCli.CALLE +' '+ $ctrl.datosCli.NUMERO +' '+ $ctrl.datosCli.COLONIA +' '+ $ctrl.datosCli.CIUDAD}}<br>
-					<br>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<b><i class="md md-settings-remote"></i> Servicios asignados</b><br>
-				<div class="card wrapper scrollDiv2" style="background: #DDEAE9">
-					<p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicios">{{ x.Servicio }} <br></span></p>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<b><i class="md md-access-time"></i> Fechas</b><br>
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="regular13" class="col-sm-4 control-label">Solicitud</label>
-						<div class="col-sm-8">
-							<input type="date" ng-model="$ctrl.fecha" class="form-control input-sm" style="font-size:12px;" disabled>
-							<div class="form-control-line"></div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="regular13" class="col-sm-4 control-label">Ejecución</label>
-						<div class="col-sm-8">
-							<input type="date" class="form-control input-sm" style="font-size:12px;" disabled>
-							<div class="form-control-line"></div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="regular13" class="col-sm-4 control-label">Visita 1</label>
-						<div class="col-sm-8">
-							<input type="date" class="form-control input-sm" style="font-size:12px;" disabled>
-							<div class="form-control-line"></div>
-						</div>
-					</div>
+    </header>
+    <div class="tools">
+      <button class="btn btn-default btn-sm" type="button" ui-sref="home.procesos.ordenes">Cancelar</button>
+      <button ng-if="$ctrl.soyEjecucion==true" class="btn btn-danger btn-sm" type="button" ng-click="$ctrl.Eliminar();"><i  class="fa fa-trash"></i>Eliminar</button>
+      <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
 
-				</form>
-			</div>
-			<div class="col-md-2">
-				<br>
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="regular13" class="col-sm-4 control-label">Visita 2</label>
-						<div class="col-sm-8">
-							<input type="date" class="form-control input-sm" style="font-size:12px;" disabled>
-							<div class="form-control-line"></div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="regular13" class="col-sm-4 control-label">Ejecución real</label>
-						<div class="col-sm-8">
-							<input type="date" class="form-control input-sm" style="font-size:12px;" disabled>
-							<div class="form-control-line"></div>
-						</div>
-					</div>
-				</form>
-			</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="col-md-12">
+          <div class="col-md-2">
+            <small><b># Orden:</b></small>
+          </div>
+          <div class="col-md-3">
+            <input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.clv_orden" disabled>
+          </div>
+          <div class="col-md-4">
+            <form angular-validator-submit="$ctrl.buscarContrato()" name="contratoForm" novalidate angular-validator>
+              <input type="text" placeholder="No. contrato" class="form-control input-sm" ng-model="$ctrl.contrato" name="contrato" validate-on="dirty"
+                ng-disabled="$ctrl.block" ng-pattern="/^[0-9]+([-][0-9]+)?$/" required-message="'Este campo es obligatorio.'"
+                autocomplete="off" invalid-message="'Formato de contrato inválido.'">
+            </form>
+          </div>
+          <div class="col-md-3" style="margin-left: -20px;">
+            <div>
+              <button type="button" ng-click="$ctrl.buscarCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default" ng-disabled="$ctrl.block"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <input type="text" class="form-control input-sm" placeholder="# folio de bitácora" ng-model="$ctrl.bitacora" ng-disabled="$ctrl.block">
+      </div>
+      <div class="col-md-5">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            <small><b>Status:</small></b>
+            </p>
+          </div>
+          <div class="col-md-3">
+            <label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" value="P" ng-model="$ctrl.status" ng-disabled="$ctrl.blockPendiente"><span>Pendiente</span>
+					</label>
+          </div>
+          <div class="col-md-3">
+            <label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" value="E" ng-model="$ctrl.status" ng-disabled="$ctrl.blockEjecutada" ng-change="$ctrl.fechas()"><span>Ejecutada</span>
+					</label>
+          </div>
+          <div class="col-md-3">
+            <label class="radio-inline radio-styled">
+						<input type="radio" name="inlineRadioOptions" value="V" ng-model="$ctrl.status" ng-disabled="$ctrl.blockVista" ng-change="$ctrl.fechas()"><span>Vista</span>
+					</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="col-md-12">
+          <b style="font-size: 14px;
+    color: #06599a;"><i class="md md-perm-identity"></i> Información del Cliente</b><br>
+          <strong>Distribuidor:</strong> {{$ctrl.datosCli.Compania}}<br>
+          <p><strong>Nombre:</strong> {{$ctrl.datosCli.NOMBRE}}<br>
+            <strong>Dirección:</strong> {{$ctrl.datosCli.CALLE +' '+ $ctrl.datosCli.NUMERO +' '+ $ctrl.datosCli.COLONIA +'
+            '+ $ctrl.datosCli.CIUDAD}}<br>
+            <br>
+          </p>
+        </div>
+        <div class="col-md-12">
+          <b style="font-size: 14px;
+    color: #06599a;"><i class="md md-settings-remote"></i> Servicios asignados</b><br>
+          <div class="card wrapper scrollDiv2" style="background: #DDEAE9">
+            <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicios">{{ x.Servicio }} <br></span></p>
+          </div>
+          <label class="text-left radio-inline radio-styled"><input type="radio" ng-checked="$ctrl.datosCli.ESHOTEL"  >
+					<span>Es Hotel</span>
+				</label>
+          <label class="text-left radio-inline radio-styled"><input type="radio"  ng-checked="$ctrl.datosCli.SOLOINTERNET"  >
+					<span>Solo Internet</span>
+				</label>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <b style="font-size: 14px;
+    color: #06599a;"><i class="md md-access-time"></i> Fechas de:</b><br><br>
+        <div class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">Solicitud</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Sol"
+               style="font-size:12px;" ng-disabled="$ctrl.blockSolicitud"
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+          <div class="form-group ">
+            <label for="regular13" class="col-sm-4 control-label">Ejecución</label>
+            <div class="col-sm-8">
+              <input type="text" name='fejecucion' class="form-control input-sm" ng-model="$ctrl.Fec_Eje" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucion"
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" ng-required="!$ctrl.blockEjecucion"
+                 model-view-value="true"
+                validate-on="dirty" required-message="' La Fecha es obligatoria.'"
+                >
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">Visita 1</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control input-sm"
+              name="fechavisita1"
+               ng-model="$ctrl.Visita1" style="font-size:12px;" ng-disabled="$ctrl.blockVista1"
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" ng-required="!$ctrl.blockVista1"
+                validate-on="dirty" required-message="'La fecha es obligatoria.'"
+                >
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">Visita 2</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control input-sm" ng-model="$ctrl.Visita2" style="font-size:12px;" ng-disabled="$ctrl.blockVista2"
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" 
+                name="fechavisita2"
+                ng-required="!$ctrl.blockVista2"
+                validate-on="dirty" required-message="'La fecha es obligatoria.'"
+                >
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="regular13" class="col-sm-4 control-label">Ejecución real</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control input-sm" ng-model="$ctrl.datosOrden.FechaEjecucionReal" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucionReal"
+                placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+              <div class="form-control-line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-6">
+          <small>Técnico:</small>
+          <select  name="tecnico" class="form-control input-sm" ng-model="$ctrl.selectedTecnico" ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
+            validate-on="dirty" required-message="'Error!, Este campo es obligatorio.'" ng-required="!$ctrl.blockTecnico" ng-disabled="$ctrl.blockTecnico">
+					<option value=""  selected>Seleccione el técnico</option>
+				</select>
+        </div>
+        <div class="col-md-6">
+          <small>Observaciones:</small>
+          <input type="text" class="form-control" ng-model="$ctrl.observaciones" ng-disabled="true">
+        </div>
+		<div class="col-md-12">
+			 <button type="button" class="btn btn-success btn-xs" ng-click="$ctrl.agregar()" ng-disabled="$ctrl.block">Agregar servicio</button>
 		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<small>Técnico:</small>
-				<select class="form-control input sm" disabled></select>
-			</div>
-			<div class="col-md-4">
-				<small>Observaciones:</small>
-				<input type="text" class="form-control" ng-model="$ctrl.observaciones">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<br>
-				<button class="btn btn-success btn-xs" ng-click="$ctrl.agregar($ctrl.contrato)">Agregar servicio</button>
-			</div>
-		</div>
-		<div class="row">
-			<table class="table">
-				<thead>
-					<th>Descripción</th>
-					<th>Acción</th>
-					<th>Observacíones</th>
-					<th>Recibir</th>
-					<th>Eliminar</th>
-				</thead>
-				<tbody>
-					<tr ng-repeat="x in $ctrl.trabajosTabla">
-						<td>{{ x.Descripcion }}</td>
-						<td><button class="btn btn-default btn-sm" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion)">{{ x.Accion }}</button></td>
-						<td>{{ x.Obs }}</td>
-						<td>
-							<label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
+        <div class="col-md-12">
+          <table class="table" style="font-size:11px;">
+            <thead>
+              <th>Descripción</th>
+              <th>Acción</th>
+              <th>Observacíones</th>
+              <th>Recibir</th>
+              <th>Eliminar</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="x in $ctrl.trabajosTabla">
+                <td>{{ x.Descripcion }}</td>
+                <td>
+                  <button type="button" class="btn btn-info btn-xs" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
+                  <button type="button" class="btn btn-info btn-xs" ng-if="x.Accion == ' '">NO ASIGNABLE</button>
+                  </td>
+                <td>{{ x.Obs }}</td>
+                <td>
+                  <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
 								<input type="checkbox" name="inlineRadioOptions" ng-model="x.SeRealiza"><span></span>
 							</label>
-						</td>
-						<td>
-							<button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i></button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+                </td>
+                <td>
+                  <button type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top"
+                    title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);" ng-disabled="$ctrl.block"><i class="md md-delete"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+ 
 </div>
+</form>
