@@ -93,7 +93,7 @@ angular
 			});		
 		}
 
-		function ObtenerImporteFactura() {;
+		function ObtenerImporteFactura() {
 				quejasFactory.DameImporteFactura(detalle.Queja, BndPorMonto).then(function(data) {
 				vm.ImporteFac = data.GetImporteFacturaResult[0].cantidad;
 			});		
