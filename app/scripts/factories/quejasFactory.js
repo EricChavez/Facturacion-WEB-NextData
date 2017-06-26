@@ -15,7 +15,12 @@ angular
 			ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
 			UpdateQuejas: '/Quejas/UpdateQuejas',
 			DameBonificacion: '/DameBonificacion/GetDameBonificacionList',
-			EliminaQueja: '/uspBorraQuejasOrdenes/GetDeepuspBorraQuejasOrdenes'
+			EliminaQueja: '/uspBorraQuejasOrdenes/GetDeepuspBorraQuejasOrdenes',
+			DamePrecioBonificacion: '/DameBonificacion/GetDamePrecioBonificaciob',
+			InsertaBonificacion: '/DameBonificacion/AddBonificacion',
+			DameImporteFactura: '/DameBonificacion/GetImporteFactura',
+			EliminaBonificacion:'/DameBonificacion/DeleteBonificacion'
+			
 		};
 
 		factory.ObtenPrioridad = function() {
@@ -139,7 +144,7 @@ angular
 				'SoloNivel2': object.SoloNivel2,
 				'NoTicket': object.NoTicket
 			};
-			console.log(JSON.stringify(Parametros));
+			
 			var config = {
 				headers: {
 					'Authorization': $localStorage.currentUser.token
@@ -305,10 +310,102 @@ angular
 			return deferred.promise;
 		};
 
+		factory.DamePrecioBonificacion = function(queja, dias) {
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_queja': queja,
+				'dias': dias
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.DamePrecioBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.InsertaBonificacion = function(queja, dias, comentario, BndPorMonto, CantidadMonto, ImporteFac) {
+
+			var deferred = $q.defer();
+
+			var Parametros = {
+				'objBonificacion': {
+						'Clv_queja': queja,
+						'dias': dias,
+						'comentario': comentario,
+						'ClvUsuario':  $localStorage.currentUser.idUsuario,
+						'BndPorMonto': BndPorMonto,
+						'Monto': CantidadMonto,
+						'Montofac': ImporteFac			
+					}
+				};
+
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.InsertaBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
 
 
 
 
+		factory.DameImporteFactura = function(queja, BndPorMonto) {
+		
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_queja': queja,
+				'BndPorMonto': BndPorMonto
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.DameImporteFactura, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
+
+
+		factory.EliminaBonificacion = function(queja) {
+		
+			var deferred = $q.defer();
+			var Parametros = {
+				'Clv_queja': queja,
+				'ClvUsuario': $localStorage.currentUser.idUsuario
+			};
+			var config = {
+				headers: {
+					'Authorization': $localStorage.currentUser.token
+				}
+			};
+			$http.post(globalService.getUrl() + paths.EliminaBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+				deferred.resolve(response.data);
+			}).catch(function(response) {
+				deferred.reject(response.data);
+			});
+
+			return deferred.promise;
+		};
 
 
 

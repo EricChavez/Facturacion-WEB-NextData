@@ -27,13 +27,13 @@
     <div class="col-md-5  col-md-offset-1">
       <div class="row" ng-show="ctrl.ShowConceptosDia">
         <b>Dias a bonificar</b>
-        <input type="number" name="" value="" ng-model="ctrl.DiasBonificar" class="form-control input-sm" min="1" max="30" ng-disabled="ctrl.bloquear" >
+        <input type="number" name="" value="" ng-model="ctrl.DiasBonificar" class="form-control input-sm" ng-change="ctrl.esCero(); ctrl.ObtenerPrecioBonificacion()" ng-disabled="ctrl.bloquear" >
         <b>Cantidad</b>
         <input type="text" name="" value="" ng-model="ctrl.CantidadBoNificar" class="form-control input-sm" disabled>
       </div>
       <div class="row" ng-show="ctrl.ShowConceptosMonto">
         <b>Cantidad</b>
-        <input type="text" name="" value="" ng-model="ctrl.CantidadMonto" class="form-control input-sm" ng-disabled="ctrl.bloquear">
+        <input type="text" name="" value="" ng-model="ctrl.CantidadMonto" class="form-control input-sm" min = "0" ng-disabled="ctrl.bloquear">
       </div>
       <div class="row">
         <b>Observaciones:</b>
