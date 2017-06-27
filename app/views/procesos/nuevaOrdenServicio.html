@@ -23,8 +23,9 @@
 <div class="card animated fadeIn fast" style="margin-top:20px;">
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
-      <strong style="font-weight:bold; border:none; margin-left:10px;">Procesos{{$ctrl.titulo}}</strong>
-<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos ></a><a href="#" class="paginaActiva">Ordenes de Servicio{{$ctrl.titulo}}</a></small>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">{{$ctrl.titulo}}</strong>
+<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos ></a><a href="#" class="paginaActiva">
+  {{$ctrl.titulo}}</a></small>
 
     </header>
     <div class="tools">
@@ -104,10 +105,10 @@
           <div class="card wrapper scrollDiv2" style="background: #DDEAE9">
             <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicios">{{ x.Servicio }} <br></span></p>
           </div>
-          <label class="text-left radio-inline radio-styled"><input type="radio" ng-checked="$ctrl.datosCli.ESHOTEL"  >
+          <label class="text-left radio-inline radio-styled"><input type="radio" ng-checked="$ctrl.datosCli.ESHOTEL"  ng-disabled="true" >
 					<span>Es Hotel</span>
 				</label>
-          <label class="text-left radio-inline radio-styled"><input type="radio"  ng-checked="$ctrl.datosCli.SOLOINTERNET"  >
+          <label class="text-left radio-inline radio-styled"><input type="radio"  ng-checked="$ctrl.datosCli.SOLOINTERNET" ng-disabled="true" >
 					<span>Solo Internet</span>
 				</label>
         </div>
@@ -172,18 +173,23 @@
             </div>
           </div>
         </div>
+
+        <div class="row">
+          <button type="button" class="btn btn-info btn-sm" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
+
+        </div>
       </div>
       <div class="col-md-6">
         <div class="col-md-6">
-          <small>Técnico:</small>
+          <small><b>Técnico:</b></small>
           <select  name="tecnico" class="form-control input-sm" ng-model="$ctrl.selectedTecnico" ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
             validate-on="dirty" required-message="'Error!, Este campo es obligatorio.'" ng-required="!$ctrl.blockTecnico" ng-disabled="$ctrl.blockTecnico">
 					<option value=""  selected>Seleccione el técnico</option>
 				</select>
         </div>
         <div class="col-md-6">
-          <small>Observaciones:</small>
-          <input type="text" class="form-control" ng-model="$ctrl.observaciones" ng-disabled="true">
+          <small><b>Observaciones:</b></small>
+          <textarea type="text" class="form-control input-sm" ng-model="$ctrl.observaciones" ng-disabled="true"></textarea>
         </div>
 		<div class="col-md-12">
 			 <button type="button" class="btn btn-success btn-xs" ng-click="$ctrl.agregar()" ng-disabled="$ctrl.block">Agregar servicio</button>
@@ -194,7 +200,7 @@
               <th>Descripción</th>
               <th>Acción</th>
               <th>Observacíones</th>
-              <th>Recibir</th>
+              <th>Recibí</th>
               <th>Eliminar</th>
             </thead>
             <tbody>
@@ -207,7 +213,7 @@
                 <td>{{ x.Obs }}</td>
                 <td>
                   <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
-								<input type="checkbox" name="inlineRadioOptions" ng-model="x.SeRealiza"><span></span>
+								<input type="checkbox" name="inlineRadioOptions" ng-model="x.recibi"><span></span>
 							</label>
                 </td>
                 <td>

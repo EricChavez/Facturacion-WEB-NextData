@@ -63,8 +63,32 @@ angular
       AddGuardaMovSist: '/GuardaMovSist/AddGuardaMovSist',
       DeleteOrdSer: '/OrdSer/DeleteOrdSer',
       AddMovSist: '/MovSist/AddMovSist',
-      DeleteDetOrdSer: '/DetOrdSer/DeleteDetOrdSer'
+      DeleteDetOrdSer: '/DetOrdSer/DeleteDetOrdSer',
+      GetDameCitaOrdenQueja:'/OrdSer/GetDameCitaOrdenQueja'
 
+    };
+
+ 
+
+
+factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) { 
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var Parametros = {
+        'clv_queja_orden': clv_queja_orden,
+        'opcion':opcion
+      };
+      console.log(Parametros);
+      $http.post(globalService.getUrl() + paths.GetDameCitaOrdenQueja,JSON.stringify(Parametros) ,config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
     };
 
 
