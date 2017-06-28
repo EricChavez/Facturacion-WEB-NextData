@@ -24,9 +24,9 @@
 
 		<div class="panel-group" id="accordion3">
 			<div class="card panel">
-				<div class="card-head card-head-xs style-primary-light collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
+				<div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
 				 aria-expanded="false">
-					<header>Buscar orden de servicio</header>
+					<header><i class="fa fa-search"></i> orden de servicio</header>
 					<div class="tools">
 						<a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
 					</div>
@@ -34,7 +34,8 @@
 				<div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
 					<div class="panel-body">
 						<uib-tabset active="active">
-							<uib-tab index="0" heading="Detalles">
+							<uib-tab index="0">
+								<uib-tab-heading><i class="md md-receipt"></i> Detalles</uib-tab-heading>
 								<br>
 								<div class="col-md-4">
 									<label class="text-muted">Plaza</label>
@@ -69,7 +70,8 @@
 								</div>
 							</uib-tab>
 
-							<uib-tab index="1" heading="Contrato">
+							<uib-tab index="1">
+								<uib-tab-heading><i class="md md-content-paste"></i> Contrato</uib-tab-heading>
 								<br/>
 								<div class="row">
 									<div class="col-md-4 form-group">
@@ -94,7 +96,8 @@
 								</footer>
 							</uib-tab>
 
-							<uib-tab index="2" heading="Dirección">
+							<uib-tab index="2">
+								<uib-tab-heading><i class="fa fa-home"></i> Dirección</uib-tab-heading>
 								<br/>
 								<form ng-submit="$ctrl.buscarColonia()">
 									<div class="row">
@@ -126,7 +129,8 @@
 									</footer>
 								</form>
 							</uib-tab>
-							<uib-tab index="3" heading="Nombre">
+							<uib-tab index="3">
+								<uib-tab-heading><i class="fa fa-user"></i> Nombre</uib-tab-heading>
 								<br/>
 								<form ng-submit="$ctrl.buscarNombres()">
 									<div class="row">
@@ -156,7 +160,8 @@
 									</footer>
 								</form>
 							</uib-tab>
-							<uib-tab index="4" heading="Setup box">
+							<uib-tab index="4">
+								<uib-tab-heading><i></i> Set Up Box</uib-tab-heading>
 								<br>
 								<form ng-submit="$ctrl.buscarSetup()">
 									<div class="row">

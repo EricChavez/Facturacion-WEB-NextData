@@ -29,6 +29,7 @@
     vm.blockVista = false;
     vm.blockTecnico = false;
     vm.fechas = fechas;
+    vm.ValidarDescargaMaterialOrden = ValidarDescargaMaterialOrden;
     vm.soyEjecucion = true;
     vm.Eliminar = Eliminar;
     init(vm.claveOrden);
@@ -92,6 +93,43 @@
       });
       ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
         vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
+      });
+    }
+
+    function ValidarDescargaMaterialOrden(){
+
+        if(vm.selectedTecnico != undefined && vm.Fec_Eje != undefined){
+          DescargaMaterialOrden();
+        }else{
+          ngNotify.set('Selecciona un técnico y/o Ingresa una fecha de ejecución.', 'error');
+        }
+        //console.log(vm.selectedTecnico, vm.Fec_Eje);
+
+    }
+    
+    function DescargaMaterialOrden() {
+      
+      var options = {};
+      
+      options.ClvOrden = vm.clv_orden;
+      options.SctTecnico = vm.selectedTecnico;
+      options.Tipo_Descargar = "O";
+
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/procesos/ModalDescargaMaterial.html',
+        controller: 'ModalDescargaMaterialCtrl',
+        controllerAs: 'ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'lg',
+        resolve: {
+          options: function() {
+           	return options;
+          }
+        }
       });
     }
 

@@ -73,9 +73,9 @@
         <br>
         <strong>Distribuidor:</strong> <small>{{ctrl.datosCli.Compania}}</small><br>
         <p>
-          <strong>Nombre:</strong> {{ctrl.datosCli.NOMBRE}}
+          <strong>Nombre:</strong> <small>{{ctrl.datosCli.NOMBRE}}</small>
           <br>
-          <strong>Dirección:</strong> {{ctrl.datosCli.CALLE +' '+ ctrl.datosCli.NUMERO +' '+ ctrl.datosCli.COLONIA +' '+ ctrl.datosCli.CIUDAD}}<br>
+          <strong>Dirección:</strong> <small>{{ctrl.datosCli.CALLE +' '+ ctrl.datosCli.NUMERO +' '+ ctrl.datosCli.COLONIA +' '+ ctrl.datosCli.CIUDAD}}</small><br>
           
         </p>
       </div>
@@ -85,8 +85,10 @@
         <div class="card wrapper scrollDiv2" style="background: #DDEAE9">
           <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in ctrl.servicios">{{ x.Servicio }} <br></span></p>
         </div>
-        <div class="col-md-12">
-          <input type="text" class="form-control input-sm" ng-model="ctrl.Tip_Ser.Nombre" disabled>
+        <div class="col-md-13">
+          <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
+					  <input type="checkbox" name="inlineRadioOptions" ng-model="ctrl.ClvTipSer" disabled><span><small>Solo Internet</small></span>
+					</label>
         </div>
       </div>
     </div>
@@ -133,6 +135,8 @@
       </div>
       <br>
       <br>
+      <br>
+      <br>
       <div class="col-md-12">
         <table class="table" style="font-size:11px;">
             <thead>
@@ -148,8 +152,8 @@
                 <td>{{ x.Obs }}</td>
                 <td>
                   <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
-								<input type="checkbox" name="inlineRadioOptions" ng-model="x.SeRealiza" disabled><span></span>
-							</label>
+								    <input type="checkbox" name="inlineRadioOptions" ng-model="x.SeRealiza" disabled><span></span>
+							    </label>
                 </td>
               </tr>
             </tbody>

@@ -35,6 +35,10 @@ angular
                   }
                 }
 
+                if (vm.Clv_TipSer == '2') {
+                    vm.ClvTipSer = true;
+                }
+
                 ordenesFactory.getContratoReal(vm.ContratoCom).then(function (data) {
                     var conceptos_Contrato = data.GetuspBuscaContratoSeparado2ListResult[0];
                     //console.log(conceptos_Contrato);
@@ -102,9 +106,8 @@ angular
             'Clave': '2',
             'Nombre': 'Solo Internet'
         }];
-        
-        
 
         InitialData();
+        vm.ClvTipSer = false;
 
     });

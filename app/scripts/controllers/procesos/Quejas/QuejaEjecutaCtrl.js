@@ -487,7 +487,10 @@ angular
 
     }
 
-    function DescargaMaterial() {
+    
+    function DescargaMaterial(ClvOrden) {
+      var options = {};
+      options.Tipo_Descargar = "Q";
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',
@@ -497,14 +500,16 @@ angular
         controllerAs: 'ctrl',
         backdrop: 'static',
         keyboard: false,
-        size: 'md',
+        size: 'lg',
         resolve: {
-          // contrato: function() {
-          // 	return vm.GlobalContrato;
-          // }
+          options: function() {
+           	return options;
+          }
         }
       });
     }
+
+    
     var vm = this;
    
     InitalData();
