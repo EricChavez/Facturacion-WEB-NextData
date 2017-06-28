@@ -3,7 +3,7 @@
 
 angular
     .module('softvApp')
-    .factory('DescargarMaterialFactory', function ($http, $q, globalService, $localStorage){
+    .factory('DescargarMaterialFactory', function ($http, $q, globalService, $localStorage) {
 
         var factory = {};
         var paths = {
@@ -14,23 +14,57 @@ angular
             GetSoftv_GetDescargaMaterialEstaPagado: '/Softv_GetDescargaMaterialEstaPagado/GetSoftv_GetDescargaMaterialEstaPagado',
             GetSoftv_ExistenciasTecnico: '/Softv_ExistenciasTecnico/GetSoftv_ExistenciasTecnico',
             GetDescargaMaterialArt: '/TblDescargaMaterial/GetDescargaMaterialArt',
-            GetAddDescargaMaterialArt: '/TblDescargaMaterial/GetAddDescargaMaterialArt'
+            GetAddDescargaMaterialArt: '/TblDescargaMaterial/GetAddDescargaMaterialArt',
+            GetSoftv_ObtenTipoMaterial: '/OrdSer/GetSoftv_ObtenTipoMaterial',
+            GetGRABAtblDescargaMaterialCableIACTV: '/Softv_DimeSiTieneBitacora/GetGRABAtblDescargaMaterialCableIACTV',
+            GetchecaBitacoraTecnico: '/Softv_DimeSiTieneBitacora/GetchecaBitacoraTecnico',
+            GetDescargaMaterialArticulosByIdClvOrden: '/GetDescargaMaterialArticulosByIdClvOrden/GetGetDescargaMaterialArticulosByIdClvOrdenList'
 
         };
 
-        factory.GetSoftv_DimeSiTieneBitacora = function(ClvOrden, TipoDescarga){
+
+
+
+
+        factory.GetDescargaMaterialArticulosByIdClvOrden = function (ClvOrdSer, TipoDescarga) {
 
             var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
-			var Parametros = {
-				'ClvOrdSer': ClvOrden,
-                'TipoDescarga': TipoDescarga 
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ClvOrdSer': ClvOrdSer,
+                'TipoDescarga': TipoDescarga
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+
+            $http.post(globalService.getUrl() + paths.GetDescargaMaterialArticulosByIdClvOrden, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+
+        };
+
+
+
+        factory.GetSoftv_DimeSiTieneBitacora = function (ClvOrden, TipoDescarga) {
+
+            var deferred = $q.defer();
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ClvOrdSer': ClvOrden,
+                'TipoDescarga': TipoDescarga
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
 
             $http.post(globalService.getUrl() + paths.GetSoftv_DimeSiTieneBitacora, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
@@ -42,19 +76,19 @@ angular
 
         };
 
-        factory.GetMuestra_Detalle_Bitacora = function(ClvTecnico, IAlma){
+        factory.GetMuestra_Detalle_Bitacora = function (ClvTecnico, IAlma) {
 
             var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
-			var Parametros = {
-				'ClvTecnico': ClvTecnico,
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ClvTecnico': ClvTecnico,
                 'IdAlmacen': IAlma
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
 
             $http.post(globalService.getUrl() + paths.GetMuestra_Detalle_Bitacora, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
@@ -66,20 +100,20 @@ angular
 
         }
 
-        factory.GetMuestra_Descripcion_Articulo_2List = function(ClvTecnico, ClvArticulo, IAlma){
+        factory.GetMuestra_Descripcion_Articulo_2List = function (ClvTecnico, ClvArticulo, IAlma) {
 
             var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
-			var Parametros = {
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
                 'ClvTecnico': ClvTecnico,
-				'ClvTipo': ClvArticulo,
+                'ClvTipo': ClvArticulo,
                 'IdAlmacen': IAlma
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
 
             $http.post(globalService.getUrl() + paths.GetMuestra_Descripcion_Articulo_2List, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
@@ -91,19 +125,19 @@ angular
 
         }
 
-        factory.GetSoftv_GetDescargaMaterialEstaPagado = function(ClvOrden, TipoDescarga){
+        factory.GetSoftv_GetDescargaMaterialEstaPagado = function (ClvOrden, TipoDescarga) {
 
             var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
-			var Parametros = {
-				'ClvOrdSer': ClvOrden,
-                'TipoDescarga': TipoDescarga 
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ClvOrdSer': ClvOrden,
+                'TipoDescarga': TipoDescarga
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
 
             $http.post(globalService.getUrl() + paths.GetSoftv_GetDescargaMaterialEstaPagado, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
@@ -115,20 +149,20 @@ angular
 
         }
 
-        factory.GetSoftv_ExistenciasTecnico = function(Iarticulo, ClvTecnico, IAlma){
+        factory.GetSoftv_ExistenciasTecnico = function (Iarticulo, ClvTecnico, IAlma) {
 
             var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
-			var Parametros = {
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
                 'ClvArticulo': Iarticulo,
-				'ClvTecnico': ClvTecnico,
+                'ClvTecnico': ClvTecnico,
                 'IdAlmacen': IAlma
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
 
             $http.post(globalService.getUrl() + paths.GetSoftv_ExistenciasTecnico, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
@@ -140,12 +174,12 @@ angular
 
         }
 
-        factory.GetDescargaMaterialArt = function(ObjDescargaMate, Articulo){
+        factory.GetDescargaMaterialArt = function (ObjDescargaMate, arrayArticulos) {
 
             var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
-			var Parametros = {
-                'ObjDescargaMat':  {
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ObjDescargaMat': {
                     IdTecnico: ObjDescargaMate.IdTecnico,
                     ClvOrden: ObjDescargaMate.ClvOrden,
                     IdAlmacen: ObjDescargaMate.IdAlmacen,
@@ -153,23 +187,15 @@ angular
                     IdBitacora: ObjDescargaMate.IdBitacora,
                     TipoDescarga: ObjDescargaMate.TipoDescarga
                 },
-				'Articulos': {
-                    NoArticulo: Articulo.NoArticulo,
-                    Cantidad: Articulo.Cantidad,
-                    EsCable: Articulo.EsCable,
-                    MetrajeInicio: Articulo.MetrajeInicio,
-                    MetrajeFin: Articulo.MetrajeFin,
-                    MetrajeInicioExt: Articulo.MetrajeInicioExt,
-                    MetrajeFinExt: Articulo.MetrajeFinExt
+                'Articulos': arrayArticulos
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
                 }
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
+            };
 
-            console.log(Parametros);
+            console.log(JSON.stringify(Parametros));
 
             $http.post(globalService.getUrl() + paths.GetDescargaMaterialArt, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
@@ -181,12 +207,12 @@ angular
 
         }
 
-        factory.GetAddDescargaMaterialArt = function(){
+        factory.GetAddDescargaMaterialArt = function (ObjDescargaMate, arrayArticulo) {
 
             var deferred = $q.defer();
-			var user = $localStorage.currentUser.idUsuario;
-			var Parametros = {
-                'ObjDescargaMat':  {
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ObjDescargaMat': {
                     IdTecnico: ObjDescargaMate.IdTecnico,
                     ClvOrden: ObjDescargaMate.ClvOrden,
                     IdAlmacen: ObjDescargaMate.IdAlmacen,
@@ -194,25 +220,91 @@ angular
                     IdBitacora: ObjDescargaMate.IdBitacora,
                     TipoDescarga: ObjDescargaMate.TipoDescarga
                 },
-				'Articulos': {
-                    NoArticulo: Articulo.NoArticulo,
-                    Cantidad: Articulo.Cantidad,
-                    EsCable: Articulo.EsCable,
-                    MetrajeInicio: Articulo.MetrajeInicio,
-                    MetrajeFin: Articulo.MetrajeFin,
-                    MetrajeInicioExt: Articulo.MetrajeInicioExt,
-                    MetrajeFinExt: Articulo.MetrajeFinExt
+                'Articulos': arrayArticulo
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
                 }
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
+            };
 
             console.log(Parametros);
 
-            $http.post(globalService.getUrl() + paths.GetDescargaMaterialArt, JSON.stringify(Parametros), config).then(function (response) {
+            $http.post(globalService.getUrl() + paths.GetAddDescargaMaterialArt, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+
+        }
+
+        factory.GetSoftv_ObtenTipoMaterial = function (catUnidadClave, Tipo, Articulo, IdArticulo) {
+
+            var deferred = $q.defer();
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                Softv_ObtenTipoMaterialEntity: {
+                    'catUnidadClave': catUnidadClave,
+                    'Tipo': Tipo,
+                    'Articulo': Articulo,
+                    'IdArticulo': IdArticulo
+                }
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+
+            $http.post(globalService.getUrl() + paths.GetSoftv_ObtenTipoMaterial, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+
+        }
+
+        factory.GetGRABAtblDescargaMaterialCableIACTV = function (ClvOrdSer) {
+
+            var deferred = $q.defer();
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ClvOrdSer': ClvOrdSer
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            console.log(Parametros);
+            $http.post(globalService.getUrl() + paths.GetGRABAtblDescargaMaterialCableIACTV, JSON.stringify(Parametros), config).then(function (response) {
+                deferred.resolve(response.data);
+            }).catch(function (response) {
+                deferred.reject(response.data);
+            });
+
+            return deferred.promise;
+
+        }
+
+        factory.GetchecaBitacoraTecnico = function (ClvOrdSer, TipoDescarga) {
+
+            var deferred = $q.defer();
+            var user = $localStorage.currentUser.idUsuario;
+            var Parametros = {
+                'ClvOrdSer': ClvOrdSer,
+                'TipoDescarga': TipoDescarga
+            };
+            var config = {
+                headers: {
+                    'Authorization': $localStorage.currentUser.token
+                }
+            };
+            $http.post(globalService.getUrl() + paths.GetchecaBitacoraTecnico, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
             }).catch(function (response) {
                 deferred.reject(response.data);

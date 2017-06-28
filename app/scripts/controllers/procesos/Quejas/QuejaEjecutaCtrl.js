@@ -486,7 +486,7 @@ angular
 
     }
 
-    function DescargaMaterial() {
+    
     function DescargaMaterial(ClvOrden) {
       var options = {};
       options.Tipo_Descargar = "Q";
@@ -507,6 +507,8 @@ angular
         }
       });
     }
+
+    
     var vm = this;
    
     InitalData();

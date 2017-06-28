@@ -36,31 +36,31 @@
         name="articulo"
         ng-model="ctrl.SlctArticulo"
         ng-options="A.Nombre for A in ctrl.DescripcionArticulo track by A.IdArticulo"
-        ng-change="">
+        ng-change="ctrl.BuscarTipoArticulo()">
       </select>
     </div>
     
     <div class="col-md-4">
-      <p>cantidad</p>
-      <input type="number" class="form-control" ng-model="ctrl.CantidadDescarga">
+      <p ng-show="ctrl.MostrarCD">cantidad</p>
+      <input type="number" class="form-control" ng-model="ctrl.CantidadDescarga" ng-show="ctrl.MostrarCD">
     </div>
     
     <div class="col-md-1">
       <br>
-      <p>Interior</p>
+      <p ng-show="ctrl.MostrarTM">Interior</p>
       <br>
-      <p>Exterior</p>
+      <p ng-show="ctrl.MostrarTM">Exterior</p>
     </div>
 
     <div class="col-md-1">
-      <p>Inicial</p>
-      <input type="number" class="form-control" ng-model="ctrl.cantidad">
-      <input type="number" class="form-control" ng-model="ctrl.cantidad">
+      <p ng-show="ctrl.MostrarTM">Inicial</p>
+      <input type="number" class="form-control" ng-model="ctrl.MetrajeII" ng-show="ctrl.MostrarMII">
+      <input type="number" class="form-control" ng-model="ctrl.MetrajeIE" ng-show="ctrl.MostrarMIE">
     </div>
     <div class="col-md-1">
-      <p>Final</p>
-      <input type="number" class="form-control" ng-model="ctrl.cantidad">
-       <input type="number" class="form-control" ng-model="ctrl.cantidad">
+      <p ng-show="ctrl.MostrarTM">Final</p>
+      <input type="number" class="form-control" ng-model="ctrl.MetrajeFI" ng-show="ctrl.MostrarMFI">
+       <input type="number" class="form-control" ng-model="ctrl.MetrajeFE" ng-show="ctrl.MostrarMFE">
     </div>
   </div>
 
@@ -71,7 +71,6 @@
   </div>
 
   <br>
-
   <div class="row">
     <table class="table">
       <thead>
@@ -83,8 +82,19 @@
         <th>Metraje final int.</th>
         <th>Metraje inicial ext.</th>
         <th>Metraje final ext.</th>
+        <th>Opciones</th>
       </thead>
-      <tbody></tbody>
+      <tbody ng-model="ctrl.datos" ng-repeat="D in ctrl.DesMatArt">
+        <td>{{ D.Clave}}</td>
+        <td> {{D.Descripcion}} </td>
+        <td> {{D.Cantidad}} </td>
+        <td> {{D.Tecnico}} </td>
+        <td> {{D.metrajeInicio}} </td>
+        <td> {{D.metrajeFin}} </td>
+        <td> {{D.metrajeInicioExterior}} </td>
+        <td> {{D.metrajeFinExterior}} </td>
+        <td> <button class="btn btn-xs btn-danger " ng-click="ctrl.EliminarArticulo(D.Clave)"><i class="fa fa-trash"></i> Eliminar</button> </td>
+      </tbody>
     </table>
 
   </div>
