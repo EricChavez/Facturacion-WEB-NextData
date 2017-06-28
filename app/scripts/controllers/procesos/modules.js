@@ -118,17 +118,7 @@ angular
         templateUrl: 'views/procesos/QuejaEjecuta.html',
         controller: 'QuejaEjecutaCtrl',
         controllerAs: '$ctrl'
-      },
-
-      {
-        name: 'home.procesos.encuestas',       
-        url: '/encuestas',
-        //templateUrl: 'views/procesos/QuejaEjecuta.html',
-        controller: 'EncuestasCtrl',
-        controllerAs: '$ctrl'
-        
       }
-
     ];
     states.forEach(function (state) {
       $stateProvider.state(state);

@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
+  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Agenda</h4>
+</div>
+<div class="modal-body" style="padding-top:20px;">
+  <div class="row">
+    <div class="col-md-12">
+      <label>Técnico</label>
+      <br/>
+      <input class="form-control input-sm" type="text" ng-model="ctrl.TecnicoAgenda" ng-disabled="true">
+
+    </div>
+    <div class="col-md-12">
+      <label>Fecha</label>
+      <br/>
+      <input type="text" class="form-control input-sm" ng-model="ctrl.FechaAgenda" ng-disabled="true">
+    </div>
+    <div class="col-md-12" ng-if="ctrl.muestraComboTurno==true">
+      <label>Turno</label>
+      <br/>
+      <select class="form-control input-sm" ng-disabled="true" ng-model="ctrl.TurnoAgenda" ng-options="v.TURNO for v in ctrl.Turnos track by v.ID">
+      <option value="">Selecciona</option>
+      </select>
+
+    </div>
+    <div class="col-md-12" ng-if="ctrl.muestraComboTurno==false">
+      <label>Turno</label>
+      <br/>
+      <input type="text" class="form-control input-sm" ng-model="ctrl.inputTurno" ng-disabled="true">
+
+
+    </div>
+    <div class="col-md-12">
+      <label>Comentario</label>
+      <br/>
+      <input type="text" class="form-control input-sm" ng-model="ctrl.ComentarioAgenda" ng-disabled="true">
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Aceptar</button>
+
+</div>

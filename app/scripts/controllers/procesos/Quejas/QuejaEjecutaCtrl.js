@@ -467,11 +467,12 @@ angular
       options.TurnoAgenda = vm.TurnoAgenda;
       options.FechaAgenda = vm.FechaAgenda;
       options.ComentarioAgenda = vm.ComentarioAgenda;
+      options.opcion = 2;
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',
         ariaDescribedBy: 'modal-body',
-        templateUrl: 'views/procesos/ModalAgenda.html',
+        templateUrl: 'views/procesos/ModalAgendaQueja.html',
         controller: 'ModalAgendaQuejaCtrl',
         controllerAs: 'ctrl',
         backdrop: 'static',

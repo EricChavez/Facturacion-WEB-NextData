@@ -20,7 +20,7 @@
     vm.claveOrden = $stateParams.claveOr;
     vm.block = true;
     vm.blockSolicitud = true;
-
+    vm.MuestraAgenda=MuestraAgenda;
     vm.blockVista1 = true;
     vm.blockVista2 = true;
     vm.blockEjecucionReal = true;
@@ -62,7 +62,7 @@
     function init(orden) {
       ordenesFactory.ConsultaOrdSer(orden).then(function (data) {
         vm.datosOrden = data.GetDeepConsultaOrdSerResult;
-        console.log(vm.datosOrden);
+
         vm.clv_orden = data.GetDeepConsultaOrdSerResult.Clv_Orden;
         vm.contrato = data.GetDeepConsultaOrdSerResult.ContratoCom;
         //vm.status = data.GetDeepConsultaOrdSerResult.STATUS;
@@ -70,6 +70,7 @@
         vm.Fec_Sol = vm.datosOrden.Fec_Sol;
         vm.observaciones = vm.datosOrden.Obs;
         ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
+          console.log(data);
           vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
         });
         buscarContrato(vm.contrato);
@@ -370,57 +371,74 @@
 
 
     function ValidaFecha(fechaIngresada, fechasolicitud) {
-      console.log(fechaIngresada, fechasolicitud);
+
       var _fechaHoy = new Date();
       var _fechaIngresada = toDate(fechaIngresada);
       var _fechasolicitud = toDate(fechasolicitud);
-      console.log(_fechaHoy, _fechaIngresada, _fechasolicitud)
-
-      if ((_fechaIngresada > _fechasolicitud && _fechaIngresada < _fechaHoy) || _fechasolicitud.toDateString() === _fechaIngresada.toDateString()) {
-        console.log(true);
+      if ((_fechaIngresada > _fechasolicitud && _fechaIngresada < _fechaHoy) ||
+        _fechasolicitud.toDateString() === _fechaIngresada.toDateString()) {
         return true;
-
       } else {
-        console.log(false);
         return false;
       }
 
     }
 
 
+    function MuestraAgenda() {
+
+      var options = {};
+      options.clv_queja_orden =  vm.clv_orden;
+      options.opcion = 1;
+     
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/procesos/ModalAgendaQueja.html',
+        controller: 'ModalAgendaQuejaCtrl',
+        controllerAs: 'ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'sm',
+        resolve: {
+          options: function () {
+            return options;
+          }
+        }
+      });
+
+    }
+
+
 
     function Guardar() {
-    
-      console.log(vm.Fec_Eje,vm.Fec_Sol);
-      console.log(vm.Visita1,vm.Fec_Sol);
-      console.log(vm.Visita2,vm.Fec_Sol);
-
       if (vm.status == 'E') {
         alert('E');
-        if (ValidaFecha(vm.Fec_Eje,vm.Fec_Sol) == false){
+        if (ValidaFecha(vm.Fec_Eje, vm.Fec_Sol) == false) {
           alert('false');
           ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-        return;
+          return;
         }
       } else if (vm.status == 'V') {
         alert('V');
-        if (vm.Visita1 != null && vm.Visita1 != undefined &&  (vm.Visita2 == undefined || vm.Visita2==null)) {
+        if (vm.Visita1 != null && vm.Visita1 != undefined && (vm.Visita2 == undefined || vm.Visita2 == null)) {
           alert('V1');
-         if (ValidaFecha(vm.Visita1,vm.Fec_Sol) == false){
-          ngNotify.set('La fecha de visita1 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-        return;
-        }
-        if(vm.Visita1 != null && vm.Visita1 != undefined &&  (vm.Visita2 != undefined || vm.Visita2!=null)){
-        if (ValidaFecha(vm.Visita2,vm.Fec_Sol) == false){
-            alert('V2');
-          ngNotify.set('La fecha de visita 2 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-        return;
-        }
-        }
+          if (ValidaFecha(vm.Visita1, vm.Fec_Sol) == false) {
+            ngNotify.set('La fecha de visita1 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
+            return;
+          }
+          if (vm.Visita1 != null && vm.Visita1 != undefined && (vm.Visita2 != undefined || vm.Visita2 != null)) {
+            if (ValidaFecha(vm.Visita2, vm.Fec_Sol) == false) {
+              alert('V2');
+              ngNotify.set('La fecha de visita 2 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
+              return;
+            }
+          }
 
+        }
       }
-      }
-    
+
       EjecutaOrden();
     }
 
