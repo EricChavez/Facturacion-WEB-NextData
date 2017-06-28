@@ -98,7 +98,7 @@
 
     function ValidarDescargaMaterialOrden(){
 
-        if(vm.selectedTecnico != undefined && vm.Fec_Eje != undefined){
+        if(vm.selectedTecnico != undefined){
           DescargaMaterialOrden();
         }else{
           ngNotify.set('Selecciona un técnico y/o Ingresa una fecha de ejecución.', 'error');

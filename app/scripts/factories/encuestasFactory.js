@@ -12,6 +12,25 @@ angular
     };
     var factory = {};
 
+   factory.GetPreguntasList = function () {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.get(globalService.getUrl() + paths.GetPreguntasList, config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
 
     factory.GetEditEncuesta = function (objEncuesta, arraypreguntas, arrayrespuestas) {
       var deferred = $q.defer();

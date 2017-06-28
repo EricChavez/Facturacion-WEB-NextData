@@ -1,69 +1,93 @@
-<div class="card" style="margin-top:10px;">
-  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
-    <header>
-      <strong style="font-weight:bold; border:none; margin-left:10px;">Nueva pregunta</strong>
-      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Encuestas</a></small>
+<form angular-validator-submit="$ctrl.AgregarPregunta()" name="PregumntaForm" novalidate angular-validator>
+  <div class="card" style="margin-top:10px;">
+    <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+      <header>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">Nueva pregunta</strong>
+        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Encuestas</a></small>
 
-    </header>
-    <div class="tools">
-      <div class="btn-group">
-        <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-save" aria-hidden="true"></i> Guardar</button>
-        <button class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.encuesta"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+      </header>
+      <div class="tools">
+        <div class="btn-group">
+          <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Guardar</button>
+          <button class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.preguntas"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-4">
-        <label>Pregunta</label>
-        <input type="text" class="form-control input-sm" placeholder="ingresa la pregunta la pregunta">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <label><b>Pregunta </b></label>
+          <input type="text" class="form-control input-sm" name="npregunta" required-message="'Este campo es obligatorio'" ng-model="$ctrl.Npregunta"
+            ng-required="true" validate-on="dirty" placeholder="Ingresa la pregunta">
 
-      </div>
-      <div class="col-md-4">
-        <label>Tipo de respuesta</label>
-        <select class="form-control input-sm">
+        </div>
+        <div class="col-md-4">
+          <label><b>Tipo de respuesta</b></label>
+          <select class="form-control input-sm" name="tpregunta" required-message="'Este campo es obligatorio'" ng-required="true"
+            validate-on="dirty" ng-change="$ctrl.cambioTipo();" ng-model="$ctrl.TipoPregunta">
                                         <option disabled="" value="0">Selecciona el tipo de pregunta</option>
                                         <option value="1">Pregunta abierta</option>
                                         <option value="2">Pregunta cerrada</option>
                                         <option value="3">Pregunta con opciones multiples</option>
                
                                      </select>
-      </div>
-    </div>
-    <br>
-    <br>
-    <div class="row ">
+        </div>
+        <div class="col-md-2" ng-show="$ctrl.opcionMultiple">
+          <button class="btn btn-success btn-sm" type="button" ng-click="$ctrl.AgregaRespuesta()">
+         <i class="fa fa-plus"></i> agregar respuesta </button>
 
-      <div class="col-md-6">
-        <table class="table">
-          <tr style="
+        </div>
+
+      </div>
+      <br>
+      <br>
+      <div class="row " ng-show="$ctrl.opcionMultiple">
+
+        <div class="col-md-6">
+          <table class="table">
+            <tr style="
     background-color: rgba(150, 156, 156, 0.08);
 ">
-            <td>Descripción</td>
-            <td>Opciones </td>
-          </tr>
-          <tr>
-            <td><input class="form-control input-sm" placeholder="Ingresa la Respuesta">
-            </td>
-            <td>
-              <button type="button" class="btn ink-reaction btn-floating-action btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+              
+            </tr>
+            <tr ng-repeat="s in $ctrl.Respuestas">
+              
+                <td>
+                  <ng-form name="urlForm" angular-validator>
+               
+                  <input class="form-control input-sm"
+                   type="text" name="resp"
+                   ng-required="true"
+                    required-message="'Este campo es obligatorio'"
+                    validate-on="dirty" 
+                    ng-model="s.ResOpcMult"
+                     placeholder="Ingresa la Respuesta">
+               <span ng-show="urlForm.resp.$error.required" style="color: red">Este campo es obligatorio</span>
+                     
+                   </ng-form>
+                </td>
+              
+              <td>
+                <button type="button" class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.Elimina($index)"><i class="fa fa-trash"></i></button>
 
-            </td>
-          </tr>
-        </table>
+              </td>
+
+            </tr>
+          </table>
+        </div>
       </div>
+
+
+
+
+
+
+
+
+
+
     </div>
 
-
-
-
-
-
-
-
-
-
   </div>
-
-</div>
+</form>
