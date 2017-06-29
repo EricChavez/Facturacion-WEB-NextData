@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
+  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Detalle pregunta</h4>
+</div>
+<div class="modal-body" style="padding-top:20px;">
+  <div class="row">
+    <div class="col-md-12" ng-repeat="x in ctrl.Respuestas">     
+      <input class="form-control input-sm" type="text" ng-model="x.ResOpcMult" ng-disabled="true">
+
+    </div>
+    
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Aceptar</button>
+
+</div>

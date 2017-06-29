@@ -1,7 +1,7 @@
 'use strict';
-angular.module('softvApp').config(corporativaConf);
+angular.module('softvApp').config(EncuestaConf);
 
-function corporativaConf($stateProvider) {
+function EncuestaConf($stateProvider) {
 	var states = [{
 		name: 'home.encuestas',
 		abstract: true,
@@ -18,7 +18,7 @@ function corporativaConf($stateProvider) {
 				}
 			}
 		},
-		url: '/encuestas/encuesta',
+		url: '/encuestas/encuestaL',
 		templateUrl: 'views/encuestas/encuesta.html',
 		controller: 'EncuestaCtrl',
 		controllerAs: '$ctrl'

@@ -117,6 +117,8 @@ angular
 
 
 		function abrirBusquedaCliente() {
+			var options={};
+			options.CLV_TIPSER=vm.selectedServicio.Clv_TipSerPrincipal;
 			var modalInstance = $uibModal.open({
 				animation: true,
 				ariaLabelledBy: 'modal-title',
@@ -128,9 +130,9 @@ angular
 				keyboard: false,
 				size: "lg",
 				resolve: {
-					// options: function() {
-					// 	return options;
-					// }
+					options: function() {
+					return options;
+			       }
 				}
 			});
 		}

@@ -16,7 +16,7 @@
     vm.detalleTrabajo = detalleTrabajo;
     vm.Guardar = Guardar;
     vm.clv_tecnico = 0;
-    vm.titulo = 'Orden Ejecutada'
+    vm.titulo = 'Ejecución de Orden'
     vm.claveOrden = $stateParams.claveOr;
     vm.block = true;
     vm.blockSolicitud = true;
