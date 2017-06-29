@@ -6,7 +6,7 @@
 
     </header>
     <div class="tools">
-      <button class="btn btn-primary btn-sm" type="button" ui-sref="home.encuestas.nuevoproceso" permission permission-only="'encuestaAdd'"><i class="fa fa-plus" aria-hidden="true"></i> Nuevo proceso</button>
+     
     </div>
   </div>
   <div class="card-body">
@@ -16,13 +16,9 @@
       <table class="table" >
         <thead>
           <tr>
-            <td><b>ID</b></td>
-            <td><b>Nombre proceso</b> </td>
-            <td><b>Detalle</b></td>
-             <td><b>Tipo Servicio</b></td>
-            <td><b>Fecha</b></td>
-            <td><b>Creada por</b></td>
-            <td><b>Estado</b></td>
+            <td><b>Contrato</b></td>
+            <td><b>Nombre</b> </td>
+            <td><b>Telefono</b></td>             
             <td><b>Opciones</b></td>
           </tr>
         </thead>
@@ -30,21 +26,14 @@
 <!--dir-paginate="x in $ctrl.Encuestas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8"-->
           <tr  >
            <td><b>ID</b></td>
-            <td><b>Nombre Proceso</b> </td>
-            <td><b>Detalle</b></td>
-             <td><b>Tipo Servicio</b></td>
-            <td><b>Fecha</b></td>
-            <td><b>Creada por</b></td>
-            <td><b>Estado</b></td>
-           
-            <td>
+            <td><b>Nombre Encuesta</b> </td>
+            <td><b>Detalle</b></td>          
+        <td>
               <button class="btn ink-reaction  btn-xs btn-info" 
-              ui-sref="home.encuestas.aplicacontratos({id:1})"
+              ui-sref="home.encuestas.aplicacontratos({id:x.IdEncuesta})"
               > Aplicar</button>
-              <button class="btn ink-reaction  btn-xs btn-warning" 
-            >Terminar proceso</button>
-            <button class="btn ink-reaction btn-xs btn-danger" 
-            ><i class="fa fa-trash"></i> Cancelar</button>
+              
+            
     <!--permission permission-only="'encuestasUpdate'"-->
           </tr>
         </tbody>
@@ -54,6 +43,10 @@
         </dir-pagination-controls>
       </div>
     </div>
+  </div>
+  <div class="card-body">
+      
+
   </div>
 </div>
 </div>
