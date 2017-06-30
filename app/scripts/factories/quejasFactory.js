@@ -1,7 +1,8 @@
 'use strict';
 angular
-  .module('softvApp')
-  .factory('quejasFactory', function ($http, $q, globalService, $localStorage) {
+      GetuspInseraTblRelQuejaProblema: '/Quejas/GetuspInseraTblRelQuejaProblema'
+	.module('softvApp')
+	.factory('quejasFactory', function($http, $q, globalService, $localStorage) {
     var factory = {};
     var paths = {
       MuestraPlazas: '/Muestra_Compania_RelUsuario/GetMuestra_Compania_RelUsuarioList',
@@ -10,18 +11,21 @@ angular
       ObtenLista: '/BuscaQuejasSeparado2/GetBuscaQuejasSeparado2List',
       ValidaQueja: '/ValidaQuejaCompaniaAdic/GetDeepValidaQuejaCompaniaAdic',
       BuscaBloqueado: '/BuscaBloqueado/GetDeepBuscaBloqueado',
-      ConsultaQueja: '/Quejas/GetQuejasList', //checar
+      ConsultaQueja: '/Quejas/GetQuejasList',//checar
       ObtenTecnicos: '/Muestra_Tecnicos_Almacen/GetMuestra_Tecnicos_AlmacenList',
       ObtenPrioridad: '/Softv_GetPrioridadQueja/GetSoftv_GetPrioridadQuejaList',
       UpdateQuejas: '/Quejas/UpdateQuejas',
       DameBonificacion: '/DameBonificacion/GetDameBonificacionList',
       EliminaQueja: '/uspBorraQuejasOrdenes/GetDeepuspBorraQuejasOrdenes',
-      GetuspInseraTblRelQuejaProblema: '/Quejas/GetuspInseraTblRelQuejaProblema'
+      DamePrecioBonificacion: '/DameBonificacion/GetDamePrecioBonificaciob',
+      InsertaBonificacion: '/DameBonificacion/AddBonificacion',
+      DameImporteFactura: '/DameBonificacion/GetImporteFactura',
+      EliminaBonificacion:'/DameBonificacion/DeleteBonificacion',
+      GetuspInseraTblRelQuejaProblema: '/Quejas/GetuspInseraTblRelQuejaProblema'    
     };
 
     factory.ObtenPrioridad = function () {
       var deferred = $q.defer();
-
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -32,7 +36,6 @@ angular
       }).catch(function (response) {
         deferred.reject(response.data);
       });
-
       return deferred.promise;
     };
 
@@ -45,8 +48,6 @@ angular
           'clvProblema': obj.clvProblema,
           'opAccion': obj.opAccion
         }
-
-
       };
       var config = {
         headers: {
@@ -58,11 +59,10 @@ angular
       }).catch(function (response) {
         deferred.reject(response.data);
       });
-
       return deferred.promise;
     };
 
-
+    
 
 
 
@@ -149,7 +149,7 @@ angular
 
 
 
-    factory.ObtenLista = function (object) {
+    factory.ObtenLista = function(object) {
       var deferred = $q.defer();
       var Parametros = {
         'Clv_TipSer': object.Clv_TipSer,
@@ -168,16 +168,16 @@ angular
         'ClvUsuario': $localStorage.currentUser.idUsuario,
         'SoloNivel2': object.SoloNivel2,
         'NoTicket': object.NoTicket
-      };
-      console.log(JSON.stringify(Parametros));
+      };      
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
         }
       };
-      $http.post(globalService.getUrl() + paths.ObtenLista, JSON.stringify(Parametros), config).then(function (response) {
+
+      $http.post(globalService.getUrl() + paths.ObtenLista, JSON.stringify(Parametros), config).then(function(response) {
         deferred.resolve(response.data);
-      }).catch(function (response) {
+      }).catch(function(response) {
         deferred.reject(response.data);
       });
 
@@ -279,15 +279,12 @@ angular
           'Solucion': data.Solucion,
           'IdUsuario': $localStorage.currentUser.idUsuario
         }
-
       };
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
         }
       };
-
-      console.log(JSON.stringify(Parametros));
       $http.post(globalService.getUrl() + paths.UpdateQuejas, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -296,6 +293,9 @@ angular
 
       return deferred.promise;
     };
+
+
+
 
     factory.DameBonificacion = function (queja) {
       var deferred = $q.defer();
@@ -313,6 +313,25 @@ angular
         deferred.reject(response.data);
       });
 
+      return deferred.promise;
+    };
+    
+    factory.DamePrecioBonificacion = function(queja, dias) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'Clv_queja': queja,
+        'dias': dias
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.DamePrecioBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+        deferred.resolve(response.data);
+      }).catch(function(response) {
+        deferred.reject(response.data);
+      });
       return deferred.promise;
     };
 
@@ -337,12 +356,78 @@ angular
       return deferred.promise;
     };
 
+    factory.InsertaBonificacion = function(queja, dias, comentario, BndPorMonto, CantidadMonto, ImporteFac) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'objBonificacion': {
+            'Clv_queja': queja,
+            'dias': dias,
+            'comentario': comentario,
+            'ClvUsuario':  $localStorage.currentUser.idUsuario,
+            'BndPorMonto': BndPorMonto,
+            'Monto': CantidadMonto,
+            'Montofac': ImporteFac      
+          }
+        };
+
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.InsertaBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+        deferred.resolve(response.data);
+      }).catch(function(response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
 
 
 
+    factory.DameImporteFactura = function(queja, BndPorMonto) {
+    
+      var deferred = $q.defer();
+      var Parametros = {
+        'Clv_queja': queja,
+        'BndPorMonto': BndPorMonto
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.DameImporteFactura, JSON.stringify(Parametros), config).then(function(response) {
+        deferred.resolve(response.data);
+      }).catch(function(response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
 
 
+    factory.EliminaBonificacion = function(queja) {
+    
+      var deferred = $q.defer();
+      var Parametros = {
+        'Clv_queja': queja,
+        'ClvUsuario': $localStorage.currentUser.idUsuario
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.EliminaBonificacion, JSON.stringify(Parametros), config).then(function(response) {
+        deferred.resolve(response.data);
+      }).catch(function(response) {
+        deferred.reject(response.data);
+      });
 
+      return deferred.promise;
+    };
 
     return factory;
   });

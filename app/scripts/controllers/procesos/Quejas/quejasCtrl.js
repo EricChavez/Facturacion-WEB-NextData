@@ -34,7 +34,7 @@ angular
 							'NoTicket': 0
 						};
 						quejasFactory.ObtenLista(Parametros).then(function(data) {
-							console.log(data);
+							console.log(data); 
 							vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 						});
 					});
@@ -353,7 +353,7 @@ angular
 		function abrirBonificacion(object) {
 			var detalle = {};
 			detalle.Block = false;
-			alert(object.Clv_Queja);
+			//alert(object.Clv_Queja);
 			detalle.Queja = object.Clv_Queja;
 			var modalInstance = $uibModal.open({
 				animation: vm.animationsEnabled,
