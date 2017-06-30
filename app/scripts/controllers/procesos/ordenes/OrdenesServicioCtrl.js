@@ -117,7 +117,7 @@
 				ngNotify.set('Introduce un número de contrato ó un número de orden.', 'error');
 			} else if(!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato)) && vm.contrato != undefined && vm.contrato != '') {
   				console.log(false);
-				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'error');  
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');  
 			}else{
 				var obj = {
 					op: vm.op,

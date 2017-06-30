@@ -1,27 +1,32 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('ModalBuscaClienteCtrl', function($uibModalInstance, $uibModal, atencionFactory, $rootScope, ngNotify, $localStorage,options) {
+	.controller('ModalBuscaClienteCtrl', function ($uibModalInstance, $uibModal, atencionFactory, $rootScope, ngNotify, $localStorage, options) {
 
 		function initialData() {
 			var obje = {};
 			obje.servicio = options.CLV_TIPSER;
 			obje.op = 3;
 			obje.colonia = 0;
-			atencionFactory.buscarCliente(obje).then(function(data) {
+			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 		}
 
 		function BusquedaporContrato() {
-			var obje = {};
-			obje.contrato = vm.BUcontrato;
-			obje.servicio = options.CLV_TIPSER;
-			obje.colonia = 0;
-			obje.op = 0;
-			atencionFactory.buscarCliente(obje).then(function(data) {
-				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
-			});
+			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.BUcontrato))) {
+				console.log(false);
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+			} else {
+				var obje = {};
+				obje.contrato = vm.BUcontrato;
+				obje.servicio = options.CLV_TIPSER;
+				obje.colonia = 0;
+				obje.op = 0;
+				atencionFactory.buscarCliente(obje).then(function (data) {
+					vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+				});
+			}
 		}
 
 		function BusquedaporNombre() {
@@ -32,7 +37,7 @@ angular
 			obje.colonia = 0;
 			obje.servicio = options.CLV_TIPSER;
 			obje.op = 1;
-			atencionFactory.buscarCliente(obje).then(function(data) {
+			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 		}
@@ -45,7 +50,7 @@ angular
 			obje.colonia = 0;
 			//obje.colonia
 			obje.op = 2;
-			atencionFactory.buscarCliente(obje).then(function(data) {
+			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 		}
@@ -56,7 +61,7 @@ angular
 			obje.setupbox = vm.BUaparato;
 			obje.op = 5;
 			obje.colonia = 0;
-			atencionFactory.buscarCliente(obje).then(function(data) {
+			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
 			});
 		}

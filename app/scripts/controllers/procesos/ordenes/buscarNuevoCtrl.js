@@ -49,7 +49,9 @@
 		function buscarContrato() {
 			if (vm.contrato == undefined || vm.contrato == '') {
 				ngNotify.set('Introduce un contrato valido.', 'error');
-			} else {
+			} else if (!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato))){
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+			}else{
 				$('.buscarContrato').collapse('hide');
 				var obj = {
 					contrato: vm.contrato,

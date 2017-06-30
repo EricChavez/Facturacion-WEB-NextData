@@ -4,6 +4,7 @@
 		overflow: auto;
 		overflow-x: hidden;
 	}
+
 </style>
 
 <div class="card" style="margin-top:20px;">
@@ -15,8 +16,7 @@
 		</header>
 		<div class="tools">
 			<div class="btn-group">
-				<a class="btn btn-success btn-sm" ui-sref="home.procesos.atencionNueva"> NUEVO</a>
-
+				<a class="btn btn-success btn-sm" ui-sref="home.procesos.atencionNueva" title="Crear una atención telefónica nueva"> NUEVO</a>
 			</div>
 		</div>
 	</div>
@@ -238,10 +238,9 @@
 							<td>{{ x.Contrato }}</td>
 							<td>{{ x.NOMBRE }}</td>
 							<td>{{ x.CALLE }} #{{ x.NUMERO}}</td>
-							<td><button class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleLlamada(x)"><i class="fa fa-eye"></i></button>
-								<a ui-sref="home.procesos.atencionEditar({ id: x.llamada})" class="btn ink-reaction btn-floating-action btn-xs btn-warning"
+							<td><button title="Consultar atención telefónica" class="btn ink-reaction btn-floating-action btn-xs btn-info" ng-click="$ctrl.DetalleLlamada(x)"><i class="fa fa-eye"></i></button>
+								<a title="Editar atención telefónica" ui-sref="home.procesos.atencionEditar({ id: x.llamada})" class="btn ink-reaction btn-floating-action btn-xs btn-warning"
 								 ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-edit"></i></a>
-
 						</tr>
 					</tbody>
 				</table>

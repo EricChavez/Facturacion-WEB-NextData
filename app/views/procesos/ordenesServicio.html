@@ -15,7 +15,7 @@
 		</header>
 		<div class="tools">
 			<div class="btn-group">
-				<a class="btn btn-success btn-sm"  ui-sref="home.procesos.ordenNueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
+				<a title="Crear una orden de servicio nueva" class="btn btn-success btn-sm"  ui-sref="home.procesos.ordenNueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
 
 			</div>
 		</div>
@@ -212,8 +212,8 @@
 							<td>{{ x.CALLE }}</td>
 							<td>#{{ x.NUMERO}}</td>
 							<td>
-								<button class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DetalleOrden(x)"><i class="fa fa-eye"></i> Vista</button>
-								<a   ng-if="x.STATUS !='E'"  ui-sref="home.procesos.ordenEjecutada({claveOr: x.Clv_Orden})" class="btn ink-reaction btn-xs btn-warning"><i class="md md-launch"></i> Ejecutar</a>
+								<button title="Consultar orden de servicio" class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DetalleOrden(x)"><i class="fa fa-eye"></i> Vista</button>
+								<a title="Ejecutar orden de servicio" ng-if="x.STATUS !='E'"  ui-sref="home.procesos.ordenEjecutada({claveOr: x.Clv_Orden})" class="btn ink-reaction btn-xs btn-warning"><i class="md md-launch"></i> Ejecutar</a>
 							</td>
 						</tr>
 					</tbody>

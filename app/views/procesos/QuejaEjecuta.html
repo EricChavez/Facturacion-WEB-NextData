@@ -26,8 +26,8 @@
 
       </header>
       <div class="tools">
-        <button type="submit" class="btn btn-success btn-sm">Guardar</button>
-        <button type="button" ui-sref="home.procesos.reportes" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
+        <button title="Guardar cambios" type="submit" class="btn btn-success btn-sm">Guardar</button>
+        <button title="Cancelar cambios" type="button" ui-sref="home.procesos.reportes" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
       </div>
     </div>
 
@@ -205,10 +205,6 @@
               model-view-value="true" ng-disabled="true">
           </div>
 
-  
-          
-            
-
               <div class="col-md-12">
                 <br><br>
                 <b>Departamento Responsable:</b>
@@ -225,10 +221,10 @@
               <div class="col-md-12">
                 <br>
                 <div class="col-md-6">
-              <button type="button" class="btn btn-xs btn-info" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
-            </div>
+                <button title="Consultar agenda" type="button" class="btn btn-xs btn-info" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
+              </div>
                 <div class="col-md-6">
-                  <button type="button" class="btn btn-xs btn-info" ng-click="$ctrl.DescargaMaterial()"><i class="fa fa-wrench"></i> Descar. Material</button>
+                  <button title="Realizar descarga de material" type="button" class="btn btn-xs btn-info" ng-click="$ctrl.DescargaMaterial()"><i class="fa fa-wrench"></i> Descar. Material</button>
                 </div>
               </div>
           

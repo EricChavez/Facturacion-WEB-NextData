@@ -134,7 +134,7 @@ angular
 
 			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato))) {
 				console.log(false);
-				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'error');
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
 			} else {
 				console.log(true);
 				if (vm.selectedServicio == undefined || vm.selectedServicio == false) {
