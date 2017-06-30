@@ -16,7 +16,7 @@
     vm.detalleTrabajo = detalleTrabajo;
     vm.Guardar = Guardar;
     vm.clv_tecnico = 0;
-    vm.titulo = 'Orden Ejecutada'
+    vm.titulo = 'Ejecución de Orden'
     vm.claveOrden = $stateParams.claveOr;
     vm.block = true;
     vm.blockSolicitud = true;
@@ -98,7 +98,7 @@
 
     function ValidarDescargaMaterialOrden(){
 
-        if(vm.selectedTecnico != undefined && vm.Fec_Eje != undefined){
+        if(vm.selectedTecnico != undefined){
           DescargaMaterialOrden();
         }else{
           ngNotify.set('Selecciona un técnico y/o Ingresa una fecha de ejecución.', 'error');

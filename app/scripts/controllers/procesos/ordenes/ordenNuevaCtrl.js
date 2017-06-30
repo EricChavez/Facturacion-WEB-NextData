@@ -15,6 +15,7 @@
     vm.buscarCliente = buscarCliente;
     vm.status = 'P';
     vm.fecha = new Date();
+    vm.titulo = 'Nueva Orden de servicio';
     vm.observaciones = '';
     vm.detalleTrabajo = detalleTrabajo;
     vm.clv_orden = 0;
