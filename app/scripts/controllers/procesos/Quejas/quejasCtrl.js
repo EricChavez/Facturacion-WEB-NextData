@@ -106,20 +106,15 @@ angular
 		}
 
 		function BuscaContrato() {
-
 			if (vm.Servicio == null) {
-
 				return;
 			}
-
 			if (vm.Plaza == null) {
-
 				return;
 			}
-
 			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.Contrato))) {
 				console.log(false);
-				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'error');
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
 			} else {
 
 				var Parametros = {

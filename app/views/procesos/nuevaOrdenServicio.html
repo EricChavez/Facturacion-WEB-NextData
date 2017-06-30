@@ -29,10 +29,9 @@
 
     </header>
     <div class="tools">
-      <button class="btn btn-default btn-sm" type="button" ui-sref="home.procesos.ordenes">Cancelar</button>
-      <button ng-if="$ctrl.soyEjecucion==true" class="btn btn-danger btn-sm" type="button" ng-click="$ctrl.Eliminar();"><i  class="fa fa-trash"></i>Eliminar</button>
-      <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-
+      <button title="Guardar orden de servicio" class="btn btn-primary btn-sm" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+      <button title="Eliminar orden de servicio" ng-if="$ctrl.soyEjecucion==true" class="btn btn-danger btn-sm" type="button" ng-click="$ctrl.Eliminar();"><i  class="fa fa-trash"></i>Eliminar</button>
+      <button title="Cancelar cambios" class="btn btn-default btn-sm" type="button" ui-sref="home.procesos.ordenes">Cancelar</button>      
     </div>
   </div>
   <div class="card-body">
@@ -54,7 +53,7 @@
           </div>
           <div class="col-md-3" style="margin-left: -20px;">
             <div>
-              <button type="button" ng-click="$ctrl.buscarCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default" ng-disabled="$ctrl.block"><i class="fa fa-search"></i></button>
+              <button title="Buscar cliente" type="button" ng-click="$ctrl.buscarCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default" ng-disabled="$ctrl.block"><i class="fa fa-search"></i></button>
             </div>
           </div>
         </div>
@@ -175,7 +174,7 @@
         </div>
 
         <div class="row">
-          <button type="button" class="btn btn-info btn-sm" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
+          <button title="Consultar agenda" type="button" class="btn btn-info btn-sm" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
 
         </div>
       </div>
@@ -192,7 +191,7 @@
           <textarea type="text" class="form-control input-sm" ng-model="$ctrl.observaciones" ng-disabled="true"></textarea>
         </div>
 		<div class="col-md-12">
-			 <button type="button" class="btn btn-success btn-xs" ng-click="$ctrl.agregar()" ng-disabled="$ctrl.block">Agregar servicio</button>
+			 <button title="Agregar un servicio nuevo" type="button" class="btn btn-success btn-xs" ng-click="$ctrl.agregar()" ng-disabled="$ctrl.block">Agregar servicio</button>
 		</div>
         <div class="col-md-12">
           <table class="table" style="font-size:11px;">
@@ -226,7 +225,7 @@
         </div>
         
         <div class="col-md-6">
-          <button type="button" class="btn btn-xs btn-warning" ng-if="$ctrl.soyEjecucion==true" ng-click="$ctrl.ValidarDescargaMaterialOrden()"><i class="fa fa-wrench"></i> Descar. Material</button>
+          <button title="Realizar descarga de material" type="button" class="btn btn-xs btn-warning" ng-if="$ctrl.soyEjecucion==true" ng-click="$ctrl.ValidarDescargaMaterialOrden()"><i class="fa fa-wrench"></i> Descar. Material</button>
         </div>
 
       </div>

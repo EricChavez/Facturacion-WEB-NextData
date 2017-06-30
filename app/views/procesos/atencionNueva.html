@@ -33,9 +33,9 @@
     </header>
     <div class="tools">
       
-        <button class="btn btn-info btn-sm" ng-show="$ctrl.MostrarGuardar" ng-click="$ctrl.GuardarLlamada()">Guardar llamada</button>
-        <button class="btn btn-warning btn-sm" ng-show="$ctrl.MostrarEditar" ng-click="$ctrl.EditaLlamada()">Editar llamada</button>
-        <button type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
+        <button title="Guardar atención telefónica" class="btn btn-info btn-sm" ng-show="$ctrl.MostrarGuardar" ng-click="$ctrl.GuardarLlamada()">Guardar llamada</button>
+        <button title="Guardar cambios" class="btn btn-warning btn-sm" ng-show="$ctrl.MostrarEditar" ng-click="$ctrl.EditaLlamada()">Editar llamada</button>
+        <button title="Cancelar cambios" type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
       
       
     </div>
@@ -46,7 +46,7 @@
         <h4>Buscar Cliente</h4>
       </div>
       <div class="col-md-2"><input type="text" ng-disabled="$ctrl.BloquearElementos" ng-model="$ctrl.contratoSelected" class="form-control" placeholder="Ingresa contrato" ng-keyup="$ctrl.EnterContrato($event)"></div>
-      <div class="col-md-2"> <button ng-disabled="$ctrl.BloquearElementos" ng-click="$ctrl.BuscaCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default"><i class="fa fa-search"></i></button></div>
+      <div class="col-md-2"> <button title="Buscar cliente" ng-disabled="$ctrl.BloquearElementos" ng-click="$ctrl.BuscaCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default"><i class="fa fa-search"></i></button></div>
       <div class="col-md-2">
        <b><i class="md md-av-timer" ></i> Hora Inicial:</b>
           <input type="text" ng-model="$ctrl.Hora" class="form-control input-sm" disabled="">
