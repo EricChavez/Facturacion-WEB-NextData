@@ -5,6 +5,11 @@ angular
 
     function initialData() {
      
+
+    encuestasFactory.ProcesosEncuestas().then(function(data){
+      vm.Procesos=data.GetProcesosEncuestasListResult;
+      //vm.Procesos=
+    });
     }
 
     
