@@ -1,19 +1,19 @@
 'use strict';
 angular
 	.module('softvApp')
-	.controller('quejasCtrl', function($state, ngNotify, $location, $uibModal, quejasFactory) {
+	.controller('quejasCtrl', function ($state, ngNotify, $location, $uibModal, quejasFactory) {
 
 		function InitalData() {
 
-			quejasFactory.MuestraPlazas().then(function(data) {
+			quejasFactory.MuestraPlazas().then(function (data) {
 				vm.Plazas = data.GetMuestra_Compania_RelUsuarioListResult;
 
-				quejasFactory.ObtenServicios().then(function(data) {
+				quejasFactory.ObtenServicios().then(function (data) {
 					vm.Servicios = data.GetMuestraTipSerPrincipalListResult;
 					vm.Servicio = vm.Servicios[0];
 					vm.Plaza = vm.Plazas[0];
 					vm.Status = vm.LosStatus[0];
-					quejasFactory.ObtenColonias(vm.Plazas[0].id_compania).then(function(data) {
+					quejasFactory.ObtenColonias(vm.Plazas[0].id_compania).then(function (data) {
 						vm.Colonias = data.GetuspConsultaColoniasListResult;
 						var Parametros = {
 							'Clv_TipSer': 0,
@@ -33,9 +33,16 @@ angular
 							'SoloNivel2': 0,
 							'NoTicket': 0
 						};
-						quejasFactory.ObtenLista(Parametros).then(function(data) {
+						quejasFactory.ObtenLista(Parametros).then(function (data) {
 							console.log(data);
 							vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+							if (vm.ListaQuejas.length == 0) {
+								vm.sinRegistros = true;
+								vm.conRegistros = false;
+							} else {
+								vm.sinRegistros = false;
+								vm.conRegistros = true;
+							}
 						});
 					});
 				});
@@ -85,9 +92,16 @@ angular
 				'SoloNivel2': 0,
 				'NoTicket': 0
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+				if (vm.ListaQuejas.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 		}
 
@@ -102,28 +116,41 @@ angular
 
 				return;
 			}
-			var Parametros = {
-				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
-				'Clv_Queja': 0,
-				'Contrato': vm.Contrato,
-				'NOMBRE': '',
-				'AP': '',
-				'AM': '',
-				'CALLE': '',
-				'NUMERO': '',
-				'SetupBox': '',
-				'Status': '',
-				'Op': 0,
-				'ClvColonia': 0,
-				'IdCompania': vm.Plaza.id_compania,
-				'ClvUsuario': 0,
-				'SoloNivel2': 0,
-				'NoTicket': 0
-			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
-				console.log(data);
-				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
-			});
+
+			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.Contrato))) {
+				console.log(false);
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'error');
+			} else {
+
+				var Parametros = {
+					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
+					'Clv_Queja': 0,
+					'Contrato': vm.Contrato,
+					'NOMBRE': '',
+					'AP': '',
+					'AM': '',
+					'CALLE': '',
+					'NUMERO': '',
+					'SetupBox': '',
+					'Status': '',
+					'Op': 0,
+					'ClvColonia': 0,
+					'IdCompania': vm.Plaza.id_compania,
+					'ClvUsuario': 0,
+					'SoloNivel2': 0,
+					'NoTicket': 0
+				};
+				quejasFactory.ObtenLista(Parametros).then(function (data) {
+					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+					if (vm.ListaQuejas.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
+			}
 		}
 
 		function BuscaporNombre() {
@@ -134,7 +161,7 @@ angular
 				'Contrato': 0,
 				'NOMBRE': vm.Nombre,
 				'AP': vm.APaterno,
-				'AM': '',
+				'AM': vm.Amaterno,
 				'CALLE': '',
 				'NUMERO': '',
 				'SetupBox': '',
@@ -146,9 +173,16 @@ angular
 				'SoloNivel2': 0,
 				'NoTicket': 0
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+				if (vm.ListaQuejas.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 
 		}
@@ -160,7 +194,6 @@ angular
 			} else {
 				colonia = vm.Colonia.clvColonia;
 			}
-
 			var Parametros = {
 				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 				'Clv_Queja': 0,
@@ -173,21 +206,28 @@ angular
 				'SetupBox': '',
 				'Status': '',
 				'Op': 2,
-				'ClvColonia': 0,
+				'ClvColonia': colonia,
 				'IdCompania': 0,
 				'ClvUsuario': 0,
 				'SoloNivel2': 0,
 				'NoTicket': 0
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+				if (vm.ListaQuejas.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 
 		}
 
 		function CambioPlaza(x) {
-			quejasFactory.ObtenColonias(x.id_compania).then(function(data) {
+			quejasFactory.ObtenColonias(x.id_compania).then(function (data) {
 				vm.Colonias = data.GetuspConsultaColoniasListResult;
 				var Parametros = {
 					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
@@ -208,9 +248,16 @@ angular
 					'NoTicket': 0
 				};
 				console.log(Parametros);
-				quejasFactory.ObtenLista(Parametros).then(function(data) {
+				quejasFactory.ObtenLista(Parametros).then(function (data) {
 					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+					if (vm.ListaQuejas.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
 				});
 			});
 		}
@@ -234,9 +281,16 @@ angular
 				'SoloNivel2': 0,
 				'NoTicket': 0
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+				if (vm.ListaQuejas.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 		}
 
@@ -260,9 +314,16 @@ angular
 				'SoloNivel2': 0,
 				'NoTicket': 0
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+				if (vm.ListaQuejas.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 
 		}
@@ -286,7 +347,7 @@ angular
 				'SoloNivel2': vm.Nivel2.isChecked,
 				'NoTicket': 0
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 			});
@@ -314,9 +375,16 @@ angular
 				'SoloNivel2': 0,
 				'NoTicket': 0
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+				if (vm.ListaQuejas.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 		}
 
@@ -343,9 +411,16 @@ angular
 				'SoloNivel2': 0,
 				'NoTicket': vm.Ticket
 			};
-			quejasFactory.ObtenLista(Parametros).then(function(data) {
+			quejasFactory.ObtenLista(Parametros).then(function (data) {
 				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+				if (vm.ListaQuejas.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 
 		}
@@ -366,7 +441,7 @@ angular
 				keyboard: false,
 				size: 'md',
 				resolve: {
-					detalle: function() {
+					detalle: function () {
 						return detalle;
 					}
 				}
@@ -389,7 +464,7 @@ angular
 				keyboard: false,
 				size: 'lg',
 				resolve: {
-					detalle: function() {
+					detalle: function () {
 						return detalle;
 					}
 				}
@@ -421,7 +496,7 @@ angular
 				keyboard: false,
 				size: 'sm',
 				resolve: {
-					detalle: function() {
+					detalle: function () {
 						return detalle;
 					}
 				}
@@ -446,21 +521,21 @@ angular
 		vm.EjecutaQueja = EjecutaQueja;
 		vm.EliminaQueja = EliminaQueja;
 		vm.LosStatus = [{
-				'Clave': 'P',
-				'Nombre': 'Pendiente'
-			},
-			{
-				'Clave': 'V',
-				'Nombre': 'Con visita'
-			},
-			{
-				'Clave': 'E',
-				'Nombre': 'Ejecutadas'
-			},
-			{
-				'Clave': 'S',
-				'Nombre': 'En Proceso'
-			}
+			'Clave': 'P',
+			'Nombre': 'Pendiente'
+		},
+		{
+			'Clave': 'V',
+			'Nombre': 'Con visita'
+		},
+		{
+			'Clave': 'E',
+			'Nombre': 'Ejecutadas'
+		},
+		{
+			'Clave': 'S',
+			'Nombre': 'En Proceso'
+		}
 		];
 
 	});
