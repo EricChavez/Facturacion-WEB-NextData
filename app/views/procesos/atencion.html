@@ -43,10 +43,10 @@
 											<div class="col-md-10 ">
 												<label class="form-control">Plaza</label>
 												<select id="idplaza" 
-												  ng-change="$ctrl.cambioPlaza()" 
-												  class="form-control input-sm" 
-												  ng-model="$ctrl.selectedPlaza" 
-												  ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania">
+												  	ng-change="$ctrl.cambioPlaza()" 
+												  	class="form-control input-sm" 
+												  	ng-model="$ctrl.selectedPlaza" 
+												  	ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania">
   													<option value="">Selecciona</option>
   												</select>
 											</div>
@@ -55,10 +55,10 @@
 											<div class="col-md-10 ">
 												<strong>Tipo de Servicio</strong>
 												<select 
-												  class="form-control input-sm" 
-												  ng-model="$ctrl.selectedServicio" 
-												  ng-change="$ctrl.cambioServicio()"
-												  ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal">
+													class="form-control input-sm" 
+													ng-model="$ctrl.selectedServicio" 
+												  	ng-change="$ctrl.cambioServicio()"
+												  	ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal">
   													<option value="">Selecciona</option>
   												</select>
 											</div>
@@ -75,7 +75,7 @@
 														<span>Llamadas que generaron reporte</span>
 												</label><br>
 												<label class="checkbox-inline checkbox-styled">
-													<input type="checkbox" 
+													<input type="checkbox"
 														ng-model="$ctrl.sinReporte"
 														ng-change="$ctrl.cambiaSinReporte()"/>
 														<span>Llamadas sin reporte</span>
@@ -85,7 +85,13 @@
 										<div class="row">
 											<div class="col-md-10 ">
 												<strong>Usuario</strong>
-												<select class="form-control input-sm" id="idusuario" ng-model="$ctrl.selectedUsuario" ng-change="$ctrl.bucarUsuario()" ng-options="v.NOMBRE for v in $ctrl.usuarios track by v.Clave"></select>
+												<select class="form-control input-sm"
+													id="idusuario"
+													ng-model="$ctrl.selectedUsuario"
+													ng-change="$ctrl.bucarUsuario()"
+													ng-options="v.NOMBRE for v in $ctrl.usuarios track by v.Clave">
+													<option value="">Selecciona</option>
+												</select>
 											</div>
 										</div>
 									</div>
@@ -223,6 +229,9 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr ng-show="$ctrl.sinRegistros">
+							<td class="text-center" colspan="9">SIN REGISTROS</td>
+						</tr>
 						<tr dir-paginate="x in $ctrl.atenciones|itemsPerPage:7">
 							<td>{{ x.llamada }}</td>
 							<td>{{ x.FECHA }}</td>

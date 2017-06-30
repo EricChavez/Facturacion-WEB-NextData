@@ -7,12 +7,11 @@ angular
 				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
 				atencionFactory.getServicios().then(function (data) {
 					vm.servicios = data.GetMuestraTipSerPrincipalListResult;
-					vm.selectedServicio = vm.servicios[2];
+					//vm.selectedServicio = vm.servicios[2];
 
 					atencionFactory.getUsuarios().then(function (data) {
 						console.log(data);
 						vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
-						vm.selectedUsuario = vm.usuarios[0];
 
 						var obj = {
 							servicio: 0,
@@ -38,10 +37,6 @@ angular
 
 				});
 			});
-
-
-
-
 		}
 
 		function cambioReporte(x) {
@@ -55,8 +50,18 @@ angular
 		}
 
 		function cambioServicio() {
+			if (vm.selectedServicio == undefined) {
+				var tServicio = 0;
+			} else {
+				var tServicio = vm.selectedServicio.Clv_TipSerPrincipal;
+			}
+			if (vm.selectedPlaza == undefined) {
+				var plaza = 0;
+			} else {
+				var plaza = vm.selectedPlaza.id_compania;
+			}
 			var obj = {
-				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+				servicio: tServicio,
 				reporte: 0,
 				contrato: 0,
 				nombre: '',
@@ -67,58 +72,107 @@ angular
 				colonia: 0,
 				setupbox: '',
 				op: 4,
-				compania: vm.selectedPlaza.id_compania,
+				compania: plaza,
 				clvUsuario: 0
 			};
 			atencionFactory.buscarAtencion(obj).then(function (data) {
 				console.log(data);
 				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+				if (vm.atenciones.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
+
+				vm.selectedUsuario = false;
 			});
 		}
 
 		function buscarReporte() {
 
-			var obj = {
-				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
-				reporte: vm.reporte,
-				contrato: 0,
-				nombre: '',
-				paterno: '',
-				materno: '',
-				calle: '',
-				numero: '',
-				colonia: 0,
-				setupbox: '',
-				op: 3,
-				compania: vm.selectedPlaza.id_compania,
-				clvUsuario: vm.selectedUsuario.Clave
-			};
-			atencionFactory.buscarAtencion(obj).then(function (data) {
-				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
-			});
+			if (vm.selectedPlaza == undefined || vm.selectedPlaza == false) {
+				ngNotify.set('Selecciona una compañía.', 'warn');
+			}else if(vm.selectedServicio == undefined || vm.selectedServicio == false){
+				ngNotify.set('Selecciona un tipo de servicio.', 'warn');
+			}else if(vm.selectedUsuario == undefined || vm.selectedUsuario == false){
+				ngNotify.set('Selecciona un usuario.', 'warn');
+			}else{
+				console.log("ok");
+				var obj = {
+					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+					reporte: vm.reporte,
+					contrato: 0,
+					nombre: '',
+					paterno: '',
+					materno: '',
+					calle: '',
+					numero: '',
+					colonia: 0,
+					setupbox: '',
+					op: 9,
+					compania: vm.selectedPlaza.id_compania,
+					clvUsuario: vm.selectedUsuario.Clave
+				};
+				console.log(obj);
+				atencionFactory.buscarAtencion(obj).then(function (data) {
+					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+					if (vm.atenciones.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
+			}
 
 		}
 
 		function buscarContrato() {
 
-			var obj = {
-				servicio: vm.selectedServicio.Clv_TipSerPrincipal,
-				reporte: 0,
-				contrato: vm.contrato,
-				nombre: '',
-				paterno: '',
-				materno: '',
-				calle: '',
-				numero: '',
-				colonia: 0,
-				setupbox: '',
-				op: 0,
-				compania: 0,
-				clvUsuario: vm.selectedUsuario.Clave
-			};
-			atencionFactory.buscarAtencion(obj).then(function (data) {
-				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
-			});
+			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato))) {
+				console.log(false);
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'error');
+			} else {
+				console.log(true);
+				if (vm.selectedServicio == undefined || vm.selectedServicio == false) {
+					var servicio = 0;
+				} else {
+					var servicio = vm.selectedServicio.Clv_TipSerPrincipal;
+				}
+				if (vm.selectedUsuario == undefined || vm.selectedUsuario == false) {
+					var usuario = 0;
+				} else {
+					var usuario = vm.selectedUsuario.Clave;
+				}
+				var obj = {
+					servicio: servicio,
+					reporte: 0,
+					contrato: vm.contrato,
+					nombre: '',
+					paterno: '',
+					materno: '',
+					calle: '',
+					numero: '',
+					colonia: 0,
+					setupbox: '',
+					op: 0,
+					compania: 0,
+					clvUsuario: usuario
+				};
+				atencionFactory.buscarAtencion(obj).then(function (data) {
+					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+					if (vm.atenciones.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
+			}
 
 		}
 
@@ -150,31 +204,45 @@ angular
 		}
 
 		function cambioPlaza() {
-			if (vm.selectedPlaza.id_compania > 0) {
-				atencionFactory.getColonias(vm.selectedPlaza.id_compania).then(function (data) {
-					console.log(data);
+
+			if (vm.selectedPlaza == undefined) {
+				var plaza = 0;
+				vm.colonias = null;
+			} else {
+				var plaza = vm.selectedPlaza.id_compania
+				atencionFactory.getColonias(plaza).then(function (data) {
 					vm.colonias = data.GetuspConsultaColoniasListResult;
 					vm.selectedColonia = vm.colonias[0];
-					var obj = {
-						servicio: 0,
-						reporte: 0,
-						contrato: 0,
-						nombre: '',
-						paterno: '',
-						materno: '',
-						calle: '',
-						numero: '',
-						colonia: 0,
-						setupbox: '',
-						op: 4,
-						compania: vm.selectedPlaza.id_compania,
-						clvUsuario: 0
-					};
-					atencionFactory.buscarAtencion(obj).then(function (data) {
-						vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
-					});
 				});
 			}
+			var obj = {
+				servicio: 0,
+				reporte: 0,
+				contrato: 0,
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: '',
+				numero: '',
+				colonia: 0,
+				setupbox: '',
+				op: 4,
+				compania: plaza,
+				clvUsuario: 0
+			};
+			atencionFactory.buscarAtencion(obj).then(function (data) {
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+				if (vm.atenciones.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
+
+				vm.selectedServicio = false;
+				vm.selectedUsuario = false;
+			});
 		}
 
 		function buscarColonia() {
@@ -205,11 +273,24 @@ angular
 		}
 
 		function bucarUsuario() {
-			if (vm.selectedUsuario.Clave == 0) {
+			if (vm.selectedUsuario == undefined || vm.selectedUsuario == false) {
 				ngNotify.set('Por favor seleccione un usuario.', 'error');
 			} else {
+				if (vm.selectedServicio == undefined || vm.selectedServicio == false) {
+					var tServicio = 0;
+				} else {
+					var tServicio = vm.selectedServicio.Clv_TipSerPrincipal;
+				}
+				if (vm.selectedPlaza == undefined) {
+					var plaza = 0;
+				} else {
+					var plaza = vm.selectedPlaza.id_compania;
+				}
+				console.log("Plaza: " + plaza);
+				console.log("Servicio: " + tServicio);
+				console.log("Usuario: " + vm.selectedUsuario.Clave);
 				var obj = {
-					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+					servicio: tServicio,
 					reporte: 0,
 					contrato: 0,
 					nombre: '',
@@ -220,11 +301,18 @@ angular
 					colonia: 0,
 					setupbox: '',
 					op: 11,
-					compania: vm.selectedPlaza.id_compania,
+					compania: plaza,
 					clvUsuario: vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function (data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+					if (vm.atenciones.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
 				});
 			}
 		}
@@ -258,6 +346,18 @@ angular
 		}
 
 		function cambiaConReporte() {
+
+			if (vm.selectedUsuario == undefined) {
+				var usuario = 0;
+			} else {
+				var usuario = vm.selectedUsuario.Clave;
+			}
+			if (vm.selectedPlaza == undefined) {
+				var plaza = 0;
+			} else {
+				var plaza = vm.selectedPlaza.id_compania;
+			}
+
 			var op = 0;
 			if (vm.conReporte) {
 				op = 12;
@@ -276,15 +376,36 @@ angular
 				colonia: 0,
 				setupbox: '',
 				op: op,
-				compania: vm.selectedPlaza.id_compania,
-				clvUsuario: vm.selectedUsuario.Clave
+				compania: plaza,
+				clvUsuario: usuario
 			};
 			atencionFactory.buscarAtencion(obj).then(function (data) {
 				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+				if (vm.atenciones.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
+				vm.sinReporte = false;
+
 			});
 		}
 
 		function cambiaSinReporte() {
+
+			if (vm.selectedUsuario == undefined) {
+				var usuario = 0;
+			} else {
+				var usuario = vm.selectedUsuario.Clave;
+			}
+			if (vm.selectedPlaza == undefined) {
+				var plaza = 0;
+			} else {
+				var plaza = vm.selectedPlaza.id_compania;
+			}
+
 			var op = 0;
 			if (vm.sinReporte) {
 				op = 13;
@@ -303,11 +424,20 @@ angular
 				colonia: 0,
 				setupbox: '',
 				op: op,
-				compania: vm.selectedPlaza.id_compania,
-				clvUsuario: vm.selectedUsuario.Clave
+				compania: plaza,
+				clvUsuario: usuario
 			};
 			atencionFactory.buscarAtencion(obj).then(function (data) {
 				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+				if (vm.atenciones.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
+				vm.conReporte = false;
 			});
 		}
 

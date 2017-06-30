@@ -143,7 +143,7 @@
                   </div>
                   <div class="col-md-3">
                     <b> Numero:</b>
-                    <input class="form-control input-sm" placeholder="" ng-model="$ctrl.Numero">
+                    <input type="number" class="form-control input-sm" placeholder="" ng-model="$ctrl.Numero">
                   </div>
                   <div class="col-md-3">
                     <b>Colonia</b>
@@ -193,7 +193,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr dir-paginate="x in $ctrl.ListaQuejas|itemsPerPage:7">
+            <tr ng-show="$ctrl.sinRegistros">
+							<td class="text-center" colspan="9">SIN REGISTROS</td>
+						</tr>
+            <tr dir-paginate="x in $ctrl.ListaQuejas|itemsPerPage:7" ng-show="$ctrl.conRegistros">
               <td>{{x.Clv_Queja}}</td>
               <td>{{x.Contrato}}</td>
               <td>{{x.Status}}</td>

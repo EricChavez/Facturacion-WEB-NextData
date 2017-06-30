@@ -93,7 +93,7 @@
 
 		function cambioReporte(x) {
 			if (x == 1) {
-				vm.contrato = '';
+				vm.contrato = 0;
 				vm.op = 33;
 			} else {
 				vm.orden = 0;
@@ -102,19 +102,23 @@
 		}
 
 		function buscarOrden() {
-			if (vm.auto == undefined) {
+
+			if (vm.auto == undefined || vm.auto == 0) {
 				vm.auto = 0;
 			} else {
 				vm.auto = 1;
+				vm.auto = true;
 			}
-
 			if (vm.selectedPlaza.id_compania == 0) {
 				ngNotify.set('Selecciona una plaza valida.', 'error');
 			} else if (vm.contrato == undefined && vm.orden == undefined) {
 				ngNotify.set('Introduce un número de contrato ó un número de orden.', 'error');
 			} else if (vm.contrato == '' && vm.orden == '') {
 				ngNotify.set('Introduce un número de contrato ó un número de orden.', 'error');
-			} else {
+			} else if(!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato)) && vm.contrato != undefined && vm.contrato != '') {
+  				console.log(false);
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'error');  
+			}else{
 				var obj = {
 					op: vm.op,
 					orden: vm.orden,
@@ -131,7 +135,9 @@
 					status: '',
 					auto: vm.auto
 				};
+				console.log(obj);
 				ordenesFactory.buscarOrdenes(obj).then(function (data) {
+					console.log(data);
 					vm.ordenes = data.GetuspBuscaOrdSer_BuscaOrdSerSeparado2ListResult;
 					if (vm.ordenes.length == 0) {
 						vm.sinRegistros = true;
@@ -142,6 +148,8 @@
 					}
 				});
 			}
+			
+
 		}
 
 		function buscarColonia() {
