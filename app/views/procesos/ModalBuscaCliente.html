@@ -99,10 +99,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-if="ctrl.Cientes.length == 0">
-          <td class="text-center" colspan="6">SIN REGISTROS</td>
-        </tr>
-        <tr dir-paginate="x in ctrl.Clientes|itemsPerPage:8" ng-if="ctrl.Clientes.length > 0">
+        <tr ng-show="ctrl.sinRegistros">
+				  <td class="text-center" colspan="9">SIN REGISTROS</td>
+				</tr>
+        <tr dir-paginate="x in ctrl.Clientes|itemsPerPage:8" ng-show="ctrl.conRegistros">
           <td>{{ x.CONTRATO }}</td>
           <td>{{ x.Nombre }}</td>
           <td>{{ x.Apellido_Paterno }}</td>

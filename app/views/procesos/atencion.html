@@ -16,7 +16,7 @@
 		</header>
 		<div class="tools">
 			<div class="btn-group">
-				<a class="btn btn-success btn-sm" ui-sref="home.procesos.atencionNueva" title="Crear una atención telefónica nueva"> NUEVO</a>
+				<a class="btn btn-success btn-sm" ui-sref="home.procesos.atencionNueva" title="Crear una atención telefónica nueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
 			</div>
 		</div>
 	</div>
@@ -156,7 +156,7 @@
 									<div class="row">
 										<div class="col-md-5">
 											<strong>Número</strong>
-											<input type="text" class="form-control" ng-model="$ctrl.numero">
+											<input type="number" class="form-control" ng-model="$ctrl.numero">
 										</div>
 
 									</div>
@@ -232,7 +232,7 @@
 						<tr ng-show="$ctrl.sinRegistros">
 							<td class="text-center" colspan="9">SIN REGISTROS</td>
 						</tr>
-						<tr dir-paginate="x in $ctrl.atenciones|itemsPerPage:7">
+						<tr dir-paginate="x in $ctrl.atenciones|itemsPerPage:7" ng-show="$ctrl.conRegistros">
 							<td>{{ x.llamada }}</td>
 							<td>{{ x.FECHA }}</td>
 							<td>{{ x.Contrato }}</td>

@@ -10,6 +10,13 @@ angular
 			obje.colonia = 0;
 			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+				if (vm.Clientes.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 		}
 
@@ -25,6 +32,13 @@ angular
 				obje.op = 0;
 				atencionFactory.buscarCliente(obje).then(function (data) {
 					vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+					if (vm.Clientes.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
 				});
 			}
 		}
@@ -39,6 +53,13 @@ angular
 			obje.op = 1;
 			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+				if (vm.Clientes.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 		}
 
@@ -52,6 +73,13 @@ angular
 			obje.op = 2;
 			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+				if (vm.Clientes.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 		}
 
@@ -63,6 +91,13 @@ angular
 			obje.colonia = 0;
 			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
+				if (vm.Clientes.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
 			});
 		}
 

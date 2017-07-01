@@ -110,11 +110,11 @@
 				vm.auto = true;
 			}
 			if (vm.selectedPlaza.id_compania == 0) {
-				ngNotify.set('Selecciona una plaza valida.', 'error');
+				ngNotify.set('Selecciona una plaza valida.', 'warn');
 			} else if (vm.contrato == undefined && vm.orden == undefined) {
-				ngNotify.set('Introduce un número de contrato ó un número de orden.', 'error');
+				ngNotify.set('Introduce un número de contrato ó un número de orden.', 'warn');
 			} else if (vm.contrato == '' && vm.orden == '') {
-				ngNotify.set('Introduce un número de contrato ó un número de orden.', 'error');
+				ngNotify.set('Introduce un número de contrato ó un número de orden.', 'warn');
 			} else if(!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato)) && vm.contrato != undefined && vm.contrato != '') {
   				console.log(false);
 				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');  
@@ -160,11 +160,11 @@
 			}
 
 			if (vm.selectedPlaza.id_compania == 0) {
-				ngNotify.set('Selecciona una plaza valida.', 'error');
+				ngNotify.set('Selecciona una plaza valida.', 'warn');
 			} else if (vm.calle == '' && vm.numero == '' && vm.selectedColonia.clvColonia == 0) {
-				ngNotify.set('Introduce un domicilio válido.', 'error');
+				ngNotify.set('Introduce un domicilio válido.', 'warn');
 			} else if (vm.calle == undefined && vm.numero == undefined && vm.selectedColonia.clvColonia == 0) {
-				ngNotify.set('Introduce un domicilio válido.', 'error');
+				ngNotify.set('Introduce un domicilio válido.', 'warn');
 			} else {
 				var obj = {
 					op: 32,
@@ -202,11 +202,11 @@
 			}
 
 			if (vm.selectedPlaza.id_compania == 0) {
-				ngNotify.set('Selecciona una plaza valida.', 'error');
+				ngNotify.set('Selecciona una plaza valida.', 'warn');
 			} else if (vm.nombre == '' && vm.paterno == '' && vm.materno == '') {
-				ngNotify.set('Introduce un nombre válido.', 'error');
+				ngNotify.set('Introduce un nombre válido.', 'warn');
 			} else if (vm.nombre == undefined && vm.paterno == undefined && vm.materno == undefined) {
-				ngNotify.set('Introduce un nombre válido.', 'error');
+				ngNotify.set('Introduce un nombre válido.', 'warn');
 			} else {
 				var obj = {
 					op: 31,
@@ -245,9 +245,9 @@
 			}
 
 			if (vm.selectedPlaza.id_compania == 0) {
-				ngNotify.set('Selecciona una plaza valida.', 'error');
+				ngNotify.set('Selecciona una plaza valida.', 'warn');
 			} else if (vm.status == '' && vm.status == undefined) {
-				ngNotify.set('Introduce un SetupBox válido.', 'error');
+				ngNotify.set('Introduce un SetupBox válido.', 'warn');
 			} else {
 				var obj = {
 					op: 5,
@@ -293,7 +293,7 @@
 			}
 
 			if (vm.selectedPlaza.id_compania == 0) {
-				ngNotify.set('Selecciona una plaza valida.', 'error');
+				ngNotify.set('Selecciona una plaza valida.', 'warn');
 			} else {
 				var obj = {
 					op: 399,
