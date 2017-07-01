@@ -7,13 +7,15 @@
 
       </header>
       <div class="tools">
-
+ <button ng-show="$ctrl.PanelContratos" class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.aplicar"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
       </div>
     </div>
     <div class="card-body">
 
-      <div class="col-md-12 table-responsive" ng-show="$ctrl.PanelContratos">
 
+      <div class="col-md-12 table-responsive" ng-show="$ctrl.PanelContratos">
+      
+<h4 class="text-danger">La encuesta {{$ctrl.proceso.Encuesta}} se aplicara a los siguientes clientes: </h4>
         <table class="table">
           <thead>
             <tr>
@@ -23,13 +25,14 @@
               <td><b>Opciones</b></td>
             </tr>
           </thead>
-          <tbody>          
+          <tbody>
             <tr dir-paginate="x in $ctrl.Contratos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
               <td>{{x.Contrato}}</td>
               <td>{{x.Nombre}}</td>
               <td>{{x.Cel}}</td>
               <td>
-              <button class="btn ink-reaction  btn-xs btn-info" ng-click="$ctrl.Encuesta(x)"> Aplicar</button>
+                <button ng-if="x.Aplicada==true" type="button" class="btn ink-reaction  btn-xs btn-success" disabled> Aplicada</button>
+                <button ng-if="x.Aplicada==false" type="button" class="btn ink-reaction  btn-xs btn-info" ng-click="$ctrl.Encuesta_(x)"> Aplicar</button>
 
 
                 <!--permission permission-only="'encuestasUpdate'"-->
@@ -44,49 +47,56 @@
 
 
       <div class="col-md-12 " ng-show="!$ctrl.PanelContratos">
-        <h1><b>{{$crl.Encuesta.TituloEncuesta}}</b> </h1>
+        <div class="col-md-12 text-center">
+          <h3><b style="color: green">{{$ctrl.proceso.Encuesta}}</b> </h3>
+          <h5><b>{{$ctrl.proceso.NombreProceso}}</b> </h5>
+          <h5><b>{{$ctrl.proceso.TipSer}}</b> </h5>
+          <h5><b>{{$ctrl.cliente.Nombre}}</b> </h5>
+          <h5><b>{{$ctrl.cliente.Cel}}</b> </h5>
+
+        </div>
+
 
 
         <div class="col-md-12" ng-repeat="x in $ctrl.Encuesta.LstPregunta">
 
           <div class="col-md-12" ng-if="x.IdTipoPregunta==1">
             <form>
-            <b>{{x.Pregunta}}</b>
-            <textarea class="form-control input-sm" name="x.name" required-message="'Este respuesta es obligatoria'" 
-            ng-model="x.Respuesta" ng-required="true"
-              validate-on="dirty"></textarea>
+              <b>{{x.Pregunta}}</b>
+              <textarea class="form-control input-sm" name="x.name" required-message="'Este respuesta es obligatoria'" ng-model="x.Respuesta"
+                ng-required="true" validate-on="dirty"></textarea>
             </form>
           </div>
 
           <div class="col-md-12" ng-if="x.IdTipoPregunta==2">
             <b>{{x.Pregunta}}</b><br>
             <form name="urlForm">
-            <div>
-              <label class="radio-inline radio-styled radio-info">
+              <div>
+                <label class="radio-inline radio-styled radio-info">
 														<input type="radio" 
                             name="resp"
                             ng-model="x.Respuesta" 
                             ng-required="!x.respuesta"
-                            value="si" ><span>Si</span>
+                            value="S" ><span>Si</span>
 													</label>
-            </div>
-            <div>
-              <label class="radio-inline radio-styled radio-info">
+              </div>
+              <div>
+                <label class="radio-inline radio-styled radio-info">
 														<input type="radio" 
                              ng-model="x.Respuesta" 
                              name="resp"
                              ng-required="!x.respuesta"
-                             value="No"><span>No</span>
+                             value="N"><span>No</span>
 													</label>
-            </div>
-            <span class="alert error text-danger" ng-show="urlForm.resp.$error.required">Selecciona alguno</span>
+              </div>
+              <span class="alert error text-danger" ng-show="urlForm.resp.$error.required">Selecciona alguno</span>
             </form>
           </div>
           <div class="col-md-12" ng-if="x.IdTipoPregunta==3">
             <b>{{x.Pregunta}}</b>
-           <form name="urlForm">
-            <div ng-repeat="y in x.ResOpcMult">
-              <label class="radio-inline radio-styled radio-info">
+            <form name="urlForm">
+              <div ng-repeat="y in x.ResOpcMult">
+                <label class="radio-inline radio-styled radio-info">
                             <input type="radio" 
                             ng-model="x.Respuesta"
                             ng-required="!x.respuesta"
@@ -95,8 +105,8 @@
                              
                                ><span>{{y.ResOpcMult}}</span>
 													</label>
-            </div>
-            <span class="alert error text-danger" ng-show="urlForm.resp.$error.required">Selecciona alguno</span>
+              </div>
+              <span class="alert error text-danger" ng-show="urlForm.resp.$error.required">Selecciona alguno</span>
             </form>
           </div>
 
@@ -105,7 +115,8 @@
         </div>
 
         <div class="row text-center">
-          <button class="btn btn-info ">Guardar respuestas</button>
+          <button class="btn btn-info " type="submit">Guardar respuestas</button>
+            <button class="btn btn-danger " type="button" ng-click="$ctrl.CancelaProceso();">Cancelar</button>
 
         </div>
 

@@ -12,7 +12,7 @@ angular
     }
 
     function Imprime(id) {
-      alert(id);
+      
       var options = id;
       vm.animationsEnabled = true;
       var modalInstance = $uibModal.open({

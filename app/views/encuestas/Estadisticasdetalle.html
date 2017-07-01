@@ -1,0 +1,36 @@
+<div class="card" style="margin-top:10px;">
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Estadisticas</strong>
+      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Catálogos</a></small>
+
+    </header>
+    <div class="tools">
+        <button class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.estadisticas"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <div class="row">
+        <div class="col-md-4">
+ <label><b>Encuesta</b></label>
+      <select class="form-control input-sm" name="encuesta" required-message="'Este campo es obligatorio'" ng-required="true" validate-on="dirty"
+        ng-options="v.TituloEncuesta for v in $ctrl.Encuestas track by v.IdEncuesta" ng-model="$ctrl.Encuesta">   
+            <option value="">Selecciona</option>                                      
+          </select>
+
+        </div>
+        <div class="col-md-4">
+<br>
+            <button class="btn btn-success btn-flat btn-sm" ng-click="$ctrl.printDiv('print')"><i class="fa fa-print"></i> Imprimir resultados</b<utton>
+        </div>
+     
+    </div>
+<div class="row" id="print" style="overflow-y:scroll; max-height: 500px; ">
+ <div google-chart chart="$ctrl.myChartObject" style="height:400px; width:100%;"></div>
+</div>
+
+   
+  </div>
+</div>

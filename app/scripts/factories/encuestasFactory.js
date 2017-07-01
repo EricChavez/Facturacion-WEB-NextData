@@ -18,9 +18,70 @@ angular
       GetUniversoEncuestaAplicarList: '/UniversoEncuesta/GetUniversoEncuestaAplicarList',
       ProcesosEncuestas: '/ProcesosEncuestas/GetProcesosEncuestasList',
       GetDeepProcesosEncuestas: '/ProcesosEncuestas/GetDeepProcesosEncuestas',
-      GetGet_UniversoEncuestaList: '/Get_UniversoEncuesta/GetGet_UniversoEncuestaList'
+      GetGet_UniversoEncuestaList: '/Get_UniversoEncuesta/GetGet_UniversoEncuestaList',
+      GetRelEncuestaCli: '/RelEncuestaClientes/GetRelEncuestaCli',
+      TerminarProceso: '/UniversoEncuesta/UpdateUniversoEncuesta'
     };
     var factory = {};
+
+
+
+
+
+
+    factory.TerminarProceso = function (idproceso) {
+      var deferred = $q.defer();
+
+      var Parametros = {
+        'objUniversoEncuesta': {
+          'IdProcesoEnc': idproceso
+        }
+
+      };
+      console.log(JSON.stringify(Parametros));
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.TerminarProceso, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
+    factory.GetRelEncuestaCli = function (idproceso, idencuesta, contrato, respuestas) {
+      var deferred = $q.defer();
+
+      var Parametros = {
+        'objEncCli': {
+          'IdProcesoEnc': idproceso,
+          'IdEncuesta': idencuesta,
+          'Contrato': contrato
+        },
+        'LstRelEnProcesos': respuestas
+      };
+      console.log(JSON.stringify(Parametros));
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.GetRelEncuestaCli, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
 
 
     factory.GetGet_UniversoEncuestaList = function (object) {
@@ -31,13 +92,13 @@ angular
         'IdTipSer': object.IdTipSer,
         'IdTipBusq': object.IdTipBusq,
         'Desconectado': object.Desconectado,
-        'Instalado':object.Instalado,
+        'Instalado': object.Instalado,
         'Suspendido': object.Suspendido,
         'Contratado': object.Contratado,
-        'Temporales':object.Temporales,
+        'Temporales': object.Temporales,
         'Fuera': object.Fuera,
         'IdTipFecha': object.IdTipFecha,
-        'FechaI':object.FechaI,
+        'FechaI': object.FechaI,
         'FechaF': object.FechaF,
         'IdUsuario': $localStorage.currentUser.idUsuario,
         'IdEncuesta': object.IdEncuesta,
