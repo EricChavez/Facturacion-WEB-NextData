@@ -13,13 +13,12 @@
 
     <div class="col-md-12 table-responsive">
 
-      <table class="table" >
+      <table class="table">
         <thead>
           <tr>
             <td><b>ID</b></td>
             <td><b>Nombre proceso</b> </td>
-            <td><b>Detalle</b></td>
-             <td><b>Tipo Servicio</b></td>
+            <td><b>Tipo Servicio</b></td>
             <td><b>Fecha</b></td>
             <td><b>Creada por</b></td>
             <td><b>Estado</b></td>
@@ -27,25 +26,20 @@
           </tr>
         </thead>
         <tbody>
-<!--dir-paginate="x in $ctrl.Encuestas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8"-->
-          <tr  >
-           <td><b>ID</b></td>
-            <td><b>Nombre Proceso</b> </td>
-            <td><b>Detalle</b></td>
-             <td><b>Tipo Servicio</b></td>
-            <td><b>Fecha</b></td>
-            <td><b>Creada por</b></td>
-            <td><b>Estado</b></td>
-           
+
+          <tr dir-paginate="x in $ctrl.Procesos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
+            <td>{{x.IdProcesoEnc}}</td>
+            <td>{{x.NombreProceso}}</td>
+            <td>{{x.TipSer}}</td>
+            <td>{{x.FechaInicio}}</td>
+            <td>{{x.Usuario}}</td>
+            <td>{{x.StatusEncuesta}}</td>
+
             <td>
-              <button class="btn ink-reaction  btn-xs btn-info" 
-              ui-sref="home.encuestas.aplicacontratos({id:1})"
-              > Aplicar</button>
-              <button class="btn ink-reaction  btn-xs btn-warning" 
-            >Terminar proceso</button>
-            <button class="btn ink-reaction btn-xs btn-danger" 
-            ><i class="fa fa-trash"></i> Cancelar</button>
-    <!--permission permission-only="'encuestasUpdate'"-->
+              <button ng-if="x.StatusEncuesta!='Terminada'" class="btn ink-reaction  btn-xs btn-info" ui-sref="home.encuestas.aplicacontratos({id:x.IdProcesoEnc})"> Aplicar</button>
+              <button ng-if="x.StatusEncuesta!='Terminada'"class="btn ink-reaction  btn-xs btn-warning" ng-click="$ctrl.TerminaProceso(x.IdProcesoEnc)">Terminar proceso</button>
+               <button ng-if="x.StatusEncuesta=='Terminada'" ui-sref="home.encuestas.estadisticasdetalle({id:x.IdProcesoEnc})" type="button" class="btn ink-reaction btn-xs btn-warning"><i class="md md-equalizer"></i> Resultados</button>
+              <!--permission permission-only="'encuestasUpdate'"-->
           </tr>
         </tbody>
       </table>

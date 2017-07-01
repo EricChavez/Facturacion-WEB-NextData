@@ -14,7 +14,8 @@ angular
     'ui.mask', 'dndLists',
     'smart-table',
     'ngSanitize',
-    'ngCsv'
+    'ngCsv',
+    'googlechart'
 
   ])
   .config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {

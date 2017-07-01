@@ -1,0 +1,43 @@
+<div class="card" style="margin-top:10px;">
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Estadisticas</strong>
+      <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> 
+          <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Catálogos</a></small>
+
+    </header>
+    <div class="tools">
+    </div>
+  </div>
+
+  <div class="card-body">
+
+  
+<div class="row text-center">
+    <ul class="list divider-full-bleed">
+      <li class="tile" ng-repeat="x in $ctrl.Procesos">
+        <a class="tile-content ink-reaction">
+          <div class="tile-text">
+            <b>{{x.NombreProceso}}</b>
+            <small>
+        <b></b>{{x.Encuesta}}										
+		   </small>
+           <small>
+				{{x.TipSer}}										
+		   </small>
+          </div>
+          <div class="tile-icon">
+              <button  ui-sref="home.encuestas.estadisticasdetalle({id:x.IdEncuesta})"
+               type="button" class="btn ink-reaction btn-sm btn-warning">
+               <i class="md md-equalizer"></i> Resultados</button>
+ 
+          </div>
+        </a>
+      </li>
+
+    </ul></div>
+
+
+
+  </div>
+</div>

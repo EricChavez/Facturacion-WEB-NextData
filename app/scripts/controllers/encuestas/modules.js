@@ -150,7 +150,40 @@ function EncuestaConf($stateProvider) {
       templateUrl: 'views/encuestas/Aplicacontratos.html',
       controller: 'AplicacontratosCtrl',
       controllerAs: '$ctrl'
+    },
+    {
+      name: 'home.encuestas.estadisticas',
+      data: {
+        pageTitle: 'SAC | Encuesta',
+        permissions: {
+          only: ['encuestaSelect'],
+          options: {
+            reload: false
+          }
+        }
+      },
+      url: '/encuestas/estadisticas',
+      templateUrl: 'views/encuestas/Estadisticas.html',
+      controller: 'EstadisticasCtrl',
+      controllerAs: '$ctrl'
+    },
+     {
+      name: 'home.encuestas.estadisticasdetalle',
+      data: {
+        pageTitle: 'SAC | Encuesta',
+        permissions: {
+          only: ['encuestaSelect'],
+          options: {
+            reload: false
+          }
+        }
+      },
+      url: '/encuestas/estadisticas/:id',
+      templateUrl: 'views/encuestas/Estadisticasdetalle.html',
+      controller: 'EstadisticasdetalleCtrl',
+      controllerAs: '$ctrl'
     }
+    
 
 
 

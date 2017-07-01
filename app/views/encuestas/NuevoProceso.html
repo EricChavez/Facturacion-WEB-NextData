@@ -1,4 +1,4 @@
-<form angular-validator-submit="$ctrl.AgregarProcesos()" name="PregumntaForm" novalidate angular-validator>
+<form angular-validator-submit="$ctrl.AgregarProceso()" name="PregumntaForm" novalidate angular-validator>
   <div class="card" style="margin-top:10px;">
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
@@ -15,72 +15,109 @@
       <div class="col-md-12">
 
         <div class="col-md-6">
-          <label><b>Distribuidor</b></label>
-          <select class="form-control input-sm" name="Distribuidor" required-message="'Este campo es obligatorio'" ng-required="true"
-            validate-on="dirty" ng-change="$ctrl.cambioTipo();" ng-model="$ctrl.Distribuidor"> 
+
+          <div class="col-md-12">
+            <label><b>Distribuidor</b></label>
+            <select class="form-control input-sm" name="Distribuidor" required-message="'Este campo es obligatorio'" ng-required="true"
+              validate-on="dirty" ng-options="v.Nombre for v in $ctrl.Distribuidores track by v.Clv_Plaza" ng-change="$ctrl.cambioDistribuidor();"
+              ng-model="$ctrl.Distribuidor"> 
             <option value="">Selecciona</option>                                        
 </select>
-
-          <label><b>Plaza</b></label>
-          <select class="form-control input-sm" name="plaza" required-message="'Este campo es obligatorio'" ng-required="true" validate-on="dirty"
-            ng-model="$ctrl.Plaza">  
+          </div>
+          <div class="col-md-12">
+            <label><b>Plaza</b></label>
+            <select class="form-control input-sm" name="plaza" required-message="'Este campo es obligatorio'" ng-required="true" validate-on="dirty"
+              ng-options="v.razon_social for v in $ctrl.Plazas track by v.id_compania" ng-model="$ctrl.Plaza">  
          <option value="">Selecciona</option>                                     
          </select>
+          </div>
 
-
-
-          <label><b>Encuesta</b></label>
-          <select class="form-control input-sm" name="encuesta" required-message="'Este campo es obligatorio'" ng-required="true" validate-on="dirty"
-            ng-model="$ctrl.Encuesta">   
+          <div class="col-md-12">
+            <label><b>Encuesta</b></label>
+            <select class="form-control input-sm" name="encuesta" required-message="'Este campo es obligatorio'" ng-required="true" validate-on="dirty"
+              ng-options="v.TituloEncuesta for v in $ctrl.Encuestas track by v.IdEncuesta" ng-model="$ctrl.Encuesta">   
             <option value="">Selecciona</option>                                      
           </select>
-
-          <label><b>Nombre proceso</b></label>
-          <input class="form-control input-sm" ng-model="$ctrl.NombreProceso" placeholder="Ingresa el nombre del proceso" required-message="'Este campo es obligatorio'"
-            ng-required="true" validate-on="dirty">
-
-          <label><b>Servicio</b></label>
-          <select class="form-control input-sm" ng-model="$ctrl.Servicio" required-message="'Este campo es obligatorio'" ng-required="true"
-            validate-on="dirty">
+          </div>
+          <div class="col-md-12">
+            <label><b>Nombre proceso</b></label>
+            <input class="form-control input-sm" ng-model="$ctrl.NombreProceso" name="proceso" placeholder="Ingresa el nombre del proceso"
+              required-message="'Este campo es obligatorio'" ng-required="true" validate-on="dirty">
+          </div>
+          <div class="col-md-12">
+            <label><b>Servicio</b></label>
+            <select class="form-control input-sm" ng-model="$ctrl.Servicio" name="servicio" required-message="'Este campo es obligatorio'"
+              ng-required="true" ng-options="v.Concepto for v in $ctrl.Servicios track by v.Clv_TipSer" validate-on="dirty">
           <option value="">Selecciona</option>  
           </select>
-
+          </div>
 
         </div>
         <div class="col-md-6 text-left">
-          <b>Selecciona tipo de Servicio</b>
+          <b>Selecciona tipo de busqueda</b>
           <br>
           <label class="radio-inline radio-styled radio-info">
 														<input type="radio" 
                                                         ng-model="$ctrl.TipoBusqueda"
-                                                         value="S"
+                                                         value="1"
                                                           ng-change="$ctrl.CambioBusqueda()" 
                                                           checked ><span>Status</span>
 													</label>
           <label class="radio-inline radio-styled radio-info">
 														<input type="radio"  
                                                         ng-model="$ctrl.TipoBusqueda" 
-                                                        value="R" ng-change="$ctrl.CambioBusqueda()" ><span>Rango de Fechas</span>
+                                                        value="2" ng-change="$ctrl.CambioBusqueda()" ><span>Rango de Fechas</span>
 													</label>
 
-            
-          <div class="col-md-12" ng-repeat="x in $ctrl.Estatus" ng-show="$ctrl.MuestraStatus">
-            <label class="checkbox-inline checkbox-styled checkbox-warning">
-														<input type="checkbox" ng-model="x.checked" checked=""><span>{{x.Nombre}}</span>
+
+          <div class="col-md-12" ng-show="$ctrl.MuestraStatus">
+
+
+            <div ng-repeat="x in $ctrl.Estatus">
+
+              <label class="checkbox-inline checkbox-styled checkbox-warning">
+														<input type="checkbox" ng-model="x.checked"  
+                                     
+                            checked=""><span>{{x.Nombre}}</span>
 													</label>
+
+            </div>
 
           </div>
+
+
+
+
 
           <div class="col-md-12" ng-show="$ctrl.MuestraFecha">
+            <b>Selecciona un rango de fechas basado en el estatus seleccionado</b>
+            <div ng-repeat="x in $ctrl.TipoFecha">
+              <label class="radio-inline radio-styled radio-info">
+														<input type="radio" 
+                                                        ng-model="$ctrl.EstatusFecha"
+                                                         value="{{x.clave}}"                                                          
+                                                           ><span>{{x.Nombre}}</span>
+													</label>
+            </div>
 
+            <div class="row">
+              <div class="col-md-6">
+                <input type="date" class="form-control input-sm" ng-required="$ctrl.MuestraFecha" name="FechaInicio" required-message="'Este campo es obligatorio'"
+                  ng-required="true" validate-on="dirty" ng-model="$ctrl.FechaInicio">
+              </div>
 
+              <div class="col-md-6">
+                <input type="date" class="form-control input-sm" ng-required="$ctrl.MuestraFecha" required-message="'Este campo es obligatorio'"
+                  ng-required="true" validate-on="dirty" name="FechaFin" ng-model="$ctrl.FechaFin">
+              </div>
+            </div>
 
           </div>
-         </div>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-6"></div>
+
 
   </div>
 
