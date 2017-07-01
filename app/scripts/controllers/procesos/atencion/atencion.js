@@ -31,6 +31,13 @@ angular
 						atencionFactory.buscarAtencion(obj).then(function (data) {
 							vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 							console.log(vm.atenciones);
+							if (vm.atenciones.length == 0) {
+								vm.sinRegistros = true;
+								vm.conRegistros = false;
+							} else {
+								vm.sinRegistros = false;
+								vm.conRegistros = true;
+							}
 						});
 
 					});
@@ -50,6 +57,7 @@ angular
 		}
 
 		function cambioServicio() {
+			
 			if (vm.selectedServicio == undefined) {
 				var tServicio = 0;
 			} else {
@@ -85,20 +93,18 @@ angular
 					vm.sinRegistros = false;
 					vm.conRegistros = true;
 				}
-
-				vm.selectedUsuario = false;
 			});
 		}
 
 		function buscarReporte() {
 
-			if (vm.selectedPlaza == undefined || vm.selectedPlaza == false) {
-				ngNotify.set('Selecciona una compañía.', 'warn');
-			}else if(vm.selectedServicio == undefined || vm.selectedServicio == false){
-				ngNotify.set('Selecciona un tipo de servicio.', 'warn');
-			}else if(vm.selectedUsuario == undefined || vm.selectedUsuario == false){
-				ngNotify.set('Selecciona un usuario.', 'warn');
-			}else{
+			if (vm.selectedPlaza == undefined || vm.selectedPlaza == false ||
+				vm.selectedServicio == undefined || vm.selectedServicio == false ||
+				vm.selectedUsuario == undefined || vm.selectedUsuario == false) {
+					ngNotify.set('Selecciona una compañía, un tipo de servicio y un usuario.', 'warn');
+			}else if (vm.reporte == undefined || vm.selectedUsuario == ""){
+					ngNotify.set('Ingresa un número de reporte válido.', 'warn');
+			}else {
 				console.log("ok");
 				var obj = {
 					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
@@ -177,18 +183,47 @@ angular
 		}
 
 		function buscarNombres() {
-			if (vm.nombre == '' && vm.paterno == '' && vm.materno == '') {
-				ngNotify.set('Introduce un nombre válido.', 'error');
-			} else if (vm.nombre == undefined && vm.paterno == undefined && vm.materno == undefined) {
-				ngNotify.set('Introduce un nombre válido.', 'error');
+
+			if (vm.nombre == undefined || vm.nombre == "") {
+				var nombreB = "";
+			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.nombre))) {
+				var nombreB = "";
+			} else {
+				var nombreB = vm.nombre;
+			}
+
+			if (vm.paterno == undefined || vm.paterno == "") {
+				var paternoB = "";
+			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.paterno))) {
+				var paternoB = "";
+			} else {
+				var paternoB = vm.paterno;
+			}
+
+			if (vm.materno == undefined || vm.materno == "") {
+				var maternoB = "";
+			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.materno))) {
+				var maternoB = "";
+			} else {
+				var maternoB = vm.materno;
+			}
+			if (vm.selectedPlaza == undefined) {
+				ngNotify.set('Selecciona una compañía.', 'warn');
+			} else if (vm.selectedServicio == undefined || vm.selectedServicio == false) {
+				ngNotify.set('Selecciona un tipo de servicio.', 'warn');
+			} else if (vm.selectedUsuario == undefined || vm.selectedUsuario == false) {
+				ngNotify.set('Selecciona un tipo de usuario.', 'warn');
+			} else if (nombreB == "" && paternoB == "" && maternoB == "") {
+				console.log(false);
+				ngNotify.set('Introduce un nombre válido.', 'warn');
 			} else {
 				var obj = {
 					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
 					reporte: 0,
 					contrato: 0,
-					nombre: vm.nombre,
-					paterno: vm.paterno,
-					materno: vm.materno,
+					nombre: nombreB,
+					paterno: paternoB,
+					materno: maternoB,
 					calle: '',
 					numero: '',
 					colonia: 0,
@@ -198,7 +233,15 @@ angular
 					clvUsuario: vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function (data) {
+					console.log(data);
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+					if (vm.atenciones.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
 				});
 			}
 		}
@@ -239,18 +282,30 @@ angular
 					vm.sinRegistros = false;
 					vm.conRegistros = true;
 				}
-
-				vm.selectedServicio = false;
-				vm.selectedUsuario = false;
 			});
 		}
 
 		function buscarColonia() {
-			if (vm.selectedColonia == undefined) {
-				ngNotify.set('Por favor seleccione una plaza.', 'error');
-			} else if (vm.selectedColonia.clvColonia == 0) {
-				ngNotify.set('Por favor seleccione una colonia.', 'error');
+
+			if (vm.calle == undefined || vm.calle == "") {
+				var calleV = true;
+				var calle = "";
+			} else if (!(/^[A-Za-z\s\xF1\xD1\0-9]+$/.test(vm.calle))) {
+				var calleV = false;
+				var calle = "";
 			} else {
+				var calleV = true;
+				var calle = vm.calle;
+			}
+
+			if (vm.selectedColonia == undefined) {
+				ngNotify.set('Por favor seleccione una plaza.', 'warn');
+			} else if (vm.selectedColonia.clvColonia == 0) {
+				ngNotify.set('Por favor seleccione una colonia.', 'warn');
+			} else if (calleV == false) {
+				ngNotify.set('Introduce una calle válida.', 'warn');
+			}
+			else {
 				var obj = {
 					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
 					reporte: 0,
@@ -258,7 +313,7 @@ angular
 					nombre: '',
 					paterno: '',
 					materno: '',
-					calle: vm.calle,
+					calle: calle,
 					numero: vm.numero,
 					colonia: vm.selectedColonia.clvColonia,
 					setupbox: '',
@@ -266,31 +321,29 @@ angular
 					compania: 0,
 					clvUsuario: 0
 				};
+				console.log(obj);
 				atencionFactory.buscarAtencion(obj).then(function (data) {
+					console.log(data);
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+					if (vm.atenciones.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
 				});
 			}
 		}
 
 		function bucarUsuario() {
-			if (vm.selectedUsuario == undefined || vm.selectedUsuario == false) {
-				ngNotify.set('Por favor seleccione un usuario.', 'error');
+			if (vm.selectedUsuario == undefined || vm.selectedUsuario == false ||
+			    vm.selectedServicio == undefined || vm.selectedServicio == false ||
+				vm.selectedPlaza == undefined) {
+				ngNotify.set('Por favor seleccione una compañía, un tipo de servicio y un usuario.', 'error');
 			} else {
-				if (vm.selectedServicio == undefined || vm.selectedServicio == false) {
-					var tServicio = 0;
-				} else {
-					var tServicio = vm.selectedServicio.Clv_TipSerPrincipal;
-				}
-				if (vm.selectedPlaza == undefined) {
-					var plaza = 0;
-				} else {
-					var plaza = vm.selectedPlaza.id_compania;
-				}
-				console.log("Plaza: " + plaza);
-				console.log("Servicio: " + tServicio);
-				console.log("Usuario: " + vm.selectedUsuario.Clave);
 				var obj = {
-					servicio: tServicio,
+					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
 					reporte: 0,
 					contrato: 0,
 					nombre: '',
@@ -301,7 +354,7 @@ angular
 					colonia: 0,
 					setupbox: '',
 					op: 11,
-					compania: plaza,
+					compania: vm.selectedPlaza.id_compania,
 					clvUsuario: vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function (data) {
@@ -357,7 +410,6 @@ angular
 			} else {
 				var plaza = vm.selectedPlaza.id_compania;
 			}
-
 			var op = 0;
 			if (vm.conReporte) {
 				op = 12;
@@ -440,9 +492,6 @@ angular
 				vm.conReporte = false;
 			});
 		}
-
-
-
 		var vm = this;
 		vm.cambioReporte = cambioReporte;
 		vm.buscarReporte = buscarReporte;

@@ -71,52 +71,51 @@ angular
 			};
 
 		}
-
-
 		function BuscaReporte() {
-			var Parametros = {
-				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
-				'Clv_Queja': vm.Reporte,
-				'Contrato': '',
-				'NOMBRE': '',
-				'AP': '',
-				'AM': '',
-				'CALLE': '',
-				'NUMERO': '',
-				'SetupBox': '',
-				'Status': '',
-				'Op': 3,
-				'ClvColonia': 0,
-				'IdCompania': 0,
-				'ClvUsuario': 0,
-				'SoloNivel2': 0,
-				'NoTicket': 0
-			};
-			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
-				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
-				if (vm.ListaQuejas.length == 0) {
-					vm.sinRegistros = true;
-					vm.conRegistros = false;
-				} else {
-					vm.sinRegistros = false;
-					vm.conRegistros = true;
-				}
-			});
+			if (vm.Servicio == null) {
+				ngNotify.set('Por favor seleccione un tipo de servicio.', 'warn');
+			} else if (vm.Reporte == null) {
+				ngNotify.set('Ingresa un número de reporte válido.', 'warn');
+			} else {
+				var Parametros = {
+					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
+					'Clv_Queja': vm.Reporte,
+					'Contrato': '',
+					'NOMBRE': '',
+					'AP': '',
+					'AM': '',
+					'CALLE': '',
+					'NUMERO': '',
+					'SetupBox': '',
+					'Status': '',
+					'Op': 3,
+					'ClvColonia': 0,
+					'IdCompania': 0,
+					'ClvUsuario': 0,
+					'SoloNivel2': 0,
+					'NoTicket': 0
+				};
+				quejasFactory.ObtenLista(Parametros).then(function (data) {
+					console.log(data);
+					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+					if (vm.ListaQuejas.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
+			}
 		}
 
 		function BuscaContrato() {
-			if (vm.Servicio == null) {
-				return;
-			}
-			if (vm.Plaza == null) {
-				return;
-			}
-			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.Contrato))) {
+			if (vm.Servicio == null || vm.Plaza == null) {
+				ngNotify.set('Por favor seleccione una compañía y un tipo de servicio.', 'warn');
+			} else if (!(/^\d{1,9}-\d{1,9}$/.test(vm.Contrato))) {
 				console.log(false);
 				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
 			} else {
-
 				var Parametros = {
 					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 					'Clv_Queja': 0,
@@ -149,76 +148,85 @@ angular
 		}
 
 		function BuscaporNombre() {
-
-			var Parametros = {
-				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
-				'Clv_Queja': 0,
-				'Contrato': 0,
-				'NOMBRE': vm.Nombre,
-				'AP': vm.APaterno,
-				'AM': vm.Amaterno,
-				'CALLE': '',
-				'NUMERO': '',
-				'SetupBox': '',
-				'Status': '',
-				'Op': 1,
-				'ClvColonia': 0,
-				'IdCompania': 0,
-				'ClvUsuario': 0,
-				'SoloNivel2': 0,
-				'NoTicket': 0
-			};
-			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
-				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
-				if (vm.ListaQuejas.length == 0) {
-					vm.sinRegistros = true;
-					vm.conRegistros = false;
-				} else {
-					vm.sinRegistros = false;
-					vm.conRegistros = true;
-				}
-			});
-
+			if (vm.Servicio == undefined) {
+				ngNotify.set('Por favor seleccione un tipo de servicio.', 'warn');
+			} else if (vm.Nombre == undefined && vm.APaterno == undefined && vm.Amaterno == undefined) {
+				ngNotify.set('Introduce un nombre válido.', 'warn');
+			} else {
+				var Parametros = {
+					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
+					'Clv_Queja': 0,
+					'Contrato': 0,
+					'NOMBRE': vm.Nombre,
+					'AP': vm.APaterno,
+					'AM': vm.Amaterno,
+					'CALLE': '',
+					'NUMERO': '',
+					'SetupBox': '',
+					'Status': '',
+					'Op': 1,
+					'ClvColonia': 0,
+					'IdCompania': 0,
+					'ClvUsuario': 0,
+					'SoloNivel2': 0,
+					'NoTicket': 0
+				};
+				quejasFactory.ObtenLista(Parametros).then(function (data) {
+					console.log(data);
+					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+					if (vm.ListaQuejas.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
+			}
 		}
 
 		function BuscaporDireccion() {
-			var colonia;
+			/*var colonia;
 			if (vm.Colonia == null) {
 				colonia = 0;
 			} else {
 				colonia = vm.Colonia.clvColonia;
+			}*/
+			if (vm.Colonia == null) {
+				ngNotify.set('Por favor seleccione una compañía y una colonia.', 'warn');
+			} else if (vm.Colonia.clvColonia == null || vm.Colonia.clvColonia == 0) {
+				ngNotify.set('Por favor seleccione una compañía y una colonia.', 'warn');
+			} else {
+				var Parametros = {
+					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
+					'Clv_Queja': 0,
+					'Contrato': 0,
+					'NOMBRE': '',
+					'AP': '',
+					'AM': '',
+					'CALLE': vm.Calle,
+					'NUMERO': vm.Numero,
+					'SetupBox': '',
+					'Status': '',
+					'Op': 2,
+					'ClvColonia': vm.Colonia.clvColonia,
+					'IdCompania': 0,
+					'ClvUsuario': 0,
+					'SoloNivel2': 0,
+					'NoTicket': 0
+				};
+				quejasFactory.ObtenLista(Parametros).then(function (data) {
+					console.log(data);
+					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+					if (vm.ListaQuejas.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
 			}
-			var Parametros = {
-				'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
-				'Clv_Queja': 0,
-				'Contrato': 0,
-				'NOMBRE': '',
-				'AP': '',
-				'AM': '',
-				'CALLE': vm.Calle,
-				'NUMERO': vm.Numero,
-				'SetupBox': '',
-				'Status': '',
-				'Op': 2,
-				'ClvColonia': colonia,
-				'IdCompania': 0,
-				'ClvUsuario': 0,
-				'SoloNivel2': 0,
-				'NoTicket': 0
-			};
-			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
-				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
-				if (vm.ListaQuejas.length == 0) {
-					vm.sinRegistros = true;
-					vm.conRegistros = false;
-				} else {
-					vm.sinRegistros = false;
-					vm.conRegistros = true;
-				}
-			});
-
 		}
 
 		function CambioPlaza(x) {
