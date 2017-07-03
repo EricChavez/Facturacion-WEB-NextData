@@ -143,7 +143,7 @@
       <div class="col-md-4">
         <strong style="margin-top: 10px;">Clasificación del Problema:</strong>
         <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.clasificacionProblemas track by item.clvProblema">
-											  <option value=""  disabled="true">selecciona</option>
+											  <option value=""  ng-disabled="$ctrl.BloquearElementos">selecciona</option>
 											  </select>
         <br>
         <strong>Reporte del Cliente:</strong>

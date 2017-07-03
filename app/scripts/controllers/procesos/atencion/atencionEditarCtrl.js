@@ -7,10 +7,11 @@ angular
         vm.servicios = data.GetMuestraTipSerPrincipal2ListResult;
 
         atencionFactory.ConsultaLLamada(vm.NumeroLlamada).then(function (data) {
+          console.log(data);
           var datos = data.GetLLamadasdeInternetListResult[0];
           vm.CLV_TIPSER = datos.CLV_TIPSER;
           vm.CLV_TRABAJO = datos.Clv_trabajo;
-          vm.clvProblema = datos.Clv_Problema;
+          vm.clvProblema = parseInt(datos.Clv_Problema);
           vm.tipoAtencion = datos.TipoAtencion;
           vm.contratoSelected = datos.ContratoCom;
           var param = {};
@@ -48,7 +49,7 @@ angular
               vm.clasificacionProblemas = data.GetuspConsultaTblClasificacionProblemasListResult;
 
               for (var b = 0; b < vm.clasificacionProblemas.length; b++) {
-                if (vm.clasificacionProblemas[b].clvProblema == parseInt(vm.clvProblema)) {
+                if (vm.clasificacionProblemas[b].clvProblema == vm.clvProblema) {
                   vm.Problema = vm.clasificacionProblemas[b];
                 }
               }
