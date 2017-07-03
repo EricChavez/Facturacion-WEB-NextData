@@ -1,81 +1,82 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('EstadisticasdetalleCtrl', function ($uibModal, $rootScope,$stateParams ,ngNotify, encuestasFactory) {
+  .controller('EstadisticasdetalleCtrl', function ($uibModal, $rootScope, $stateParams, ngNotify, encuestasFactory) {
 
     function initialData() {
-
-      vm.IdEncuesta = $stateParams.id;
-
-      vm.myChartObject.type = "PieChart";
-      vm.onions = [{
-          v: "Onions"
-        },
-        {
-          v: 3
-        },
-      ];
-
-      vm.myChartObject.data = {
-        "cols": [{
-            id: "t",
-            label: "Topping",
-            type: "string"
-          },
-          {
-            id: "s",
-            label: "Slices",
-            type: "number"
-          }
-        ],
-        "rows": [{
-            c: [{
-                v: "Mushrooms"
-              },
-              {
-                v: 3
-              },
-            ]
-          },
-          {
-            c: vm.onions
-          },
-          {
-            c: [{
-                v: "Olives"
-              },
-              {
-                v: 31
-              }
-            ]
-          },
-          {
-            c: [{
-                v: "Zucchini"
-              },
-              {
-                v: 1
-              },
-            ]
-          },
-          {
-            c: [{
-                v: "Pepperoni"
-              },
-              {
-                v: 2
-              },
-            ]
-          }
-        ]
-      };
-
-      vm.myChartObject.options = {
-        'title': 'How Much Pizza I Ate Last Night'
-      };
-
+      vm.Idproceso = $stateParams.id;
+      graficar();
     }
 
+    function graficar(){
+encuestasFactory.GetGraficasPreguntasList(vm.Idproceso).then(function (data) {
+        vm.Preguntas = data.GetGraficasPreguntasListResult.preguntas;
+        
+       
+         console.log(vm.Preguntas);
+        vm.Preguntas.forEach(function (pregunta) {
+          console.log(pregunta);
+          var cols = [{
+              id: 't',
+              label: 'Topping',
+              type: 'string'
+            },
+            {
+              id: 's',
+              label: 'clientes',
+              type: 'number'
+            }
+          ];
+
+          console.log(cols);
+          var options = {
+            'title': pregunta.Pregunta,
+            'forceRedrawNow':true
+          };
+
+          console.log(options);
+          var respuestas = [];
+
+          pregunta.ResOpcMult.forEach(function (respuesta) {
+
+            var res = {
+              c: [{
+                  v: respuesta.ResOpcMult
+                },
+                {
+                  v: respuesta.cantidad
+                },
+              ]
+            };
+            respuestas.push(res);
+
+          });
+        
+          console.log(respuestas);
+
+          var data = {
+            'cols': cols,
+            'rows': respuestas,
+           
+            
+          };
+          pregunta.data = data;
+          pregunta.type=vm.TipoGrafica;
+          pregunta.options=options;
+        });
+
+      console.log(vm.Preguntas);
+      });
+    }
+
+
+
+      function ObtenPreguntas() {
+        vm.resultados.forEach(function (pregunta) {
+
+
+        });
+      }
 
     function printDiv(divName) {
       var printContents = document.getElementById(divName).innerHTML;
@@ -86,12 +87,18 @@ angular
 
     }
 
+    function cambioGrafico(){
+      graficar();
+    }
+
 
     var vm = this;
-    vm.myChartObject = {};
+    //vm.myChartObject = {};
+    vm.TipoGrafica='PieChart';
     initialData();
-    
     vm.printDiv = printDiv;
-
+    vm.Charts = [];
+    vm.cambioGrafico=cambioGrafico;
+    
 
   });

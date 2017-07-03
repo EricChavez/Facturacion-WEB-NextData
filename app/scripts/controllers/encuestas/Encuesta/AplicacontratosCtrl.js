@@ -62,7 +62,7 @@ angular
       });
 
       console.log(respuestas);
-      return;
+   
       encuestasFactory.GetRelEncuestaCli(vm.IdProceso, vm.IdEncuesta, vm.contrato, respuestas).then(function (data) {
         vm.PanelContratos = true;
 

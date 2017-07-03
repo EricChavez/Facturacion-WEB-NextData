@@ -1,7 +1,7 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('EncuestaNuevaCtrl', function ($uibModal, $rootScope, ngNotify, encuestasFactory) {
+  .controller('EncuestaNuevaCtrl', function ($uibModal, $rootScope, ngNotify, encuestasFactory,$state) {
 
     function initialData() {
       vm.obj = {};

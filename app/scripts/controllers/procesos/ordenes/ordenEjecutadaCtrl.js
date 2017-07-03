@@ -5,9 +5,9 @@
     .module('softvApp')
     .controller('ordenEjecutadaCtrl', ordenEjecutadaCtrl);
 
-  ordenEjecutadaCtrl.inject = ['$state', 'ngNotify', '$stateParams', '$uibModal', 'ordenesFactory', '$rootScope', '$filter'];
+  ordenEjecutadaCtrl.inject = ['$state', 'ngNotify', '$stateParams', '$uibModal','DescargarMaterialFactory', 'ordenesFactory', '$rootScope', '$filter'];
 
-  function ordenEjecutadaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactory, $rootScope, $filter) {
+  function ordenEjecutadaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactory, $rootScope, $filter,DescargarMaterialFactory) {
     var vm = this;
     vm.showDatosCliente = true;
     vm.buscarContrato = buscarContrato;
@@ -20,7 +20,7 @@
     vm.claveOrden = $stateParams.claveOr;
     vm.block = true;
     vm.blockSolicitud = true;
-    vm.MuestraAgenda=MuestraAgenda;
+    vm.MuestraAgenda = MuestraAgenda;
     vm.blockVista1 = true;
     vm.blockVista2 = true;
     vm.blockEjecucionReal = true;
@@ -32,6 +32,8 @@
     vm.ValidarDescargaMaterialOrden = ValidarDescargaMaterialOrden;
     vm.soyEjecucion = true;
     vm.Eliminar = Eliminar;
+    vm.idBitacora = 0;
+    vm.idTecnicoBitacora = 0;
     init(vm.claveOrden);
 
 
@@ -61,6 +63,7 @@
 
     function init(orden) {
       ordenesFactory.ConsultaOrdSer(orden).then(function (data) {
+        console.log(data);
         vm.datosOrden = data.GetDeepConsultaOrdSerResult;
 
         vm.clv_orden = data.GetDeepConsultaOrdSerResult.Clv_Orden;
@@ -76,41 +79,48 @@
         buscarContrato(vm.contrato);
         vm.status = 'E'
         Bloqueo();
-        // if (vm.datosOrden.Fec_Eje != '01/01/1900') {
-        //   vm.Fec_Eje = vm.datosOrden.Fec_Eje;
-        // }
-        // if (vm.datosOrden.Visita1 != '01/01/1900') {
-        //   vm.Visita1 = vm.datosOrden.Visita1;
-        // }
-        // if (vm.datosOrden.Visita2 != '01/01/1900') {
-        //   vm.Visita2 = vm.datosOrden.Visita2;
-        // }
-        // if (vm.status == 'P') {
-        //   vm.status = 'E';
-        //   vm.blockEjecucion = false;
-        // }
+
+
+        DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_orden, 'O').then(function (data) {
+          console.log(data);
+          if (data.GetchecaBitacoraTecnicoResult != null) {
+            vm.idBitacora = data.GetchecaBitacoraTecnicoResult.idBitacora;
+            vm.idTecnicoBitacora = data.GetchecaBitacoraTecnicoResult.clvTecnico;
+          }
+
+          ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
+            vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
+
+            if (vm.idTecnicoBitacora > 0) {
+              for (var a = 0; a < vm.tecnico.length; a++) {
+                if (vm.tecnico[a].CLV_TECNICO == vm.idTecnicoBitacora) {
+                  console.log(vm.tecnico[a].CLV_TECNICO);
+                  vm.selectedTecnico = vm.tecnico[a];
+                  vm.blockTecnico = true;
+                }
+              }
+            }
+          });
+        });
 
       });
-      ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
-        vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
-      });
-    }
 
-    function ValidarDescargaMaterialOrden(){
 
-        if(vm.selectedTecnico != undefined){
-          DescargaMaterialOrden();
-        }else{
-          ngNotify.set('Selecciona un técnico y/o Ingresa una fecha de ejecución.', 'error');
-        }
-        //console.log(vm.selectedTecnico, vm.Fec_Eje);
 
     }
-    
+
+    function ValidarDescargaMaterialOrden() {
+      if (vm.selectedTecnico != undefined) {
+        DescargaMaterialOrden();
+      } else {
+        ngNotify.set('Selecciona un técnico y/o Ingresa una fecha de ejecución.', 'error');
+      }
+    }
+
     function DescargaMaterialOrden() {
-      
+
       var options = {};
-      
+
       options.ClvOrden = vm.clv_orden;
       options.SctTecnico = vm.selectedTecnico;
       options.Tipo_Descargar = "O";
@@ -126,8 +136,8 @@
         keyboard: false,
         size: 'lg',
         resolve: {
-          options: function() {
-           	return options;
+          options: function () {
+            return options;
           }
         }
       });
@@ -388,9 +398,9 @@
     function MuestraAgenda() {
 
       var options = {};
-      options.clv_queja_orden =  vm.clv_orden;
+      options.clv_queja_orden = vm.clv_orden;
       options.opcion = 1;
-     
+
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',

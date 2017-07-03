@@ -214,7 +214,7 @@
               <div class="col-md-12">
                 <b>Selecciona Técnico:</b>
                 <select class="form-control input-sm" name="Tecnico" required-message="'Este campo es obligatorio.'" required validate-on="dirty"
-                  ng-model="$ctrl.Tecnico" ng-options="item as item.Nombre for item in $ctrl.Tecnicos track by item.clv_Tecnico">
+                  ng-model="$ctrl.Tecnico" ng-disabled="$ctrl.BlockTecnico" ng-options="item as item.Nombre for item in $ctrl.Tecnicos track by item.clv_Tecnico">
                        <option value="">Selecciona</option>
                        </select>
               </div>

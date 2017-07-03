@@ -13,22 +13,28 @@
   <div class="card-body">
 
     <div class="row">
-        <div class="col-md-4">
- <label><b>Encuesta</b></label>
-      <select class="form-control input-sm" name="encuesta" required-message="'Este campo es obligatorio'" ng-required="true" validate-on="dirty"
-        ng-options="v.TituloEncuesta for v in $ctrl.Encuestas track by v.IdEncuesta" ng-model="$ctrl.Encuesta">   
-            <option value="">Selecciona</option>                                      
-          </select>
-
-        </div>
+      
         <div class="col-md-4">
 <br>
             <button class="btn btn-success btn-flat btn-sm" ng-click="$ctrl.printDiv('print')"><i class="fa fa-print"></i> Imprimir resultados</b<utton>
         </div>
+        <div class="col-md-4">
+selecciona el tipo de grafica
+           <select class="form-control input-sm" ng-model="$ctrl.TipoGrafica"
+           ng-change="$ctrl.cambioGrafico()"
+           >
+           <option value="PieChart" selected>Gráfico circular </option>
+           <option value="BarChart">Gráfico de barras</option>
+           <option value="ColumnChart">Gráfico columnas</option>
+           
+           </select>
+        </div>
      
     </div>
 <div class="row" id="print" style="overflow-y:scroll; max-height: 500px; ">
- <div google-chart chart="$ctrl.myChartObject" style="height:400px; width:100%;"></div>
+
+
+ <div  ng-repeat="x in $ctrl.Preguntas" google-chart chart="x" style="height:500px; width:100%;"></div>
 </div>
 
    
