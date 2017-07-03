@@ -29,7 +29,7 @@ angular
                 ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
                 ObjDescargaMat.ClvOrden = options.ClvOrden;
                 ObjDescargaMat.IdAlmacen = vm.IAlma;
-                ObjDescargaMat.Accion = "Agregar";
+                ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
                 ObjDescargaMat.IdBitacora = vm.No_Bitacora;
                 ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
@@ -195,7 +195,7 @@ angular
                 ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
                 ObjDescargaMat.ClvOrden = options.ClvOrden;
                 ObjDescargaMat.IdAlmacen = vm.IAlma;
-                ObjDescargaMat.Accion = "Agregar";
+                ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
                 ObjDescargaMat.IdBitacora = vm.No_Bitacora;
                 ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
@@ -244,9 +244,10 @@ angular
         ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
         ObjDescargaMat.ClvOrden = options.ClvOrden;
         ObjDescargaMat.IdAlmacen = vm.IAlma;
-        ObjDescargaMat.Accion = "Agregar";
+        ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
         ObjDescargaMat.IdBitacora = vm.No_Bitacora;
         ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
+        console.log(ObjDescargaMat);
         DescargarMaterialFactory.GetAddDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
           console.log(data);
           DescargarMaterialFactory.GetGRABAtblDescargaMaterialCableIACTV(options.ClvOrden).then(function(data){
@@ -277,7 +278,7 @@ angular
       ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
       ObjDescargaMat.ClvOrden = options.ClvOrden;
       ObjDescargaMat.IdAlmacen = vm.IAlma;
-      ObjDescargaMat.Accion = "Agregar";
+      ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
       ObjDescargaMat.IdBitacora = vm.No_Bitacora;
       ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
