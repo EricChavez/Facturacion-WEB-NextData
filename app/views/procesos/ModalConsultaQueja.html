@@ -22,8 +22,7 @@
               </div>
               <div class="col-md-3">
 
-                <select class="form-control input-sm" name="Estatus" ng-disabled="$ctrl.IEstatus" ng-model="$ctrl.Estatus" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave"
-                    ng-disabled="true">
+                <select class="form-control input-sm" name="Estatus" ng-disabled="true" ng-model="$ctrl.Estatus" required-message="'Este campo es obligatorio.'" required validate-on="dirty" ng-change="$ctrl.CambiaEstatus()" ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
                   <option value="">Selecciona estatus</option>
                   </select>
               </div>

@@ -217,7 +217,7 @@ angular
 				return;
 			}
 			
-				if (vm.contratoSelected == null || vm.contratoSelected == '') {
+				if (vm.contratoSelected == null || vm.contratoSelected == '' || !(/^\d{1,9}-\d{1,9}$/.test(vm.contratoSelected))) {
 					ngNotify.set('Coloque un contrato válido', 'error');
 					return;
 				}

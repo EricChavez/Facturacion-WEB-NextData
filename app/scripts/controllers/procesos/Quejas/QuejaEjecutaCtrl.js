@@ -281,14 +281,14 @@ angular
           vm.Ivisita3 = 'input-normal';
         }
 
-        if (vm.Fechavisita3 == null && vm.Fechavisita2) {
+        if (vm.Fechavisita3 == null && vm.Fechavisita2 != null) {
           vm.FVisita3 = false;
           vm.FVisita1 = true;
-          vm.FVisita3 = true;
+          vm.FVisita2 = true;
 
-          vm.Ivisita2 = 'input-yellow';
+          vm.Ivisita2 = 'input-normal';
           vm.Ivisita1 = 'input-normal';
-          vm.Ivisita3 = 'input-normal';
+          vm.Ivisita3 = 'input-yellow';
         }
 
       } else if (vm.Estatus == 'S') {
@@ -312,6 +312,7 @@ angular
     }
 
     function Ejecutaqueja() {
+      console.log("F2: " + vm.Fechavisita2);
       quejasFactory.ValidaQueja(vm.clv_queja).then(function (data) {
         if (data.GetDeepValidaQuejaCompaniaAdicResult.Valida == 0) {
           quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function (bloqueado) {
@@ -339,7 +340,7 @@ angular
                     return;
                   }
                 } else if (vm.Fechavisita1 != undefined &&
-                  vm.Fechavisita2 == undefined &&
+                  vm.Fechavisita2 != undefined &&
                   vm.Fechavisita3 == undefined) {
 
                   if (ValidaFecha(vm.Fechavisita2, vm.FechaSolicitud) == false) {

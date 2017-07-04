@@ -148,18 +148,39 @@ angular
 		}
 
 		function BuscaporNombre() {
+			if (vm.Nombre == undefined || vm.Nombre == "") {
+				var NombreB = "";
+			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.Nombre))) {
+				var NombreB = "";
+			} else {
+				var NombreB = vm.Nombre;
+			}
+			if (vm.APaterno == undefined || vm.APaterno == "") {
+				var APaternoB = "";
+			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.APaterno))) {
+				var APaternoB = "";
+			} else {
+				var APaternoB = vm.APaterno;
+			}
+			if (vm.Amaterno == undefined || vm.Amaterno == "") {
+				var AmaternoB = "";
+			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.Amaterno))) {
+				var AmaternoB = "";
+			} else {
+				var AmaternoB = vm.Amaterno;
+			}
 			if (vm.Servicio == undefined) {
 				ngNotify.set('Por favor seleccione un tipo de servicio.', 'warn');
-			} else if (vm.Nombre == undefined && vm.APaterno == undefined && vm.Amaterno == undefined) {
+			} else if (NombreB == "" && APaternoB == "" && AmaternoB == "") {
 				ngNotify.set('Introduce un nombre válido.', 'warn');
 			} else {
 				var Parametros = {
 					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 					'Clv_Queja': 0,
 					'Contrato': 0,
-					'NOMBRE': vm.Nombre,
-					'AP': vm.APaterno,
-					'AM': vm.Amaterno,
+					'NOMBRE': NombreB,
+					'AP': APaternoB,
+					'AM': AmaternoB,
 					'CALLE': '',
 					'NUMERO': '',
 					'SetupBox': '',
@@ -186,12 +207,6 @@ angular
 		}
 
 		function BuscaporDireccion() {
-			/*var colonia;
-			if (vm.Colonia == null) {
-				colonia = 0;
-			} else {
-				colonia = vm.Colonia.clvColonia;
-			}*/
 			if (vm.Colonia == null) {
 				ngNotify.set('Por favor seleccione una compañía y una colonia.', 'warn');
 			} else if (vm.Colonia.clvColonia == null || vm.Colonia.clvColonia == 0) {
