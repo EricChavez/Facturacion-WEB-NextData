@@ -7,11 +7,11 @@ angular
       vm.IdProceso = $stateParams.id;
       encuestasFactory.GetUniversoEncuestaAplicarList(vm.IdProceso).then(function (data) {
         vm.Contratos = data.GetUniversoEncuestaAplicarListResult;
-        console.log(vm.Contratos);
+        
         encuestasFactory.GetDeepProcesosEncuestas(vm.IdProceso).then(function (data) {
           vm.proceso = data.GetDeepProcesosEncuestasResult;
           vm.IdEncuesta = data.GetDeepProcesosEncuestasResult.IdEncuesta;
-          console.log(data);
+         
         });
 
       });
@@ -22,7 +22,7 @@ angular
       vm.contrato = cliente.Contrato;
       encuestasFactory.GetRelPreguntaEncuesta(vm.IdEncuesta).then(function (data) {
         vm.Encuesta = data.GetEncuestaDetalleResult;
-        console.log(vm.Encuesta);
+       
         vm.PanelContratos = false;
       });
     }
@@ -61,14 +61,14 @@ angular
 
       });
 
-      console.log(respuestas);
+      
    
       encuestasFactory.GetRelEncuestaCli(vm.IdProceso, vm.IdEncuesta, vm.contrato, respuestas).then(function (data) {
         vm.PanelContratos = true;
 
         encuestasFactory.GetUniversoEncuestaAplicarList(vm.IdProceso).then(function (data) {
           vm.Contratos = data.GetUniversoEncuestaAplicarListResult;
-          console.log(vm.Contratos);
+         
           encuestasFactory.GetDeepProcesosEncuestas(vm.IdProceso).then(function (data) {
             vm.proceso = data.GetDeepProcesosEncuestasResult;
             vm.IdEncuesta = data.GetDeepProcesosEncuestasResult.IdEncuesta;

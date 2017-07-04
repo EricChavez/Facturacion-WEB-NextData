@@ -263,6 +263,7 @@ angular
       obj.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
       obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
       obj.Turno = vm.Turno;
+      obj.ClvProblema=vm.Problema.clvProblema;
       atencionFactory.ActualizaLlamada(obj).then(function (data) {
         $state.go('home.procesos.atencion');
         ngNotify.set('La llamada #' + vm.NumeroLlamada + ' se ha editado correctamente', 'grimace');

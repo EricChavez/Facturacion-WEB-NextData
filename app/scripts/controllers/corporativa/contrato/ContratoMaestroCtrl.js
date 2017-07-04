@@ -39,7 +39,7 @@ function ContratoMaestroCtrl($uibModal, ContratoMaestroFactory) {
       "Op": 4
     };
     ContratoMaestroFactory.BuscarContratos(obj).then(function (data) {
-      console.log(data);
+      
       vm.Contratos = data.GetBusquedaContratoMaestroFacResult;
     });
   }

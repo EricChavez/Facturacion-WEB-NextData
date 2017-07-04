@@ -16,7 +16,7 @@
       ContratoMaestroFactory.GetCrearNotaCreditoCM(object.factura).then(function (response) {
         vm.det = response.GetCrearNotaCreditoCMResult[0];
         ContratoMaestroFactory.ConceptosTicketNotasCredito(object.factura).then(function (data) {
-          console.log(data);
+          
           vm.conceptos = data.GetConceptosTicketNotasCreditoCMResult;           
 
           vm.total=0;

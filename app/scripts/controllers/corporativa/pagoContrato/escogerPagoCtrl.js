@@ -34,11 +34,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 				NoPago: vm.numeroPagos,
 				PagoInicial: vm.pagoInicial
 			};
-			// var elem = {
-			// 	PagoInicial: vm.pagoInicial,
-			// };
-			// console.log(objPagar);
-			// pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
+			
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({
@@ -74,11 +70,7 @@ function EscogerPagoCtrl($uibModal, $state, $rootScope, cajasFactory, ngNotify, 
 				NoPago: 0,
 				PagoInicial: vm.abono
 			};
-			// var elem = {
-			// 	PagoInicial: vm.abono,
-			// };
-			// console.log(objPagar);
-			// pagosMaestrosFactory.actFactura(elem).then(function(dataGraba) {
+			
 				$uibModalInstance.dismiss('cancel');
 				vm.animationsEnabled = true;
 				var modalInstance = $uibModal.open({

@@ -14,7 +14,7 @@
     vm.titulo='Atención';
 
     this.$onInit = function () {     
-      console.log(object);
+     
         vm.pregunta = object.pregunta;
         vm.MesesAdelantados = object.MesesAdelantados;
     

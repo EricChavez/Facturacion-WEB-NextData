@@ -427,7 +427,7 @@ function PagarContadoCtrl($uibModal, $state, $rootScope, ngNotify, inMenu, $uibM
 					}
 					break;
 				default:
-					console.log('sasasas');
+					
 			}
 		}
 	}

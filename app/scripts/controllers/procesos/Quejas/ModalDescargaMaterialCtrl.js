@@ -256,9 +256,7 @@ angular
         
         });
         
-        /*DescargarMaterialFactory.GetchecaBitacoraTecnico(options.ClvOrden, options.Tipo_Descargar).then(function(data){
-        	console.log(data);
-        });*/
+     
 
 
       } else {
