@@ -34,6 +34,7 @@
     vm.Eliminar = Eliminar;
     vm.idBitacora = 0;
     vm.idTecnicoBitacora = 0;
+    vm.SoyRetiro = false;
     init(vm.claveOrden);
 
 
@@ -61,6 +62,39 @@
     }
 
 
+    function DimeSitengoRetiro() {
+      console.log(vm.trabajosTabla);
+      var recibidos = 0;
+      vm.trabajosTabla.forEach(function (row) {
+        if (row.Descripcion.toLowerCase().includes('rante') ||
+          row.Descripcion.toLowerCase().includes('relnb') ||
+          row.Descripcion.toLowerCase().includes('rcabl') ||
+          row.Descripcion.toLowerCase().includes('rcont') ||
+          row.Descripcion.toLowerCase().includes('rapar') ||
+          row.Descripcion.toLowerCase().includes('rantx') ||
+          row.Descripcion.toLowerCase().includes('riapar') ||
+          row.Descripcion.toLowerCase().includes('retca') ||
+          row.Descripcion.toLowerCase().includes('rradi') ||
+          row.Descripcion.toLowerCase().includes('rrout')) {
+          vm.SoyRetiro = true;
+          if (row.recibi == true) {
+            recibidos = recibidos + 1;
+          }
+
+        }
+
+      });
+
+      if (recibidos == 0) {
+        ngNotify.set('Necesita recibir al menos un articulo para generar la orden ', 'warn');
+        return;
+
+      }
+
+
+    }
+
+
     function init(orden) {
       ordenesFactory.ConsultaOrdSer(orden).then(function (data) {
 
@@ -74,6 +108,10 @@
         vm.observaciones = vm.datosOrden.Obs;
         ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
           vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
+          vm.trabajosTabla.forEach(function (row) {
+            row.recibi = false;
+
+          });
         });
         buscarContrato(vm.contrato);
         vm.status = 'E'
@@ -186,32 +224,62 @@
 
     function detalleTrabajo(trabajo, x) {
 
-      if (trabajo != null) {
-        if (vm.selectedTecnico == undefined) {
-          ngNotify.set('Selecciona un técnico.', 'warn');
-        }
-        var items = {};
-        items.contrato = vm.contratoBueno;
-        if (x.Descripcion.toLowerCase().includes('ipaqu') ||
-          x.Descripcion.toLowerCase().includes('bpaqu') ||
-          x.Descripcion.toLowerCase().includes('dpaqu') ||
-          x.Descripcion.toLowerCase().includes('rpaqu') ||
-          x.Descripcion.toLowerCase().includes('ipaqut') ||
-          x.Descripcion.toLowerCase().includes('bpaqt') ||
-          x.Descripcion.toLowerCase().includes('dpaqt') ||
-          x.Descripcion.toLowerCase().includes('rpaqt') ||
-          x.Descripcion.toLowerCase().includes('bpaad') ||
-          x.Descripcion.toLowerCase().includes('bsedi')) {
-          items.clv_detalle_orden = x.Clave;
-          items.clv_orden = x.Clv_Orden;
-          items.descripcion = x.Descripcion.toLowerCase();
-          items.servicio = vm.Clv_TipSer;
+
+      if (vm.selectedTecnico == undefined) {
+        ngNotify.set('Selecciona un técnico.', 'warn');
+      }
+      var items = {};
+      items.contrato = vm.contratoBueno;
+      if (x.Descripcion.toLowerCase().includes('ipaqu') ||
+        x.Descripcion.toLowerCase().includes('bpaqu') ||
+        x.Descripcion.toLowerCase().includes('dpaqu') ||
+        x.Descripcion.toLowerCase().includes('rpaqu') ||
+        x.Descripcion.toLowerCase().includes('ipaqut') ||
+        x.Descripcion.toLowerCase().includes('bpaqt') ||
+        x.Descripcion.toLowerCase().includes('dpaqt') ||
+        x.Descripcion.toLowerCase().includes('rpaqt') ||
+        x.Descripcion.toLowerCase().includes('bpaad') ||
+        x.Descripcion.toLowerCase().includes('bsedi')) {
+        items.clv_detalle_orden = x.Clave;
+        items.clv_orden = x.Clv_Orden;
+        items.descripcion = x.Descripcion.toLowerCase();
+        items.servicio = vm.Clv_TipSer;
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/procesos/bajaServicios.html',
+          controller: 'BajaServiciosCtrl',
+          controllerAs: 'ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'md',
+          resolve: {
+            items: function () {
+              return items;
+            }
+          }
+        });
+      } else if (
+        x.Descripcion.toLowerCase().includes('camdo') ||
+        x.Descripcion.toLowerCase().includes('cadig') ||
+        x.Descripcion.toLowerCase().includes('canet')
+      ) {
+
+        ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
+          var items = {
+            clv_detalle_orden: vm.clv_detalle,
+            clv_orden: vm.clv_orden,
+            contrato: vm.contratoBueno,
+            isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
+            datosCamdo: data.GetDeepCAMDOResult
+          };
           var modalInstance = $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/procesos/bajaServicios.html',
-            controller: 'BajaServiciosCtrl',
+            templateUrl: 'views/facturacion/modalCambioDomicilio.html',
+            controller: 'CambioDomicilioOrdenesCtrl',
             controllerAs: 'ctrl',
             backdrop: 'static',
             keyboard: false,
@@ -222,115 +290,98 @@
               }
             }
           });
-        } else if (
-          x.Descripcion.toLowerCase().includes('camdo') ||
-          x.Descripcion.toLowerCase().includes('cadig') ||
-          x.Descripcion.toLowerCase().includes('canet')
-        ) {
+        });
+      } else if (
+        x.Descripcion.toLowerCase().includes('iante') ||
+        x.Descripcion.toLowerCase().includes('inlnb') ||
+        x.Descripcion.toLowerCase().includes('iapar') ||
 
-          ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
-            var items = {
-              clv_detalle_orden: vm.clv_detalle,
-              clv_orden: vm.clv_orden,
-              contrato: vm.contratoBueno,
-              isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
-              datosCamdo: data.GetDeepCAMDOResult
-            };
-            var modalInstance = $uibModal.open({
-              animation: true,
-              ariaLabelledBy: 'modal-title',
-              ariaDescribedBy: 'modal-body',
-              templateUrl: 'views/facturacion/modalCambioDomicilio.html',
-              controller: 'CambioDomicilioOrdenesCtrl',
-              controllerAs: 'ctrl',
-              backdrop: 'static',
-              keyboard: false,
-              size: 'md',
-              resolve: {
-                items: function () {
-                  return items;
-                }
-              }
-            });
-          });
-        } else if (
-          x.Descripcion.toLowerCase().includes('iante') ||
-          x.Descripcion.toLowerCase().includes('inlnb') ||
-          x.Descripcion.toLowerCase().includes('iapar') ||
-          x.Descripcion.toLowerCase().includes('riapar') ||
-          x.Descripcion.toLowerCase().includes('iantx') ||
-          x.Descripcion.toLowerCase().includes('iradi') ||
-          x.Descripcion.toLowerCase().includes('irout') ||
-          x.Descripcion.toLowerCase().includes('icabm') ||
-          x.Descripcion.toLowerCase().includes('ecabl') ||
-          x.Descripcion.toLowerCase().includes('econt') ||
-          x.Descripcion.toLowerCase().includes('rante') ||
-          x.Descripcion.toLowerCase().includes('relnb') ||
-          x.Descripcion.toLowerCase().includes('rcabl') ||
-          x.Descripcion.toLowerCase().includes('rcont') ||
-          x.Descripcion.toLowerCase().includes('rapar') ||
-          x.Descripcion.toLowerCase().includes('rantx') ||
-          x.Descripcion.toLowerCase().includes('retca') ||
-          x.Descripcion.toLowerCase().includes('rradi') ||
-          x.Descripcion.toLowerCase().includes('rrout')
-        ) {
-          vm.NOM = x.Descripcion.split(' ');
-          var items_ = {
-            'Op': 'M',
-            'Trabajo': vm.NOM[0],
-            'Contrato': vm.contratoBueno,
-            'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
-            'Clave': x.Clave,
-            'ClvOrden': x.Clv_Orden
-          };
-          var modalInstance = $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/procesos/ModalAsignaAparato.html',
-            controller: 'ModalAsignaAparatoCtrl',
-            controllerAs: 'ctrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'md',
-            resolve: {
-              items: function () {
-                return items_;
-              }
-            }
-          });
-        } else if (
-          x.Descripcion.toLowerCase().includes('ccabm') ||
-          x.Descripcion.toLowerCase().includes('cantx')
-        ) {
-          vm.NOM = x.Descripcion.split(' ');
-          var items_ = {
-            'Op': 'M',
-            'Trabajo': vm.NOM[0],
-            'Contrato': vm.contratoBueno,
-            'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
-            'Clave': x.Clave,
-            'ClvOrden': x.Clv_Orden
-          };
+        x.Descripcion.toLowerCase().includes('iantx') ||
+        x.Descripcion.toLowerCase().includes('inups') ||
+        x.Descripcion.toLowerCase().includes('itrip') ||
+        x.Descripcion.toLowerCase().includes('iradi') ||
+        x.Descripcion.toLowerCase().includes('irout') ||
+        x.Descripcion.toLowerCase().includes('icabm') ||
+        x.Descripcion.toLowerCase().includes('ecabl') ||
+        x.Descripcion.toLowerCase().includes('econt')
 
-          var modalInstance = $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: 'views/procesos/ModalAsignaAparato.html',
-            controller: 'ModalCambioAparatoCtrl',
-            controllerAs: 'ctrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'md',
-            resolve: {
-              items: function () {
-                return items_;
-              }
+      ) {
+
+        vm.NOM = x.Descripcion.split(' ');
+        var items_ = {
+          'Op': 'M',
+          'Trabajo': vm.NOM[0],
+          'Contrato': vm.contratoBueno,
+          'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
+          'Clave': x.Clave,
+          'ClvOrden': x.Clv_Orden
+        };
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/procesos/ModalAsignaAparato.html',
+          controller: 'ModalAsignaAparatoCtrl',
+          controllerAs: 'ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'md',
+          resolve: {
+            items: function () {
+              return items_;
             }
-          });
-        }
+          }
+        });
+      } else if (
+
+        x.Descripcion.toLowerCase().includes('rante') ||
+        x.Descripcion.toLowerCase().includes('relnb') ||
+        x.Descripcion.toLowerCase().includes('rcabl') ||
+        x.Descripcion.toLowerCase().includes('rcont') ||
+        x.Descripcion.toLowerCase().includes('rapar') ||
+        x.Descripcion.toLowerCase().includes('rantx') ||
+        x.Descripcion.toLowerCase().includes('riapar') ||
+        x.Descripcion.toLowerCase().includes('retca') ||
+        x.Descripcion.toLowerCase().includes('rradi') ||
+        x.Descripcion.toLowerCase().includes('rrout')
+      ) {
+
+        vm.TrabajoRetiro = true;
+
+      } else if (
+        x.Descripcion.toLowerCase().includes('ccabm') ||
+        x.Descripcion.toLowerCase().includes('cantx')
+      ) {
+        vm.NOM = x.Descripcion.split(' ');
+        var items_ = {
+          'Op': 'M',
+          'Trabajo': vm.NOM[0],
+          'Contrato': vm.contratoBueno,
+          'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
+          'Clave': x.Clave,
+          'ClvOrden': x.Clv_Orden
+        };
+
+        var modalInstance = $uibModal.open({
+          animation: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'views/procesos/ModalAsignaAparato.html',
+          controller: 'ModalCambioAparatoCtrl',
+          controllerAs: 'ctrl',
+          backdrop: 'static',
+          keyboard: false,
+          size: 'md',
+          resolve: {
+            items: function () {
+              return items_;
+            }
+          }
+        });
+      } else {
+        console.log('este trabajo no esta implementado');
       }
+
     }
 
     function fechas() {
@@ -407,6 +458,9 @@
           }
         }
       }
+
+      DimeSitengoRetiro();
+      return;      
       EjecutaOrden();
     }
 
@@ -556,6 +610,7 @@
                         }
                       });
                     } else {
+
                       GuardaDetalle();
                     }
                   });

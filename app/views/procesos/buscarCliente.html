@@ -8,7 +8,7 @@
     <div class="card panel">
       <div class="card-head card-head-xs collapsed " data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
         aria-expanded="false">
-        <header><i class="fa fa-search"></i> Buscar Cliente</header>
+        <header><i class="fa fa-search"></i> Filtros</header>
         <div class="tools">
           <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
         </div>
@@ -18,14 +18,14 @@
           <uib-tabset active="active">
             <uib-tab index="0">
               <uib-tab-heading>
-                <i class="md md-receipt"></i> Suscriptor
+                <i class="md md-user"></i> Suscriptor
               </uib-tab-heading>
               <div class="row">
                 <br>
                 <div class="col-md-3">
                   <div class="col-md-12">
                     <div class="input-group">
-                      <input type="text" class="form-control" ng-model="$ctrl.contrato" placeholder="Contrato">
+                      <input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" placeholder="Contrato">
                       <span class="input-group-btn">
                             <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarContrato()">Buscar</button>
                         </span>
@@ -33,15 +33,19 @@
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" ng-model="$ctrl.nombre" placeholder="Nombre">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.nombre" placeholder="Nombre">
                 </div>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" ng-model="$ctrl.paterno" placeholder="Apellido Paterno">
+                <div class="col-md-2">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.paterno" placeholder="Apellido Paterno">
 
                 </div>
-                <div class="col-md-3">
-                  <input type="text" class="form-control" ng-model="$ctrl.materno" placeholder="Apellido Materno">
-                  <p class="text-right">
+                <div class="col-md-2">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.materno" placeholder="Apellido Materno">
+                 
+                </div>
+                <div class="col-md-2">
+
+                   <p class="text-right">
                     <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarNombres()">Buscar</button>
                   </p>
                 </div>
@@ -49,15 +53,15 @@
             </uib-tab>
             <uib-tab>
               <uib-tab-heading>
-                <i class="md md-receipt"></i> Domicilio
+                <i class="fa fa-home"></i> Domicilio
               </uib-tab-heading>
               <div class="row">
                 <br>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" ng-model="$ctrl.calle" placeholder="Calle">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.calle" placeholder="Calle">
                 </div>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" ng-model="$ctrl.numero" placeholder="Número">
+                  <input type="text" class="form-control input-sm" ng-model="$ctrl.numero" placeholder="Número">
                 </div>
                 <button class="btn btn-primary btn-xs" ng-click="$ctrl.buscarDomicilio()">Buscar</button>
               </div>
@@ -85,7 +89,7 @@
   <div class="row">
 
     <div class="col-md-12 table-responsive panel form-element-padding">
-      <table class="table-bordered table table-striped table-hover" style="font-size: 9px;">
+      <table class="table " style="font-size: 9px;">
         <thead>
           <tr>
             <th>Contrato</th>
