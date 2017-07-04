@@ -32,10 +32,8 @@
         };
 
         ContratoMaestroFactory.BuscarContratos(parametros).then(function (data) {
-          vm.DetalleContrato = data.GetBusquedaContratoMaestroFacResult[0];
-          console.log(data);
-          ContratoMaestroFactory.GetDetalle_NotasdeCreditoVerHistorialList(vm.nota).then(function (data) {
-           console.log(data);
+          vm.DetalleContrato = data.GetBusquedaContratoMaestroFacResult[0];         
+          ContratoMaestroFactory.GetDetalle_NotasdeCreditoVerHistorialList(vm.nota).then(function (data) {           
             vm.DetalleNota = data.GetDetalle_NotasdeCreditoVerHistorialListResult;
           });
         });

@@ -24,11 +24,36 @@ angular
       ActualizaLlamada: '/LLamadasdeInternet/UpdateLLamadasdeInternet',
       ActualizaQuejaCallCenter: '/Actualizar_quejasCallCenter/GetDeepActualizar_quejasCallCenter',
       ConsultaColoniasPorUsuario: '/uspConsultaColoniasPorUsuario/GetuspConsultaColoniasPorUsuarioList',
-      ConsultaLLamada: '/LLamadasdeInternet/GetLLamadasdeInternetList'
+      ConsultaLLamada: '/LLamadasdeInternet/GetLLamadasdeInternetList',
+      GetConAtenTelCte:'/ConAtenTelCte/GetConAtenTelCte'
 
     };
     var factory = {};
     var usuarioAtencion = $localStorage.currentUser.idUsuario;
+ 
+
+     factory.GetConAtenTelCte = function (Contrato) {
+      var deferred = $q.defer();
+      var user = $localStorage.currentUser.idUsuario;
+      var Parametros = {
+        'Contrato': Contrato,
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.GetConAtenTelCte, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
 
     factory.ConsultaColoniasPorUsuario = function () {
       var deferred = $q.defer();
@@ -464,7 +489,8 @@ angular
         'Clv_trabajo': objeto.Clv_Trabajo,
         'clv_queja': objeto.clv_queja,
         'CLV_TIPSER': objeto.CLV_TIPSER,
-        'Turno': objeto.Turno
+        'Turno': objeto.Turno,
+        'ClvProblema':objeto.ClvProblema
       };
 	  console.log(parametros);
      

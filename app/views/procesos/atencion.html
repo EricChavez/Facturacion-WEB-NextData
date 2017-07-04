@@ -109,12 +109,12 @@
 								<div class="row">
 									<div class="col-md-4">
 										<strong>Contrato</strong>
-										<input type="text" class="form-control" name="contrato" ng-model="$ctrl.contrato" placeholder="Contrato">
+										<input type="text" class="form-control input-sm" name="contrato" ng-model="$ctrl.contrato" placeholder="Contrato">
 										<button type="button" class="btn btn-sm btn-info" ng-click="$ctrl.buscarContrato()"><i class="fa fa-search"></i> Buscar</button>
 									</div>
 									<div class="col-md-4 ">
 										<strong># Reporte</strong>
-										<input type="number" class="form-control" ng-model="$ctrl.reporte" name="reporte" placeholder="Reporte">
+										<input type="number" class="form-control input-sm" ng-model="$ctrl.reporte" name="reporte" placeholder="Reporte">
 										<button type="button" class="btn btn-sm btn-info" ng-click="$ctrl.buscarReporte()"><i class="fa fa-search"></i> Buscar</button>
 									</div>
 								</div>
@@ -137,63 +137,54 @@
 								<uib-tab-heading><i class="fa fa-home"></i> Dirección</uib-tab-heading>
 								<br/>
 								<form ng-submit="$ctrl.buscarColonia()">
-									<div class="row">
+									<!--<div class="row">
 										<div class="col-md-5 ">
 											<strong>Colonia</strong>
 											<select class="form-control" 
 												ng-model="$ctrl.selectedColonia" 
 												ng-options="v.nombre for v in $ctrl.colonias|orderBy:'nombre' track by v.clvColonia">
- 												<option value="">Primero seleccione una plaza</option>
+ 												
 											</select>
 										</div>
-									</div>
-									<div class="row">
+									</div>-->
+									<div class="col-md-12">
 										<div class="col-md-5">
 											<strong>Calle</strong>
-											<input type="text" class="form-control" ng-model="$ctrl.calle">
+											<input type="text" placeholder="Ingresa el nombre de la calle" class="form-control input-sm" ng-model="$ctrl.calle">
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-2">
 											<strong>Número</strong>
-											<input type="number" class="form-control" ng-model="$ctrl.numero">
+											<input type="number" class="form-control  input-sm" ng-model="$ctrl.numero">
 										</div>
-
-									</div>
-									<div class="note">
-										<p>Busqueda por dirección</p>
-									</div>
-									<footer>
-										<p class="text-right">
+										<div class=" col-md-2 text-right">
 											<button type="submit" class="btn btn-sm btn-info">
 	 											 <i class="fa fa-search"></i> Buscar
 	 											 </button>
-										</p>
-									</footer>
+										</div>
+									
+									</div>
+								
 								</form>
 							</uib-tab>
 							<uib-tab index="3">
 								<uib-tab-heading><i class="fa fa-user"></i> Nombre</uib-tab-heading>
 								<br/>
 								<form ng-submit="$ctrl.buscarNombres()">
-									<div class="row">
-										<div class="col-md-7">
+									<div class="col-md-12">
+										<div class="col-md-3">
 											<strong>Nombre</strong>
 											<input type="text" class="form-control" ng-model="$ctrl.nombre">
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5">
+										<div class="col-md-3">
+											<strong>Apellido Materno</strong>
+											<input type="text" class="form-control" ng-model="$ctrl.materno">
+										</div>
+										<div class="col-md-3">
 											<strong>Apellido Paterno</strong>
 											<input type="text" class="form-control" ng-model="$ctrl.paterno">
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-5">
-											<strong>Apellido Materno</strong>
-											<input type="text" class="form-control" ng-model="$ctrl.materno">
-										</div>
-									</div>
+								
 									<div class="note">
 										<p>Busqueda por nombre</p>
 									</div>

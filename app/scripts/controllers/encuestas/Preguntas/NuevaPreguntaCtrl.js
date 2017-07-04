@@ -30,9 +30,9 @@ angular
 
 
     function AgregarPregunta() {
-      console.log(vm.Respuestas);
+     
       encuestasFactory.GetAddPregunta(vm.Npregunta,vm.TipoPregunta,vm.Respuestas).then(function(resp){
-         console.log(resp);
+        
 		 ngNotify.set('La pregunta se ha guardado correctamente','success');
 		 $state.go('home.encuestas.preguntas');
 		});

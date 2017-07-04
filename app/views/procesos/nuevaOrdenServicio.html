@@ -129,7 +129,7 @@
             <label for="regular13" class="col-sm-4 control-label">Ejecución</label>
             <div class="col-sm-8">
               <input type="text" name='fejecucion' class="form-control input-sm" ng-model="$ctrl.Fec_Eje" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucion"
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" ng-required="!$ctrl.blockEjecucion"
+                placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockEjecucion"
                  model-view-value="true"
                 validate-on="dirty" required-message="' La Fecha es obligatoria.'"
                 >
@@ -141,8 +141,10 @@
             <div class="col-sm-8">
               <input type="text" class="form-control input-sm"
               name="fechavisita1"
-               ng-model="$ctrl.Visita1" style="font-size:12px;" ng-disabled="$ctrl.blockVista1"
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" ng-required="!$ctrl.blockVista1"
+               ng-model="$ctrl.Visita1" style="font-size:12px;"
+                model-view-value="true"
+                ng-disabled="$ctrl.blockVista1"
+                placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockVista1"
                 validate-on="dirty" required-message="'La fecha es obligatoria.'"
                 model-view-value="true">
               <div class="form-control-line"></div>
@@ -154,8 +156,12 @@
           <div class="form-group">
             <label for="regular13" class="col-sm-4 control-label">Visita 2</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control input-sm" ng-model="$ctrl.Visita2" style="font-size:12px;" ng-disabled="$ctrl.blockVista2"
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999" 
+              <input type="text" 
+              class="form-control input-sm"
+               ng-model="$ctrl.Visita2"
+                model-view-value="true"
+                style="font-size:12px;" ng-disabled="$ctrl.blockVista2"
+                placeholder="" ui-mask="99/99/9999" 
                 name="fechavisita2"
                 ng-required="!$ctrl.blockVista2"
                 validate-on="dirty" required-message="'La fecha es obligatoria.'"
@@ -166,7 +172,9 @@
           <div class="form-group">
             <label for="regular13" class="col-sm-4 control-label">Ejecución real</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control input-sm" ng-model="$ctrl.datosOrden.FechaEjecucionReal" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucionReal"
+              <input type="text" class="form-control input-sm"
+               ng-model="$ctrl.datosOrden.FechaEjecucionReal" style="font-size:12px;"
+               ng-disabled="$ctrl.blockEjecucionReal"
                 placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
               <div class="form-control-line"></div>
             </div>
@@ -181,8 +189,12 @@
       <div class="col-md-6">
         <div class="col-md-6">
           <small><b>Técnico:</b></small>
-          <select  name="tecnico" class="form-control input-sm" ng-model="$ctrl.selectedTecnico" ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
-            validate-on="dirty" required-message="'Error!, Este campo es obligatorio.'" ng-required="!$ctrl.blockTecnico" ng-disabled="$ctrl.blockTecnico">
+          <select  name="tecnico" class="form-control input-sm" 
+          ng-model="$ctrl.selectedTecnico" 
+          ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
+            validate-on="dirty" 
+            required-message="'Error!, Este campo es obligatorio.'"
+             ng-required="!$ctrl.blockTecnico" ng-disabled="$ctrl.blockTecnico">
 					<option value=""  selected>Seleccione el técnico</option>
 				</select>
         </div>

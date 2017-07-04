@@ -1,7 +1,7 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('QuejaEjecutaCtrl', function ($state, ngNotify, $location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
+  .controller('QuejaEjecutaCtrl', function ($state, ngNotify,DescargarMaterialFactory ,$location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
 
     function InitalData() {
       vm.clv_queja = $stateParams.id;
@@ -28,7 +28,7 @@ angular
               vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 
               quejasFactory.ConsultaQueja($stateParams.id).then(function (data) {
-                console.log(data);
+                
                 var detqueja = data.GetQuejasListResult[0];
                 vm.UsuarioGenero = detqueja.UsuarioGenero;
                 vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
@@ -104,18 +104,25 @@ angular
                 vm.Estatus = 'E';
                 Bloqueo(true);
 
-
-
+               DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_queja,'Q').then(function(data){
+                if(data.GetchecaBitacoraTecnicoResult!=null){
+                  vm.idBitacora=data.GetchecaBitacoraTecnicoResult.idBitacora;
+                  vm.idTecnicoBitacora=data.GetchecaBitacoraTecnicoResult.clvTecnico;
+                }
                 quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function (data) {
                   vm.Tecnicos = data.GetMuestra_Tecnicos_AlmacenListResult;
-                  if (detqueja.Clave_Tecnico != null) {
+                  if (detqueja.Clave_Tecnico != null && vm.idTecnicoBitacora>0) {
                     for (var a = 0; a < vm.Tecnicos.length; a++) {
-                      if (vm.Tecnicos[a].clv_Tecnico == detqueja.Clave_Tecnico) {
+                      if (vm.Tecnicos[a].clv_Tecnico == vm.idTecnicoBitacora) {
                         vm.Tecnico = vm.Tecnicos[a];
+                        vm.BlockTecnico=true;
                       }
                     }
                   }
-                });
+                });                 
+               });
+
+                
 
                 atencionFactory.MuestraTrabajos(vm.Servicio).then(function (data) {
                   vm.Trabajos = data.GetMUESTRATRABAJOSQUEJASListResult;
@@ -227,20 +234,13 @@ angular
 
 
     function ValidaFecha(fechaIngresada, fechasolicitud) {
-      console.log(fechaIngresada, fechasolicitud);
-
       var _fechaHoy = new Date();
       var _fechaIngresada = toDate(fechaIngresada);
-      var _fechasolicitud = toDate(fechasolicitud);
-
-      console.log(_fechaHoy, _fechaIngresada, _fechasolicitud)
+      var _fechasolicitud = toDate(fechasolicitud);     
 
       if ((_fechaIngresada > _fechasolicitud && _fechaIngresada < _fechaHoy) || _fechasolicitud.toDateString() === _fechaIngresada.toDateString()) {
-        console.log(true);
-        return true;
-
-      } else {
-        console.log(false);
+      return true;
+      } else {        
         return false;
       }
 
@@ -383,7 +383,7 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                console.log(obj);
+                
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('La queja se aplicó  correctamente', 'success');
@@ -408,7 +408,7 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                console.log(obj);
+               
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('La queja se aplicó  correctamente', 'success');
@@ -435,7 +435,7 @@ angular
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
 
-                console.log(obj);
+               
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('La queja se aplicó  correctamente', 'success');
@@ -487,11 +487,20 @@ angular
       });
 
     }
-
     
-    function DescargaMaterial(ClvOrden) {
-      var options = {};
+        
+    function DescargaMaterial() {   
+
+      if (vm.Tecnico== null) ngNotify.set('Seleccione un técnico para continuar','warn');
+      const Tecnico={};
+      Tecnico.CLV_TECNICO =vm.Tecnico.clv_Tecnico;
+      Tecnico.Nombre=vm.Tecnico.Nombre;
+      var options = {};      
+      options.ClvOrden = vm.clv_queja;
+      options.ClvBitacora=vm.idBitacora;
+      options.SctTecnico = Tecnico;
       options.Tipo_Descargar = "Q";
+
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',
@@ -508,9 +517,7 @@ angular
           }
         }
       });
-    }
-
-    
+    }    
     var vm = this;
    
     InitalData();
@@ -526,5 +533,7 @@ angular
     vm.Iprobreal = false;
     vm.Iobser = true;
     vm.IEstatus = true;
+    vm.idBitacora=0;
+    vm.idTecnicoBitacora=0;
 
   });

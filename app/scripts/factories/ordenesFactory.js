@@ -543,6 +543,8 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
         'Obs': obj.Obs,
         'ListadeArticulos': obj.ListadeArticulos
       };
+
+      console.log(JSON.stringify(Parametros));
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token

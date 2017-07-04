@@ -68,7 +68,7 @@ angular
           'IdEncuesta': vm.Encuesta.IdEncuesta,
           'NombreProceso': vm.NombreProceso
         };
-        console.log(Parametros);       
+         
         encuestasFactory.GetGet_UniversoEncuestaList(Parametros).then(function (data) {
           $state.go('home.encuestas.aplicar');
           ngNotify.set('El proceso se ha guardado correctamente', 'success');
@@ -94,7 +94,7 @@ angular
           'IdEncuesta': vm.Encuesta.IdEncuesta,
           'NombreProceso': vm.NombreProceso
         };
-        console.log(Parametros);
+      
        
         encuestasFactory.GetGet_UniversoEncuestaList(Parametros).then(function (data) {
           $state.go('home.encuestas.aplicar');

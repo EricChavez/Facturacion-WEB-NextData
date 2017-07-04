@@ -5,9 +5,9 @@
     .module('softvApp')
     .controller('ordenEjecutadaCtrl', ordenEjecutadaCtrl);
 
-  ordenEjecutadaCtrl.inject = ['$state', 'ngNotify', '$stateParams', '$uibModal', 'ordenesFactory', '$rootScope', '$filter'];
+  ordenEjecutadaCtrl.inject = ['$state', 'ngNotify', '$stateParams', '$uibModal', 'DescargarMaterialFactory', 'ordenesFactory', '$rootScope', '$filter'];
 
-  function ordenEjecutadaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactory, $rootScope, $filter) {
+  function ordenEjecutadaCtrl($state, ngNotify, $stateParams, $uibModal, ordenesFactory, $rootScope, $filter, DescargarMaterialFactory) {
     var vm = this;
     vm.showDatosCliente = true;
     vm.buscarContrato = buscarContrato;
@@ -20,7 +20,7 @@
     vm.claveOrden = $stateParams.claveOr;
     vm.block = true;
     vm.blockSolicitud = true;
-    vm.MuestraAgenda=MuestraAgenda;
+    vm.MuestraAgenda = MuestraAgenda;
     vm.blockVista1 = true;
     vm.blockVista2 = true;
     vm.blockEjecucionReal = true;
@@ -32,6 +32,8 @@
     vm.ValidarDescargaMaterialOrden = ValidarDescargaMaterialOrden;
     vm.soyEjecucion = true;
     vm.Eliminar = Eliminar;
+    vm.idBitacora = 0;
+    vm.idTecnicoBitacora = 0;
     init(vm.claveOrden);
 
 
@@ -61,6 +63,7 @@
 
     function init(orden) {
       ordenesFactory.ConsultaOrdSer(orden).then(function (data) {
+
         vm.datosOrden = data.GetDeepConsultaOrdSerResult;
 
         vm.clv_orden = data.GetDeepConsultaOrdSerResult.Clv_Orden;
@@ -70,47 +73,49 @@
         vm.Fec_Sol = vm.datosOrden.Fec_Sol;
         vm.observaciones = vm.datosOrden.Obs;
         ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
-          console.log(data);
           vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
         });
         buscarContrato(vm.contrato);
         vm.status = 'E'
+        FechasOrden();
         Bloqueo();
-        // if (vm.datosOrden.Fec_Eje != '01/01/1900') {
-        //   vm.Fec_Eje = vm.datosOrden.Fec_Eje;
-        // }
-        // if (vm.datosOrden.Visita1 != '01/01/1900') {
-        //   vm.Visita1 = vm.datosOrden.Visita1;
-        // }
-        // if (vm.datosOrden.Visita2 != '01/01/1900') {
-        //   vm.Visita2 = vm.datosOrden.Visita2;
-        // }
-        // if (vm.status == 'P') {
-        //   vm.status = 'E';
-        //   vm.blockEjecucion = false;
-        // }
+        DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_orden, 'O').then(function (data) {
+          if (data.GetchecaBitacoraTecnicoResult != null) {
+            vm.idBitacora = data.GetchecaBitacoraTecnicoResult.idBitacora;
+            vm.idTecnicoBitacora = data.GetchecaBitacoraTecnicoResult.clvTecnico;
+          }
+          ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
+            vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
+            if (vm.idTecnicoBitacora > 0) {
+              for (var a = 0; a < vm.tecnico.length; a++) {
+                if (vm.tecnico[a].CLV_TECNICO == vm.idTecnicoBitacora) {
+                  vm.selectedTecnico = vm.tecnico[a];
+                  vm.blockTecnico = true;
+                }
+              }
+            }
+          });
+        });
 
       });
-      ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
-        vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
-      });
-    }
 
-    function ValidarDescargaMaterialOrden(){
 
-        if(vm.selectedTecnico != undefined){
-          DescargaMaterialOrden();
-        }else{
-          ngNotify.set('Selecciona un técnico y/o Ingresa una fecha de ejecución.', 'error');
-        }
-        //console.log(vm.selectedTecnico, vm.Fec_Eje);
 
     }
-    
+
+
+
+
+    function ValidarDescargaMaterialOrden() {
+      if (vm.selectedTecnico != undefined) {
+        DescargaMaterialOrden();
+      } else {
+        ngNotify.set('Selecciona un técnico y/o Ingresa una fecha de ejecución.', 'error');
+      }
+    }
+
     function DescargaMaterialOrden() {
-      
       var options = {};
-      
       options.ClvOrden = vm.clv_orden;
       options.SctTecnico = vm.selectedTecnico;
       options.Tipo_Descargar = "O";
@@ -126,8 +131,8 @@
         keyboard: false,
         size: 'lg',
         resolve: {
-          options: function() {
-           	return options;
+          options: function () {
+            return options;
           }
         }
       });
@@ -182,16 +187,11 @@
     function detalleTrabajo(trabajo, x) {
 
       if (trabajo != null) {
-
         if (vm.selectedTecnico == undefined) {
           ngNotify.set('Selecciona un técnico.', 'warn');
         }
-
-
-
         var items = {};
         items.contrato = vm.contratoBueno;
-
         if (x.Descripcion.toLowerCase().includes('ipaqu') ||
           x.Descripcion.toLowerCase().includes('bpaqu') ||
           x.Descripcion.toLowerCase().includes('dpaqu') ||
@@ -229,7 +229,6 @@
         ) {
 
           ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
-
             var items = {
               clv_detalle_orden: vm.clv_detalle,
               clv_orden: vm.clv_orden,
@@ -237,7 +236,6 @@
               isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
               datosCamdo: data.GetDeepCAMDOResult
             };
-
             var modalInstance = $uibModal.open({
               animation: true,
               ariaLabelledBy: 'modal-title',
@@ -255,11 +253,6 @@
               }
             });
           });
-
-
-
-
-
         } else if (
           x.Descripcion.toLowerCase().includes('iante') ||
           x.Descripcion.toLowerCase().includes('inlnb') ||
@@ -282,7 +275,6 @@
           x.Descripcion.toLowerCase().includes('rrout')
         ) {
           vm.NOM = x.Descripcion.split(' ');
-
           var items_ = {
             'Op': 'M',
             'Trabajo': vm.NOM[0],
@@ -291,8 +283,6 @@
             'Clave': x.Clave,
             'ClvOrden': x.Clv_Orden
           };
-
-
           var modalInstance = $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
@@ -309,18 +299,11 @@
               }
             }
           });
-
-
-
-
-
         } else if (
           x.Descripcion.toLowerCase().includes('ccabm') ||
           x.Descripcion.toLowerCase().includes('cantx')
         ) {
-
           vm.NOM = x.Descripcion.split(' ');
-
           var items_ = {
             'Op': 'M',
             'Trabajo': vm.NOM[0],
@@ -329,7 +312,6 @@
             'Clave': x.Clave,
             'ClvOrden': x.Clv_Orden
           };
-
 
           var modalInstance = $uibModal.open({
             animation: true,
@@ -347,20 +329,12 @@
               }
             }
           });
-
-
-
-
         }
-
-
-
-
-
       }
     }
 
     function fechas() {
+      FechasOrden();
       Bloqueo();
     }
 
@@ -381,16 +355,12 @@
       } else {
         return false;
       }
-
     }
 
-
     function MuestraAgenda() {
-
       var options = {};
-      options.clv_queja_orden =  vm.clv_orden;
+      options.clv_queja_orden = vm.clv_orden;
       options.opcion = 1;
-     
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',
@@ -407,75 +377,69 @@
           }
         }
       });
-
     }
 
+    function FechasOrden() {
+
+      vm.Fec_Eje = (vm.datosOrden.Fec_Eje == '' || vm.datosOrden.Fec_Eje === '01/01/1900') ? '' : vm.datosOrden.Fec_Eje;
+      vm.Visita1 = (vm.datosOrden.Visita1 == '' || vm.datosOrden.Visita1 === '01/01/1900') ? '' : vm.datosOrden.Visita1;
+      vm.Visita2 = (vm.datosOrden.Visita2 == '' || vm.datosOrden.Visita2 === '01/01/1900') ? '' : vm.datosOrden.Visita2;
+    }
 
 
     function Guardar() {
       if (vm.status == 'E') {
-        alert('E');
         if (ValidaFecha(vm.Fec_Eje, vm.Fec_Sol) == false) {
-          alert('false');
           ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
           return;
         }
       } else if (vm.status == 'V') {
-        alert('V');
         if (vm.Visita1 != null && vm.Visita1 != undefined && (vm.Visita2 == undefined || vm.Visita2 == null)) {
-          alert('V1');
           if (ValidaFecha(vm.Visita1, vm.Fec_Sol) == false) {
             ngNotify.set('La fecha de visita1 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
             return;
           }
           if (vm.Visita1 != null && vm.Visita1 != undefined && (vm.Visita2 != undefined || vm.Visita2 != null)) {
             if (ValidaFecha(vm.Visita2, vm.Fec_Sol) == false) {
-              alert('V2');
               ngNotify.set('La fecha de visita 2 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
               return;
             }
           }
-
         }
       }
-
       EjecutaOrden();
     }
+
+
 
 
     function GuardaDetalle() {
 
       ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
-
         ordenesFactory.AddNueRelOrdenUsuario(vm.clv_orden).then(function (data) {
-
-          var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
           var obj = {
             'ClvOrden': vm.clv_orden,
             'ClvTipSer': vm.Clv_TipSer,
             'Contrato': vm.contratoBueno,
-            'FecSol': fecha,
-            'FecEje': '',
-            'Visita1': '',
-            'Visita2': '',
+            'FecSol': vm.Fec_Sol,
+            'FecEje': (vm.Fec_Eje == null || vm.Fec_Eje == undefined) ? '' : vm.Fec_Eje,
+            'Visita1': (vm.Visita1 == null || vm.Visita1 == undefined) ? '' : vm.Visita1,
+            'Visita2': (vm.Visita2 == null || vm.Visita2 == undefined) ? '' : vm.Visita2,
             'Status': vm.status,
-            'ClvTecnico': 0,
+            'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
             'Impresa': 1,
             'ClvFactura': 0,
             'Obs': vm.observaciones,
             'ListadeArticulos': ''
           };
           ordenesFactory.MODORDSER(obj).then(function (response) {
-
             if (response.GetDeepMODORDSERResult.Msj != null) {
               ngNotify.set(response.GetDeepMODORDSERResult.Msj, 'error');
             } else {
 
               ordenesFactory.PreejecutaOrden(vm.clv_orden).then(function (details) {
-
                 ordenesFactory.GetDeepSP_GuardaOrdSerAparatos(vm.clv_orden).then(function (result) {
                   var descripcion = 'Se generó la';
-
                   ordenesFactory.AddSP_LLena_Bitacora_Ordenes(descripcion, vm.clv_orden).then(function (data) {
                     ordenesFactory.Imprime_Orden(vm.clv_orden).then(function (data) {
                       if (data.GetDeepImprime_OrdenResult.Imprime == 1) {
@@ -484,10 +448,8 @@
                         $state.go('home.procesos.ordenes')
                         ngNotify.set('La orden se ha ejecutado correctamente', 'success');
                       }
-
                     })
                   });
-
                 });
               });
             }
@@ -555,6 +517,7 @@
         ngNotify.set('Marque la opcion ejecutada o visita   para continuar', 'error');
         return;
       }
+
       ordenesFactory.GetSP_ValidaGuardaOrdSerAparatos(vm.clv_orden, 'M', vm.status, 0, vm.selectedTecnico.CLV_TECNICO).then(function (data) {
         if (data.GetSP_ValidaGuardaOrdSerAparatosResult != '') {
           ngNotify.set(data.GetSP_ValidaGuardaOrdSerAparatosResult, 'warn');

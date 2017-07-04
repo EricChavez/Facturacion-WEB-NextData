@@ -5,14 +5,15 @@ angular
 		function initialData() {
 			atencionFactory.getPlazas().then(function (data) {
 				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
+				vm.selectedPlaza=vm.plazas[0];
 				atencionFactory.getServicios().then(function (data) {
 					vm.servicios = data.GetMuestraTipSerPrincipalListResult;
-					//vm.selectedServicio = vm.servicios[2];
+					vm.selectedServicio = vm.servicios[0];
 
 					atencionFactory.getUsuarios().then(function (data) {
 						console.log(data);
 						vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
-
+                         vm.selectedUsuario=vm.usuarios[0];
 						var obj = {
 							servicio: 0,
 							reporte: 0,
@@ -105,7 +106,7 @@ angular
 			}else if (vm.reporte == undefined || vm.selectedUsuario == ""){
 					ngNotify.set('Ingresa un número de reporte válido.', 'warn');
 			}else {
-				console.log("ok");
+				
 				var obj = {
 					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
 					reporte: vm.reporte,
@@ -117,11 +118,11 @@ angular
 					numero: '',
 					colonia: 0,
 					setupbox: '',
-					op: 9,
+					op: 3,
 					compania: vm.selectedPlaza.id_compania,
 					clvUsuario: vm.selectedUsuario.Clave
 				};
-				console.log(obj);
+				
 				atencionFactory.buscarAtencion(obj).then(function (data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 					if (vm.atenciones.length == 0) {
@@ -287,41 +288,25 @@ angular
 
 		function buscarColonia() {
 
-			if (vm.calle == undefined || vm.calle == "") {
-				var calleV = true;
-				var calle = "";
-			} else if (!(/^[A-Za-z\s\xF1\xD1\0-9]+$/.test(vm.calle))) {
-				var calleV = false;
-				var calle = "";
-			} else {
-				var calleV = true;
-				var calle = vm.calle;
-			}
-
-			if (vm.selectedColonia == undefined) {
-				ngNotify.set('Por favor seleccione una plaza.', 'warn');
-			} else if (vm.selectedColonia.clvColonia == 0) {
-				ngNotify.set('Por favor seleccione una colonia.', 'warn');
-			} else if (calleV == false) {
-				ngNotify.set('Introduce una calle válida.', 'warn');
-			}
-			else {
+                var servicio=(vm.selectedServicio==null|vm.selectedServicio==undefined)?0:vm.selectedServicio.Clv_TipSerPrincipal;
+				var calle=(vm.calle==null||vm.calle==undefined)?'':vm.calle;
+				var numero=(vm.numero==null||vm.numero==undefined)?'':vm.numero;
 				var obj = {
-					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
+					servicio:servicio ,
 					reporte: 0,
-					contrato: 0,
+					contrato: '',
 					nombre: '',
 					paterno: '',
 					materno: '',
 					calle: calle,
-					numero: vm.numero,
-					colonia: vm.selectedColonia.clvColonia,
+					numero: numero,
+					colonia: 0,
 					setupbox: '',
 					op: 2,
 					compania: 0,
 					clvUsuario: 0
 				};
-				console.log(obj);
+				
 				atencionFactory.buscarAtencion(obj).then(function (data) {
 					console.log(data);
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
@@ -333,7 +318,7 @@ angular
 						vm.conRegistros = true;
 					}
 				});
-			}
+			
 		}
 
 		function bucarUsuario() {

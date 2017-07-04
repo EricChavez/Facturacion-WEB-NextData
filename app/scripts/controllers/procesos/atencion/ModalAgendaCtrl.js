@@ -57,7 +57,8 @@ angular
             'Clv_trabajo': options.Clv_Trabajo,
             'clv_queja': vm.clv_queja,
             'CLV_TIPSER': options.CLV_TIPSER,
-            'Turno': vm.TurnoAgenda.ID
+            'Turno': vm.TurnoAgenda.ID,
+            'ClvProblema': options.clvProblema
           };
 
           atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {

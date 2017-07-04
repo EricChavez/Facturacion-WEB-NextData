@@ -43,8 +43,14 @@
   <div class="card-body">
     <div class="card row " style="padding: 5px;">
       <div class="col-md-2">
-        <h4>Buscar Cliente</h4>
-      </div>
+          <strong class="" style="margin-top: 10px;">Tipo de servicio:</strong>
+        </div>
+        <div class="col-md-2">
+          <select class="form-control input-sm" ng-model="$ctrl.selectedServicio"
+           ng-change="$ctrl.CambioServicio($ctrl.selectedServicio)"
+           ng-disabled="$ctrl.BloquearElementos"
+            ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal"></select>
+        </div>
       <div class="col-md-2"><input type="text" ng-disabled="$ctrl.BloquearElementos" ng-model="$ctrl.contratoSelected" class="form-control" placeholder="Ingresa contrato" ng-keyup="$ctrl.EnterContrato($event)"></div>
       <div class="col-md-2"> <button title="Buscar cliente" ng-disabled="$ctrl.BloquearElementos" ng-click="$ctrl.BuscaCliente()" class="btn ink-reaction btn-floating-action btn-sm btn-default"><i class="fa fa-search"></i></button></div>
       <div class="col-md-2">
@@ -76,15 +82,7 @@
         </div>
 
         
-         <div class="col-md-6">
-          <strong class="" style="margin-top: 10px;">Tipo de servicio:</strong>
-        </div>
-        <div class="col-md-6">
-          <select class="form-control input-sm" ng-model="$ctrl.selectedServicio"
-           ng-change="$ctrl.CambioServicio($ctrl.selectedServicio)"
-           ng-disabled="$ctrl.BloquearElementos"
-            ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal"></select>
-        </div>
+         
         
 
 
@@ -105,11 +103,9 @@
       <div class="col-md-3 form-group" >
         <div class="col-md-12 text-center" style="font-size:14px; color: #06599a;">
            <b > Suscriptor</b>
-          </div>
-        <div class="col-md-12">
-          <p><b>Nombre: </b>{{$ctrl.NombreCliente}} </p>
-        </div>
-        <div class="col-md-12">
+          </div>       
+        <div class="col-md-12" style="font-size:11px;">
+           <p><b>Nombre: </b>{{$ctrl.NombreCliente}} </p>
           <p><b>Calle: </b>{{$ctrl.Calle}} <b>#:</b>{{$ctrl.Numero}}</p>
           <p><b>Colonia: </b>{{$ctrl.Colonia}}</p>
           <p><b>Ciudad: </b>{{$ctrl.Ciudad}}</p>
@@ -143,7 +139,7 @@
       <div class="col-md-4">
         <strong style="margin-top: 10px;">Clasificación del Problema:</strong>
         <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.clasificacionProblemas track by item.clvProblema">
-											  <option value=""  disabled="true">selecciona</option>
+											  <option value=""  ng-disabled="$ctrl.BloquearElementos">selecciona</option>
 											  </select>
         <br>
         <strong>Reporte del Cliente:</strong>
