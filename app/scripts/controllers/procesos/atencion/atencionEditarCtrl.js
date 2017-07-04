@@ -36,7 +36,7 @@ angular
             vm.Hora = datos.HoraInicial;
             vm.clv_queja = datos.clv_queja;
             vm.Turno = datos.Turno;
-            vm.Telefono = 123;
+            
             vm.UsuarioGenero = datos.UsuarioGenero;
             for (var a = 0; a < vm.servicios.length; a++) {
               if (vm.servicios[a].Clv_TipSerPrincipal == vm.CLV_TIPSER) {
@@ -71,6 +71,9 @@ angular
             vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
             atencionFactory.getServiciosCliente(contrato).then(function (data) {
               vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
+               atencionFactory.GetConAtenTelCte(vm.GlobalContrato).then(function (data) {
+                vm.Telefono = data.GetConAtenTelCteResult.Telefono;
+              });
 
             });
           });
