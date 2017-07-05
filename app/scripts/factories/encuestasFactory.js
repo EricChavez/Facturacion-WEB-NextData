@@ -25,11 +25,6 @@ angular
     };
     var factory = {};
 
-
-
-
-
-
     factory.GetGraficasPreguntasList = function (idproceso) {
       var deferred = $q.defer();
 
