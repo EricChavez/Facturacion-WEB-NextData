@@ -7,7 +7,7 @@
 
       </header>
       <div class="tools">
- <button ng-show="$ctrl.PanelContratos" class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.aplicar"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+        <button title="Salir de la encuesta" ng-show="$ctrl.PanelContratos" class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.aplicar"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
       </div>
     </div>
     <div class="card-body">
@@ -31,8 +31,8 @@
               <td>{{x.Nombre}}</td>
               <td>{{x.Cel}}</td>
               <td>
-                <button ng-if="x.Aplicada==true" type="button" class="btn ink-reaction  btn-xs btn-success" disabled> Aplicada</button>
-                <button ng-if="x.Aplicada==false" type="button" class="btn ink-reaction  btn-xs btn-info" ng-click="$ctrl.Encuesta_(x)"> Aplicar</button>
+                <button title="Encuesta aplicada" ng-if="x.Aplicada==true" type="button" class="btn ink-reaction  btn-xs btn-success" disabled> Aplicada</button>
+                <button title="Aplicar encuesta" ng-if="x.Aplicada==false" type="button" class="btn ink-reaction  btn-xs btn-info" ng-click="$ctrl.Encuesta_(x)"> Aplicar</button>
 
 
                 <!--permission permission-only="'encuestasUpdate'"-->
@@ -115,9 +115,8 @@
         </div>
 
         <div class="row text-center">
-          <button class="btn btn-info " type="submit">Guardar respuestas</button>
-            <button class="btn btn-danger " type="button" ng-click="$ctrl.CancelaProceso();">Cancelar</button>
-
+            <button title="Guardar respuestas" class="btn btn-info " type="submit">Guardar respuestas</button>
+            <button title="Cancelar cambios" class="btn btn-danger " type="button" ng-click="$ctrl.CancelaProceso();">Cancelar</button>
         </div>
 
       </div>

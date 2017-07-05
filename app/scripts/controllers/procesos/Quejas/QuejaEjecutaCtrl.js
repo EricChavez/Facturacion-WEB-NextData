@@ -492,7 +492,7 @@ angular
     function DescargaMaterial() {   
 
       if (vm.Tecnico== null) ngNotify.set('Seleccione un técnico para continuar','warn');
-      const Tecnico={};
+      var Tecnico={};
       Tecnico.CLV_TECNICO =vm.Tecnico.clv_Tecnico;
       Tecnico.Nombre=vm.Tecnico.Nombre;
       var options = {};      
