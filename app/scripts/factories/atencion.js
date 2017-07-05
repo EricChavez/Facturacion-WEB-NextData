@@ -33,7 +33,7 @@ angular
  
 
      factory.GetConAtenTelCte = function (Contrato) {
-      var deferred = $q.defer();      
+      var deferred = $q.defer();
       var Parametros = {
         'Contrato': Contrato,
       };

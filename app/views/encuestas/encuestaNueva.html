@@ -50,8 +50,8 @@
       </header>
       <div class="tools">
         <div class="btn-group">
-          <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Guardar</button>
-          <button class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.encuesta"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+          <button title="Guardar encuesta" class="btn btn-primary btn-sm" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Guardar</button>
+          <button title="Cancelar cambios" class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.encuesta"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
         </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
                   <ul>
                     <li ng-repeat="item in $ctrl.obj.items">
                       <a href=""><b>{{ item.Pregunta }}</b> <br> <small style="padding-left:20px; color:green">Tipo : {{ item.TipoPreguntas.Descripcion }}</small></a>
-                      <button type="button" class="btn ink-reaction btn-icon-toggle btn-xs btn-primary" ng-click="$ctrl.transfer($ctrl.obj.items, $ctrl.obj.selectedItems, $ctrl.obj.items.indexOf(item))"><i class="md-chevron-right
+                      <button title="Agregar pregunta a la encuesta" type="button" class="btn ink-reaction btn-icon-toggle btn-xs btn-primary" ng-click="$ctrl.transfer($ctrl.obj.items, $ctrl.obj.selectedItems, $ctrl.obj.items.indexOf(item))"><i class="md-chevron-right
 "></i></button>
                       <a href="" ng-if="item.IdTipoPregunta==3" ng-click="$ctrl.respuestas(item.IdPregunta)" style="color:red"><b><i class="fa fa-eye"></i> ver respuestas</b></a>
                     </li>
@@ -99,7 +99,7 @@
                   <ul>
                     <li ng-repeat="item in $ctrl.obj.selectedItems">
                       <a href=""><b>{{ item.Pregunta }}</b> <br> <small style="padding-left:20px; color:green">Tipo : {{ item.TipoPreguntas.Descripcion }}</small></a>
-                      <button type="button" class="btn ink-reaction btn-icon-toggle btn-xs btn-primary"><i class="md-chevron-left
+                      <button title="Quitar pregunta a la encuesta" type="button" class="btn ink-reaction btn-icon-toggle btn-xs btn-primary"><i class="md-chevron-left
 " ng-click="$ctrl.transfer($ctrl.obj.selectedItems, $ctrl.obj.items, $ctrl.obj.selectedItems.indexOf(item))"></i></button>
                       <a href="" ng-if="item.IdTipoPregunta==3" ng-click="$ctrl.respuestas(item.IdPregunta)" style="color:red"><b><i class="fa fa-eye"></i> ver respuestas</b></a>
                     </li>

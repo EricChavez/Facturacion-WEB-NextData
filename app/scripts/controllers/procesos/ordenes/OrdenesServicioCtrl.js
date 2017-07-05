@@ -278,10 +278,10 @@
 		}
 
 		function buscarStatus() {
-			if (vm.auto == undefined) {
-				vm.auto = 0;
+			if (vm.auto == undefined || vm.auto == 0) {
+				var Bauto = 0;
 			} else {
-				vm.auto = 1;
+				var Bauto = 1;
 			}
 
 			if (vm.status == 1) {
@@ -308,8 +308,9 @@
 					compania: vm.selectedPlaza.id_compania,
 					setupbox: '',
 					status: vm.stat,
-					auto: vm.auto
+					auto: Bauto
 				};
+				console.log(obj);
 				ordenesFactory.buscarOrdenes(obj).then(function (data) {
 					vm.ordenes = data.GetuspBuscaOrdSer_BuscaOrdSerSeparado2ListResult;
 					if (vm.ordenes.length == 0) {

@@ -83,7 +83,7 @@ angular
     }
 
 function CancelaProceso(){
- vm.PanelContratos = false;
+ vm.PanelContratos = true;
 }
 
 
