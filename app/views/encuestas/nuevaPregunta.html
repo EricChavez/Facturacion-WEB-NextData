@@ -8,8 +8,8 @@
       </header>
       <div class="tools">
         <div class="btn-group">
-          <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Guardar</button>
-          <button class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.preguntas"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+          <button title="Guardar cambios" class="btn btn-primary btn-sm" type="submit"><i class="fa fa-save" aria-hidden="true"></i> Guardar</button>
+          <button title="Cancelar cambios" class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.preguntas"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
                                      </select>
         </div>
         <div class="col-md-2" ng-show="$ctrl.opcionMultiple">
-          <button class="btn btn-success btn-sm" type="button" ng-click="$ctrl.AgregaRespuesta()">
+          <button title="Agregar una nueva opción" class="btn btn-success btn-sm" type="button" ng-click="$ctrl.AgregaRespuesta()">
          <i class="fa fa-plus"></i> agregar respuesta </button>
 
         </div>
@@ -69,7 +69,7 @@
                 </td>
               
               <td>
-                <button type="button" class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.Elimina($index)"><i class="fa fa-trash"></i></button>
+                <button title="Eliminar opción" type="button" class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.Elimina($index)"><i class="fa fa-trash"></i></button>
 
               </td>
 

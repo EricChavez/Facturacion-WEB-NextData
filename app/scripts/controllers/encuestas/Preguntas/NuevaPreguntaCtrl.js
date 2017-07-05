@@ -30,12 +30,22 @@ angular
 
 
     function AgregarPregunta() {
-     
-      encuestasFactory.GetAddPregunta(vm.Npregunta,vm.TipoPregunta,vm.Respuestas).then(function(resp){
-        
-		 ngNotify.set('La pregunta se ha guardado correctamente','success');
-		 $state.go('home.encuestas.preguntas');
-		});
+     if(vm.TipoPregunta == 3){
+        console.log("Opciones");
+          if(vm.Respuestas != undefined && vm.Respuestas.length > 1){
+            encuestasFactory.GetAddPregunta(vm.Npregunta,vm.TipoPregunta,vm.Respuestas).then(function(resp){
+              ngNotify.set('La pregunta se ha guardado correctamente','success');
+		          $state.go('home.encuestas.preguntas');
+		        });
+          }else{
+            ngNotify.set('Ingresa las opciones','warn');
+          }
+     }else{
+        encuestasFactory.GetAddPregunta(vm.Npregunta,vm.TipoPregunta,vm.Respuestas).then(function(resp){
+          ngNotify.set('La pregunta se ha guardado correctamente','success');
+		      $state.go('home.encuestas.preguntas');
+		    });
+     }
     }
 
     var vm = this;

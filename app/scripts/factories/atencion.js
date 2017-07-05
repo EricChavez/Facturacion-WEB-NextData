@@ -34,7 +34,6 @@ angular
 
      factory.GetConAtenTelCte = function (Contrato) {
       var deferred = $q.defer();
-      var user = $localStorage.currentUser.idUsuario;
       var Parametros = {
         'Contrato': Contrato,
       };
