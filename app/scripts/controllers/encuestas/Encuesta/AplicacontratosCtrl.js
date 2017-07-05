@@ -9,6 +9,7 @@ angular
         vm.Contratos = data.GetUniversoEncuestaAplicarListResult;
         
         encuestasFactory.GetDeepProcesosEncuestas(vm.IdProceso).then(function (data) {
+          console.log(data);
           vm.proceso = data.GetDeepProcesosEncuestasResult;
           vm.IdEncuesta = data.GetDeepProcesosEncuestasResult.IdEncuesta;
          

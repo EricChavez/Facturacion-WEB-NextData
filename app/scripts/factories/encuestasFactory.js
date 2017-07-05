@@ -120,6 +120,7 @@ angular
         'Desconectado': object.Desconectado,
         'Instalado': object.Instalado,
         'Suspendido': object.Suspendido,
+        'Baja':object.Baja,
         'Contratado': object.Contratado,
         'Temporales': object.Temporales,
         'Fuera': object.Fuera,

@@ -61,6 +61,7 @@ angular
           'Suspendido': (cestatus.indexOf('S') !== -1) ? 'S' : '',
           'Contratado': (cestatus.indexOf('C') !== -1) ? 'C' : '',
           'Temporales': (cestatus.indexOf('T') !== -1) ? 'T' : '',
+          'Baja': (cestatus.indexOf('B') !== -1) ? 'B' : '',
           'Fuera': (cestatus.indexOf('F') !== -1) ? 'F' : '',
           'IdTipFecha': 0,
           'FechaI': '',
@@ -70,6 +71,7 @@ angular
         };
          
         encuestasFactory.GetGet_UniversoEncuestaList(Parametros).then(function (data) {
+         
           $state.go('home.encuestas.aplicar');
           ngNotify.set('El proceso se ha guardado correctamente', 'success');
         })
@@ -127,6 +129,10 @@ angular
       {
         'clave': 'D',
         'Nombre': 'Desconectado'
+      },
+      {
+        'clave': 'B',
+        'Nombre': 'Baja'
       },
       {
         'clave': 'F',
