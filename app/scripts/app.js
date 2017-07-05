@@ -15,14 +15,20 @@ angular
     'smart-table',
     'ngSanitize',
     'ngCsv',
-    'googlechart'
+    'googlechart'   
 
   ])
-  .config(['$provide', '$urlRouterProvider', '$httpProvider', 'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $qProvider, blockUIConfig) {
+  .config(['$provide','$urlRouterProvider', '$httpProvider' ,'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider ,cfpLoadingBarProvider, $qProvider, blockUIConfig) {
     $urlRouterProvider.otherwise(function ($injector) {
       var $state = $injector.get('$state');
       $state.go('auth');
     });
+  /*  agcLibraryLoaderProvider.agcLibraryLoaderProvider.setLoader('gstatic');
+    agcGstaticLoaderProvider
+            .setVersion('45')
+            .addPackage('map')
+            .setOption('mapsApiKey', '[AIzaSyBo8Db0Dc56FBW_ZY4dVBlLAzhjQpgZpD0]');*/
+
     cfpLoadingBarProvider.includeSpinner = false;
     $qProvider.errorOnUnhandledRejections(false);
     blockUIConfig.templateUrl = 'views/components/loading.html';
