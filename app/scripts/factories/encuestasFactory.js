@@ -21,9 +21,29 @@ angular
       GetGet_UniversoEncuestaList: '/Get_UniversoEncuesta/GetGet_UniversoEncuestaList',
       GetRelEncuestaCli: '/RelEncuestaClientes/GetRelEncuestaCli',
       TerminarProceso: '/UniversoEncuesta/UpdateUniversoEncuesta',
-      GetGraficasPreguntasList: '/GraficasPreguntas/GetGraficasPreguntasList'
+      GetGraficasPreguntasList: '/GraficasPreguntas/GetGraficasPreguntasList',
+      GetResOpcMultsList:'/ResOpcMults/GetResOpcMultsList'
     };
     var factory = {};
+
+
+
+     factory.GetResOpcMultsList = function () {
+
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.get(globalService.getUrl() + paths.GetResOpcMultsList, config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
 
     factory.GetGraficasPreguntasList = function (idproceso) {
       var deferred = $q.defer();

@@ -37,5 +37,9 @@
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "zingchart": "^2.6.0",
+    "zingchart-angularjs": "^1.2.0"
   }
 }

@@ -15,9 +15,9 @@ angular
     'smart-table',
     'ngSanitize',
     'ngCsv',
-    'googlechart'   
-
-  ])
+    'googlechart',   
+    'angucomplete-alt'
+     ])
   .config(['$provide','$urlRouterProvider', '$httpProvider' ,'cfpLoadingBarProvider', '$qProvider', 'blockUIConfig', function ($provide, $urlRouterProvider, $httpProvider ,cfpLoadingBarProvider, $qProvider, blockUIConfig) {
     $urlRouterProvider.otherwise(function ($injector) {
       var $state = $injector.get('$state');
