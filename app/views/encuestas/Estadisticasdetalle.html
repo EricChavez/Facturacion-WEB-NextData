@@ -6,17 +6,20 @@
 
     </header>
     <div class="tools">
-        <button title="Salir de estadísticas" class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.estadisticas"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
+      <button title="Salir de estadísticas" class="btn btn-default btn-sm" type="button" ui-sref="home.encuestas.estadisticas"><i class="fa fa-arrow-left" aria-hidden="true"></i> Regresar</button>
     </div>
   </div>
 
   <div class="card-body">
 
-    <div class="row">
-      
-        <div class="col-md-4">
-<br>
-            <button class="btn btn-success btn-flat btn-sm" ng-click="$ctrl.printDiv('print')"><i class="fa fa-print"></i> Imprimir resultados</b<utton>
+    
+ </div>
+
+    <div class="col-md-12">
+
+      <div class="col-md-4">
+        <br>
+        <button class="btn btn-success btn-flat btn-sm" ng-click="$ctrl.printDiv('print')"><i class="fa fa-print"></i> Imprimir resultados</b<utton>
         </div>
         <div class="col-md-4">
 selecciona el tipo de grafica
@@ -31,10 +34,10 @@ selecciona el tipo de grafica
         </div>
      
     </div>
-<div class="row" id="print" style="overflow-y:scroll; max-height: 500px; ">
+<div class="col-md-12" id="print" style=" ">
 
 
- <div  ng-repeat="x in $ctrl.Preguntas" google-chart chart="x" style="height:500px; width:100%;"></div>
+ <div  class="col-md-6" ng-repeat="x in $ctrl.Preguntas" google-chart chart="x" style="height:500px; width:100%;"></div>
 </div>
 
    

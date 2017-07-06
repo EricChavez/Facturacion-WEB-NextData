@@ -22,60 +22,63 @@
             ng-required="true" validate-on="dirty" placeholder="Ingresa la pregunta">
 
         </div>
-        <div class="col-md-4">
+        <div class=" col-md-4 ">
           <label><b>Tipo de respuesta</b></label>
-          <select class="form-control input-sm" name="tpregunta" required-message="'Este campo es obligatorio'" ng-required="true"
-            validate-on="dirty" ng-change="$ctrl.cambioTipo();" ng-model="$ctrl.TipoPregunta">
-                                        <option disabled="" value="0">Selecciona el tipo de pregunta</option>
-                                        <option value="1">Pregunta abierta</option>
-                                        <option value="2">Pregunta cerrada</option>
-                                        <option value="3">Pregunta con opciones multiples</option>
+          <select class="form-control input-sm " name="tpregunta " required-message=" 'Este campo es obligatorio'
+              " ng-required="true " validate-on="dirty " ng-change="$ctrl.cambioTipo(); " ng-model="$ctrl.TipoPregunta ">
+                                        <option disabled=" " value="0 ">Selecciona el tipo de pregunta</option>
+                                        <option value="1 ">Pregunta abierta</option>
+                                        <option value="2 ">Pregunta cerrada</option>
+                                        <option value="3 ">Pregunta con opciones multiples</option>
                
                                      </select>
         </div>
-        <div class="col-md-2" ng-show="$ctrl.opcionMultiple">
-          <button title="Agregar una nueva opción" class="btn btn-success btn-sm" type="button" ng-click="$ctrl.AgregaRespuesta()">
-         <i class="fa fa-plus"></i> agregar respuesta </button>
+        <div class="col-md-2 " ng-show="$ctrl.opcionMultiple ">
+          <button title="Agregar una nueva opción " class="btn btn-success btn-sm " type="button " ng-click="$ctrl.AgregaRespuesta() ">
+         <i class="fa fa-plus "></i> agregar respuesta </button>
 
         </div>
 
       </div>
       <br>
       <br>
-      <div class="row " ng-show="$ctrl.opcionMultiple">
+      <div class="row " ng-show="$ctrl.opcionMultiple ">
 
+        <div class="col-md-6 ">
+        
+        <angucomplete-alt id="ex1"
+              placeholder="Ingresa las respuestas ffff"
+              pause="100"
+              selected-object="selectedCountry"
+              local-data="$ctrl.Respuestas_"
+              search-fields="ResOpcMult"
+              title-field="ResOpcMult"
+              minlength="1"
+              input-class="form-control form-control-small"/>
+
+
+
+
+
+        </div>
         <div class="col-md-6">
-          <table class="table">
-            <tr style="
-    background-color: rgba(150, 156, 156, 0.08);
-">
-              
+          <table class="table ">
+            <tr style=" background-color: rgba(150, 156, 156, 0.08); ">
+
             </tr>
-            <tr ng-repeat="s in $ctrl.Respuestas">
-              
-                <td>
-                  <ng-form name="urlForm" angular-validator>
-               
-                  <input class="form-control input-sm"
-                   type="text" name="resp"
-                   ng-required="true"
-                    required-message="'Este campo es obligatorio'"
-                    validate-on="dirty" 
-                    ng-model="s.ResOpcMult"
-                     placeholder="Ingresa la Respuesta">
-               <span ng-show="urlForm.resp.$error.required" style="color: red">Este campo es obligatorio</span>
-                     
-                   </ng-form>
-                </td>
-              
-              <td>
-                <button title="Eliminar opción" type="button" class="btn ink-reaction btn-floating-action btn-xs btn-danger" ng-click="$ctrl.Elimina($index)"><i class="fa fa-trash"></i></button>
+            <tr ng-repeat="s in $ctrl.Respuestas ">
+              <td>{{s.ResOpcMult}}</td>
+              <td><button title="Eliminar opción " type="button " class="btn ink-reaction btn-floating-action btn-xs btn-danger
+              " ng-click="$ctrl.Elimina($index) "><i class="fa fa-trash "></i></button>
 
               </td>
 
             </tr>
           </table>
+
+
         </div>
+
       </div>
 
 

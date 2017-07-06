@@ -12,7 +12,7 @@ function EstadisticasdetalleCtrl($uibModal, $rootScope, $stateParams, ngNotify, 
    function graficar() {
     encuestasFactory.GetGraficasPreguntasList(vm.Idproceso).then(function (data) {
       vm.Preguntas = data.GetGraficasPreguntasListResult.preguntas;
-
+      console.log(vm.Preguntas);
 
       console.log(vm.Preguntas);
       vm.Preguntas.forEach(function (pregunta) {
@@ -100,6 +100,4 @@ function EstadisticasdetalleCtrl($uibModal, $rootScope, $stateParams, ngNotify, 
   vm.printDiv = printDiv;
   vm.Charts = [];
   vm.cambioGrafico = cambioGrafico;
-
-
 }

@@ -11,32 +11,39 @@
   </div>
 
   <div class="card-body">
+ <div class="col-md-12 table-responsive">
 
-  
-<div class="row text-center">
-    <ul class="list divider-full-bleed">
-      <li class="tile" ng-repeat="x in $ctrl.Procesos">
-        <a class="tile-content ink-reaction">
-          <div class="tile-text">
-            <b>{{x.NombreProceso}}</b>
-            <small>
-        <b></b>{{x.Encuesta}}										
-		   </small>
-           <small>
-				{{x.TipSer}}										
-		   </small>
-          </div>
-          <div class="tile-icon">
-              <button title="Consultar resultados" ui-sref="home.encuestas.estadisticasdetalle({id:x.IdProcesoEnc})"
+      <table class="table">
+        <thead>
+          <tr>
+            <td><b>Nombre proceso</b></td>
+            <td><b>Nombre encuesta</b> </td> 
+            <td><b>Tipo servicio</b> </td>           
+            <td><b>Opciones</b></td>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr ng-show="$ctrl.Procesos.length>0" dir-paginate="x in $ctrl.Procesos|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
+            <td>{{x.NombreProceso}}</td>
+            <td>{{x.Encuesta}}		</td>
+            <td>{{x.TipSer}}			</td>
+            <td>
+               <button title="Consultar resultados" ui-sref="home.encuestas.estadisticasdetalle({id:x.IdProcesoEnc})"
                type="button" class="btn ink-reaction btn-sm btn-warning">
                <i class="md md-equalizer"></i> Resultados</button>
+            </td>
+            
+          </tr>
+        </tbody>
+      </table>
+      <div style="padding-left: 20px;">
+        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+        </dir-pagination-controls>
+      </div>
+    </div>
+
  
-          </div>
-        </a>
-      </li>
-
-    </ul></div>
-
 
 
   </div>

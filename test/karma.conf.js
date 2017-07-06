@@ -53,6 +53,10 @@ module.exports = function(config) {
       'bower_components/jspdf/dist/jspdf.debug.js',
       'bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js',
       'bower_components/angular-google-chart/ng-google-chart.js',
+      'bower_components/fusioncharts/fusioncharts.js',
+      'bower_components/zingchart/client/zingchart.min.js',
+      'bower_components/ZingChart-AngularJS/src/zingchart-angularjs.js',
+      'bower_components/angucomplete-alt/angucomplete-alt.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
