@@ -4,7 +4,6 @@ angular
   .controller('ModalAgendaCtrl', function ($uibModalInstance, $uibModal, options, quejasFactory, atencionFactory, $rootScope, ngNotify, $localStorage, $state) {
 
     function initialData() {
-      console.log('options', options);
       atencionFactory.MuestraTecnicosAlmacen(options.Contrato).then(function (data) {
         vm.Tecnicos = data.GetMuestra_Tecnicos_AlmacenListResult;
         atencionFactory.ConsultaTurnos().then(function (data) {
@@ -15,7 +14,6 @@ angular
     }
 
     function ok() {
-      console.log(options);
 
       if (vm.TecnicoAgenda == null || vm.TecnicoAgenda == undefined) {
         ngNotify.set('Selecciona un técnico para continuar', 'error');
@@ -33,7 +31,7 @@ angular
       var parametrosQUEJA = {
         'Clv_TipSer': options.CLV_TIPSER,
         'Contrato': options.Contrato,
-        'Problema': options.Problema,
+        'Problema': options.Descripcion,
         'Solucion': options.Solucion,
         'Clv_Trabajo': options.Clv_Trabajo,
         'clvPrioridadQueja': options.clvPrioridadQueja,
@@ -45,14 +43,13 @@ angular
         'clv_llamada': options.clv_llamada,
         'clvProblema': options.clvProblema
       };
-
       if (options.clv_queja == 0) {
         atencionFactory.AgregaQueja(parametrosQUEJA).then(function (data) {
           vm.clv_queja = data.AddQuejasResult;
 
           var parametrosLlamada = {
             'clv_llamada': options.clv_llamada,
-            'Descripcion': options.Problema,
+            'Descripcion': options.Descripcion,
             'Solucion': options.Solucion,
             'Clv_trabajo': options.Clv_Trabajo,
             'clv_queja': vm.clv_queja,
@@ -60,7 +57,6 @@ angular
             'Turno': vm.TurnoAgenda.ID,
             'ClvProblema': options.clvProblema
           };
-
           atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
 
 

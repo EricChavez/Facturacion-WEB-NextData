@@ -42,9 +42,9 @@ angular
             vm.FechaSolicitud = detqueja.Fecha_Soliciutud;
             vm.FechaEjecucion = detqueja.Fecha_Ejecucion;
             vm.FechaProceso = detqueja.FechaProceso;
-            vm.FechaVisita1 = detqueja.HV1;
-            vm.FechaVisita2 = detqueja.HV2;
-            vm.FechaVisita3 = detqueja.HV3;
+            vm.FechaVisita1 = detqueja.Visita1;
+            vm.FechaVisita2 = detqueja.Visita2;
+            vm.FechaVisita3 = detqueja.Visita3;
             vm.Departamento = detqueja.Clasificacion;
             vm.Clv_trabajo = detqueja.Clv_Trabajo;
             vm.Clv_prioridad = detqueja.clvPrioridadQueja;

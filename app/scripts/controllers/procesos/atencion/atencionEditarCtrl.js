@@ -238,7 +238,6 @@ angular
       options.clvProblema = vm.Problema.clvProblema;
       options.clv_queja = vm.clv_queja;
 	  //options.=atencion
-      console.log(options);
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -264,7 +263,7 @@ angular
       obj.Solucion = vm.DescripcionSolucion;
       obj.clv_queja = vm.clv_queja;
       obj.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
-      obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
+      obj.Clv_trabajo = vm.Trabajo.CLV_TRABAJO;
       obj.Turno = vm.Turno;
       obj.ClvProblema=vm.Problema.clvProblema;
       atencionFactory.ActualizaLlamada(obj).then(function (data) {

@@ -208,7 +208,6 @@ angular
                 Articulos.MetrajeInicioExt = vMIE;
                 Articulos.MetrajeFinExt = vMFE;
                 if (ExisteArticulo(Articulos.NoArticulo) == false) {
-                  alert('no esxiste')
                   vm.articulos_.push(Articulos);
                   DescargarMaterialFactory.GetDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
                     //console.log(data.GetDescargaMaterialArtResult[0].NoArticulo);
