@@ -182,6 +182,54 @@ function corporativaConf($stateProvider) {
 		templateUrl: 'views/corporativa/reportesPendientes.html',
 		controller: 'ReportesPendientesCtrl',
 		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportedolares',
+		data: {
+			pageTitle: 'SOFTV | REPORTES FACTURAS EN DOLARES',
+			permissions: {
+				only: ['facturasendolaresSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportedolares',
+		templateUrl: 'views/corporativa/reporteFacDolares.html',
+		controller: 'reporteFacDolaresCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportecontsaldados',
+		data: {
+			pageTitle: 'SOFTV | REPORTES CONTRATOS SALDADOS',
+			permissions: {
+				only: ['contratossaldadosSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportecontsaldados',
+		templateUrl: 'views/corporativa/reporteContSaldados.html',
+		controller: 'reporteContSaldadosCtrl',
+		controllerAs: '$ctrl'
+	},
+	{
+		name: 'home.corporativa.reportecontpend',
+		data: {
+			pageTitle: 'SOFTV | REPORTES CONTRATOS PENDIENTES',
+			permissions: {
+				only: ['contratospendientespagoSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/reportecontpendientes',
+		templateUrl: 'views/corporativa/reporteContpendientes.html',
+		controller: 'reporteContpendientesCtrl',
+		controllerAs: '$ctrl'
 	}
 
 

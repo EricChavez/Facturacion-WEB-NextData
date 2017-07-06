@@ -33,11 +33,7 @@
                
                                      </select>
         </div>
-        <div class="col-md-2 " ng-show="$ctrl.opcionMultiple ">
-          <button title="Agregar una nueva opción " class="btn btn-success btn-sm " type="button " ng-click="$ctrl.AgregaRespuesta() ">
-         <i class="fa fa-plus "></i> agregar respuesta </button>
-
-        </div>
+       
 
       </div>
       <br>
@@ -45,23 +41,28 @@
       <div class="row " ng-show="$ctrl.opcionMultiple ">
 
         <div class="col-md-6 ">
-        
-        <angucomplete-alt id="ex1"
+        <div class="col-md-8">
+        <angucomplete-alt 
               placeholder="Ingresa las respuestas ffff"
               pause="100"
-              selected-object="selectedCountry"
+              ng-model="$ctrl.Resp"
+              selected-object="$ctrl.selectedResp"
               local-data="$ctrl.Respuestas_"
               search-fields="ResOpcMult"
               title-field="ResOpcMult"
-              minlength="1"
-              input-class="form-control form-control-small"/>
-
-
-
+              minlength="1"              
+              input-class="form-control input-sm"
+              override-suggestions="true"
+              >
+        </div>
+        <div class="col-md-4">
+           <button type="button" ng-click="$ctrl.AgregaRespuesta()" class="btn btn-success btn-sm "><i class="fa fa-plus"></i>Add</button>
+        </div>
 
 
         </div>
         <div class="col-md-6">
+          <b>Respuestas</b> 
           <table class="table ">
             <tr style=" background-color: rgba(150, 156, 156, 0.08); ">
 

@@ -42,12 +42,16 @@ angular.module('softvApp')
       GetAgregaDetalleNotaDeCreditoMaestroList: '/AgregaDetalleNotaDeCreditoMaestro/GetAgregaDetalleNotaDeCreditoMaestroList',
       GetCANCELA_FACTURASMAESTRA_PRINCIPAL: '/NotasDeCredito_ContraMaeFac/GetCANCELA_FACTURASMAESTRA_PRINCIPAL',
       GetCancelaPagoFacturaMaestro: '/ContratoMaestroFac/GetCancelaPagoFacturaMaestro',
-      GetValidaSipuedohacerPagoc: '/ContratoMaestroFac/GetValidaSipuedohacerPagoc',    
+      GetValidaSipuedohacerPagoc: '/ContratoMaestroFac/GetValidaSipuedohacerPagoc',
       GetGeneraFacturaMaestroPrueba: '/ContratoMaestroFac/GetGeneraFacturaMaestroPrueba',
       GetValidaSipuedoCancelarPago: '/ContratoMaestroFac/GetValidaSipuedoCancelarPago',
       GetDetalle_NotasdeCreditoVerHistorialList: '/Detalle_NotasdeCredito/GetDetalle_NotasdeCreditoVerHistorialList',
       UpdateMarcaTodoNotaCreditoCM: '/NotasDeCredito_ContraMaeFac/UpdateMarcaTodoNotaCreditoCM',
-      UpdateDesmarcaTodoNotaCreditoCM: '/NotasDeCredito_ContraMaeFac/UpdateDesmarcaTodoNotaCreditoCM'
+      UpdateDesmarcaTodoNotaCreditoCM: '/NotasDeCredito_ContraMaeFac/UpdateDesmarcaTodoNotaCreditoCM',
+      GetContratosSaldadosMaestroList: '/ContratosSaldadosMaestro/GetContratosSaldadosMaestroList',
+      ResumenFacturasDolares: '/ResumenFacturasDolares/GetResumenFacturasDolaresList',
+      GetContratosPorSaldarMaestroList: '/ContratosPorSaldarMaestro/GetContratosPorSaldarMaestroList'
+
 
     };
 
@@ -104,6 +108,86 @@ angular.module('softvApp')
 
 
 
+    factory.GetContratosPorSaldarMaestroList = function (fecha) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+       'FechaFacturacion':{
+              FechaFacturacion:fecha
+
+        }
+
+      };
+
+      $http.post(globalService.getUrl() + paths.GetContratosPorSaldarMaestroList, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+    factory.ResumenFacturasDolares = function (fecha) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'ResumenFacturasDolaresEntity':
+         {
+           'Fecha':fecha
+          }
+
+      };
+
+      $http.post(globalService.getUrl() + paths.ResumenFacturasDolares, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetContratosSaldadosMaestroList = function (fecha) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'FechaFacturacion':{
+              FechaFacturacion:fecha
+
+        }
+
+      };
+
+      $http.post(globalService.getUrl() + paths.GetContratosSaldadosMaestroList, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+
+
+
     factory.UpdateDesmarcaTodoNotaCreditoCM = function (session) {
       var deferred = $q.defer();
       var config = {
@@ -138,11 +222,11 @@ angular.module('softvApp')
         }
       };
       var parametros = {
-        
-          'objMarcaTodoNotaCreditoCM': {
-            'Clv_Session': session
-          }
-        
+
+        'objMarcaTodoNotaCreditoCM': {
+          'Clv_Session': session
+        }
+
 
 
       };
@@ -1089,24 +1173,24 @@ angular.module('softvApp')
       return deferred.promise;
     };
 
-    factory.GetGeneraFacturaMaestroPrueba = function(contrato) {
-			var deferred = $q.defer();
-			var Parametros = {
-				'IdContratoMaestro': contrato
-			};
-			var config = {
-				headers: {
-					'Authorization': $localStorage.currentUser.token
-				}
-			};
-			$http.post(globalService.getUrl() + paths.GetGeneraFacturaMaestroPrueba, JSON.stringify(Parametros), config).then(function(response) {
-				deferred.resolve(response.data);
-			}).catch(function(response) {
-				deferred.reject(response);
-			});
+    factory.GetGeneraFacturaMaestroPrueba = function (contrato) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'IdContratoMaestro': contrato
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.GetGeneraFacturaMaestroPrueba, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
 
-			return deferred.promise;
-		};
+      return deferred.promise;
+    };
 
     return factory;
 
