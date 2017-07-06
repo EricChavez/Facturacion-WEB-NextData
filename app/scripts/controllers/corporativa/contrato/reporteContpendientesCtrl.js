@@ -10,6 +10,7 @@ function reporteContpendientesCtrl($uibModal, $rootScope, corporativoFactory, $f
     var fecha = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
     console.log(fecha);
     ContratoMaestroFactory.GetContratosPorSaldarMaestroList(fecha).then(function (data) {
+      console.log(data);
       vm.Registros=data.GetContratosPorSaldarMaestroListResult;
     })
   }

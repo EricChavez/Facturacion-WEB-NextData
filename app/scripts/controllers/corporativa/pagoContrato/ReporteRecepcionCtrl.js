@@ -367,7 +367,7 @@ function ReporteRecepcionCtrl($uibModal, ngNotify, inMenu, pagosMaestrosFactory,
     vm.saldadas = saldadas;
     vm.crearTodoAsCsv = crearTodoAsCsv;
     vm.createPdfTodo = createPdfTodo;
-    vm.filename = 'Reporte_de_pagos';
+    vm.filename = 'Contratos saldados';
     var reportHeaderPdf = "Reporte de Pagos";
     vm.csvDosHide = true;
     var img = new Image();
