@@ -163,7 +163,7 @@ angular
 
 
     function AddLLamadasdeInternet(showDetails) {
-      var atencion = (vm.tipoAtencion == 'telefonica') ? 'S' : 'T';
+      var atencion = (vm.tipoAtencion == 'S') ? 'S' : 'T';
       var trabajo = (vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;
       var solucion = (vm.DescripcionSolucion == undefined) ? '' : vm.DescripcionSolucion;
       var parametros = {

@@ -30,6 +30,7 @@ angular
               quejasFactory.ConsultaQueja($stateParams.id).then(function (data) {
                 
                 var detqueja = data.GetQuejasListResult[0];
+                console.log(detqueja);
                 vm.UsuarioGenero = detqueja.UsuarioGenero;
                 vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
                 vm.TecnicoAgenda = detqueja.NombreTecAge;
@@ -319,12 +320,10 @@ angular
             if (bloqueado.GetDeepBuscaBloqueadoResult.Bloqueado == 0) {
 
               if (vm.Estatus == 'E') {
-                alert('ejecutado');
                 if (vm.FechaEjecucion == undefined) {
                   ngNotify.set('Seleccione la fecha de ejecución', 'error');
                   return;
                 } else {
-                  alert('aqui');
                   if (ValidaFecha(vm.FechaEjecucion, vm.FechaSolicitud) == false) {
                     ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
                     return;

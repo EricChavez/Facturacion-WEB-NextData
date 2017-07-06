@@ -125,11 +125,11 @@
 
       <div class="col-md-3">
         <br>
-        <button type="button" style="font-size: 10px;" class="btn btn-danger btn-block" ng-click="$ctrl.generaReporte()"><i class="fa fa-flag"></i> Generar Reporte</button>
-        <button type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirPagos()"><i class="fa fa-money"></i> Historial de Pagos</button>
-        <button type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.openHistorial()"><i class="fa fa-clock-o
+        <button title="Generar reporte" type="button" style="font-size: 10px;" class="btn btn-danger btn-block" ng-click="$ctrl.generaReporte()"><i class="fa fa-flag"></i> Generar Reporte</button>
+        <button title="Consultar historial de pagos" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirPagos()"><i class="fa fa-money"></i> Historial de Pagos</button>
+        <button title="Consultar historial de reportes" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.openHistorial()"><i class="fa fa-clock-o
 					"></i> Historial Reportes</button>
-        <button type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirDetalleCobro();"><i class="fa fa-credit-card
+        <button title="Consultar detalle de cobro" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirDetalleCobro();"><i class="fa fa-credit-card
 					"></i> Consultar Cobro</button>
       </div>
     </div>
@@ -143,7 +143,7 @@
 											  </select>
         <br>
         <strong>Reporte del Cliente:</strong>
-        <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente  " ng-model="$ctrl.DescripcionProblema"></textarea>
+        <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente " ng-model="$ctrl.DescripcionProblema"></textarea>
       </div>
       <div class="col-md-4">
         <strong style="margin-top: 10px;">Clasificación de la Solución:</strong>

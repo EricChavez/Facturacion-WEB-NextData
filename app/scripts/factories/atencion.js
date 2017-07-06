@@ -473,7 +473,6 @@ angular
     };
 
     factory.ActualizaLlamada = function (objeto) {
-      console.log(objeto);
 	  
       var deferred = $q.defer();
       var config = {
@@ -485,13 +484,12 @@ angular
         'clv_llamada': objeto.clv_llamada,
         'Descripcion': objeto.Descripcion,
         'Solucion': objeto.Solucion,
-        'Clv_trabajo': objeto.Clv_Trabajo,
+        'Clv_trabajo': objeto.Clv_trabajo,
         'clv_queja': objeto.clv_queja,
         'CLV_TIPSER': objeto.CLV_TIPSER,
         'Turno': objeto.Turno,
         'ClvProblema':objeto.ClvProblema
       };
-	  console.log(parametros);
      
       $http.post(globalService.getUrl() + paths.ActualizaLlamada, JSON.stringify({
         'objLLamadasdeInternet': parametros

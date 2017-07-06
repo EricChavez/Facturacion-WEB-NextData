@@ -35,8 +35,10 @@ angular
                   }
                 }
 
-                if (vm.Clv_TipSer == '2') {
-                    vm.ClvTipSer = true;
+                if (vm.Clv_TipSer == '1') {
+                    vm.ClvTipSer1 = true;
+                }else if (vm.Clv_TipSer == '2') {
+                    vm.ClvTipSer2 = true;
                 }
 
                 ordenesFactory.getContratoReal(vm.ContratoCom).then(function (data) {
@@ -57,7 +59,7 @@ angular
             });
 
             ordenesFactory.consultaTablaServicios(options.Clave_Orden).then(function (data) {
-                //console.log(data);
+                console.log(data);
                 vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
             });
 
