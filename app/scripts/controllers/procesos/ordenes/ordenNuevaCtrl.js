@@ -32,8 +32,14 @@
     vm.blockEjecucionReal = true;
     vm.soyEjecucion = false;
     vm.EliminaQueja = EliminaQueja;
+    vm.Cancelar = Cancelar;
     vm.Fec_Sol = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 
+
+
+    function Cancelar() {
+      $state.go('home.procesos.ordenes');
+    }
 
     function ImprimeOrden(clv_orden) {
 

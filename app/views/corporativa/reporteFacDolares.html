@@ -24,8 +24,8 @@
                 <br>
                         <button class="btn btn-warning btn-flat btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar tabla</button>
                         <ul class="dropdown-menu primary" role="menu">
-                            <li><a class="btn btn-sm " ng-click="$ctrl.createPdfTodo('todo')"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
-                            <li><a class="btn btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/xls.png" width="24px"> CSV</a></li>
+                            <li><a class="btn btn-sm " ng-click="$ctrl.createPdf()"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
+                            <li><a class="btn btn-sm" ng-csv="$ctrl.RegistrosReporte" csv-header="['FECHA FACTURACION','FACTURA', 'CONTRATO MAESTRO', 'NOMBRE COMERCIAL','IMPORTE A FACTURAR','TIPO DE CAMBIO','IMPORTE EN DOLARES']" filename="test.csv"><img src="images/xls.png" width="24px"> CSV</a></li>
                         </ul>
                     </div>
         </div>
@@ -34,7 +34,7 @@
     <hr>
       <div class="col-md-12">
         <div class="row">
-
+ 
           <div class="col-md-12  table-responsive" style="padding-left: 25px; padding-right: 25px; font-size:10px;">
             <table class="table">
               <thead>
@@ -42,23 +42,24 @@
                   <th>FECHA FACTURACIÓN</th>
                   <th>FACTURA</th>
                   <th>CONTRATO MAESTRO</th>
-                  <th>CONTRATO INDIVIDUAL</th>
-                  <th>CLIENTE</th>
-                  <th>IMPORTE</th>
-                  <th>FECHA PAGO</th>
+                  <th>NOMBRE COMERCIAL</th>
+                  <th>IMPORTE A FACTURAR</th>
+                  <th>TIPO DE CAMBIO </th>
+                  <th>IMPORTE EN DOLARES </th>
+        
 
                 </tr>
 
               </thead>
               <tbody>
-                <tr ng-show="$ctrl.Registros.length>0">
+                <tr ng-show="$ctrl.Registros.length>0" ng-repeat="x in $ctrl.Registros">
+                  <td>{{x.Fecha}}</td>
+                  <td>{{x.Factura}}</td>
                   <td>{{x.ContratoMaestro}}</td>
-                  <td>{{x.Ticket}}</td>
-                  <td>{{x.Cliente}}</td>
-                  <td>{{x.Tipo}}</td>
-                  <td>{{x.FechaFacturacion}}</td>
+                  <td>{{x.NombreComercial}}</td>
                   <td>{{x.ImporteFactura | currency}}</td>
-                  <td>{{x.PagoInicial | currency}}</td>
+                  <td>{{x.TipoDeCambio }}</td>
+                  <td>{{x.ImporteDolares | currency}}</td>
 
                 </tr>
               </tbody>

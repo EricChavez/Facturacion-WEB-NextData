@@ -4,11 +4,15 @@ angular
   .controller('EncuestaCtrl', function ($uibModal, $rootScope, ngNotify, encuestasFactory) {
 
     function initialData() {
-      encuestasFactory.GetEncuestasList().then(function (data) {
+    lista();
+    }
+
+
+    function lista(){
+  encuestasFactory.GetEncuestasList().then(function (data) {
         vm.Encuestas = data.GetEncuestasListResult;
-
-
-      });
+      
+       });
     }
 
     function Imprime(id) {
@@ -33,7 +37,16 @@ angular
       });
     }
 
+
+    function DeleteEncuestas(id){
+      encuestasFactory.DeleteEncuestas(id).then(function(data){
+     ngNotify.set('La encuesta se ha eliminado','success');
+     lista();
+      });
+    }
+
     var vm = this;
     initialData();
     vm.Imprime=Imprime;
+    vm.DeleteEncuestas=DeleteEncuestas;
   });

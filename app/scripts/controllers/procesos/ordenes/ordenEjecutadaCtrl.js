@@ -35,8 +35,17 @@
     vm.idBitacora = 0;
     vm.idTecnicoBitacora = 0;
     vm.SoyRetiro = false;
-   
+    vm.Cancelar = Cancelar;
     init(vm.claveOrden);
+
+
+    function Cancelar() {
+      ordenesFactory.Getsp_BorraArticulosAsignados(vm.claveOrden).then(function (data) {
+        $state.go('home.procesos.ordenes');
+      });
+
+
+    }
 
 
     function Bloqueo() {
@@ -111,47 +120,48 @@
         vm.clv_orden = data.GetDeepConsultaOrdSerResult.Clv_Orden;
         vm.datosOrden = data.GetDeepConsultaOrdSerResult;
         vm.contrato = data.GetDeepConsultaOrdSerResult.ContratoCom;
-        vm.Clv_TipSer = data.GetDeepConsultaOrdSerResult.Clv_TipSer;    
+        vm.Clv_TipSer = data.GetDeepConsultaOrdSerResult.Clv_TipSer;
 
-            var verificastatus = data.GetDeepConsultaOrdSerResult.STATUS;
-            if (verificastatus == 'E') {
-              $state.go('home.procesos.ordenes');
-            }
+        var verificastatus = data.GetDeepConsultaOrdSerResult.STATUS;
+        if (verificastatus == 'E') {
+          $state.go('home.procesos.ordenes');
+        }
+        
+        
+        vm.Fec_Sol = vm.datosOrden.Fec_Sol;
+        vm.observaciones = vm.datosOrden.Obs;
+        ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
+          vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
+          vm.trabajosTabla.forEach(function (row) {
+            row.recibi = false;
 
-            vm.Fec_Sol = vm.datosOrden.Fec_Sol;
-            vm.observaciones = vm.datosOrden.Obs;
-            ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
-              vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
-              vm.trabajosTabla.forEach(function (row) {
-                row.recibi = false;
-
-              });
-            });
-            buscarContrato(vm.contrato);
-            vm.status = 'E'
-            FechasOrden();
-            Bloqueo();
-            DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_orden, 'O').then(function (data) {
-              if (data.GetchecaBitacoraTecnicoResult != null) {
-                vm.idBitacora = data.GetchecaBitacoraTecnicoResult.idBitacora;
-                vm.idTecnicoBitacora = data.GetchecaBitacoraTecnicoResult.clvTecnico;
-              }
-              ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
-                vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
-                if (vm.idTecnicoBitacora > 0) {
-                  for (var a = 0; a < vm.tecnico.length; a++) {
-                    if (vm.tecnico[a].CLV_TECNICO == vm.idTecnicoBitacora) {
-                      vm.selectedTecnico = vm.tecnico[a];
-                      vm.blockTecnico = true;
-                    }
-                  }
+          });
+        });
+        buscarContrato(vm.contrato);
+        vm.status = 'E'
+        FechasOrden();
+        Bloqueo();
+        DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_orden, 'O').then(function (data) {
+          if (data.GetchecaBitacoraTecnicoResult != null) {
+            vm.idBitacora = data.GetchecaBitacoraTecnicoResult.idBitacora;
+            vm.idTecnicoBitacora = data.GetchecaBitacoraTecnicoResult.clvTecnico;
+          }
+          ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
+            vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
+            if (vm.idTecnicoBitacora > 0) {
+              for (var a = 0; a < vm.tecnico.length; a++) {
+                if (vm.tecnico[a].CLV_TECNICO == vm.idTecnicoBitacora) {
+                  vm.selectedTecnico = vm.tecnico[a];
+                  vm.blockTecnico = true;
                 }
-              });
-            });
+              }
+            }
+          });
+        });
 
-          
 
-      
+
+
 
 
       });

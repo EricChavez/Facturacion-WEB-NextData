@@ -124,7 +124,7 @@ function corporativaConf($stateProvider) {
 		data: {
 			pageTitle: 'SAC | FACTURAS',
 			permissions: {
-				only: ['ticketsSelect'],
+				only: ['facturasSelect'],
 				options: {
 					reload: false
 				}
@@ -229,6 +229,22 @@ function corporativaConf($stateProvider) {
 		url: '/corporativa/reportecontpendientes',
 		templateUrl: 'views/corporativa/reporteContpendientes.html',
 		controller: 'reporteContpendientesCtrl',
+		controllerAs: '$ctrl'
+	},
+		{
+		name: 'home.corporativa.tipocambio',
+		data: {
+			pageTitle: 'SOFTV | REPORTES CONTRATOS PENDIENTES',
+			permissions: {
+				only: ['tipodecambioSelect'],
+				options: {
+					reload: false
+				}
+			}
+		},
+		url: '/corporativa/tipocambio',
+		templateUrl: 'views/corporativa/TipoCambio.html',
+		controller: 'TipoCambioCtrl',
 		controllerAs: '$ctrl'
 	}
 
