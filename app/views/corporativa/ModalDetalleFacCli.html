@@ -20,7 +20,7 @@
           <td ng-if="x.Se_Cobra">
             <ng-form name="urlForm">
               <input type="number" ng-disabled="!x.Se_Cobra" name="cant" ng-model="x.ImporteNota" class="form-control input-sm" required min="0"
-                ng-change="$ctrl.calcular()" validate-on="dirty" max="{{x.importe}}">
+                ng-change="$ctrl.calcular()" validate-on="dirty" max="{{x.Total}}">
               <span class="alert error text-danger" ng-show="urlForm.cant.$error.required">campo requerido</span>
               <span class="alert error text-danger" ng-show="urlForm.cant.$error.max">cantidad invalida</span>
 

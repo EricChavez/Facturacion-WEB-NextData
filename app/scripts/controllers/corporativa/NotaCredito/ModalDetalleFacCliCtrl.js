@@ -15,9 +15,9 @@
     vm.sumatotal = 0;
     this.$onInit = function () {
 
-      ContratoMaestroFactory.DameDetalle_FacturaporCli(options.Clv_FacturaCli, options.clv_session).then(function (response) {
-      
+      ContratoMaestroFactory.DameDetalle_FacturaporCli(options.Clv_FacturaCli, options.clv_session).then(function (response) {      
         vm.conceptos = response.GetDameDetalle_FacturaporCliListResult;
+        console.log(vm.conceptos);
 
       });
     }

@@ -7,7 +7,7 @@ function reporteContSaldadosCtrl($uibModal, $rootScope, corporativoFactory, $fil
   }
 
   function Aceptar() {
-    alert('busca');
+   
     var fecha = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
     console.log(fecha);
     ContratoMaestroFactory.GetContratosSaldadosMaestroList(fecha).then(function (data) {
@@ -107,7 +107,7 @@ function createPdf() {
 
   var vm = this;
   vm.Aceptar = Aceptar;
-  var reportHeaderPdf = "Reporte de Pagos";
+  var reportHeaderPdf = "CONTRATOS SALDADOS";
   vm.createPdf=createPdf;
 vm.FechaHOY = $filter('date')(new Date(), 'dd-MM-yyyy');
 }

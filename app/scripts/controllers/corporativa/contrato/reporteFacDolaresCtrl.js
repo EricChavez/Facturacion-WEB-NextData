@@ -5,8 +5,7 @@ function reporteFacDolaresCtrl($uibModal, $rootScope, corporativoFactory, $filte
 
   }
 
-  function Aceptar() {
-    alert('busca');
+  function Aceptar() {  
     var fecha = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
     console.log(fecha);
     ContratoMaestroFactory.ResumenFacturasDolares(fecha).then(function (data) {
