@@ -74,7 +74,7 @@
                   <div class="col-md-6">
                     <form angular-validator-submit="$ctrl.BuscaContrato()" name="contratoForm" novalidate angular-validator>
                     
-                      <input class="form-control input-sm" ng-model="$ctrl.Contrato" placeholder="#Contrato" type="text" autocomplete="off" required="" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]+([-][0-9]+)?$/" required-message="'Este campo es obligatorio.'" invalid-message="'Formato de contrato inválido.'">
+                      <input class="form-control input-sm" ng-model="$ctrl.Contrato" placeholder="#Contrato" type="text" autocomplete="off" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]+([-][0-9]+)?$/" invalid-message="'Formato de contrato inválido.'">
                       <button class="btn btn-info btn-xs text-left" type="submit">Buscar</button>
                     </form>
                     <br>

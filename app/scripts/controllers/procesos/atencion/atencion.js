@@ -5,7 +5,7 @@ angular
 		function initialData() {
 			atencionFactory.getPlazas().then(function (data) {
 				vm.plazas = data.GetMuestra_Compania_RelUsuarioListResult;
-				vm.selectedPlaza=vm.plazas[0];
+				vm.selectedPlaza = vm.plazas[0];
 				atencionFactory.getServicios().then(function (data) {
 					vm.servicios = data.GetMuestraTipSerPrincipalListResult;
 					vm.selectedServicio = vm.servicios[0];
@@ -13,7 +13,7 @@ angular
 					atencionFactory.getUsuarios().then(function (data) {
 						console.log(data);
 						vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
-                         vm.selectedUsuario=vm.usuarios[0];
+						vm.selectedUsuario = vm.usuarios[0];
 						var obj = {
 							servicio: 0,
 							reporte: 0,
@@ -58,7 +58,7 @@ angular
 		}
 
 		function cambioServicio() {
-			
+
 			if (vm.selectedServicio == undefined) {
 				var tServicio = 0;
 			} else {
@@ -102,11 +102,11 @@ angular
 			if (vm.selectedPlaza == undefined || vm.selectedPlaza == false ||
 				vm.selectedServicio == undefined || vm.selectedServicio == false ||
 				vm.selectedUsuario == undefined || vm.selectedUsuario == false) {
-					ngNotify.set('Selecciona una compañía, un tipo de servicio y un usuario.', 'warn');
-			}else if (vm.reporte == undefined || vm.selectedUsuario == ""){
-					ngNotify.set('Ingresa un número de reporte válido.', 'warn');
-			}else {
-				
+				ngNotify.set('Selecciona una compañía, un tipo de servicio y un usuario.', 'warn');
+			} else if (vm.reporte == undefined || vm.selectedUsuario == "") {
+				ngNotify.set('Ingresa un número de reporte válido.', 'warn');
+			} else {
+
 				var obj = {
 					servicio: vm.selectedServicio.Clv_TipSerPrincipal,
 					reporte: vm.reporte,
@@ -122,7 +122,7 @@ angular
 					compania: vm.selectedPlaza.id_compania,
 					clvUsuario: vm.selectedUsuario.Clave
 				};
-				
+
 				atencionFactory.buscarAtencion(obj).then(function (data) {
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 					if (vm.atenciones.length == 0) {
@@ -132,6 +132,7 @@ angular
 						vm.sinRegistros = false;
 						vm.conRegistros = true;
 					}
+					vm.reporte = "";
 				});
 			}
 
@@ -140,10 +141,9 @@ angular
 		function buscarContrato() {
 
 			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato))) {
-				console.log(false);
 				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+				vm.contrato = "";
 			} else {
-				console.log(true);
 				if (vm.selectedServicio == undefined || vm.selectedServicio == false) {
 					var servicio = 0;
 				} else {
@@ -179,6 +179,7 @@ angular
 						vm.conRegistros = true;
 					}
 				});
+				vm.contrato = "";
 			}
 
 		}
@@ -192,7 +193,7 @@ angular
 			} else {
 				var nombreB = vm.nombre;
 			}
-
+			vm.nombre = "";
 			if (vm.paterno == undefined || vm.paterno == "") {
 				var paternoB = "";
 			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.paterno))) {
@@ -200,7 +201,7 @@ angular
 			} else {
 				var paternoB = vm.paterno;
 			}
-
+			vm.paterno = "";
 			if (vm.materno == undefined || vm.materno == "") {
 				var maternoB = "";
 			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.materno))) {
@@ -208,6 +209,7 @@ angular
 			} else {
 				var maternoB = vm.materno;
 			}
+			vm.materno = "";
 			if (vm.selectedPlaza == undefined) {
 				ngNotify.set('Selecciona una compañía.', 'warn');
 			} else if (vm.selectedServicio == undefined || vm.selectedServicio == false) {
@@ -234,7 +236,6 @@ angular
 					clvUsuario: vm.selectedUsuario.Clave
 				};
 				atencionFactory.buscarAtencion(obj).then(function (data) {
-					console.log(data);
 					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
 					if (vm.atenciones.length == 0) {
 						vm.sinRegistros = true;
@@ -244,6 +245,9 @@ angular
 						vm.conRegistros = true;
 					}
 				});
+				/*vm.nombre = "";
+				vm.paterno = "";
+				vm.materno = "";*/
 			}
 		}
 
@@ -288,42 +292,44 @@ angular
 
 		function buscarColonia() {
 
-                var servicio=(vm.selectedServicio==null|vm.selectedServicio==undefined)?0:vm.selectedServicio.Clv_TipSerPrincipal;
-				var calle=(vm.calle==null||vm.calle==undefined)?'':vm.calle;
-				var numero=(vm.numero==null||vm.numero==undefined)?'':vm.numero;
-				var obj = {
-					servicio:servicio ,
-					reporte: 0,
-					contrato: '',
-					nombre: '',
-					paterno: '',
-					materno: '',
-					calle: calle,
-					numero: numero,
-					colonia: 0,
-					setupbox: '',
-					op: 2,
-					compania: 0,
-					clvUsuario: 0
-				};
-				
-				atencionFactory.buscarAtencion(obj).then(function (data) {
-					console.log(data);
-					vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
-					if (vm.atenciones.length == 0) {
-						vm.sinRegistros = true;
-						vm.conRegistros = false;
-					} else {
-						vm.sinRegistros = false;
-						vm.conRegistros = true;
-					}
-				});
-			
+			var servicio = (vm.selectedServicio == null | vm.selectedServicio == undefined) ? 0 : vm.selectedServicio.Clv_TipSerPrincipal;
+			var calle = (vm.calle == null || vm.calle == undefined) ? '' : vm.calle;
+			var numero = (vm.numero == null || vm.numero == undefined) ? '' : vm.numero;
+			var obj = {
+				servicio: servicio,
+				reporte: 0,
+				contrato: '',
+				nombre: '',
+				paterno: '',
+				materno: '',
+				calle: calle,
+				numero: numero,
+				colonia: 0,
+				setupbox: '',
+				op: 2,
+				compania: 0,
+				clvUsuario: 0
+			};
+
+			atencionFactory.buscarAtencion(obj).then(function (data) {
+				console.log(data);
+				vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
+				if (vm.atenciones.length == 0) {
+					vm.sinRegistros = true;
+					vm.conRegistros = false;
+				} else {
+					vm.sinRegistros = false;
+					vm.conRegistros = true;
+				}
+				vm.calle = "";
+				vm.numero = "";
+			});
+
 		}
 
 		function bucarUsuario() {
 			if (vm.selectedUsuario == undefined || vm.selectedUsuario == false ||
-			    vm.selectedServicio == undefined || vm.selectedServicio == false ||
+				vm.selectedServicio == undefined || vm.selectedServicio == false ||
 				vm.selectedPlaza == undefined) {
 				ngNotify.set('Por favor seleccione una compañía, un tipo de servicio y un usuario.', 'error');
 			} else {

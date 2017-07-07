@@ -104,6 +104,8 @@
                       if (data.GetDeepImprime_OrdenResult.Imprime == 1) {
                         ngNotify.set('La orden es de proceso automático por lo cual no se imprimió', 'error');
                       } else {
+                        $state.go('home.procesos.ordenes');
+                        ngNotify.set('Se ha guardado la orden de servicio con exito');
                         ImprimeOrden(vm.clv_orden);
                       }
 

@@ -74,7 +74,7 @@ angular
 		function BuscaReporte() {
 			if (vm.Servicio == null) {
 				ngNotify.set('Por favor seleccione un tipo de servicio.', 'warn');
-			} else if (vm.Reporte == null) {
+			} else if (vm.Reporte == null || !(/^\d{1,9}/.test(vm.Reporte))) {
 				ngNotify.set('Ingresa un número de reporte válido.', 'warn');
 			} else {
 				var Parametros = {
@@ -107,6 +107,7 @@ angular
 					}
 				});
 			}
+			vm.Reporte = "";
 		}
 
 		function BuscaContrato() {
@@ -145,6 +146,7 @@ angular
 					}
 				});
 			}
+			vm.Contrato = "";
 		}
 
 		function BuscaporNombre() {
@@ -162,12 +164,12 @@ angular
 			} else {
 				var APaternoB = vm.APaterno;
 			}
-			if (vm.Amaterno == undefined || vm.Amaterno == "") {
+			if (vm.AMaterno == undefined || vm.AMaterno == "") {
 				var AmaternoB = "";
-			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.Amaterno))) {
+			} else if (!(/^[A-Za-z\s\xF1\xD1]+$/.test(vm.AMaterno))) {
 				var AmaternoB = "";
 			} else {
-				var AmaternoB = vm.Amaterno;
+				var AmaternoB = vm.AMaterno;
 			}
 			if (vm.Servicio == undefined) {
 				ngNotify.set('Por favor seleccione un tipo de servicio.', 'warn');
@@ -204,13 +206,26 @@ angular
 					}
 				});
 			}
+			vm.Nombre = "";
+			vm.APaterno = "";
+			vm.AMaterno = "";
 		}
 
 		function BuscaporDireccion() {
+
+			if(!(/^\d{1,9}/.test(vm.Numero))){
+				var Num = "";
+				vm.Numero = Num;
+			}else{
+				var Num = vm.Numero;
+			}
+
 			if (vm.Colonia == null) {
 				ngNotify.set('Por favor seleccione una compañía y una colonia.', 'warn');
+				vm.Numero = "";
 			} else if (vm.Colonia.clvColonia == null || vm.Colonia.clvColonia == 0) {
 				ngNotify.set('Por favor seleccione una compañía y una colonia.', 'warn');
+				vm.Numero = "";
 			} else {
 				var Parametros = {
 					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
@@ -220,7 +235,7 @@ angular
 					'AP': '',
 					'AM': '',
 					'CALLE': vm.Calle,
-					'NUMERO': vm.Numero,
+					'NUMERO': Num,
 					'SetupBox': '',
 					'Status': '',
 					'Op': 2,
@@ -242,6 +257,9 @@ angular
 					}
 				});
 			}
+			vm.Calle = "";
+			vm.Numero = "";
+			vm.Colonia.clvColonia = vm.Colonia.clvColonia[0];
 		}
 
 		function CambioPlaza(x) {
@@ -372,75 +390,78 @@ angular
 		}
 
 		function BuscaporSTB() {
-			if (vm.STB == null) {
-
+			if (vm.STB == null || vm.STB == "") {
+				ngNotify.set('Ingresa una Serie de STB válida.', 'warn');
+			} else {
+				var Parametros = {
+					'Clv_TipSer': 0,
+					'Clv_Queja': 0,
+					'Contrato': 0,
+					'NOMBRE': '',
+					'AP': '',
+					'AM': '',
+					'CALLE': '',
+					'NUMERO': '',
+					'SetupBox': vm.STB,
+					'Status': '',
+					'Op': 6,
+					'ClvColonia': 0,
+					'IdCompania': 0,
+					'ClvUsuario': 0,
+					'SoloNivel2': 0,
+					'NoTicket': 0
+				};
+				quejasFactory.ObtenLista(Parametros).then(function (data) {
+					console.log(data);
+					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+					if (vm.ListaQuejas.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
+				vm.STB = "";
 			}
-			var Parametros = {
-				'Clv_TipSer': 0,
-				'Clv_Queja': 0,
-				'Contrato': 0,
-				'NOMBRE': '',
-				'AP': '',
-				'AM': '',
-				'CALLE': '',
-				'NUMERO': '',
-				'SetupBox': vm.STB,
-				'Status': '',
-				'Op': 6,
-				'ClvColonia': 0,
-				'IdCompania': 0,
-				'ClvUsuario': 0,
-				'SoloNivel2': 0,
-				'NoTicket': 0
-			};
-			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
-				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
-				if (vm.ListaQuejas.length == 0) {
-					vm.sinRegistros = true;
-					vm.conRegistros = false;
-				} else {
-					vm.sinRegistros = false;
-					vm.conRegistros = true;
-				}
-			});
 		}
 
 		function BuscaporTicket() {
 
-			if (vm.Ticket == null) {
-
+			if (vm.Ticket == null || vm.Ticket == "") {
+				ngNotify.set('Ingresa un número de ticket válido.', 'warn');
+			} else {
+				var Parametros = {
+					'Clv_TipSer': 0,
+					'Clv_Queja': 0,
+					'Contrato': 0,
+					'NOMBRE': '',
+					'AP': '',
+					'AM': '',
+					'CALLE': '',
+					'NUMERO': '',
+					'SetupBox': '',
+					'Status': '',
+					'Op': 7,
+					'ClvColonia': 0,
+					'IdCompania': 0,
+					'ClvUsuario': 0,
+					'SoloNivel2': 0,
+					'NoTicket': vm.Ticket
+				};
+				quejasFactory.ObtenLista(Parametros).then(function (data) {
+					console.log(data);
+					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
+					if (vm.ListaQuejas.length == 0) {
+						vm.sinRegistros = true;
+						vm.conRegistros = false;
+					} else {
+						vm.sinRegistros = false;
+						vm.conRegistros = true;
+					}
+				});
 			}
-			var Parametros = {
-				'Clv_TipSer': 0,
-				'Clv_Queja': 0,
-				'Contrato': 0,
-				'NOMBRE': '',
-				'AP': '',
-				'AM': '',
-				'CALLE': '',
-				'NUMERO': '',
-				'SetupBox': '',
-				'Status': '',
-				'Op': 7,
-				'ClvColonia': 0,
-				'IdCompania': 0,
-				'ClvUsuario': 0,
-				'SoloNivel2': 0,
-				'NoTicket': vm.Ticket
-			};
-			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
-				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
-				if (vm.ListaQuejas.length == 0) {
-					vm.sinRegistros = true;
-					vm.conRegistros = false;
-				} else {
-					vm.sinRegistros = false;
-					vm.conRegistros = true;
-				}
-			});
-
+			vm.Ticket = "";
 		}
 
 		function abrirBonificacion(object) {
