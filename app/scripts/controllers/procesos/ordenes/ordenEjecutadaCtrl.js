@@ -17,7 +17,7 @@
     vm.Guardar = Guardar;
     vm.clv_tecnico = 0;
     vm.titulo = 'Ejecución de Orden'
-    vm.claveOrden = $stateParams.claveOr;
+    vm.claveOrden = $stateParams.id;
     vm.block = true;
     vm.blockSolicitud = true;
     vm.MuestraAgenda = MuestraAgenda;
@@ -35,6 +35,7 @@
     vm.idBitacora = 0;
     vm.idTecnicoBitacora = 0;
     vm.SoyRetiro = false;
+   
     init(vm.claveOrden);
 
 
@@ -62,9 +63,18 @@
     }
 
 
+
+
+
     function DimeSitengoRetiro() {
-      console.log(vm.trabajosTabla);
+
+      // 1.-si tengo retiro pero no se ha recibido ninguno
+      // 2.- si tengo retiro y ya se recibio almenos un articulo
+      //3.-No tengo retiro
+
+
       var recibidos = 0;
+      var cuantosRetiro = 0;
       vm.trabajosTabla.forEach(function (row) {
         if (row.Descripcion.toLowerCase().includes('rante') ||
           row.Descripcion.toLowerCase().includes('relnb') ||
@@ -76,64 +86,73 @@
           row.Descripcion.toLowerCase().includes('retca') ||
           row.Descripcion.toLowerCase().includes('rradi') ||
           row.Descripcion.toLowerCase().includes('rrout')) {
-          vm.SoyRetiro = true;
+          cuantosRetiro = cuantosRetiro + 1;
           if (row.recibi == true) {
             recibidos = recibidos + 1;
           }
-
         }
-
       });
 
-      if (recibidos == 0) {
-        ngNotify.set('Necesita recibir al menos un articulo para generar la orden ', 'warn');
-        return;
-
+      if (cuantosRetiro > 0) {
+        vm.SoyRetiro = true;
+        return (recibidos == 0) ? 1 : 2
+      } else {
+        return 3;
       }
-
 
     }
 
 
     function init(orden) {
+
+
+
       ordenesFactory.ConsultaOrdSer(orden).then(function (data) {
-
-        vm.datosOrden = data.GetDeepConsultaOrdSerResult;
-
         vm.clv_orden = data.GetDeepConsultaOrdSerResult.Clv_Orden;
+        vm.datosOrden = data.GetDeepConsultaOrdSerResult;
         vm.contrato = data.GetDeepConsultaOrdSerResult.ContratoCom;
-        //vm.status = data.GetDeepConsultaOrdSerResult.STATUS;
-        vm.Clv_TipSer = data.GetDeepConsultaOrdSerResult.Clv_TipSer;
-        vm.Fec_Sol = vm.datosOrden.Fec_Sol;
-        vm.observaciones = vm.datosOrden.Obs;
-        ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
-          vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
-          vm.trabajosTabla.forEach(function (row) {
-            row.recibi = false;
+        vm.Clv_TipSer = data.GetDeepConsultaOrdSerResult.Clv_TipSer;    
 
-          });
-        });
-        buscarContrato(vm.contrato);
-        vm.status = 'E'
-        FechasOrden();
-        Bloqueo();
-        DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_orden, 'O').then(function (data) {
-          if (data.GetchecaBitacoraTecnicoResult != null) {
-            vm.idBitacora = data.GetchecaBitacoraTecnicoResult.idBitacora;
-            vm.idTecnicoBitacora = data.GetchecaBitacoraTecnicoResult.clvTecnico;
-          }
-          ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
-            vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
-            if (vm.idTecnicoBitacora > 0) {
-              for (var a = 0; a < vm.tecnico.length; a++) {
-                if (vm.tecnico[a].CLV_TECNICO == vm.idTecnicoBitacora) {
-                  vm.selectedTecnico = vm.tecnico[a];
-                  vm.blockTecnico = true;
-                }
-              }
+            var verificastatus = data.GetDeepConsultaOrdSerResult.STATUS;
+            if (verificastatus == 'E') {
+              $state.go('home.procesos.ordenes');
             }
-          });
-        });
+
+            vm.Fec_Sol = vm.datosOrden.Fec_Sol;
+            vm.observaciones = vm.datosOrden.Obs;
+            ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
+              vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
+              vm.trabajosTabla.forEach(function (row) {
+                row.recibi = false;
+
+              });
+            });
+            buscarContrato(vm.contrato);
+            vm.status = 'E'
+            FechasOrden();
+            Bloqueo();
+            DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_orden, 'O').then(function (data) {
+              if (data.GetchecaBitacoraTecnicoResult != null) {
+                vm.idBitacora = data.GetchecaBitacoraTecnicoResult.idBitacora;
+                vm.idTecnicoBitacora = data.GetchecaBitacoraTecnicoResult.clvTecnico;
+              }
+              ordenesFactory.MuestraRelOrdenesTecnicos(orden).then(function (data) {
+                vm.tecnico = data.GetMuestraRelOrdenesTecnicosListResult;
+                if (vm.idTecnicoBitacora > 0) {
+                  for (var a = 0; a < vm.tecnico.length; a++) {
+                    if (vm.tecnico[a].CLV_TECNICO == vm.idTecnicoBitacora) {
+                      vm.selectedTecnico = vm.tecnico[a];
+                      vm.blockTecnico = true;
+                    }
+                  }
+                }
+              });
+            });
+
+          
+
+      
+
 
       });
 
@@ -438,6 +457,7 @@
     }
 
 
+
     function Guardar() {
       if (vm.status == 'E') {
         if (ValidaFecha(vm.Fec_Eje, vm.Fec_Sol) == false) {
@@ -458,10 +478,26 @@
           }
         }
       }
+      console.log(DimeSitengoRetiro());
+      if (DimeSitengoRetiro() == 1) {
+        ngNotify.set('Necesita recibir al menos un articulo para generar la orden ', 'warn');
+        return;
+      }
+      if (DimeSitengoRetiro() == 2) {
+        var ApaNoEntregados = [];
+        vm.trabajosTabla.forEach(function (row) {
+          if (row.recibi == false) {
+            ApaNoEntregados.push(row);
+          }
+        });
 
-      DimeSitengoRetiro();
-      return;      
+        ordenesFactory.GetSP_InsertaTbl_NoEntregados(ApaNoEntregados).then(function (response) {
+          console.log(response);
+        });
+      }
+
       EjecutaOrden();
+
     }
 
 

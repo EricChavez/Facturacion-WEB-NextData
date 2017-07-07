@@ -64,14 +64,59 @@ angular
       DeleteOrdSer: '/OrdSer/DeleteOrdSer',
       AddMovSist: '/MovSist/AddMovSist',
       DeleteDetOrdSer: '/DetOrdSer/DeleteDetOrdSer',
-      GetDameCitaOrdenQueja:'/OrdSer/GetDameCitaOrdenQueja'
+      GetDameCitaOrdenQueja: '/OrdSer/GetDameCitaOrdenQueja',
+      GetSP_InsertaTbl_NoEntregados: '/SP_InsertaTbl_NoEntregados/GetSP_InsertaTbl_NoEntregados',
+      GetValidarNuevo: '/ValidarNuevo/GetValidarNuevo'
 
     };
 
- 
 
 
-factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) { 
+    factory.GetValidarNuevo = function (ClvOrden) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var Parametros = {
+        'ClvOrden': ClvOrden,
+        'Op': 0
+      };
+      console.log(Parametros);
+      $http.post(globalService.getUrl() + paths.GetValidarNuevo, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    };
+
+
+
+
+    factory.GetSP_InsertaTbl_NoEntregados = function (ApaNoEntregados) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var Parametros = {
+        'objSP_InsertaTbl_NoEntregados': ApaNoEntregados
+      };
+      console.log(Parametros);
+      $http.post(globalService.getUrl() + paths.GetSP_InsertaTbl_NoEntregados, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    };
+
+
+
+    factory.GetDameCitaOrdenQueja = function (clv_queja_orden, opcion) {
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -80,10 +125,10 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
       };
       var Parametros = {
         'clv_queja_orden': clv_queja_orden,
-        'opcion':opcion
+        'opcion': opcion
       };
       console.log(Parametros);
-      $http.post(globalService.getUrl() + paths.GetDameCitaOrdenQueja,JSON.stringify(Parametros) ,config).then(function (response) {
+      $http.post(globalService.getUrl() + paths.GetDameCitaOrdenQueja, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response.data);
@@ -135,7 +180,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
 
     factory.Getsp_validaEliminarOrden = function () {
 
-     
+
       var deferred = $q.defer();
       var Parametros = {
         'sp_validaEliminarOrdenEntity': {
@@ -149,7 +194,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
           'Authorization': $localStorage.currentUser.token
         }
       };
-      
+
       $http.post(globalService.getUrl() + paths.Getsp_validaEliminarOrden, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
@@ -393,7 +438,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
           'Clv_OrdenFin': obj.Clv_OrdenFin,
           'Fec1Ini': '',
           'Fec1Fin': '',
-          'Fec2Ini':'',
+          'Fec2Ini': '',
           'Fec2Fin': '',
           'Clv_Trabajo': obj.Clv_Trabajo,
           'Clv_Colonia': obj.Clv_Colonia,
@@ -778,7 +823,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
         'Op': 0
 
       };
-     
+
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -805,7 +850,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
         'Clv_UnicaNet': obj.Clv_UnicaNet,
         'Op': 0
       };
-     
+
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -830,7 +875,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
         'Clv_UnicaNet': obj.Clv_UnicaNet,
         'Op': 0
       };
-      
+
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -858,7 +903,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
         }
 
       };
-     
+
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -886,7 +931,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
         'ClvOrden': obj.ClvOrden,
         'Clave': obj.Clave
       };
-      
+
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -916,7 +961,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
         }
 
       };
-      
+
       var config = {
         headers: {
           'Authorization': $localStorage.currentUser.token
@@ -1102,7 +1147,7 @@ factory.GetDameCitaOrdenQueja = function (clv_queja_orden,opcion) {
           'Authorization': $localStorage.currentUser.token
         }
       };
-      
+
       $http.post(globalService.getUrl() + paths.addDetalleOrden, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {

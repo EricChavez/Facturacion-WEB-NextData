@@ -39,7 +39,7 @@
 								<br>
 								<div class="col-md-4">
 									<label class="text-muted">Plaza</label>
-									<select id="idplaza" ng-change="$ctrl.cambioPlaza()" class="form-control" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
+									<select id="idplaza" ng-change="$ctrl.cambioPlaza()" class="form-control input-sm" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
 								</div>
 								<div class="col-md-4">
 									<strong style="padding-left:15px;">Ver por Status</strong><br>
@@ -76,16 +76,13 @@
 								<div class="row">
 									<div class="col-md-4 form-group">
 										<label># Orden</label>
-										<input type="number" class="form-control" step="1" min="0" ng-model="$ctrl.orden" ng-change="$ctrl.cambioReporte(1)" placeholder="Orden">
+										<input type="number" class="form-control input-sm" step="1" min="0" ng-model="$ctrl.orden" ng-change="$ctrl.cambioReporte(1)" placeholder="Orden">
 									</div>
 									<div class="col-md-4 form-group">
 										<label>Contrato</label>
-										<input type="text" class="form-control" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioReporte(2)" placeholder="Contrato">
+										<input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioReporte(2)" placeholder="Contrato">
 									</div>
-								</div>
-								<br/>
-								<br/>
-								<br/>
+								</div>								
 								<div class="note">
 									<strong>El número de contrato</strong> está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)
 								</div>
@@ -101,25 +98,22 @@
 								<br/>
 								<form ng-submit="$ctrl.buscarColonia()">
 									<div class="row">
-										<div class="col-md-5 form-group">
+										<div class="col-md-4 form-group">
 											<label>Colonia</label>
-											<select class="form-control" ng-model="$ctrl.selectedColonia" ng-options="v.nombre for v in $ctrl.colonias|orderBy:'nombre' track by v.clvColonia">
+											<select class="form-control input-sm" ng-model="$ctrl.selectedColonia" ng-options="v.nombre for v in $ctrl.colonias|orderBy:'nombre' track by v.clvColonia">
  												<option value="">Seleccione</option>
 											</select>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5 form-group">
+										<div class="col-md-4 form-group">
 											<label>Calle</label>
-											<input type="text" class="form-control" ng-model="$ctrl.calle">
+											<input type="text" class="form-control input-sm" ng-model="$ctrl.calle">
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5 form-group">
+										<div class="col-md-2 form-group">
 											<label>Número</label>
-											<input type="text" class="form-control" ng-model="$ctrl.numero">
+											<input type="text" class="form-control input-sm" placeholder="#" ng-model="$ctrl.numero">
 										</div>
-									</div>
+										
+									</div>								
 									<footer>
 										<p class="text-right">
 											<button type="submit" class="btn btn-sm btn-info">
@@ -134,23 +128,19 @@
 								<br/>
 								<form ng-submit="$ctrl.buscarNombres()">
 									<div class="row">
-										<div class="col-md-7 form-group">
+										<div class="col-md-3 form-group">
 											<label>Nombre</label>
 											<input type="text" class="form-control" ng-model="$ctrl.nombre">
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5 form-group">
+										<div class="col-md-3 form-group">
 											<label>Apellido Paterno</label>
 											<input type="text" class="form-control" ng-model="$ctrl.paterno">
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-5 form-group">
+										<div class="col-md-3 form-group">
 											<label>Apellido Materno</label>
 											<input type="text" class="form-control" ng-model="$ctrl.materno">
 										</div>
-									</div>
+									</div>									
 									<footer>
 										<p class="text-right">
 											<button type="submit" class="btn btn-sm btn-info">
@@ -213,7 +203,7 @@
 							<td>#{{ x.NUMERO}}</td>
 							<td>
 								<button title="Consultar orden de servicio" class="btn ink-reaction btn-xs btn-info" ng-click="$ctrl.DetalleOrden(x)"><i class="fa fa-eye"></i> Detalle</button>
-								<a title="Ejecutar orden de servicio" ng-if="x.STATUS !='E'"  ui-sref="home.procesos.ordenEjecutada({claveOr: x.Clv_Orden})" class="btn ink-reaction btn-xs btn-warning"><i class="md md-launch"></i> Ejecutar</a>
+								<a title="Ejecutar orden de servicio" ng-if="x.STATUS !='E'" ng-click="$ctrl.ejecuta(x.Clv_Orden)" class="btn ink-reaction btn-xs btn-warning"><i class="md md-launch"></i> Ejecutar</a>
 							</td>
 						</tr>
 					</tbody>

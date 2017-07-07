@@ -26,18 +26,20 @@
 <div class="modal-body" style="padding-top:20px;">
   <div class="row">
     <div class="col-md-6">
-      <div class="col-md-18">
-        <div class="col-md-3">
-          <small><b># Orden:</b></small>
+      <div class="col-md-12">
+        <div class="col-md-4">
+          <small><b># Orden:</b> {{ctrl.Clv_Orden}}</small><br>
+          <small><b>No. contrato:</b> {{ctrl.ContratoCom}}</small>                  
+        </div>
+        <div class="col-md-5">
+            <small><b>Ejecutó:</b> {{ctrl.Ejecuto}}</small><br>
+          <small><b>Generó:</b> {{ctrl.Genero}}</small>        
         </div>
         <div class="col-md-3">
-          <input type="text" class="form-control input-sm" ng-model="ctrl.Clv_Orden" disabled>
+         
         </div>
         <div class="col-md-3">
-          <small><b>No. contrato:</b></small>
-        </div>
-        <div class="col-md-3">
-          <input type="text" class="form-control input-sm" ng-model="ctrl.ContratoCom" disabled>
+         
         </div>
       </div>
     </div>
@@ -126,11 +128,11 @@
       </div>
     </div>
     <div class="col-md-5">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <small>Técnico:</small>
         <input type="text" class="form-control input-sm" ng-model="ctrl.NombreTecnico" style="font-size:10px;" disabled>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-12">
         <small>Observaciones:</small>
         <input type="text" class="form-control input-sm" ng-model="ctrl.Obs" style="font-size:10px;" disabled>
       </div>
@@ -138,24 +140,18 @@
       <br>
       <br>
       <br>
-      <div class="col-md-12">
+      <div class="col-md-12" style="overflow-y: scroll; max-height: 300px;">
         <table class="table" style="font-size:11px;">
             <thead>
               <th>Descripción</th>
               <th>Acción</th>
-              <th>Observacíones</th>
-              <th>Recibir</th>
+              
             </thead>
             <tbody>
               <tr ng-repeat="x in ctrl.trabajosTabla">
                 <td>{{ x.Descripcion }}</td>
                 <td><button class="btn btn-info btn-xs" ng-if="x.Accion != ''" ng-click="$ctrl.detalleTrabajo(x.Accion,x)" disabled>{{ x.Accion }}</button></td>
-                <td>{{ x.Obs }}</td>
-                <td>
-                  <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
-								    <input type="checkbox" name="inlineRadioOptions" ng-model="x.SeRealiza" disabled><span></span>
-							    </label>
-                </td>
+                
               </tr>
             </tbody>
           </table>

@@ -7,7 +7,7 @@ angular
         function InitialData(){
 
             ordenesFactory.ConsultaOrdSer(options.Clave_Orden).then(function(data){
-                //console.log(data);
+                console.log(data);
                 var conceptos = data.GetDeepConsultaOrdSerResult;
 
                 vm.Clv_Orden = conceptos.Clv_Orden;
@@ -22,6 +22,8 @@ angular
                 vm.Clv_status = conceptos.STATUS;
                 vm.Visita1 = conceptos.Visita1;
                 vm.Visita2 = conceptos.Visita2;
+                vm.Ejecuto=conceptos.UserEjecuto;
+                vm.Genero=conceptos.UserGenero;
 
                 for (var t = 0; t < vm.Status.length; t++) {
                   if (vm.Status[t].Clave == vm.Clv_status) {
