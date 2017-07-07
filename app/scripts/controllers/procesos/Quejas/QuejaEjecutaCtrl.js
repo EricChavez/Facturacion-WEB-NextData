@@ -407,7 +407,8 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-               
+                //obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
+                console.log(obj);
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('La queja se aplicó  correctamente', 'success');
