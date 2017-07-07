@@ -278,6 +278,7 @@ angular
           'clvPrioridadQueja': data.clvPrioridadQueja,
           'Solucion': data.Solucion,
           'IdUsuario': $localStorage.currentUser.idUsuario
+          //'Clv_Trabajo': data.Clv_Trabajo
         }
 
       };

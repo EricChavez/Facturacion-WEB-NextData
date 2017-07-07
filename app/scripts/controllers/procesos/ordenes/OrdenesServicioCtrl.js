@@ -167,7 +167,8 @@
           }
         });
       }
-
+      vm.contrato = "";
+      vm.orden = "";
 
     }
 
@@ -211,6 +212,9 @@
           }
         });
       }
+      vm.calle = "";
+      vm.numero = "";
+      vm.selectedColonia.clvColonia = vm.selectedColonia.clvColonia[0];
     }
 
     function buscarNombres() {
@@ -254,6 +258,9 @@
           }
         });
       }
+      vm.nombre = "";
+      vm.paterno = "";
+      vm.materno = "";
     }
 
     function buscarSetup() {
@@ -265,7 +272,7 @@
 
       if (vm.selectedPlaza.id_compania == 0) {
         ngNotify.set('Selecciona una plaza valida.', 'warn');
-      } else if (vm.status == '' && vm.status == undefined) {
+      } else if (vm.setupbox == "" || vm.setupbox == undefined) {
         ngNotify.set('Introduce un SetupBox válido.', 'warn');
       } else {
         var obj = {
@@ -294,6 +301,7 @@
           }
         });
       }
+      vm.setupbox = "";
     }
 
     function buscarStatus() {
