@@ -274,7 +274,7 @@ angular
           'HP': data.HP,
           'Visita': data.Visita,
           'Clv_Tecnico': data.Clv_Tecnico,
-          'clvProblema': data.clvProblema,
+          'clvProblema': data.Clv_Trabajo,
           'clvPrioridadQueja': data.clvPrioridadQueja,
           'Solucion': data.Solucion,
           'IdUsuario': $localStorage.currentUser.idUsuario
@@ -286,8 +286,6 @@ angular
           'Authorization': $localStorage.currentUser.token
         }
       };
-
-      console.log(JSON.stringify(Parametros));
       $http.post(globalService.getUrl() + paths.UpdateQuejas, JSON.stringify(Parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {

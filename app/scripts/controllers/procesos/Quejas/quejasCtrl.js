@@ -76,6 +76,7 @@ angular
 				ngNotify.set('Por favor seleccione un tipo de servicio.', 'warn');
 			} else if (vm.Reporte == null || !(/^\d{1,9}/.test(vm.Reporte))) {
 				ngNotify.set('Ingresa un número de reporte válido.', 'warn');
+				vm.Reporte = '';
 			} else {
 				var Parametros = {
 					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
