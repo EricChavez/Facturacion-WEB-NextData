@@ -28,6 +28,7 @@ angular
           vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 
           quejasFactory.ConsultaQueja(vm.clv_queja).then(function (data) {
+            console.log("New: ", data);
             var detqueja = data.GetQuejasListResult[0];
             console.log(detqueja);
             vm.UsuarioGenero = detqueja.UsuarioGenero;
