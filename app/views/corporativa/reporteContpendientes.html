@@ -24,8 +24,9 @@
                 <br>
                         <button class="btn btn-warning btn-flat btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i> Exportar tabla</button>
                         <ul class="dropdown-menu primary" role="menu">
-                            <li><a class="btn btn-sm " ng-click="$ctrl.createPdfTodo('todo')"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
-                            <li><a class="btn btn-sm" ng-hide="$ctrl.todoAsCsv" ng-click="$ctrl.crearTodoAsCsv()"  style="white-space: normal"><img src="images/xls.png" width="24px"> CSV</a></li>
+                            <li><a class="btn btn-sm " ng-click="$ctrl.createPdf()"  style="white-space: normal"><img src="images/pdf.png" width="24px"> PDF</a></li>
+                            <li><a class="btn btn-sm"  ng-csv="$ctrl.RegistrosReporte" csv-header="['FECHA FACTURACION','FACTURA', 'CONTRATO MAESTRO', 'CONTRATO INDIVIDUAL','CLIENTE','IMPORTE']"
+                  filename="contratosporsaldar.csv"><img src="images/xls.png" width="24px"> CSV</a></li>
                         </ul>
                     </div>
         </div>
@@ -45,27 +46,24 @@
                   <th>CONTRATO INDIVIDUAL</th>
                   <th>CLIENTE</th>
                   <th>IMPORTE</th>
-                  <th>FECHA PAGO</th>
+                 
 
                 </tr>
 
               </thead>
               <tbody>
-                <tr ng-show="$ctrl.Registros.length>0">
-                  <td>{{x.ContratoMaestro}}</td>
-                  <td>{{x.Ticket}}</td>
-                  <td>{{x.Cliente}}</td>
-                  <td>{{x.Tipo}}</td>
+                <tr ng-show="$ctrl.Registros.length>0" ng-repeat="x in $ctrl.Registros">
                   <td>{{x.FechaFacturacion}}</td>
-                  <td>{{x.ImporteFactura | currency}}</td>
-                  <td>{{x.PagoInicial | currency}}</td>
-
-                </tr>
+                  <td>{{x.Factura}}</td>
+                  <td>{{x.ContratoMaestro}}</td>
+                  <td>{{x.Contrato}}</td>
+                  <td>{{x.Cliente}}</td>
+                  <td>{{x.Importe | currency}}</td>
+                  </tr>
               </tbody>
             </table>
             <div style="padding-left: 20px;">
-              <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
-              </dir-pagination-controls>
+              
             </div>
           </div>
 

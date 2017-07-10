@@ -50,10 +50,82 @@ angular.module('softvApp')
       UpdateDesmarcaTodoNotaCreditoCM: '/NotasDeCredito_ContraMaeFac/UpdateDesmarcaTodoNotaCreditoCM',
       GetContratosSaldadosMaestroList: '/ContratosSaldadosMaestro/GetContratosSaldadosMaestroList',
       ResumenFacturasDolares: '/ResumenFacturasDolares/GetResumenFacturasDolaresList',
-      GetContratosPorSaldarMaestroList: '/ContratosPorSaldarMaestro/GetContratosPorSaldarMaestroList'
+      GetContratosPorSaldarMaestroList: '/ContratosPorSaldarMaestro/GetContratosPorSaldarMaestroList',
+      GetTipoDeCambioList: '/TipoDeCambio/GetTipoDeCambioList',
+      AddTipoDeCambio: '/TipoDeCambio/AddTipoDeCambio',
+      GetSoftv_ContratoMaestroDolares: '/ContratoMaestroFac/GetSoftv_ContratoMaestroDolares'
+    };
 
+
+
+
+
+    factory.GetSoftv_ContratoMaestroDolares = function (IdContrato) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'IdContrato': IdContrato
+      };
+
+      $http.post(globalService.getUrl() + paths.GetSoftv_ContratoMaestroDolares, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
 
     };
+
+
+    factory.AddTipoDeCambio = function (TipoDeCambio) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'objTipoDeCambio': {
+          'IdTipoDeCambio': 0,
+          'TipoDeCambio': TipoDeCambio,
+          'Clv_Usuario': $localStorage.currentUser.idUsuario
+
+        }
+
+      };
+
+      $http.post(globalService.getUrl() + paths.AddTipoDeCambio, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+    factory.GetTipoDeCambioList = function () {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.get(globalService.getUrl() + paths.GetTipoDeCambioList, config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
 
     factory.ProcesaDesconexion = function (contratos) {
       var deferred = $q.defer();
@@ -116,8 +188,8 @@ angular.module('softvApp')
         }
       };
       var parametros = {
-       'FechaFacturacion':{
-              FechaFacturacion:fecha
+        'FechaFacturacion': {
+          FechaFacturacion: fecha
 
         }
 
@@ -141,10 +213,9 @@ angular.module('softvApp')
         }
       };
       var parametros = {
-        'ResumenFacturasDolaresEntity':
-         {
-           'Fecha':fecha
-          }
+        'ResumenFacturasDolaresEntity': {
+          'Fecha': fecha
+        }
 
       };
 
@@ -167,8 +238,8 @@ angular.module('softvApp')
         }
       };
       var parametros = {
-        'FechaFacturacion':{
-              FechaFacturacion:fecha
+        'FechaFacturacion': {
+          FechaFacturacion: fecha
 
         }
 

@@ -7,7 +7,7 @@ function reporteContSaldadosCtrl($uibModal, $rootScope, corporativoFactory, $fil
   }
 
   function Aceptar() {
-    alert('busca');
+   
     var fecha = $filter('date')(vm.Fecha, 'dd/MM/yyyy');
     console.log(fecha);
     ContratoMaestroFactory.GetContratosSaldadosMaestroList(fecha).then(function (data) {
@@ -71,10 +71,10 @@ function createPdf() {
         var txtWidth = doc.getStringUnitWidth(reportHeaderPdf) * fontSize / doc.internal.scaleFactor;
         var x = (pageWidth - txtWidth) / 2;    // Calculate text's x coordinate    
         doc.text(reportHeaderPdf, x, 14);   // Posición text at x,y
-        var laFechaHoy = '07/05/2017';
+        
         doc.setFontSize(11);
         doc.setFontType("normal");
-        doc.text(doc.internal.pageSize.width - 45, 20, laFechaHoy);
+        doc.text(doc.internal.pageSize.width - 45, 20,vm.FechaHOY);
         doc.setPage(1);
         jsPDF.autoTableSetDefaults({
             headerStyles:
@@ -107,8 +107,8 @@ function createPdf() {
 
   var vm = this;
   vm.Aceptar = Aceptar;
-  var reportHeaderPdf = "Reporte de Pagos";
+  var reportHeaderPdf = "CONTRATOS SALDADOS";
   vm.createPdf=createPdf;
-
+vm.FechaHOY = $filter('date')(new Date(), 'dd-MM-yyyy');
 }
 angular.module('softvApp').controller('reporteContSaldadosCtrl', reporteContSaldadosCtrl);

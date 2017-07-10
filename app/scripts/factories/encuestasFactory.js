@@ -22,7 +22,8 @@ angular
       GetRelEncuestaCli: '/RelEncuestaClientes/GetRelEncuestaCli',
       TerminarProceso: '/UniversoEncuesta/UpdateUniversoEncuesta',
       GetGraficasPreguntasList: '/GraficasPreguntas/GetGraficasPreguntasList',
-      GetResOpcMultsList:'/ResOpcMults/GetResOpcMultsList'
+      GetResOpcMultsList:'/ResOpcMults/GetResOpcMultsList',
+      DeleteEncuestas:'/Encuestas/DeleteEncuestas'
     };
     var factory = {};
 
@@ -44,6 +45,32 @@ angular
 
       return deferred.promise;
     };
+
+    
+
+
+   factory.DeleteEncuestas = function (IdEncuesta) {
+      var deferred = $q.defer();
+
+      var Parametros = {
+        'IdEncuesta': IdEncuesta        
+      };   
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.DeleteEncuestas, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
 
     factory.GetGraficasPreguntasList = function (idproceso) {
       var deferred = $q.defer();

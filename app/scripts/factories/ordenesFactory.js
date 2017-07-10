@@ -66,10 +66,31 @@ angular
       DeleteDetOrdSer: '/DetOrdSer/DeleteDetOrdSer',
       GetDameCitaOrdenQueja: '/OrdSer/GetDameCitaOrdenQueja',
       GetSP_InsertaTbl_NoEntregados: '/SP_InsertaTbl_NoEntregados/GetSP_InsertaTbl_NoEntregados',
-      GetValidarNuevo: '/ValidarNuevo/GetValidarNuevo'
+      GetValidarNuevo: '/ValidarNuevo/GetValidarNuevo',
+      Getsp_BorraArticulosAsignados: '/OrdSer/Getsp_BorraArticulosAsignados'
 
     };
 
+
+
+    factory.Getsp_BorraArticulosAsignados = function (clv_orden) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var Parametros = {
+        'clv_orden': clv_orden
+      };
+      console.log(Parametros);
+      $http.post(globalService.getUrl() + paths.Getsp_BorraArticulosAsignados, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+      return deferred.promise;
+    };
 
 
     factory.GetValidarNuevo = function (ClvOrden) {

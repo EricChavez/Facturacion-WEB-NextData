@@ -23,6 +23,7 @@
             <td><b>Nombre Encuesta</b> </td>
             <td><b>Detalle</b></td>
             <td><b>Fecha</b></td>
+             <td><b>Aplicada</b></td>
             <td><b>Opciones</b></td>
           </tr>
         </thead>
@@ -34,12 +35,22 @@
             <td>{{x.Descripcion}}</td>
             <td>{{x.FechaCreacion}}</td>
             <td>
+              <button  title="Esta encuesta ya se aplicó a clientes" 
+              class="btn ink-reaction btn-floating-action btn-xs btn-success"   >          
+                <i class="fa fa-check"></i>
+              </button>
+            </td>
+            <td>
             
-              <button title="Modificar encuesta" class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.encuestas.encuestaedita({id:x.IdEncuesta})">
+              <button ng-disabled="x.Aplicada" title="Modificar encuesta" class="btn ink-reaction btn-floating-action btn-xs btn-warning" ui-sref="home.encuestas.encuestaedita({id:x.IdEncuesta})">
                 <i class="fa fa-edit"></i>
               </button>
-              <button title="Imprimir encuesta" class="btn ink-reaction btn-floating-action btn-xs btn-success"  ng-click="$ctrl.Imprime(x.IdEncuesta);">
+
+              <button title="Imprimir encuesta" class="btn ink-reaction btn-floating-action btn-xs btn-info"  ng-click="$ctrl.Imprime(x.IdEncuesta);">
                 <i class="fa fa-print" ></i>
+              </button>
+              <button ng-disabled="x.Aplicada" title="Eliminar encuesta" class="btn ink-reaction btn-floating-action btn-xs btn-danger"  ng-click="$ctrl.DeleteEncuestas(x.IdEncuesta)" >
+                <i class="fa fa-trash"></i>
               </button>
     <!--permission permission-only="'encuestasUpdate'"-->
           </tr>
