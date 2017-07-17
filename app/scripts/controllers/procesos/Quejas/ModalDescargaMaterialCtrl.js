@@ -251,6 +251,7 @@ angular
           console.log(data);
           DescargarMaterialFactory.GetGRABAtblDescargaMaterialCableIACTV(options.ClvOrden).then(function(data){
           ngNotify.set('La descarga de material se ha guardado correctamente','success');
+          cancel();
         });
         
         });

@@ -4,7 +4,6 @@ angular
   .controller('ModalConsultaQuejaCtrl', function ($uibModalInstance, $uibModal, $rootScope, ngNotify, $localStorage, $state, detalle, atencionFactory, quejasFactory) {
 
     function initialData() {
-      console.log(detalle);
       vm.clv_queja = detalle.Clv_Queja;
       vm.contrato = detalle.Contrato;
       vm.Servicio = detalle.Clv_TipSer;
@@ -29,7 +28,6 @@ angular
 
           quejasFactory.ConsultaQueja(vm.clv_queja).then(function (data) {
             var detqueja = data.GetQuejasListResult[0];
-            console.log(detqueja);
             vm.UsuarioGenero = detqueja.UsuarioGenero;
             vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
             vm.TecnicoAgenda = detqueja.NombreTecAge;

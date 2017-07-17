@@ -91,7 +91,7 @@ angular
       var options = {};
       options.Contrato = vm.GlobalContrato;
       options.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
-      options.Problema = vm.DescripcionProblema;
+      options.Descripcion = vm.DescripcionProblema;
       options.Solucion = vm.DescripcionSolucion;
       options.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
       options.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;

@@ -256,7 +256,7 @@
 
               <b>Clasificación del problema</b>
               <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"
-                name="problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty"></select>
+                name="problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty" disabled></select>
             </div>
             <div class="col-md-6">
               <b> Prioridad</b>

@@ -43,6 +43,7 @@ angular
         'clv_llamada': options.clv_llamada,
         'clvProblema': options.clvProblema
       };
+      console.log("AgregaQueja: ", parametrosQUEJA);
       if (options.clv_queja == 0) {
         atencionFactory.AgregaQueja(parametrosQUEJA).then(function (data) {
           vm.clv_queja = data.AddQuejasResult;
@@ -57,6 +58,7 @@ angular
             'Turno': vm.TurnoAgenda.ID,
             'ClvProblema': options.clvProblema
           };
+          console.log("ActualizarLlamada: ", parametrosLlamada);
           atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
 
 
