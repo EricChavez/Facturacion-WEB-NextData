@@ -44,9 +44,9 @@ function reporteFacDolaresCtrl($uibModal, $rootScope, corporativoFactory, $filte
       rows[i][1] = vm.RegistrosReporte[i].Factura;
       rows[i][2] = vm.RegistrosReporte[i].ContratoMaestro;
       rows[i][3] = vm.RegistrosReporte[i].NombreComercial;
-      rows[i][4] = vm.RegistrosReporte[i].ImporteFactura;
+      rows[i][4] =$filter('currency')(vm.RegistrosReporte[i].ImporteFactura);    
       rows[i][5] = vm.RegistrosReporte[i].TipoDeCambio;
-       rows[i][6] = vm.RegistrosReporte[i].ImporteDolares;
+       rows[i][6] =$filter('currency')(vm.RegistrosReporte[i].ImporteDolares); 
      
     }
     var doc = new jsPDF({

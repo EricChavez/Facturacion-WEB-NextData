@@ -45,7 +45,7 @@ function reporteContpendientesCtrl($uibModal, $rootScope, corporativoFactory, $f
       rows[i][2] = vm.RegistrosReporte[i].ContratoMaestro;
       rows[i][3] = vm.RegistrosReporte[i].Contrato;
       rows[i][4] = vm.RegistrosReporte[i].Cliente;
-      rows[i][5] = vm.RegistrosReporte[i].Importe;
+      rows[i][5] =  $filter('currency')(vm.RegistrosReporte[i].Importe);
      
 
     }
@@ -90,8 +90,8 @@ function reporteContpendientesCtrl($uibModal, $rootScope, corporativoFactory, $f
         overflow: 'linebreak',
       },
       columnStyles: {
-        21: {
-          columnWidth: 98
+        5: {
+         
         },
       },
       margin: {
