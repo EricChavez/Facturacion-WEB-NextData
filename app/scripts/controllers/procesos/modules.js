@@ -80,6 +80,16 @@ angular
         controllerAs: '$ctrl'
       },
       {
+        name: 'home.procesos.ordendetalle',
+        data: {
+          pageTitle: 'SOFTV | NUEVA ORDEN DE SERVICIO'
+        },
+        url: '/ordenes/detalle/:id',
+        templateUrl: 'views/procesos/DetalleOrdenServicio.html',
+        controller: 'OrdenDetalleCtrl',
+        controllerAs: '$ctrl'
+      },
+      {
         name: 'home.procesos.ordenEjecutada',
         data: {
           pageTitle: 'SOFTV | ORDEN DE SERVICIO EJECUTADA'
