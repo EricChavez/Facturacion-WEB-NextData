@@ -17,221 +17,202 @@
     overflow-x: hidden;
   }
 
-
 </style>
- <form angular-validator-submit="$ctrl.Guardar()" name="QuejaForm" novalidate angular-validator>
-<div class="card animated fadeIn fast" style="margin-top:20px;">
-  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
-    <header>
-      <strong style="font-weight:bold; border:none; margin-left:10px;">{{$ctrl.titulo}}</strong>
-<br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos ></a><a href="#" class="paginaActiva">
+<form angular-validator-submit="$ctrl.Guardar()" name="QuejaForm" novalidate angular-validator>
+  <div class="card animated fadeIn fast" style="margin-top:20px;">
+    <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+      <header>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">{{$ctrl.titulo}}</strong>
+        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos ></a><a href="#" class="paginaActiva">
   {{$ctrl.titulo}}</a></small>
 
-    </header>
-    <div class="tools">
-      <button title="Cancelar cambios" ui-sref="home.procesos.ordenes" class="btn btn-default btn-sm" type="button">Salir</button>   
+      </header>
+      <div class="tools">
+        <button title="Cancelar cambios" ui-sref="home.procesos.ordenes" class="btn btn-default btn-sm" type="button">Salir</button>
+      </div>
     </div>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-5">
-        <div class="col-md-12">
-          <div class="col-md-2">
-            <small><b># Orden:</b></small>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="col-md-12">
+            <div class="col-md-2">
+              <small><b># Orden:</b></small>
+            </div>
+            <div class="col-md-3">
+              <input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.clv_orden" disabled>
+            </div>
+            <div class="col-md-2">
+              <small><b>Contrato:</b></small>
+            </div>
+            <div class="col-md-4">
+              <form angular-validator-submit="$ctrl.buscarContrato()" name="contratoForm" novalidate angular-validator>
+                <input type="text" placeholder="No. contrato" class="form-control input-sm" ng-model="$ctrl.ContratoCom" name="contrato"
+                  validate-on="dirty" disabled ng-pattern="/^[0-9]+([-][0-9]+)?$/" required-message="'Este campo es obligatorio.'"
+                  autocomplete="off" invalid-message="'Formato de contrato inválido.'">
+              </form>
+            </div>
+
           </div>
-          <div class="col-md-3">
-            <input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.clv_orden" disabled>
-          </div>
-          <div class="col-md-2">
-         <small><b>Contrato:</b></small>
-      </div>
-          <div class="col-md-4">
-            <form angular-validator-submit="$ctrl.buscarContrato()" name="contratoForm" novalidate angular-validator>
-              <input type="text" placeholder="No. contrato" class="form-control input-sm" ng-model="$ctrl.ContratoCom" name="contrato" validate-on="dirty"
-                disabled ng-pattern="/^[0-9]+([-][0-9]+)?$/" required-message="'Este campo es obligatorio.'"
-                autocomplete="off" invalid-message="'Formato de contrato inválido.'">
-            </form>
-          </div>
-         
         </div>
-      </div>
-      
-      <div class="col-md-5">
-        <div class="col-md-12">
-          <div class="col-md-3">
-            <small><b>Status:</small></b>
-            </p>
+
+        <div class="col-md-2">
+
+          <div class="col-md-6">
+            <small><b>Status:</b>  </small>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-6">
             <input type="text" class="form-control input-sm" ng-model="$ctrl.Estatus.Nombre" disabled>
           </div>
-          <div class="col-md-3">
-            
-					</label>
-          </div>
-          <div class="col-md-3">
-            
-					</label>
-          </div>
+
+
         </div>
+
+        <div class="col-md-2">
+
+          <b class="text-danger">Ejecutó :</b> {{$ctrl.Ejecuto}}<br>
+
+        </div>
+        <div class="col-md-2">
+          <b class="text-danger">Generó: </b> {{$ctrl.Genero}}
+        </div>
+
       </div>
-    </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="col-md-12">
-          <b style="font-size: 14px;
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="col-md-12">
+            <b style="font-size: 14px;
     color: #06599a;"><i class="md md-perm-identity"></i> Información del Cliente</b><br>
-          <strong>Distribuidor:</strong> {{$ctrl.datosCli.Compania}}<br>
-          <p><strong>Nombre:</strong> {{$ctrl.datosCli.NOMBRE}}<br>
-            <strong>Dirección:</strong> {{$ctrl.datosCli.CALLE +' '+ $ctrl.datosCli.NUMERO +' '+ $ctrl.datosCli.COLONIA +'
-            '+ $ctrl.datosCli.CIUDAD}}<br>
-            <br>
-          </p>
-        </div>
-        <div class="col-md-12">
-          <b style="font-size: 14px;
-    color: #06599a;"><i class="md md-settings-remote"></i> Servicios asignados</b><br>
-          <div class="card wrapper scrollDiv2" style="background: #DDEAE9">
-            <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicios">{{ x.Servicio }} <br></span></p>
+            <strong>Distribuidor:</strong> {{$ctrl.datosCli.Compania}}<br>
+            <p><strong>Nombre:</strong> {{$ctrl.datosCli.NOMBRE}}<br>
+              <strong>Dirección:</strong> {{$ctrl.datosCli.CALLE +' '+ $ctrl.datosCli.NUMERO +' '+ $ctrl.datosCli.COLONIA
+              +' '+ $ctrl.datosCli.CIUDAD}}<br>
+              <br>
+            </p>
           </div>
-          <label class="text-left radio-inline radio-styled"><input type="radio" ng-checked="$ctrl.datosCli.ESHOTEL"  ng-disabled="true" >
+          <div class="col-md-12">
+            <b style="font-size: 14px;
+    color: #06599a;"><i class="md md-settings-remote"></i> Servicios asignados</b><br>
+            <div class="card wrapper scrollDiv2" style="background: #DDEAE9">
+              <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicios">{{ x.Servicio }} <br></span></p>
+            </div>
+            <label class="text-left radio-inline radio-styled"><input type="radio" ng-checked="$ctrl.datosCli.ESHOTEL"  ng-disabled="true" >
 					<span>Es Hotel</span>
 				</label>
-          <label class="text-left radio-inline radio-styled"><input type="radio"  ng-checked="$ctrl.datosCli.SOLOINTERNET" ng-disabled="true" >
+            <label class="text-left radio-inline radio-styled"><input type="radio"  ng-checked="$ctrl.datosCli.SOLOINTERNET" ng-disabled="true" >
 					<span>Solo Internet</span>
 				</label>
+          </div>
         </div>
-      </div>
-      <div class="col-md-3 text-center">
-        <b style="font-size: 14px;
+        <div class="col-md-3 text-center">
+          <b style="font-size: 14px;
     color: #06599a;"><i class="md md-access-time"></i> Fechas de:</b><br><br>
-        <div class="form-horizontal" role="form">
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">Solicitud</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Sol"
-               style="font-size:12px;" disabled
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
-              <div class="form-control-line"></div>
+          <div class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="regular13" class="col-sm-4 control-label">Solicitud</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Sol" style="font-size:12px;" disabled placeholder="DD/MM/YYYY"
+                  ui-mask="99/99/9999">
+                <div class="form-control-line"></div>
+              </div>
             </div>
-          </div>
-          <div class="form-group ">
-            <label for="regular13" class="col-sm-4 control-label">Ejecución</label>
-            <div class="col-sm-8">
-              <input type="text" name='fejecucion' class="form-control input-sm" 
-              ng-model="$ctrl.Fec_Eje" style="font-size:12px;" 
-              disabled
-                placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockEjecucion"
-                 model-view-value="true"
-                validate-on="dirty" required-message="' La Fecha es obligatoria.'"
-                >
-              <div class="form-control-line"></div>
+            <div class="form-group ">
+              <label for="regular13" class="col-sm-4 control-label">Ejecución</label>
+              <div class="col-sm-8">
+                <input type="text" name='fejecucion' class="form-control input-sm" ng-model="$ctrl.Fec_Eje" style="font-size:12px;" disabled
+                  placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockEjecucion" model-view-value="true" validate-on="dirty"
+                  required-message="' La Fecha es obligatoria.'">
+                <div class="form-control-line"></div>
+              </div>
             </div>
+            <div class="form-group">
+              <label for="regular13" class="col-sm-4 control-label">Visita 1</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control input-sm" name="fechavisita1" ng-model="$ctrl.Visita1" style="font-size:12px;" model-view-value="true"
+                  disabled placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockVista1" validate-on="dirty" required-message="'La fecha es obligatoria.'"
+                  model-view-value="true">
+                <div class="form-control-line"></div>
+              </div>
+            </div>
+
           </div>
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">Visita 1</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control input-sm"
-              name="fechavisita1"
-               ng-model="$ctrl.Visita1" style="font-size:12px;"
-                model-view-value="true"
-                disabled
-                placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockVista1"
-                validate-on="dirty" required-message="'La fecha es obligatoria.'"
-                model-view-value="true">
-              <div class="form-control-line"></div>
+          <div class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="regular13" class="col-sm-4 control-label">Visita 2</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.Visita2" model-view-value="true" style="font-size:12px;"
+                  disabled placeholder="" ui-mask="99/99/9999" name="fechavisita2" ng-required="!$ctrl.blockVista2" validate-on="dirty"
+                  required-message="'La fecha es obligatoria.'">
+                <div class="form-control-line"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regular13" class="col-sm-4 control-label">Ejecución real</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaEjecucionReal" style="font-size:12px;" disabled>
+                <div class="form-control-line"></div>
+              </div>
             </div>
           </div>
 
-        </div>
-        <div class="form-horizontal" role="form">
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">Visita 2</label>
-            <div class="col-sm-8">
-              <input type="text" 
-              class="form-control input-sm"
-               ng-model="$ctrl.Visita2"
-                model-view-value="true"
-                style="font-size:12px;" disabled
-                placeholder="" ui-mask="99/99/9999" 
-                name="fechavisita2"
-                ng-required="!$ctrl.blockVista2"
-                validate-on="dirty" required-message="'La fecha es obligatoria.'"
-                >
-              <div class="form-control-line"></div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="regular13" class="col-sm-4 control-label">Ejecución real</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control input-sm"
-               ng-model="$ctrl.datosOrden.FechaEjecucionReal" style="font-size:12px;"
-               disabled
-                placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
-              <div class="form-control-line"></div>
-            </div>
-          </div>
-        </div>
+          <div class="row">
+            <button title="Consultar agenda" type="button" class="btn btn-info btn-sm" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
 
-        <div class="row">
-          <button title="Consultar agenda" type="button" class="btn btn-info btn-sm" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
-
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="col-md-6">
-          <small><b>Técnico:</b></small>
-         <input type="text" class="form-control input-sm" ng-model="$ctrl.NombreTecnico" style="font-size:10px;" disabled>
+          </div>
         </div>
         <div class="col-md-6">
-          <small><b>Observaciones:</b></small>
-          <textarea type="text" class="form-control input-sm" disabled ng-model="$ctrl.observaciones"></textarea>
-        </div>
-	
-        <div class="col-md-12">
-          <table class="table" style="font-size:11px;">
-            <thead>
-              <th>Descripción</th>
-              <th>Acción</th>
-              <th>Observacíones</th>
-              <th>Recibí</th>
-              <th>Eliminar</th>
-            </thead>
-            <tbody>
-              <tr ng-repeat="x in $ctrl.trabajosTabla">
-                <td>{{ x.Descripcion }}</td>
-                <td>
-                  <button type="button" class="btn btn-info btn-xs"    ng-if="x.Accion != null && x.Accion != 'Ya asignado'" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
-                  <button type="button" class="btn btn-success btn-xs" ng-if="x.Accion != null && x.Accion === 'Ya asignado'" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
-                  <button type="button" class="btn btn-default btn-xs" ng-if="x.Accion == null" >-----</button>
+          <div class="col-md-6">
+            <small><b>Técnico:</b></small>
+            <input type="text" class="form-control input-sm" ng-model="$ctrl.NombreTecnico" style="font-size:10px;" disabled>
+          </div>
+          <div class="col-md-6">
+            <small><b>Observaciones:</b></small>
+            <textarea type="text" class="form-control input-sm" disabled ng-model="$ctrl.observaciones"></textarea>
+          </div>
+
+          <div class="col-md-12">
+            <table class="table" style="font-size:11px;">
+              <thead>
+                <th>Descripción</th>
+                <th>Acción</th>
+                <th>Observacíones</th>
+                <th>Recibí</th>
+                <th>Eliminar</th>
+              </thead>
+              <tbody>
+                <tr ng-repeat="x in $ctrl.trabajosTabla">
+                  <td>{{ x.Descripcion }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-xs" ng-if="x.Accion != null && x.Accion != 'Ya asignado'" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
+                    <button type="button" class="btn btn-success btn-xs" ng-if="x.Accion != null && x.Accion === 'Ya asignado'" ng-click="$ctrl.detalleTrabajo(x.Accion,x)">{{ x.Accion }}</button>
+                    <button type="button" class="btn btn-default btn-xs" ng-if="x.Accion == null">-----</button>
                   </td>
-                <td>{{ x.Obs }}</td>
-                <td>
-                  <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
+                  <td>{{ x.Obs }}</td>
+                  <td>
+                    <label class="col-md-6 col-md-offset-2 checkbox-inline checkbox-styled">
 								<input type="checkbox" disabled name="inlineRadioOptions" ng-model="x.recibi"><span></span>
 							</label>
-                </td>
-                <td>
-                  <button type="button" disabled class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top"
-                    title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);" ><i class="md md-delete"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td>
+                    <button type="button" disabled class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top"
+                      title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-md-6">
+            <button title="Realizar descarga de material" type="button" class="btn btn-xs btn-warning" ng-click="$ctrl.DescargaMaterialOrden()"><i class="fa fa-wrench"></i> Descar. Material</button>
+          </div>
+
         </div>
-        
-        <div class="col-md-6">
-          <button title="Realizar descarga de material" type="button" class="btn btn-xs btn-warning"  ng-click="$ctrl.ValidarDescargaMaterialOrden()"><i class="fa fa-wrench"></i> Descar. Material</button>
-        </div>
+
 
       </div>
-
 
     </div>
 
-  </div>
 
- 
-</div>
+  </div>
 </form>

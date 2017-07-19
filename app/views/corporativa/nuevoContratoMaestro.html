@@ -71,9 +71,7 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Localidad:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <select name="localidad" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.localidad" ng-change="$ctrl.cambioLocalidad()"
-              ng-options="v.Nombre for v in $ctrl.localidades track by v.Clv_Localidad" required-message="'Este campo es obligatorio.'"
-              required>
+            <select name="localidad" class="form-control input-sm" ng-model="$ctrl.localidad" ng-change="$ctrl.cambioLocalidad()" ng-options="v.Nombre for v in $ctrl.localidades track by v.Clv_Localidad">
                 <option value="">selecciona</option>
             </select>
           </div>
@@ -103,8 +101,7 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Entre calles:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.EntreCalles"
-              name="EntreCalles">
+            <input type="text" class="form-control input-sm" ng-model="$ctrl.EntreCalles" name="EntreCalles">
 
           </div>
         </div>
@@ -136,8 +133,7 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Fax:</label>
           <div class="col-md-9" style="padding-left:-10px;">
-            <input type="text" class="form-control input-sm" required-message="'Este campo es obligatorio.'" required ng-model="$ctrl.Fax"
-              name="Fax">
+            <input type="text" class="form-control input-sm" ng-model="$ctrl.Fax" name="Fax">
 
           </div>
         </div>
@@ -227,7 +223,7 @@
         <div class="col-md-12">
           <label class="col-md-3 control-label blod">Dia de Facturación:</label>
           <div class="col-md-3" style="padding-left:-10px;">
-            <input type="text" name="fecha" validate-on="dirty"  class="form-control input-sm" ng-model="$ctrl.fecha" required-message="'Este campo es obligatorio.'"
+            <input type="text" name="fecha" validate-on="dirty" class="form-control input-sm" ng-model="$ctrl.fecha" required-message="'Este campo es obligatorio.'"
               required>
           </div>
           <label class="col-md-3 control-label blod">Días de Gracia:</label>

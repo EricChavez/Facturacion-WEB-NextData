@@ -9,50 +9,77 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label>Ciudad</label>
-                        <select class="form-control"  name="ciudad" validate-on="dirty" ng-change="ctrl.changeCiudad()" ng-model="ctrl.selectedCiudad" ng-options="v.nombre for v in ctrl.ciudades track by v.Clv_Ciudad" required-message="'Este campo es obligatorio.'" required="" ></select>
+                        <select class="form-control input-sm"  ng-disabled="ctrl.Detalle" name="ciudad" validate-on="dirty" ng-change="ctrl.changeCiudad()" ng-model="ctrl.selectedCiudad" ng-options="v.nombre for v in ctrl.ciudades track by v.Clv_Ciudad" required-message="'Este campo es obligatorio.'" required="" ></select>
                     </div>
                 </div>
                  <div class="row">
                     <div class="col-md-6">
                         <label>Localidad</label>
-                        <select class="form-control"
+                        <select class="form-control input-sm"
                          ng-change="ctrl.changeLocalidad()"
                          ng-model="ctrl.selectedLocalidad"
                          validate-on="dirty" required-message="'Este campo es obligatorio.'" required=""
                          name="localidad"
+                         ng-disabled="ctrl.Detalle"
                          ng-options="v.Nombre for v in ctrl.localidades track by v.Clv_Localidad"></select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Colonia</label>
-                        <select class="form-control" name="colonia" validate-on="dirty" required-message="'Este campo es obligatorio.'" required=""  ng-change="ctrl.changeColonia()" ng-model="ctrl.selectedColonia" ng-options="v.COLONIA for v in ctrl.colonias track by v.CLV_COLONIA"></select>
+                        <select class="form-control input-sm"
+                         name="colonia" 
+                         validate-on="dirty"
+                          required-message="'Este campo es obligatorio.'" 
+                          required=""  ng-change="ctrl.changeColonia()"
+                           ng-model="ctrl.selectedColonia" 
+                           ng-options="v.COLONIA for v in ctrl.colonias track by v.CLV_COLONIA"
+                           ng-disabled="ctrl.Detalle"
+                           ></select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label>Calle</label>
-                        <select class="form-control" name="calles" validate-on="dirty" required-message="'Este campo es obligatorio.'" required="" ng-model="ctrl.selectedCalle" ng-options="v.Nombre for v in ctrl.calles track by v.Clv_calle"></select>
+                        <select class="form-control input-sm"  ng-disabled="ctrl.Detalle" name="calles" validate-on="dirty" required-message="'Este campo es obligatorio.'" required="" ng-model="ctrl.selectedCalle" ng-options="v.Nombre for v in ctrl.calles track by v.Clv_calle"></select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <label>Número</label>
-                        <input type="text" name="numint" validate-on="dirty" required-message="'Este campo es obligatorio.'" required="" class="form-control" ng-model="ctrl.numero" />
+                        <input type="text" name="numint" ng-disabled="ctrl.Detalle" validate-on="dirty" 
+                        required-message="'Este campo es obligatorio.'"
+                         required="" class="form-control input-sm" ng-model="ctrl.numero" />
                     </div>
                     <div class="col-md-4">
                         <label>Número Interior</label>
-                        <input type="text" class="form-control" ng-model="ctrl.numeroInterior" />
+                        <input type="text" 
+                        class="form-control input-sm"
+                        ng-disabled="ctrl.Detalle"
+                         ng-model="ctrl.numeroInterior" />
                     </div>
                     <div class="col-md-4">
                         <label>Teléfono</label>
-                        <input type="text" required-message="'Este campo es obligatorio.'" required="" name="telefono" validate-on="dirty" invalid-message="'Número de telefono no válido.'" ui-mask="(999) 999-9999" minlength="10" class="form-control" ng-model="ctrl.telefono" />
+                        <input type="text"
+                         required-message="'Este campo es obligatorio.'" 
+                         required="" name="telefono" validate-on="dirty"
+                          invalid-message="'Número de telefono no válido.'" 
+                          ui-mask="(999) 999-9999" minlength="10" class="form-control input-sm" 
+                          ng-disabled="ctrl.Detalle"
+                          ng-model="ctrl.telefono" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-8">
                         <label>Entre calles</label>
-                        <input type="text" name="entreCalles" class="form-control" required-message="'Este campo es obligatorio.'" validate-on="dirty" required="" ng-model="ctrl.entreCalles" />
+                        <input type="text" 
+                        name="entreCalles"
+                         class="form-control"
+                          required-message="'Este campo es obligatorio.'"
+                           validate-on="dirty"
+                            required=""
+                            ng-disabled="ctrl.Detalle"
+                            ng-model="ctrl.entreCalles" />
                     </div>
                 </div>
             </div>
@@ -60,7 +87,7 @@
     </div>
     <div class="modal-footer">
         <a class="btn btn-default btn-sm" ng-click="ctrl.cancel()">Cancelar</a>
-        <button class="btn btn-primary btn-sm" type="submit">Aceptar</button>
+        <button class="btn btn-primary btn-sm" ng-disabled="ctrl.Detalle" type="submit">Aceptar</button>
     </div>
 
 </form>

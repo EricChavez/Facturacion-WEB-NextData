@@ -18,6 +18,7 @@
       <select 
         class="form-control" 
         name="material" 
+        ng-disabled="ctrl.Detalle"
         ng-model="ctrl.SlctMaterial" 
         ng-options="M.Descripcion for M in ctrl.Material track by M.catTipoArticuloClave"
         ng-change="ctrl.BuscarNombreArticulo()">
@@ -32,6 +33,7 @@
       <select 
         class="form-control" 
         name="articulo"
+        ng-disabled="ctrl.Detalle"
         ng-model="ctrl.SlctArticulo"
         ng-options="A.Nombre for A in ctrl.DescripcionArticulo track by A.IdArticulo"
         ng-change="ctrl.BuscarTipoArticulo()">
@@ -40,7 +42,7 @@
     
     <div class="col-md-4">
       <p ng-show="ctrl.MostrarCD">cantidad</p>
-      <input type="number" class="form-control" ng-model="ctrl.CantidadDescarga" ng-show="ctrl.MostrarCD">
+      <input type="number" class="form-control" ng-disabled="ctrl.Detalle" ng-model="ctrl.CantidadDescarga" ng-show="ctrl.MostrarCD">
     </div>
     
     <div class="col-md-1">
@@ -66,7 +68,7 @@
 
   <div class="row">
     <div class="col-md-2">
-      <button title="Agregar un artículo" class="btn btn-info btn-sm" value="" ng-click="ctrl.AgregarArticulo()">Agregar</button>
+      <button title="Agregar un artículo" class="btn btn-info btn-sm" ng-disabled="ctrl.Detalle" ng-click="ctrl.AgregarArticulo()">Agregar</button>
     </div>
   </div>
   <br>
@@ -123,5 +125,5 @@
 </div>
 <div class="modal-footer">
   <button title="Cancelar cambios" class="btn btn-default-bright btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
-  <button title="Guardar cambios" class="btn btn-primary btn-sm" type="button" ng-click="ctrl.ok()">Guardar</button>
+  <button title="Guardar cambios" class="btn btn-primary btn-sm" type="button" ng-disabled="ctrl.Detalle" ng-click="ctrl.ok()">Guardar</button>
 </div>
