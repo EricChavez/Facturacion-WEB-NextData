@@ -47,7 +47,7 @@
             vm.listastatus = data.GetSP_StatusAparatosResult;
 
             if(items.Trabajo=='CANTX'){
-              vm.label1='Antena asignada Acualmente';
+              vm.label1='Antena asignada Actualmente';
               vm.label2='Seleccione el status de la antena';
               vm.label3='Seleccione la antena a instalar';
             }

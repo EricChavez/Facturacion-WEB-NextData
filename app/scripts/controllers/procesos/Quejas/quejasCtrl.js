@@ -15,6 +15,7 @@ angular
 					vm.Status = vm.LosStatus[0];
 					quejasFactory.ObtenColonias(vm.Plazas[0].id_compania).then(function (data) {
 						vm.Colonias = data.GetuspConsultaColoniasListResult;
+						
 						var Parametros = {
 							'Clv_TipSer': 0,
 							'Clv_Queja': 0,
@@ -266,6 +267,7 @@ angular
 		function CambioPlaza(x) {
 			quejasFactory.ObtenColonias(x.id_compania).then(function (data) {
 				vm.Colonias = data.GetuspConsultaColoniasListResult;
+				
 				var Parametros = {
 					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
 					'Clv_Queja': 0,

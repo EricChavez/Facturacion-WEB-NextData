@@ -37,7 +37,7 @@
 
             <td>
               <button title="Aplicar encuesta" ng-if="x.StatusEncuesta!='Terminada'" class="btn ink-reaction  btn-xs btn-info" ui-sref="home.encuestas.aplicacontratos({id:x.IdProcesoEnc})"> Aplicar</button>
-              <button title="Terminar proceso" ng-if="x.StatusEncuesta!='Terminada'"class="btn ink-reaction  btn-xs btn-warning" ng-click="$ctrl.TerminaProceso(x.IdProcesoEnc)">Terminar proceso</button>
+              <button title="Finalizar proceso" ng-if="x.StatusEncuesta!='Terminada'"class="btn ink-reaction  btn-xs btn-warning" ng-click="$ctrl.TerminaProceso(x.IdProcesoEnc)">Terminar proceso</button>
               <button title="Consultar resultados" ng-if="x.StatusEncuesta=='Terminada'" ui-sref="home.encuestas.estadisticasdetalle({id:x.IdProcesoEnc})" type="button" class="btn ink-reaction btn-xs btn-warning"><i class="md md-equalizer"></i> Resultados</button>
               <!--permission permission-only="'encuestasUpdate'"-->
           </tr>

@@ -26,10 +26,6 @@ angular
       var fechaHoy = new Date(m+"/"+d+"/"+y);
       var fechaIngresada = vm.FechaAgenda;
 
-      console.log("hoy: ", _fechaHoy);
-      console.log("hoy: ", fechaHoy);
-      console.log("Ingre: ", fechaIngresada);
-
       if (vm.TecnicoAgenda == null || vm.TecnicoAgenda == undefined) {
         ngNotify.set('Selecciona un técnico para continuar', 'error');
         return;
@@ -62,7 +58,7 @@ angular
         'clv_llamada': options.clv_llamada,
         'clvProblema': options.clvProblema
       };
-      console.log("AgregaQueja: ", parametrosQUEJA);
+      console.log("parametrosQUEJA: ", parametrosQUEJA);
       if (options.clv_queja == 0) {
         atencionFactory.AgregaQueja(parametrosQUEJA).then(function (data) {
           vm.clv_queja = data.AddQuejasResult;
@@ -77,8 +73,8 @@ angular
             'Turno': vm.TurnoAgenda.ID,
             'ClvProblema': options.clvProblema
           };
-          console.log("ActualizarLlamada: ", parametrosLlamada);
-          atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
+          console.log("parametrosLlamada: ", parametrosLlamada);
+          /*atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
 
 
             var Parametrosrel = {
@@ -96,18 +92,8 @@ angular
 });
               $state.go('home.procesos.atencion');
 
-           
 
-
-          });
-
-
-
-
-
-
-
-
+          });*/
 
         });
       } else {

@@ -15,7 +15,6 @@
   <div class="row">
     <div class="col-md-4">
       <p>Clasificación del material</p>
-      
       <select 
         class="form-control" 
         name="material" 
@@ -23,7 +22,6 @@
         ng-options="M.Descripcion for M in ctrl.Material track by M.catTipoArticuloClave"
         ng-change="ctrl.BuscarNombreArticulo()">
       </select>
-
     </div>
   </div>
 
@@ -47,20 +45,22 @@
     
     <div class="col-md-1">
       <br>
-      <p ng-show="ctrl.MostrarTM">Interior</p>
+      <p ng-show="ctrl.MostrarTM">Metraje Interior</p>
+      <!--
       <br>
       <p ng-show="ctrl.MostrarTM">Exterior</p>
+      -->
     </div>
 
     <div class="col-md-1">
       <p ng-show="ctrl.MostrarTM">Inicial</p>
       <input type="number" class="form-control" ng-model="ctrl.MetrajeII" ng-show="ctrl.MostrarMII">
-      <input type="number" class="form-control" ng-model="ctrl.MetrajeIE" ng-show="ctrl.MostrarMIE">
+      <!--<input type="number" class="form-control" ng-model="ctrl.MetrajeIE" ng-show="ctrl.MostrarMIE">-->
     </div>
     <div class="col-md-1">
       <p ng-show="ctrl.MostrarTM">Final</p>
       <input type="number" class="form-control" ng-model="ctrl.MetrajeFI" ng-show="ctrl.MostrarMFI">
-       <input type="number" class="form-control" ng-model="ctrl.MetrajeFE" ng-show="ctrl.MostrarMFE">
+      <!--<input type="number" class="form-control" ng-model="ctrl.MetrajeFE" ng-show="ctrl.MostrarMFE">-->
     </div>
   </div>
 
@@ -69,8 +69,30 @@
       <button title="Agregar un artículo" class="btn btn-info btn-sm" value="" ng-click="ctrl.AgregarArticulo()">Agregar</button>
     </div>
   </div>
-
   <br>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <th>Clave</th>
+        <th>Descripción</th>
+        <th>Cantidad</th>
+        <th>Tecnico</th>
+        <th>Metraje inicial int.</th>
+        <th>Metraje final int.</th>
+        <th>Opciones</th>
+      </thead>
+      <tbody ng-model="ctrl.datos" ng-repeat="D in ctrl.DesMatArt">
+        <td>{{ D.Clave}}</td>
+        <td> {{D.Descripcion}} </td>
+        <td> {{D.Cantidad}} </td>
+        <td> {{D.Tecnico}} </td>
+        <td> {{D.metrajeInicio}} </td>
+        <td> {{D.metrajeFin}} </td>
+        <td> <button title="Eliminar artículo" class="btn btn-xs btn-danger " ng-click="ctrl.EliminarArticulo(D.Clave)"><i class="fa fa-trash"></i> Eliminar</button> </td>
+      </tbody>
+    </table>
+  </div>
+  <!--inculyendo metraje exterior
   <div class="row">
     <table class="table">
       <thead>
@@ -96,9 +118,8 @@
         <td> <button title="Eliminar artículo" class="btn btn-xs btn-danger " ng-click="ctrl.EliminarArticulo(D.Clave)"><i class="fa fa-trash"></i> Eliminar</button> </td>
       </tbody>
     </table>
-
   </div>
-
+  -->
 </div>
 <div class="modal-footer">
   <button title="Cancelar cambios" class="btn btn-default-bright btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>

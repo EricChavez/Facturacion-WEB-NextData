@@ -227,17 +227,6 @@
                   <button title="Realizar descarga de material" type="button" class="btn btn-xs btn-info" ng-click="$ctrl.DescargaMaterial()"><i class="fa fa-wrench"></i> Descar. Material</button>
                 </div>
               </div>
-          
-              
-
-            
-
-
-
-
-         
-
-
         </div>
         <div class="col-md-5">
           <div class="col-md-12">
@@ -282,8 +271,7 @@
               <b>Tipo solución</b>
               <select class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" required validate-on="dirty"
                 ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
-                    <option value="">selecciona</option>
-                      </select>
+              </select>
             </div>
             <!--<div class="col-md-4">
               <label class="checkbox-inline checkbox-styled checkbox-success">

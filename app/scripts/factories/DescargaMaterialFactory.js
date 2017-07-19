@@ -190,8 +190,6 @@ angular
                 }
             };
 
-            console.log(JSON.stringify(Parametros));
-
             $http.post(globalService.getUrl() + paths.GetDescargaMaterialArt, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
             }).catch(function (response) {
@@ -222,8 +220,6 @@ angular
                     'Authorization': $localStorage.currentUser.token
                 }
             };
-
-            console.log(Parametros);
 
             $http.post(globalService.getUrl() + paths.GetAddDescargaMaterialArt, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
@@ -274,7 +270,6 @@ angular
                     'Authorization': $localStorage.currentUser.token
                 }
             };
-            console.log(Parametros);
             $http.post(globalService.getUrl() + paths.GetGRABAtblDescargaMaterialCableIACTV, JSON.stringify(Parametros), config).then(function (response) {
                 deferred.resolve(response.data);
             }).catch(function (response) {

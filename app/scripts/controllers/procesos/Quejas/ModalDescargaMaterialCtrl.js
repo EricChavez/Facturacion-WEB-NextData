@@ -4,8 +4,6 @@ angular
   .controller('ModalDescargaMaterialCtrl', function ($uibModalInstance, $uibModal, options, DescargarMaterialFactory, $rootScope, ngNotify, $localStorage, $state) {
 
     function initialData(objDesMat) {
-
-		console.log(objDesMat);
       vm.articulos_ = [];
       DescargarMaterialFactory.GetMuestra_Detalle_Bitacora(objDesMat.SctTecnico.CLV_TECNICO, vm.IAlma).then(function (data) {
         vm.Material = data.GetMuestra_Detalle_Bitacora_2ListResult;
@@ -13,16 +11,11 @@ angular
         DescargarMaterialFactory.GetSoftv_GetDescargaMaterialEstaPagado(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
           vm.pagado = data.GetSoftv_GetDescargaMaterialEstaPagadoResult.Pagado
           DescargarMaterialFactory.GetSoftv_DimeSiTieneBitacora(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
-            console.log(data);
             if (data.GetSoftv_DimeSiTieneBitacoraResult == null) {
-
-
             } else {
-
               vm.No_Bitacora = data.GetSoftv_DimeSiTieneBitacoraResult.NoBitacora;
 
               DescargarMaterialFactory.GetDescargaMaterialArticulosByIdClvOrden(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
-                console.log(data.GetGetDescargaMaterialArticulosByIdClvOrdenListResult);
                 var art = data.GetGetDescargaMaterialArticulosByIdClvOrdenListResult;
 
                 var ObjDescargaMat = {};
@@ -47,8 +40,6 @@ angular
                 }
 
                 DescargarMaterialFactory.GetDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
-                  //console.log(data.GetDescargaMaterialArtResult[0].NoArticulo);
-                  console.log(data);
                   vm.DesMatArt = data.GetDescargaMaterialArtResult;
                 })
 
@@ -63,17 +54,6 @@ angular
 
       });
 
-
-
-
-
-
-
-
-
-
-
-
     }
 
     function BuscarNombreArticulo() {
@@ -84,10 +64,13 @@ angular
           vm.SlctArticulo.IdArticulo = "";
         });
 
-      } else {
-        console.log("No");
       }
 
+      vm.CantidadDescarga = "";
+      vm.MetrajeII = "";
+      vm.MetrajeIE = "";
+      vm.MetrajeFI = "";
+      vm.MetrajeFE = "";
 
     }
 
@@ -115,7 +98,11 @@ angular
         }
 
         CantidadArticulo = 0;
-
+        vm.CantidadDescarga = "";
+        vm.MetrajeII = "";
+        vm.MetrajeIE = "";
+        vm.MetrajeFI = "";
+        vm.MetrajeFE = "";
       });
     }
 
@@ -135,28 +122,35 @@ angular
             var TArt = false;
 
             if (vm.TipoArticulo == 'Metros') {
-
+              
+              /* Incluyendo metraje exterior
               if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
                 vm.MetrajeIE != undefined && vm.MetrajeIE > 0 &&
                 vm.MetrajeFI != undefined && vm.MetrajeFI > 0 &&
-                vm.MetrajeFE != undefined && vm.MetrajeFE > 0) {
+                vm.MetrajeFE != undefined && vm.MetrajeFE > 0) {*/
+              if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
+                vm.MetrajeFI != undefined && vm.MetrajeFI > 0) {
 
-                if (vm.MetrajeFI > vm.MetrajeII && vm.MetrajeFE > vm.MetrajeIE) {
-
-                  if (vm.MetrajeIE > vm.MetrajeFI) {
+                /*ncluyendo metraje exterior
+                if (vm.MetrajeFI > vm.MetrajeII && vm.MetrajeFE > vm.MetrajeIE) {*/
+                if (vm.MetrajeFI > vm.MetrajeII) {
+                  /*if (vm.MetrajeIE > vm.MetrajeFI) {*/
 
                     vCD = 0;
                     vMII = vm.MetrajeII;
-                    vMIE = vm.MetrajeIE;
                     vMFI = vm.MetrajeFI;
+                    vMIE = 0;
+                    vMFE = 0;
+                    /*vMIE = vm.MetrajeIE;
                     vMFE = vm.MetrajeFE;
-                    CantidadArticulo = (vMFI - vMII) + (vMFE - vMIE);
+                    CantidadArticulo = (vMFI - vMII) + (vMFE - vMIE);*/
+                    CantidadArticulo = vMII + vMFI;
                     TArt = true;
 
-                  } else {
+                  /*} else {
                     CantidadArticulo = 0;
                     ngNotify.set('No se pueden intercalar los valores del metraje final con el metraje inicial.', 'error');
-                  }
+                  }*/
 
                 } else {
                   CantidadArticulo = 0;
@@ -188,6 +182,12 @@ angular
               }
             }
 
+            vm.CantidadDescarga = "";
+            vm.MetrajeII = "";
+            vm.MetrajeIE = "";
+            vm.MetrajeFI = "";
+            vm.MetrajeFE = "";
+
             if (CantidadArticulo > 0) {
               if (CantidadArticulo <= vm.SlctArticulo.Cantidad) {
 
@@ -210,8 +210,6 @@ angular
                 if (ExisteArticulo(Articulos.NoArticulo) == false) {
                   vm.articulos_.push(Articulos);
                   DescargarMaterialFactory.GetDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
-                    //console.log(data.GetDescargaMaterialArtResult[0].NoArticulo);
-                    console.log(data);
                     vm.DesMatArt = data.GetDescargaMaterialArtResult;
                   });
 
@@ -219,10 +217,6 @@ angular
                   ngNotify.set('El artículo ya fue agregado', 'warn');
                   return;
                 }
-
-
-
-
               } else {
                 ngNotify.set('No tiene material suficiente, solo cuenta con: ' + vm.SlctArticulo.Cantidad + ' pzs.', 'error');
               }
@@ -234,7 +228,6 @@ angular
       } else {
         ngNotify.set('Selecciona un artículo.', 'error');
       }
-
     }
 
     function ok() {
@@ -246,18 +239,16 @@ angular
         ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
         ObjDescargaMat.IdBitacora = vm.No_Bitacora;
         ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
-        console.log(ObjDescargaMat);
         DescargarMaterialFactory.GetAddDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
-          console.log(data);
           DescargarMaterialFactory.GetGRABAtblDescargaMaterialCableIACTV(options.ClvOrden).then(function(data){
-          ngNotify.set('La descarga de material se ha guardado correctamente','success');
-          cancel();
+            DescargarMaterialFactory.GetchecaBitacoraTecnico(options.ClvOrden, options.Tipo_Descargar).then(function(data){
+              vm.DesMatRes = data.GetchecaBitacoraTecnicoResult;
+              ngNotify.set('Se guardó exitosamente la bitácora #' + vm.DesMatRes.idBitacora + ' para la Orden #' + options.ClvOrden,'success');
+              cancel();
+            });
         });
         
         });
-        
-     
-
 
       } else {
         ngNotify.set('Necesita agregar un artículo primero.', 'error');
@@ -281,32 +272,24 @@ angular
       ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
       DescargarMaterialFactory.GetDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
-        //console.log(data.GetDescargaMaterialArtResult[0].NoArticulo);
-        console.log(data);
         vm.DesMatArt = data.GetDescargaMaterialArtResult;
       });
     }
 
 
     function ExisteArticulo(IdInventario) {
-      console.log(IdInventario);
       var count = 0;
       for (var a = 0; a < vm.articulos_.length; a++) {
         if (vm.articulos_[a].NoArticulo == IdInventario) {
           count = count + 1;
         }
       }
-      console.log(count);
       return (count > 0) ? true : false;
-
     }
-
-
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
-
 
     var IdArticulo = "";
     var catUnidadClave = 0;
@@ -321,7 +304,7 @@ angular
     vm.BuscarTipoArticulo = BuscarTipoArticulo;
     vm.EliminarArticulo = EliminarArticulo;
     vm.IAlma = 0;
-    vm.MostrarCD = true;
+    vm.MostrarCD = false;
     vm.MostrarMII = false;
     vm.MostrarMIE = false;
     vm.MostrarMFI = false;
@@ -329,9 +312,6 @@ angular
     vm.MostrarTM = false;
     vm.articulos_ = [];
 
-
-
-    //vm.Tipo = options.Tipo_Descargar;
     initialData(options);
 
 
