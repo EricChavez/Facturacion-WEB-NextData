@@ -389,7 +389,7 @@ angular
         'TipoSer': obje.servicio,
         'Op': obje.op
       };
-
+      console.log("Parametros: ",Parametros);
 
       var config = {
         headers: {
@@ -482,8 +482,7 @@ angular
         'clv_llamada': objeto.clv_llamada,
         'clvProblema': objeto.clvProblema
       };
-
-
+      console.log(parametros);
       $http.post(globalService.getUrl() + paths.AgregaQueja, JSON.stringify({
         'objQuejas': parametros
       }), config).then(function (response) {

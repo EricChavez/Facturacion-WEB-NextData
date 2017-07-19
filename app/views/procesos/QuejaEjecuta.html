@@ -21,7 +21,7 @@
   <form angular-validator-submit="$ctrl.Ejecutaqueja()" name="QuejaForm" novalidate angular-validator>
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
-        <strong style="font-weight:bold; border:none; margin-left:10px;">Ejecutar Quejas</strong>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">Ejecutar Reportes</strong>
         <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos</a>><a href="#" class="paginaActiva">Reportes</a></small>
 
       </header>
@@ -39,8 +39,8 @@
       <div class="row">
         <div class="col-md-5">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <small><b># Orden:</b></small>
+            <div class="col-md-3">
+              <small><b># Reporte:</b></small>
             </div>
             <div class="col-md-3">
               <input type="text" placeholder="# Orden" class="form-control input-sm" ng-model="$ctrl.clv_queja" disabled>
@@ -48,7 +48,7 @@
             <div class="col-md-3">
               <small><b># Contrato:</b></small>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
 
               <input type="text" disabled placeholder="No. contrato" class="form-control input-sm" ng-model="$ctrl.contrato" name="contrato">
 
@@ -92,7 +92,7 @@
             </div>
             <div class="col-md-3">
               <label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" value="V" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.blockVista" ng-change="$ctrl.CambiaEstatus()"><span>Vista</span>
+						<input type="radio" name="inlineRadioOptions" value="V" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.blockVista" ng-change="$ctrl.CambiaEstatus()"><span>Visita</span>
 					</label>
             </div>
           </div>
@@ -227,17 +227,6 @@
                   <button title="Realizar descarga de material" type="button" class="btn btn-xs btn-info" ng-click="$ctrl.DescargaMaterial()"><i class="fa fa-wrench"></i> Descar. Material</button>
                 </div>
               </div>
-          
-              
-
-            
-
-
-
-
-         
-
-
         </div>
         <div class="col-md-5">
           <div class="col-md-12">
@@ -256,7 +245,7 @@
 
               <b>Clasificación del problema</b>
               <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"
-                name="problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty" disabled></select>
+                name="problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty"></select>
             </div>
             <div class="col-md-6">
               <b> Prioridad</b>
@@ -282,8 +271,7 @@
               <b>Tipo solución</b>
               <select class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" required validate-on="dirty"
                 ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
-                    <option value="">selecciona</option>
-                      </select>
+              </select>
             </div>
             <!--<div class="col-md-4">
               <label class="checkbox-inline checkbox-styled checkbox-success">

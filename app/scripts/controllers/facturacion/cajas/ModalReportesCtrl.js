@@ -51,7 +51,7 @@ angular
 		var vm = this;
 		vm.cancel = cancel;
 		initialData();
-		vm.selectStatus = 'E';
+		vm.selectStatus = 'P';
 		vm.singleQueja = singleQueja;
 		vm.changeSelect = getReportes;
 

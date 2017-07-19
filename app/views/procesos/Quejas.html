@@ -82,7 +82,7 @@
 
                   <div class="col-md-6">
                     
-                    <input type="number" class="form-control input-sm" placeholder="Serie de STB" ng-model="$ctrl.STB">
+                    <input type="number" class="form-control input-sm" placeholder="Serie de Aparato" ng-model="$ctrl.STB">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporSTB()">Buscar</button>
                   </div>
                   <div class="col-md-6">
@@ -90,21 +90,12 @@
                     <input class="form-control input-sm" type="number" placeholder="# de ticket" ng-model="$ctrl.Ticket">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporTicket()">Buscar</button>
                   </div>
-
-
                 </div>
-
-
-
-
-
-
               </uib-tab>
-
 
               <uib-tab index="1">
                 <uib-tab-heading>
-                  <i class="fa fa-user"></i> Suscriptor
+                  <i class="fa fa-user"></i> Nombre
                 </uib-tab-heading>
 
                 <div class="row">
@@ -208,11 +199,11 @@
                 <button class="btn btn-info btn-xs" ng-click="$ctrl.abrirBonificacion(x)"><i class="fa fa-money"></i> Bonifica</button>
               </td>-->
               <td>
-                <a title="Ejecutar queja" ng-if="x.Status!='E'" ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
+                <a title="Ejecutar reporte" ng-if="x.Status!='E'" ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
               </td>
               <td>
-                <button title="Consultar queja" type="button" class="btn ink-reaction btn-xs btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" ng-click="$ctrl.abrirDetalleQueja(x);" title="" data-original-title="Detalle de queja"><i class="md md-content-paste"></i></button>
-                <button title="Eliminar queja" type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i></button>
+                <button title="Consultar reporte" type="button" class="btn ink-reaction btn-xs btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" ng-click="$ctrl.abrirDetalleQueja(x);" title="" data-original-title="Detalle de queja"><i class="md md-content-paste"></i></button>
+                <button title="Eliminar reporte" ng-if="x.Status!='E'" type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i></button>
               </td>
 
 

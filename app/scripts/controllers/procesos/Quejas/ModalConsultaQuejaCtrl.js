@@ -58,7 +58,7 @@ angular
                 //Bloqueo(true);
               }
             }
-
+            console.log(data);
 
             quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function (data) {
 

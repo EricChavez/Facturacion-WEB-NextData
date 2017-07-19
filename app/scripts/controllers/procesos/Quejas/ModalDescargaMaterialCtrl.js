@@ -16,7 +16,6 @@ angular
             if (data.GetSoftv_DimeSiTieneBitacoraResult == null) {} else {
               vm.No_Bitacora = data.GetSoftv_DimeSiTieneBitacoraResult.NoBitacora;
               DescargarMaterialFactory.GetDescargaMaterialArticulosByIdClvOrden(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
-                console.log(data.GetGetDescargaMaterialArticulosByIdClvOrdenListResult);
                 var art = data.GetGetDescargaMaterialArticulosByIdClvOrdenListResult;
                 var ObjDescargaMat = {};
                 ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
@@ -80,7 +79,11 @@ angular
         }
 
         CantidadArticulo = 0;
-
+        vm.CantidadDescarga = "";
+        vm.MetrajeII = "";
+        vm.MetrajeIE = "";
+        vm.MetrajeFI = "";
+        vm.MetrajeFE = "";
       });
     }
 
@@ -101,24 +104,30 @@ angular
               if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
                 vm.MetrajeIE != undefined && vm.MetrajeIE > 0 &&
                 vm.MetrajeFI != undefined && vm.MetrajeFI > 0 &&
-                vm.MetrajeFE != undefined && vm.MetrajeFE > 0) {
+                vm.MetrajeFE != undefined && vm.MetrajeFE > 0) {*/
+              if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
+                vm.MetrajeFI != undefined && vm.MetrajeFI > 0) {
 
-                if (vm.MetrajeFI > vm.MetrajeII && vm.MetrajeFE > vm.MetrajeIE) {
-
-                  if (vm.MetrajeIE > vm.MetrajeFI) {
+                /*ncluyendo metraje exterior
+                if (vm.MetrajeFI > vm.MetrajeII && vm.MetrajeFE > vm.MetrajeIE) {*/
+                if (vm.MetrajeFI > vm.MetrajeII) {
+                  /*if (vm.MetrajeIE > vm.MetrajeFI) {*/
 
                     vCD = 0;
                     vMII = vm.MetrajeII;
-                    vMIE = vm.MetrajeIE;
                     vMFI = vm.MetrajeFI;
+                    vMIE = 0;
+                    vMFE = 0;
+                    /*vMIE = vm.MetrajeIE;
                     vMFE = vm.MetrajeFE;
-                    CantidadArticulo = (vMFI - vMII) + (vMFE - vMIE);
+                    CantidadArticulo = (vMFI - vMII) + (vMFE - vMIE);*/
+                    CantidadArticulo = vMII + vMFI;
                     TArt = true;
 
-                  } else {
+                  /*} else {
                     CantidadArticulo = 0;
                     ngNotify.set('No se pueden intercalar los valores del metraje final con el metraje inicial.', 'error');
-                  }
+                  }*/
 
                 } else {
                   CantidadArticulo = 0;
@@ -150,6 +159,12 @@ angular
               }
             }
 
+            vm.CantidadDescarga = "";
+            vm.MetrajeII = "";
+            vm.MetrajeIE = "";
+            vm.MetrajeFI = "";
+            vm.MetrajeFE = "";
+
             if (CantidadArticulo > 0) {
               if (CantidadArticulo <= vm.SlctArticulo.Cantidad) {
 
@@ -172,8 +187,6 @@ angular
                 if (ExisteArticulo(Articulos.NoArticulo) == false) {
                   vm.articulos_.push(Articulos);
                   DescargarMaterialFactory.GetDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
-                    //console.log(data.GetDescargaMaterialArtResult[0].NoArticulo);
-                    console.log(data);
                     vm.DesMatArt = data.GetDescargaMaterialArtResult;
                   });
 
@@ -181,10 +194,6 @@ angular
                   ngNotify.set('El artículo ya fue agregado', 'warn');
                   return;
                 }
-
-
-
-
               } else {
                 ngNotify.set('No tiene material suficiente, solo cuenta con: ' + vm.SlctArticulo.Cantidad + ' pzs.', 'error');
               }
@@ -196,7 +205,6 @@ angular
       } else {
         ngNotify.set('Selecciona un artículo.', 'error');
       }
-
     }
 
     function ok() {
@@ -208,7 +216,6 @@ angular
         ObjDescargaMat.Accion = (vm.No_Bitacora == 0) ? 'Agregar' : 'Modificar';
         ObjDescargaMat.IdBitacora = vm.No_Bitacora;
         ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
-        console.log(ObjDescargaMat);
         DescargarMaterialFactory.GetAddDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
           console.log(data);
           DescargarMaterialFactory.GetGRABAtblDescargaMaterialCableIACTV(options.ClvOrden).then(function (data) {
@@ -238,32 +245,24 @@ angular
       ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
       DescargarMaterialFactory.GetDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
-        //console.log(data.GetDescargaMaterialArtResult[0].NoArticulo);
-        console.log(data);
         vm.DesMatArt = data.GetDescargaMaterialArtResult;
       });
     }
 
 
     function ExisteArticulo(IdInventario) {
-      console.log(IdInventario);
       var count = 0;
       for (var a = 0; a < vm.articulos_.length; a++) {
         if (vm.articulos_[a].NoArticulo == IdInventario) {
           count = count + 1;
         }
       }
-      console.log(count);
       return (count > 0) ? true : false;
-
     }
-
-
 
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
-
 
     var IdArticulo = "";
     var catUnidadClave = 0;
@@ -278,7 +277,7 @@ angular
     vm.BuscarTipoArticulo = BuscarTipoArticulo;
     vm.EliminarArticulo = EliminarArticulo;
     vm.IAlma = 0;
-    vm.MostrarCD = true;
+    vm.MostrarCD = false;
     vm.MostrarMII = false;
     vm.MostrarMIE = false;
     vm.MostrarMFI = false;

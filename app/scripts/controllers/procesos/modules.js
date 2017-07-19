@@ -112,7 +112,7 @@ angular
       {
         name: 'home.procesos.reportes',
         data: {
-          pageTitle: 'SOFTV | QUEJAS'
+          pageTitle: 'SOFTV | REPORTES'
         },
         url: '/quejas',
         templateUrl: 'views/procesos/Quejas.html',
@@ -122,7 +122,7 @@ angular
       {
         name: 'home.procesos.ejecutaqueja',
         data: {
-          pageTitle: 'SOFTV | EJECUTA QUEJA'
+          pageTitle: 'SOFTV | EJECUTA REPORTE'
         },
         url: '/quejas/ejecuta/:id/:contrato/:servicio',
         templateUrl: 'views/procesos/QuejaEjecuta.html',
