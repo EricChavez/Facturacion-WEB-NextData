@@ -19,6 +19,9 @@ angular
           param.servicio = datos.CLV_TIPSER;
           param.op = 0;
 
+
+
+
           atencionFactory.buscarCliente(param).then(function (data) {
             var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
             var contrato = detalle.ContratoBueno;
@@ -36,13 +39,25 @@ angular
             vm.Hora = datos.HoraInicial;
             vm.clv_queja = datos.clv_queja;
             vm.Turno = datos.Turno;
-            
+
             vm.UsuarioGenero = datos.UsuarioGenero;
             for (var a = 0; a < vm.servicios.length; a++) {
               if (vm.servicios[a].Clv_TipSerPrincipal == vm.CLV_TIPSER) {
                 vm.selectedServicio = vm.servicios[a];
               }
             }
+
+            atencionFactory.GetBuscaSiTieneQueja(vm.CLV_TIPSER.Clv_TipSerPrincipal, vm.GlobalContrato).then(function (result) {
+              if (result.GetBuscaSiTieneQuejaResult.Res == 1) {
+                vm.MuestraMensajeQueja = true;
+                vm.MensajeQueja = result.GetBuscaSiTieneQuejaResult.Msg;
+              } else {
+                vm.MuestraMensajeQueja = false;
+              }
+            });
+
+
+
 
             atencionFactory.GetClasificacionProblemas().then(function (data) {
 
@@ -71,7 +86,7 @@ angular
             vm.DireccionCliente = "Calle: " + detalle.CALLE + " #" + detalle.NUMERO + " Colonia: " + detalle.COLONIA + " Ciudad:" + detalle.CIUDAD;
             atencionFactory.getServiciosCliente(contrato).then(function (data) {
               vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
-               atencionFactory.GetConAtenTelCte(vm.GlobalContrato).then(function (data) {
+              atencionFactory.GetConAtenTelCte(vm.GlobalContrato).then(function (data) {
                 vm.Telefono = data.GetConAtenTelCteResult.Telefono;
               });
 
@@ -166,7 +181,7 @@ angular
         GetprioridadQueja();
 
       } else {
-		  abrirDetalleQueja();
+        abrirDetalleQueja();
         ngNotify.set('No se puede realizar una queja, ya que La llamada ya presenta una queja.', 'error');
 
       }
@@ -226,7 +241,7 @@ angular
     }
 
     function abrirAgenda() {
-     var atencion = (vm.tipoAtencion == 'telefonica') ? 'S' : 'T';
+      var atencion = (vm.tipoAtencion == 'telefonica') ? 'S' : 'T';
       var options = {};
       options.Contrato = vm.GlobalContrato;
       options.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
@@ -237,7 +252,7 @@ angular
       options.clv_llamada = vm.NumeroLlamada;
       options.clvProblema = vm.Problema.clvProblema;
       options.clv_queja = vm.clv_queja;
-	  //options.=atencion
+      //options.=atencion
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -265,7 +280,7 @@ angular
       obj.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
       obj.Clv_trabajo = vm.Trabajo.CLV_TRABAJO;
       obj.Turno = vm.Turno;
-      obj.ClvProblema=vm.Problema.clvProblema;
+      obj.ClvProblema = vm.Problema.clvProblema;
       atencionFactory.ActualizaLlamada(obj).then(function (data) {
         $state.go('home.procesos.atencion');
         ngNotify.set('La llamada #' + vm.NumeroLlamada + ' se ha editado correctamente', 'grimace');

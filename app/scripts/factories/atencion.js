@@ -25,14 +25,37 @@ angular
       ActualizaQuejaCallCenter: '/Actualizar_quejasCallCenter/GetDeepActualizar_quejasCallCenter',
       ConsultaColoniasPorUsuario: '/uspConsultaColoniasPorUsuario/GetuspConsultaColoniasPorUsuarioList',
       ConsultaLLamada: '/LLamadasdeInternet/GetLLamadasdeInternetList',
-      GetConAtenTelCte:'/ConAtenTelCte/GetConAtenTelCte'
+      GetConAtenTelCte: '/ConAtenTelCte/GetConAtenTelCte',
+      GetBuscaSiTieneQueja: '/BuscaSiTieneQueja/GetBuscaSiTieneQueja'
 
     };
     var factory = {};
     var usuarioAtencion = $localStorage.currentUser.idUsuario;
- 
+    
 
-     factory.GetConAtenTelCte = function (Contrato) {
+    factory.GetBuscaSiTieneQueja = function (ClvTipSer,Contrato) {
+      var deferred = $q.defer();
+      var Parametros = {
+        'ClvTipSer': ClvTipSer,
+        'Contrato':Contrato
+      };
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      $http.post(globalService.getUrl() + paths.GetBuscaSiTieneQueja, JSON.stringify(Parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response.data);
+      });
+
+      return deferred.promise;
+    };
+
+    
+
+    factory.GetConAtenTelCte = function (Contrato) {
       var deferred = $q.defer();
       var Parametros = {
         'Contrato': Contrato,
@@ -473,7 +496,7 @@ angular
     };
 
     factory.ActualizaLlamada = function (objeto) {
-	  
+
       var deferred = $q.defer();
       var config = {
         headers: {
@@ -488,9 +511,9 @@ angular
         'clv_queja': objeto.clv_queja,
         'CLV_TIPSER': objeto.CLV_TIPSER,
         'Turno': objeto.Turno,
-        'ClvProblema':objeto.ClvProblema
+        'ClvProblema': objeto.ClvProblema
       };
-     
+
       $http.post(globalService.getUrl() + paths.ActualizaLlamada, JSON.stringify({
         'objLLamadasdeInternet': parametros
       }), config).then(function (response) {

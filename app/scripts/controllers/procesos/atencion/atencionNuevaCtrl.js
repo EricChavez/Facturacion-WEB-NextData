@@ -3,12 +3,12 @@ angular
   .module('softvApp')
   .controller('AtencionNuevaCtrl', function ($uibModal, atencionFactory, ngNotify, $rootScope, $state, $stateParams, $filter) {
     function initialData() {
+
       atencionFactory.serviciosNuevo().then(function (data) {
         vm.servicios = data.GetMuestraTipSerPrincipal2ListResult;
         vm.selectedServicio = vm.servicios[0];
         MuestraTrabajos(vm.selectedServicio.Clv_TipSerPrincipal);
         GetClasificacionProblemas();
-
       });
     }
 
@@ -37,6 +37,7 @@ angular
     }
 
     function CambioServicio(servicio) {
+      LimpiaInformacion();
       MuestraTrabajos(servicio.Clv_TipSerPrincipal);
     }
 
@@ -162,6 +163,19 @@ angular
     }
 
 
+    function LimpiaInformacion() {
+      vm.NombreCliente = '';
+      vm.Calle = '';
+      vm.Numero = '';
+      vm.Colonia = '';
+      vm.Ciudad = '';
+      vm.Telefono='';
+      vm.GlobalContrato=null;
+      vm.ServiciosCliente='';
+      vm.MuestraMensajeQueja = false;
+    }
+
+
     function AddLLamadasdeInternet(showDetails) {
       var atencion = (vm.tipoAtencion == 'S') ? 'S' : 'T';
       var trabajo = (vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;
@@ -175,14 +189,16 @@ angular
         'CLV_TIPSER': vm.selectedServicio.Clv_TipSerPrincipal,
         'TipoAtencion': atencion,
         'ClvProblema': vm.Problema.clvProblema
-      }
-      console.log(parametros);
+      }     
 
       atencionFactory.AddLLamadasdeInternet(parametros).then(function (data) {
         vm.NumeroLlamada = data.AddLLamadasdeInternetResult;
         if (showDetails == true) {
           $state.go('home.procesos.atencion');
-          ngNotify.set('Se ha guardado la llamada,número de atencíon telefonica #' + vm.NumeroLlamada);
+          ngNotify.set('Se ha guardado la llamada, número de atención telefónica #' + vm.NumeroLlamada, {
+            position: 'bottom',
+            sticky: true
+          });
         }
 
       });
@@ -200,7 +216,14 @@ angular
       vm.Numero = detalle.NUMERO;
       vm.Colonia = detalle.COLONIA;
       vm.Ciudad = detalle.CIUDAD;
-
+      atencionFactory.GetBuscaSiTieneQueja(vm.selectedServicio.Clv_TipSerPrincipal, vm.GlobalContrato).then(function (result) {
+        if (result.GetBuscaSiTieneQuejaResult.Res == 1) {
+          vm.MuestraMensajeQueja = true;
+          vm.MensajeQueja = result.GetBuscaSiTieneQuejaResult.Msg;
+        } else {
+          vm.MuestraMensajeQueja = false;
+        }
+      });
       atencionFactory.GetConAtenTelCte(vm.GlobalContrato).then(function (data) {
         vm.Telefono = data.GetConAtenTelCteResult.Telefono;
       });
@@ -256,13 +279,23 @@ angular
           atencionFactory.ValidaContrato(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal).then(function (data) {
             console.log(data);
             if (data.GetuspContratoServListResult[0].Pasa == true) {
-              MuestraMensajeQueja();
+
               vm.NombreCliente = detalle.Nombre + detalle.Apellido_Paterno + " " + detalle.Apellido_Materno;
 
               vm.Calle = detalle.CALLE;
               vm.Numero = detalle.NUMERO;
               vm.Colonia = detalle.COLONIA;
               vm.Ciudad = detalle.CIUDAD
+
+              atencionFactory.GetBuscaSiTieneQueja(vm.selectedServicio.Clv_TipSerPrincipal, vm.GlobalContrato).then(function (result) {
+                if (result.GetBuscaSiTieneQuejaResult.Res == 1) {
+                  vm.MuestraMensajeQueja = true;
+                  vm.MensajeQueja = result.GetBuscaSiTieneQuejaResult.Msg;
+                } else {
+                  vm.MuestraMensajeQueja = false;
+                }
+              });
+
               atencionFactory.GetConAtenTelCte(vm.GlobalContrato).then(function (data) {
                 vm.Telefono = data.GetConAtenTelCteResult.Telefono;
               });
@@ -272,7 +305,8 @@ angular
 
               });
             } else {
-              vm.GlobalContrato = null;
+            
+              LimpiaInformacion();
               ngNotify.set('El cliente no tiene contratado el servicio, seleccione otro tipo por favor.', 'error');
             }
           });
@@ -295,15 +329,12 @@ angular
         ngNotify.set('Seleccione la clasificación del problema', 'error');
         return;
       }
-      if (vm.Trabajo == null) {
-        ngNotify.set('Seleccione la solución  del problema', 'error');
-        return;
-      }
+
       AddLLamadasdeInternet(true);
     }
 
     function generaReporte() {
-      vm.MostrarGuardar = false;
+
       if (vm.GlobalContrato == null) {
         ngNotify.set('Establezca el contrato del cliente para generar un reporte .', 'error');
         return;
@@ -316,11 +347,8 @@ angular
         ngNotify.set('Seleccione la clasificación del problema', 'error');
         return;
       }
-      if (vm.Trabajo == null) {
-        ngNotify.set('Seleccione la solución  del problema', 'error');
-        return;
-      }
 
+      vm.MostrarGuardar = false;
       vm.PanelCaptura = true;
       GetclasificacionQuejas();
       GetprioridadQueja();
@@ -349,6 +377,10 @@ angular
 
     function CancelaReporte() {
       $state.go('home.procesos.atencion');
+       ngNotify.set('Se ha guardado la llamada, número de atención telefónica #' + vm.NumeroLlamada, {
+            position: 'bottom',
+            sticky: true
+          });
     }
 
     var vm = this;
@@ -376,4 +408,5 @@ angular
     vm.Fecha = $filter('date')(new Date(), 'dd-MM-yyyy');
     vm.CancelaReporte = CancelaReporte;
     vm.BloquearElementos = false;
+    vm.cliente_seleccionado = true;
   });
