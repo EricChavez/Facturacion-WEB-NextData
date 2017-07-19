@@ -366,7 +366,7 @@ angular
         'TipoSer': obje.servicio,
         'Op': obje.op
       };
-
+      console.log("Parametros: ",Parametros);
 
       var config = {
         headers: {

@@ -13,7 +13,22 @@ angular
 
     }
 
+    function toDate(dateStr) {
+      var parts = dateStr.split("/");
+      return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
+
     function ok() {
+      var _fechaHoy = new Date();
+      var d = _fechaHoy.getDate();
+      var m = 1 + _fechaHoy.getMonth();
+      var y = _fechaHoy.getFullYear();
+      var fechaHoy = new Date(m+"/"+d+"/"+y);
+      var fechaIngresada = vm.FechaAgenda;
+
+      console.log("hoy: ", _fechaHoy);
+      console.log("hoy: ", fechaHoy);
+      console.log("Ingre: ", fechaIngresada);
 
       if (vm.TecnicoAgenda == null || vm.TecnicoAgenda == undefined) {
         ngNotify.set('Selecciona un técnico para continuar', 'error');
@@ -25,6 +40,10 @@ angular
       }
       if (vm.FechaAgenda == null || vm.FechaAgenda == undefined) {
         ngNotify.set('Selecciona un fecha para continuar', 'error');
+        return;
+      }
+      if(fechaIngresada < fechaHoy){
+        ngNotify.set('La fecha que selecciono no debe ser menor a la fecha actual', 'error');
         return;
       }
 

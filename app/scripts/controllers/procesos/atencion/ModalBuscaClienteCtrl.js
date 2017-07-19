@@ -89,6 +89,7 @@ angular
 			obje.setupbox = vm.BUaparato;
 			obje.op = 5;
 			obje.colonia = 0;
+			console.log("BusquedaAparato: ",obje);
 			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
 				if (vm.Clientes.length == 0) {

@@ -16,6 +16,7 @@ angular
 					ngNotify.set('No se pueden eliminar Reportes con status Ejecutada', 'error');
 				} else {
 					ngNotify.set('La orden ha sido eliminada correctamente', 'success');
+					$state.reload('home.procesos.reportes');
 					$uibModalInstance.dismiss('cancel');
 				}
 			});
