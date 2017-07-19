@@ -496,8 +496,9 @@ angular
       var Tecnico={};
       Tecnico.CLV_TECNICO =vm.Tecnico.clv_Tecnico;
       Tecnico.Nombre=vm.Tecnico.Nombre;
+      var options = {};
       options.Detalle=false;
-      var options = {};      
+      
       options.ClvOrden = vm.clv_queja;
       options.ClvBitacora=vm.idBitacora;
       options.SctTecnico = Tecnico;
