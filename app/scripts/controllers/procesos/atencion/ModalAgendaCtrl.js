@@ -74,7 +74,7 @@ angular
             'ClvProblema': options.clvProblema
           };
           console.log("parametrosLlamada: ", parametrosLlamada);
-          /*atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
+          atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
 
 
             var Parametrosrel = {
@@ -93,7 +93,7 @@ angular
               $state.go('home.procesos.atencion');
 
 
-          });*/
+          });
 
         });
       } else {

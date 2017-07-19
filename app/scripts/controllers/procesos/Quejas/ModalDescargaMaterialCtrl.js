@@ -101,7 +101,7 @@ angular
             var TArt = false;
 
             if (vm.TipoArticulo == 'Metros') {
-              if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
+              /*if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
                 vm.MetrajeIE != undefined && vm.MetrajeIE > 0 &&
                 vm.MetrajeFI != undefined && vm.MetrajeFI > 0 &&
                 vm.MetrajeFE != undefined && vm.MetrajeFE > 0) {*/
