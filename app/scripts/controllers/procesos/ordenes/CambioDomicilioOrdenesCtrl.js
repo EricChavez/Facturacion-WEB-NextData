@@ -13,6 +13,7 @@
         vm.changeLocalidad = changeLocalidad;
         vm.changeColonia = changeColonia;
         vm.ok = ok;
+        vm.Detalle=items.Detalle;
 
         this.$onInit = function () {
             if (items.isUpdate) {

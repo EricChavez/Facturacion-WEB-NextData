@@ -126,8 +126,8 @@
         if (verificastatus == 'E') {
           $state.go('home.procesos.ordenes');
         }
-        
-        
+
+
         vm.Fec_Sol = vm.datosOrden.Fec_Sol;
         vm.observaciones = vm.datosOrden.Obs;
         ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
@@ -186,6 +186,7 @@
       options.ClvOrden = vm.clv_orden;
       options.SctTecnico = vm.selectedTecnico;
       options.Tipo_Descargar = "O";
+      options.Detalle = false;
 
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
@@ -251,11 +252,11 @@
       });
     }
 
-    function detalleTrabajo(trabajo, x) {
-
+    function detalleTrabajo(trabajo, x) {   
 
       if (vm.selectedTecnico == undefined) {
         ngNotify.set('Selecciona un técnico.', 'warn');
+        return;
       }
       var items = {};
       items.contrato = vm.contratoBueno;
@@ -273,6 +274,7 @@
         items.clv_orden = x.Clv_Orden;
         items.descripcion = x.Descripcion.toLowerCase();
         items.servicio = vm.Clv_TipSer;
+        items.Detalle = false;
         var modalInstance = $uibModal.open({
           animation: true,
           ariaLabelledBy: 'modal-title',
@@ -295,13 +297,15 @@
         x.Descripcion.toLowerCase().includes('canet')
       ) {
 
-        ordenesFactory.consultaCambioDomicilio(vm.clv_detalle, vm.clv_orden, vm.contratoBueno).then(function (data) {
+        ordenesFactory.consultaCambioDomicilio(x.Clave, vm.clv_orden, vm.contratoBueno).then(function (data) {
+          console.log(data);
           var items = {
-            clv_detalle_orden: vm.clv_detalle,
+            clv_detalle_orden: x.Clave,
             clv_orden: vm.clv_orden,
             contrato: vm.contratoBueno,
             isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
-            datosCamdo: data.GetDeepCAMDOResult
+            datosCamdo: data.GetDeepCAMDOResult,
+            Detalle:true
           };
           var modalInstance = $uibModal.open({
             animation: true,
@@ -343,7 +347,8 @@
           'Contrato': vm.contratoBueno,
           'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
           'Clave': x.Clave,
-          'ClvOrden': x.Clv_Orden
+          'ClvOrden': x.Clv_Orden,
+          'Detalle':false
         };
         var modalInstance = $uibModal.open({
           animation: true,

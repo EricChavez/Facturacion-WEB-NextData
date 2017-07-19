@@ -12,7 +12,8 @@
     vm.cancel = cancel;
     vm.guardar = guardar;
     vm.cambio = false;
-
+    vm.Detalle=items.Detalle;
+    console.log(items);
     this.$onInit = function () {
 
       var Parametros = {
@@ -27,6 +28,7 @@
       ordenesFactory.MUESTRAAPARATOS_DISCPONIBLES(Parametros).then(function (resp) {
         console.log(resp);
         vm.aparatos = resp.GetMUESTRAAPARATOS_DISCPONIBLESListResult;
+        vm.aparato=vm.aparatos[0];
         var Parametros2 = {
           'Op': items.Op,
           'Trabajo': items.Trabajo,
@@ -40,8 +42,9 @@
         ordenesFactory.MUESTRAAPARATOS_DISCPONIBLES(Parametros2).then(function (result) {
           console.log(result);
           vm.aparatos2 = result.GetMUESTRAAPARATOS_DISCPONIBLESListResult;
+          vm.aparato2=vm.aparatos2[0];
           vm.label1='Aparatos por asignar';
-          vm.label2='Seleccione el Aparato:'
+          vm.label3='Seleccione el Aparato:'
         });
 
       });

@@ -10,7 +10,7 @@
     var vm = this;
     vm.cancel = cancel;
     vm.transfer = transfer;
-
+    vm.Detalle=items.Detalle;
     vm.titulo = '';
     vm.tituloA = '';
     vm.tituloB = '';
@@ -167,7 +167,7 @@
 
 
       if (AddIPAQ == true) {
-        alert('AddIPAQ');
+        
         if (action == 'ADD') {
 
           ordenesFactory.addIpaqu(objaddIpaqu).then(function (data) {            
@@ -192,7 +192,7 @@
       }
 
       if (AddIPAQUD == true) {
-        alert('AddIPAQD');
+        
         if (action == 'ADD') {
           ordenesFactory.AddIPAQUD(objaddIpaqud).then(function (data) {
             if (vm.status == 'B') {

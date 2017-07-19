@@ -10,27 +10,16 @@
       <label ng-show="ctrl.cambio" class="col-md-5 control-label blod">{{ctrl.label1}}</label>
       <label ng-if="ctrl.cambio==false" class="col-md-5 control-label blod">{{ctrl.label1}}</label>
       <div class="col-md-7" style="padding-left:-10px;">
-        <select class="form-control input-sm" name="aparato2" validate-on="dirty" ng-model="ctrl.aparato2" ng-options="item as item.Descripcion for item in ctrl.aparatos2 track by item.ContratoAnt"
+        <select 
+        ng-disabled="ctrl.Detalle"
+        class="form-control input-sm" name="aparato2" validate-on="dirty" ng-model="ctrl.aparato2" ng-options="item as item.Descripcion for item in ctrl.aparatos2 track by item.ContratoAnt"
           required-message="'Este aparato es obligatorio.'" required>
                 <option value="">selecciona</option>
             </select>
       </div>
     </div>
-
-<br>
-    <div class="col-md-12">
-        <br>
-      <label ng-show="ctrl.cambio" class="col-md-5 control-label blod">{{ctrl.label3}}</label>
-      <label ng-if="ctrl.cambio==false" class="col-md-5 control-label blod">{{ctrl.label3}}</label>
-      <div class="col-md-7" style="padding-left:-10px;">
-        <select class="form-control input-sm" name="aparato" validate-on="dirty" ng-model="ctrl.aparato" ng-options="item as item.Descripcion for item in ctrl.aparatos track by item.ContratoAnt"
-          required-message="'Este aparato es obligatorio.'" required>
-                <option value="">selecciona</option>
-            </select>
-      </div>
-    </div>
-    <br>
-    <div class="col-md-12">
+      <br>
+   <!-- <div class="col-md-12">
         <br>
       <label ng-show="ctrl.cambio" class="col-md-5 control-label blod">{{ctrl.label2}}</label>
       <label ng-if="ctrl.cambio==false" class="col-md-5 control-label blod">{{ctrl.label2}}</label>
@@ -40,7 +29,21 @@
         <option value="">Selecciona</option>
          </select>
       </div>
+    </div>-->
+
+<br>
+    <div class="col-md-12">
+        <br>
+      <label ng-show="ctrl.cambio" class="col-md-5 control-label blod">{{ctrl.label3}}</label>
+      <label ng-if="ctrl.cambio==false" class="col-md-5 control-label blod">{{ctrl.label3}}</label>
+      <div class="col-md-7" style="padding-left:-10px;">
+        <select class="form-control input-sm" name="aparato" validate-on="dirty" ng-model="ctrl.aparato" ng-options="item as item.Descripcion for item in ctrl.aparatos track by item.ContratoAnt"
+          required-message="'Este aparato es obligatorio.'" ng-disabled="ctrl.Detalle" required>
+                <option value="">selecciona</option>
+            </select>
+      </div>
     </div>
+  
 
 
    </div>
@@ -51,6 +54,6 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
-    <button class="btn btn-primary btn-sm" type="submit">Aceptar</button>
+    <button class="btn btn-primary btn-sm" ng-disabled="ctrl.Detalle" type="submit">Aceptar</button>
   </div>
 </form>

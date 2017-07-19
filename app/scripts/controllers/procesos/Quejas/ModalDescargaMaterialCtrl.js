@@ -3,33 +3,26 @@ angular
   .module('softvApp')
   .controller('ModalDescargaMaterialCtrl', function ($uibModalInstance, $uibModal, options, DescargarMaterialFactory, $rootScope, ngNotify, $localStorage, $state) {
 
-    function initialData(objDesMat) {
 
-		console.log(objDesMat);
+    function initialData(objDesMat) {
+       console.log(options);
       vm.articulos_ = [];
       DescargarMaterialFactory.GetMuestra_Detalle_Bitacora(objDesMat.SctTecnico.CLV_TECNICO, vm.IAlma).then(function (data) {
         vm.Material = data.GetMuestra_Detalle_Bitacora_2ListResult;
-
         DescargarMaterialFactory.GetSoftv_GetDescargaMaterialEstaPagado(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
           vm.pagado = data.GetSoftv_GetDescargaMaterialEstaPagadoResult.Pagado
           DescargarMaterialFactory.GetSoftv_DimeSiTieneBitacora(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
             console.log(data);
-            if (data.GetSoftv_DimeSiTieneBitacoraResult == null) {
-
-
-            } else {
-
+            if (data.GetSoftv_DimeSiTieneBitacoraResult == null) {} else {
               vm.No_Bitacora = data.GetSoftv_DimeSiTieneBitacoraResult.NoBitacora;
-
               DescargarMaterialFactory.GetDescargaMaterialArticulosByIdClvOrden(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
                 console.log(data.GetGetDescargaMaterialArticulosByIdClvOrdenListResult);
                 var art = data.GetGetDescargaMaterialArticulosByIdClvOrdenListResult;
-
                 var ObjDescargaMat = {};
                 ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
                 ObjDescargaMat.ClvOrden = options.ClvOrden;
                 ObjDescargaMat.IdAlmacen = vm.IAlma;
-                ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
+                ObjDescargaMat.Accion = (vm.No_Bitacora == 0) ? 'Agregar' : 'Modificar';
                 ObjDescargaMat.IdBitacora = vm.No_Bitacora;
                 ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
@@ -43,62 +36,35 @@ angular
                   Articulos.MetrajeInicioExt = art[a].METRAJEINICIOEXTERIOR;
                   Articulos.MetrajeFinExt = art[a].METRAJEFINEXTERIOR;
                   vm.articulos_.push(Articulos);
-
                 }
 
                 DescargarMaterialFactory.GetDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
-                  //console.log(data.GetDescargaMaterialArtResult[0].NoArticulo);
-                  console.log(data);
                   vm.DesMatArt = data.GetDescargaMaterialArtResult;
                 })
-
-
-
               });
-
             }
           });
 
         });
 
       });
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     function BuscarNombreArticulo() {
-
       if (vm.SlctMaterial.catTipoArticuloClave > 0) {
         DescargarMaterialFactory.GetMuestra_Descripcion_Articulo_2List(options.SctTecnico.CLV_TECNICO, vm.SlctMaterial.catTipoArticuloClave, vm.IAlma).then(function (data) {
           vm.DescripcionArticulo = data.GetMuestra_Descripcion_Articulo_2ListResult;
           vm.SlctArticulo.IdArticulo = "";
         });
 
-      } else {
-        console.log("No");
       }
-
-
     }
 
     function BuscarTipoArticulo() {
-
       DescargarMaterialFactory.GetSoftv_ObtenTipoMaterial(catUnidadClave, Tipo, Articulo, vm.SlctArticulo.IdArticulo).then(function (data) {
         vm.TipoArticulo = data.GetSoftv_ObtenTipoMaterialResult.Tipo;
-
         if (vm.TipoArticulo == 'Metros') {
           vm.MostrarCD = false;
-
           vm.MostrarMII = true;
           vm.MostrarMIE = true;
           vm.MostrarMFI = true;
@@ -106,7 +72,6 @@ angular
           vm.MostrarTM = true;
         } else if (vm.TipoArticulo == 'Piezas') {
           vm.MostrarCD = true;
-
           vm.MostrarMII = false;
           vm.MostrarMIE = false;
           vm.MostrarMFI = false;
@@ -123,8 +88,6 @@ angular
       if (vm.SlctArticulo != undefined && vm.SlctArticulo.IdArticulo > 0) {
         DescargarMaterialFactory.GetSoftv_ExistenciasTecnico(vm.SlctArticulo.IdArticulo, options.SctTecnico.CLV_TECNICO, vm.IAlma).then(function (data) {
           vm.Existe = data.GetSoftv_ExistenciasTecnicoResult.Existe;
-
-
           DescargarMaterialFactory.GetSoftv_ObtenTipoMaterial(catUnidadClave, Tipo, Articulo, vm.SlctArticulo.IdArticulo).then(function (data) {
             vm.TipoArticulo = data.GetSoftv_ObtenTipoMaterialResult.Tipo;
             var vCD = 0;
@@ -135,7 +98,6 @@ angular
             var TArt = false;
 
             if (vm.TipoArticulo == 'Metros') {
-
               if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
                 vm.MetrajeIE != undefined && vm.MetrajeIE > 0 &&
                 vm.MetrajeFI != undefined && vm.MetrajeFI > 0 &&
@@ -195,7 +157,7 @@ angular
                 ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
                 ObjDescargaMat.ClvOrden = options.ClvOrden;
                 ObjDescargaMat.IdAlmacen = vm.IAlma;
-                ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
+                ObjDescargaMat.Accion = (vm.No_Bitacora == 0) ? 'Agregar' : 'Modificar';
                 ObjDescargaMat.IdBitacora = vm.No_Bitacora;
                 ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
@@ -239,26 +201,21 @@ angular
 
     function ok() {
       if (vm.articulos_.length > 0) {
-       var ObjDescargaMat = {};
+        var ObjDescargaMat = {};
         ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
         ObjDescargaMat.ClvOrden = options.ClvOrden;
         ObjDescargaMat.IdAlmacen = vm.IAlma;
-        ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
+        ObjDescargaMat.Accion = (vm.No_Bitacora == 0) ? 'Agregar' : 'Modificar';
         ObjDescargaMat.IdBitacora = vm.No_Bitacora;
         ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
         console.log(ObjDescargaMat);
         DescargarMaterialFactory.GetAddDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
           console.log(data);
-          DescargarMaterialFactory.GetGRABAtblDescargaMaterialCableIACTV(options.ClvOrden).then(function(data){
-          ngNotify.set('La descarga de material se ha guardado correctamente','success');
-          cancel();
+          DescargarMaterialFactory.GetGRABAtblDescargaMaterialCableIACTV(options.ClvOrden).then(function (data) {
+            ngNotify.set('La descarga de material se ha guardado correctamente', 'success');
+            cancel();
+          });
         });
-        
-        });
-        
-     
-
-
       } else {
         ngNotify.set('Necesita agregar un artículo primero.', 'error');
       }
@@ -276,7 +233,7 @@ angular
       ObjDescargaMat.IdTecnico = options.SctTecnico.CLV_TECNICO;
       ObjDescargaMat.ClvOrden = options.ClvOrden;
       ObjDescargaMat.IdAlmacen = vm.IAlma;
-      ObjDescargaMat.Accion = (vm.No_Bitacora==0)?'Agregar':'Modificar';
+      ObjDescargaMat.Accion = (vm.No_Bitacora == 0) ? 'Agregar' : 'Modificar';
       ObjDescargaMat.IdBitacora = vm.No_Bitacora;
       ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
 
@@ -328,9 +285,8 @@ angular
     vm.MostrarMFE = false;
     vm.MostrarTM = false;
     vm.articulos_ = [];
-
-
-
+    vm.Detalle = options.Detalle;
+    console.log(options);
     //vm.Tipo = options.Tipo_Descargar;
     initialData(options);
 

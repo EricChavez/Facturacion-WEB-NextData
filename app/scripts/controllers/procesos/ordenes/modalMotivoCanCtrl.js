@@ -14,9 +14,7 @@
     vm.Titulo = 'Motivo de la cancelación';
 
     this.$onInit = function () {
-      alert('modal');
-
-      ordenesFactory.GetConMotCanList().then(function (data) {
+            ordenesFactory.GetConMotCanList().then(function (data) {
         vm.motivos = data.GetConMotCanListResult;
       });
 

@@ -15,7 +15,7 @@
 		</header>
 		<div class="tools">
 			<div class="btn-group">
-				<a title="Crear una orden de servicio nueva" class="btn btn-success btn-sm"  ui-sref="home.procesos.ordenNueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
+				<a title="Crear una orden de servicio nueva" class="btn btn-success btn-sm"  ui-sref="home.procesos.ordenNueva">CREAR NUEVA ORDEN </a>
 
 			</div>
 		</div>
@@ -23,10 +23,10 @@
 	<div class="card-body">
 
 		<div class="panel-group" id="accordion3">
-			<div class="card panel">
+			<div class="card panel" style="font-size: 11px;">
 				<div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
 				 aria-expanded="false">
-					<header><i class="fa fa-search"></i> orden de servicio</header>
+					<header><i class="fa fa-search"></i> Filtros de busqueda</header>
 					<div class="tools">
 						<a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
 					</div>
@@ -35,9 +35,9 @@
 					<div class="panel-body">
 						<uib-tabset active="active">
 							<uib-tab index="0">
-								<uib-tab-heading><i class="md md-receipt"></i> Detalles</uib-tab-heading>
+								<uib-tab-heading><i class="md md-receipt"></i> Contrato y status</uib-tab-heading>
 								<br>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<label class="text-muted">Plaza</label>
 									<select id="idplaza" ng-change="$ctrl.cambioPlaza()" class="form-control input-sm" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
 								</div>
@@ -63,14 +63,27 @@
 										</div>
 										<div class="col-md-6">
 											<label class="checkbox-inline checkbox-styled">
-                                                <input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-model="$ctrl.auto"><span>Proceso Automático</span>
+                                                <input type="checkbox" name="inlineRadioOptions" ng-value="1" ng-change="$ctrl.buscarStatus()" ng-model="$ctrl.auto"><span>Proceso Automático</span>
                                             </label>
 										</div>
 									</div>
 								</div>
+								<div class="col-md-5">
+									<div class="col-md-6 form-group">
+										<label># Orden</label>
+										<input type="number" class="form-control input-sm" step="1" min="0" ng-model="$ctrl.orden" ng-change="$ctrl.cambioReporte(1)" placeholder="Orden">
+										<button class="btn btn-xs btn-info" ng-click="$ctrl.buscarOrden()"><i class="fa fa-search"></i> Buscar</button>
+									</div>
+									<div class="col-md-6 form-group">
+										<label>Contrato</label>
+										<input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioReporte(2)" placeholder="El número de contrato ejemplo: (1234-1)">
+										<button class="btn btn-xs btn-info" ng-click="$ctrl.buscarOrden()"><i class="fa fa-search"></i> Buscar</button>
+										
+									</div>
+								</div>	
 							</uib-tab>
 
-							<uib-tab index="1">
+							<!--<uib-tab index="1">
 								<uib-tab-heading><i class="md md-content-paste"></i> Contrato</uib-tab-heading>
 								<br/>
 								<div class="row">
@@ -81,6 +94,7 @@
 									<div class="col-md-4 form-group">
 										<label>Contrato</label>
 										<input type="text" class="form-control input-sm" ng-model="$ctrl.contrato" ng-change="$ctrl.cambioReporte(2)" placeholder="Contrato">
+										<p class="text-muted"><strong>El número de contrato</strong> está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)</p>
 									</div>
 								</div>								
 								<div class="note">
@@ -88,10 +102,10 @@
 								</div>
 								<footer>
 									<p class="text-right">
-										<button class="btn btn-sm btn-info" ng-click="$ctrl.buscarOrden()"><i class="fa fa-search"></i> Buscar</button>
+										<button class="btn btn-xs btn-info" ng-click="$ctrl.buscarOrden()"><i class="fa fa-search"></i> Buscar</button>
 									</p>
 								</footer>
-							</uib-tab>
+							</uib-tab>-->
 
 							<uib-tab index="2">
 								<uib-tab-heading><i class="fa fa-home"></i> Dirección</uib-tab-heading>
@@ -150,7 +164,7 @@
 									</footer>
 								</form>
 							</uib-tab>
-							<uib-tab index="4">
+							<!--<uib-tab index="4">
 								<uib-tab-heading><i></i> Set Up Box</uib-tab-heading>
 								<br>
 								<form ng-submit="$ctrl.buscarSetup()">
@@ -166,7 +180,7 @@
 										</p>
 									</footer>
 								</form>
-							</uib-tab>
+							</uib-tab>-->
 						</uib-tabset>
 					</div>
 					<!-- panel body -->
