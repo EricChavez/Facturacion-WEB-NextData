@@ -5,7 +5,7 @@ angular
 		var states = [{
 				name: 'home',
 				data: {
-					pageTitle: 'BIENVENIDO | SAC WEB',
+					pageTitle: 'BIENVENIDO | softv WEB',
 					permissions: {
 						except: ['anonymous'],
 						options: {
@@ -26,7 +26,7 @@ angular
 				name: 'auth',
 				url: '/auth/?token',
 				data: {
-					pageTitle: 'BIENVENIDO | SAC WEB'
+					pageTitle: 'BIENVENIDO | softv WEB'
 				},
 				views: {
 					'loginview': {
