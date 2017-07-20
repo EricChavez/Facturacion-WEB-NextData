@@ -28,22 +28,22 @@
                   <i class="md md-receipt"></i> Detalle orden
                 </uib-tab-heading>
                 <br/>
-                <div class="col-md-6">
+                <div class="col-md-8">
 
                   <div class="form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <b>Plaza:</b>
                       <select class="form-control input-sm" ng-options=" item.razon_social for item in $ctrl.Plazas track by item.id_compania" ng-model="$ctrl.Plaza" ng-change="$ctrl.CambioPlaza($ctrl.Plaza);">
                                               <option value="">Selecciona plaza</option>
                                                </select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <b>Servicio:</b>
                       <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-change="$ctrl.CambioServicio();" ng-options=" item.Concepto for item in $ctrl.Servicios track by item.Clv_TipSerPrincipal">
                                               <option value="">Selecciona servicio</option>
                                                </select>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                       <b>Status:</b>
                       <select class="form-control input-sm" ng-model="$ctrl.Status" ng-change="$ctrl.CambioStatus();" ng-options=" item.Nombre for item in $ctrl.LosStatus track by item.Clave">
                                                <option value="">Selecciona</option>
@@ -51,18 +51,18 @@
                                                </select>
                     </div>
 
-                    <div class="col-md-4">
+                <!--    <div class="col-md-4">
                       <br>
                       <label class="checkbox-inline checkbox-styled checkbox-info">
                                                                                              <input ng-model="$ctrl.Nivel2.isChecked" type="checkbox" value="option3" checked="" ng-change="$ctrl.CambioNivel()"><span>solo nivel 2</span>
                                                                                          </label>
-                    </div>
+                    </div>-->
                   </div>
 
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
 
 
                   <div class="col-md-6">
@@ -80,7 +80,7 @@
                     <br>
                   </div>
 
-                  <div class="col-md-6">
+              <!--    <div class="col-md-6">
                     
                     <input type="number" class="form-control input-sm" placeholder="Serie de Aparato" ng-model="$ctrl.STB">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporSTB()">Buscar</button>
@@ -89,7 +89,7 @@
                     
                     <input class="form-control input-sm" type="number" placeholder="# de ticket" ng-model="$ctrl.Ticket">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporTicket()">Buscar</button>
-                  </div>
+                  </div>-->
                 </div>
               </uib-tab>
 
@@ -177,7 +177,7 @@
               <th>Nombre</th>
               <th>Calle</th>
               <th>Numero</th>
-              <th>No.Ticket</th>
+             
             <!--  <th>Bonificar</th>-->
               <th>Ejecutar</th>
               <th>Opciones</th>
@@ -194,7 +194,7 @@
               <td>{{x.NOMBRE}}</td>
               <td>{{x.CALLE}}</td>
               <td>{{x.NUMERO}}</td>
-              <td>{{x.NoTicket}}</td>
+              
               <!--<td>
                 <button class="btn btn-info btn-xs" ng-click="$ctrl.abrirBonificacion(x)"><i class="fa fa-money"></i> Bonifica</button>
               </td>-->
@@ -202,8 +202,8 @@
                 <a title="Ejecutar reporte" ng-if="x.Status!='E'" ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
               </td>
               <td>
-                <a title="Consultar reporte" type="button" class="btn ink-reaction btn-xs btn-floating-action btn-primary" data-toggle="tooltip" data-placement="top" ui-sref="home.procesos.detallequeja({ id: x.Clv_Queja, contrato: x.Contrato, servicio: x.Clv_TipSer })" data-original-title="Detalle de queja"><i class="md md-content-paste"></i></a>
-                <button title="Eliminar reporte" ng-if="x.Status!='E'" type="button" class="btn ink-reaction btn-xs btn-floating-action btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i></button>
+                <a title="Consultar reporte" type="button" class="btn ink-reaction btn-xs  btn-info" data-toggle="tooltip" data-placement="top" ui-sref="home.procesos.detallequeja({ id: x.Clv_Queja, contrato: x.Contrato, servicio: x.Clv_TipSer })" data-original-title="Detalle de queja"><i class="md md-content-paste"></i> Consulta</a>
+                <button title="Eliminar reporte" ng-if="x.Status!='E'" type="button" class="btn ink-reaction btn-xs  btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i> Eliminar</button>
               </td>
 
 

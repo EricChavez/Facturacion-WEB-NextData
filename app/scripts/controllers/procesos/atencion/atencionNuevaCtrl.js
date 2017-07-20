@@ -94,11 +94,13 @@ angular
       options.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
       options.Descripcion = vm.DescripcionProblema;
       options.Solucion = vm.DescripcionSolucion;
-      options.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
+      options.Clv_Trabajo = (vm.Trabajo == undefined || vm.Trabajo == null) ? 0 : vm.Trabajo.CLV_TRABAJO;
       options.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
       options.clv_llamada = vm.NumeroLlamada;
-      options.clvProblema = vm.Problema.clvProblema;
+      options.clvProblema = (vm.Problema == undefined || vm.Problema == null) ? 0 : vm.Problema.clvProblema;
       options.clv_queja = 0;
+
+      console.log(options);
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -169,9 +171,9 @@ angular
       vm.Numero = '';
       vm.Colonia = '';
       vm.Ciudad = '';
-      vm.Telefono='';
-      vm.GlobalContrato=null;
-      vm.ServiciosCliente='';
+      vm.Telefono = '';
+      vm.GlobalContrato = null;
+      vm.ServiciosCliente = '';
       vm.MuestraMensajeQueja = false;
     }
 
@@ -189,7 +191,7 @@ angular
         'CLV_TIPSER': vm.selectedServicio.Clv_TipSerPrincipal,
         'TipoAtencion': atencion,
         'ClvProblema': vm.Problema.clvProblema
-      }     
+      }
 
       atencionFactory.AddLLamadasdeInternet(parametros).then(function (data) {
         vm.NumeroLlamada = data.AddLLamadasdeInternetResult;
@@ -305,7 +307,7 @@ angular
 
               });
             } else {
-            
+
               LimpiaInformacion();
               ngNotify.set('El cliente no tiene contratado el servicio, seleccione otro tipo por favor.', 'error');
             }
@@ -377,10 +379,10 @@ angular
 
     function CancelaReporte() {
       $state.go('home.procesos.atencion');
-       ngNotify.set('Se ha guardado la llamada, número de atención telefónica #' + vm.NumeroLlamada, {
-            position: 'bottom',
-            sticky: true
-          });
+      ngNotify.set('Se ha guardado la llamada, número de atención telefónica #' + vm.NumeroLlamada, {
+        position: 'bottom',
+        sticky: true
+      });
     }
 
     var vm = this;
