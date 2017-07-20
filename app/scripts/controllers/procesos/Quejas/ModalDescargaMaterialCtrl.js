@@ -218,10 +218,11 @@ angular
         ObjDescargaMat.TipoDescarga = options.Tipo_Descargar;
         DescargarMaterialFactory.GetAddDescargaMaterialArt(ObjDescargaMat, vm.articulos_).then(function (data) {
           console.log(data);
-          DescargarMaterialFactory.GetGRABAtblDescargaMaterialCableIACTV(options.ClvOrden).then(function (data) {
-            ngNotify.set('La descarga de material se ha guardado correctamente', 'success');
-            cancel();
-          });
+          DescargarMaterialFactory.GetchecaBitacoraTecnico(options.ClvOrden, options.Tipo_Descargar).then(function(data){ 
+              vm.DesMatRes = data.GetchecaBitacoraTecnicoResult; 
+              ngNotify.set('Se guardó exitosamente la bitácora #' + vm.DesMatRes.idBitacora + ' para ' + msj + ' #' + options.ClvOrden,'success'); 
+              cancel(); 
+            }); 
         });
       } else {
         ngNotify.set('Necesita agregar un artículo primero.', 'error');
@@ -285,6 +286,11 @@ angular
     vm.MostrarTM = false;
     vm.articulos_ = [];
     vm.Detalle = options.Detalle;
+    if(options.Tipo_Descargar == 'Q'){ 
+      var msj = 'el Reporte';
+    }else if(options.Tipo_Descargar == 'O'){
+      var msj = 'la Orden'
+    }
     console.log(options);
     //vm.Tipo = options.Tipo_Descargar;
     initialData(options);
