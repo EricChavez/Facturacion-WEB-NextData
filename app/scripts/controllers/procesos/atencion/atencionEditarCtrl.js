@@ -168,10 +168,7 @@ angular
         ngNotify.set('Seleccione la clasificación del problema', 'error');
         return;
       }
-      if (vm.Trabajo == null) {
-        ngNotify.set('Seleccione la solución  del problema', 'error');
-        return;
-      }
+      
       if (vm.clv_queja == 0) {
         vm.PanelCaptura = true;
         GetclasificacionQuejas();
