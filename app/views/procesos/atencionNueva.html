@@ -29,11 +29,10 @@
 
     </header>
     <div class="tools">
-
       <button title="Guardar atención telefónica" class="btn btn-info btn-sm" ng-show="$ctrl.MostrarGuardar" ng-click="$ctrl.GuardarLlamada()">Guardar llamada</button>
       <button title="Guardar cambios" class="btn btn-warning btn-sm" ng-show="$ctrl.MostrarEditar" ng-click="$ctrl.EditaLlamada()">Editar llamada</button>
-      <button title="Cancelar cambios" type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
-
+      <button title="Cancelar cambios" type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button" ng-show="$ctrl.ShowDetalle">Cancelar</button>
+      <button title="Regresar a atenciones telefónicas" type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button" ng-show="$ctrl.ShowDetalleOnly">Salir</button>
     </div>
   </div>
   <div class="card-body">
@@ -83,15 +82,11 @@
           </div>
         </div>
       </div>
-
-
-
     </div>
+
     <div class="col-md-12 style-warning text-center" style="margin-bottom: 10px;" ng-show="$ctrl.MuestraMensajeQueja">
         <h4>{{$ctrl.MensajeQueja}}</h4>
-
     </div>
-
 
     <div class="col-md-12">
       <div class="col-md-4">
@@ -119,74 +114,62 @@
           </div>
         </div>
 
-
-
-
         <div class="col-md-12">
-
           <strong class="" style="margin-top: 10px;">Tipo de atención:</strong>
         </div>
         <div class="col-md-12">
           <label class="radio-inline radio-styled radio-warning">
-											<input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" value="T"><span>Via Telefónica</span>
-										</label>
+					  <input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" ng-disabled="$ctrl.BloquearElementosDetalle" value="T"><span>Via Telefónica</span>
+					</label>
           <label class="radio-inline radio-styled radio-warning">
-										<input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" value="S"><span>En el Sitio</span>
-									</label>
+					  <input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" ng-disabled="$ctrl.BloquearElementosDetalle" value="S"><span>En el Sitio</span>
+					</label>
         </div>
       </div>
 
       <div class="col-md-5">
-
         <div class="row">
           <strong style="margin-top: 10px;">Clasificación del Problema:</strong>
-          <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.clasificacionProblemas track by item.clvProblema">
-											  <option value=""  ng-disabled="$ctrl.BloquearElementos">selecciona</option>
-											  </select>
-
+          <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.clasificacionProblemas track by item.clvProblema" ng-disabled="$ctrl.BloquearElementosDetalle">
+					  <option value="">selecciona</option>
+					</select>
         </div>
         <br>
         <div class="row">
           <strong>Reporte del Cliente:</strong>
-          <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente " ng-model="$ctrl.DescripcionProblema"></textarea>
-
+          <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente " ng-model="$ctrl.DescripcionProblema" ng-disabled="$ctrl.BloquearElementosDetalle"></textarea>
         </div>
         <br>
         <div class="row">
           <strong style="margin-top: 10px;">Clasificación de la Solución:</strong>
-          <select class="form-control input-sm" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
-												 <option value=""  disabled="true">selecciona</option>
-											  </select>
-
+          <select class="form-control input-sm" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO" ng-disabled="$ctrl.BloquearElementosDetalle">
+					  <option value="">selecciona</option>
+					</select>
         </div>
         <br>
         <div class="row">
-
           <strong style="margin-top: 10px;">Problema Real:</strong>
-          <textarea class="form-control input-sm" placeholder="Describe brevemente la solución del problema" ng-model="$ctrl.DescripcionSolucion"></textarea>
-
+          <textarea class="form-control input-sm" placeholder="Describe brevemente la solución del problema" ng-model="$ctrl.DescripcionSolucion" ng-disabled="$ctrl.BloquearElementosDetalle"></textarea>
         </div>
-
       </div>
 
-
-
       <div class="col-md-3">
-       <div class="col-md-12">
-        <button title="Generar reporte" type="button" style="font-size: 10px;" class="btn btn-danger btn-block" ng-click="$ctrl.generaReporte()"><i class="fa fa-flag"></i> Generar Reporte</button>
-        <button title="Consultar historial de pagos" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block"
-          ng-click="$ctrl.abrirPagos()"><i class="fa fa-money"></i> Historial de Pagos</button>
-        <button title="Consultar historial de reportes" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block"
-          ng-click="$ctrl.openHistorial()"><i class="fa fa-clock-o
-					"></i> Historial Reportes</button>
-        <button title="Consultar detalle de cobro" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block"
-          ng-click="$ctrl.abrirDetalleCobro();"><i class="fa fa-credit-card
-					"></i> Consultar Cobro</button>
-       </div>
-
-
-        <div class="col-md-12" ng-show="$ctrl.PanelCaptura">
-          <h3 class="text-danger"><i class="fa fa-flag"></i> Generación de reporte  </h3>
+        <div class="col-md-12">
+          <button title="Generar reporte" type="button" style="font-size: 10px;" class="btn btn-danger btn-block" ng-click="$ctrl.generaReporte()" ng-show="$ctrl.ShowDetalle">
+            <i class="fa fa-flag"></i> Generar Reporte
+          </button>
+          <button title="Consultar historial de pagos" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirPagos()">
+            <i class="fa fa-money"></i> Historial de Pagos
+          </button>
+          <button title="Consultar historial de reportes" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.openHistorial()">
+            <i class="fa fa-clock-o"></i> Historial Reportes
+          </button>
+          <button title="Consultar detalle de cobro" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirDetalleCobro();">
+              <i class="fa fa-credit-card"></i> Consultar Cobro
+          </button>
+      </div>
+      <div class="col-md-12" ng-show="$ctrl.PanelCaptura">
+      <h3 class="text-danger"><i class="fa fa-flag"></i> Generación de reporte  </h3>
            
             
               <label>Departamento Responsable</label>

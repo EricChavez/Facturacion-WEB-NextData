@@ -389,7 +389,6 @@ angular
         'TipoSer': obje.servicio,
         'Op': obje.op
       };
-      console.log("Parametros: ",Parametros);
 
       var config = {
         headers: {
@@ -482,7 +481,6 @@ angular
         'clv_llamada': objeto.clv_llamada,
         'clvProblema': objeto.clvProblema
       };
-      console.log("AgrgaQueja: ",parametros);
       $http.post(globalService.getUrl() + paths.AgregaQueja, JSON.stringify({
         'objQuejas': parametros
       }), config).then(function (response) {
@@ -512,7 +510,6 @@ angular
         'Turno': objeto.Turno,
         'ClvProblema': objeto.ClvProblema
       };
-      console.log("ActualizaLlamada: ", parametros);
       $http.post(globalService.getUrl() + paths.ActualizaLlamada, JSON.stringify({
         'objLLamadasdeInternet': parametros
       }), config).then(function (response) {

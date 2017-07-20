@@ -21,13 +21,14 @@
   <form angular-validator-submit="$ctrl.Ejecutaqueja()" name="QuejaForm" novalidate angular-validator>
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
-        <strong style="font-weight:bold; border:none; margin-left:10px;">Ejecutar Reportes</strong>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">{{ $ctrl.Titulo}}</strong>
         <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos</a>><a href="#" class="paginaActiva">Reportes</a></small>
 
       </header>
       <div class="tools">
-        <button title="Guardar cambios" type="submit" class="btn btn-success btn-sm">Guardar</button>
-        <button title="Cancelar cambios" type="button" ui-sref="home.procesos.reportes" class="btn btn-default-bright btn-sm" name="button">Cancelar</button>
+        <button title="Guardar cambios" type="submit" class="btn btn-success btn-sm" ng-show="$ctrl.ShowEje">Guardar</button>
+        <button title="Cancelar cambios" type="button" ui-sref="home.procesos.reportes" class="btn btn-default-bright btn-sm" name="button" ng-show="$ctrl.ShowEje">Cancelar</button>
+        <button title="Regresar a reportes" type="button" ui-sref="home.procesos.reportes" class="btn btn-default-bright btn-sm" name="button" ng-show="$ctrl.ShowDet">Salir</button>
       </div>
     </div>
 
@@ -82,17 +83,17 @@
             </div>
             <div class="col-md-3">
               <label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" value="S" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.blockPendiente" ng-change="$ctrl.CambiaEstatus()"><span>Proceso</span>
+						<input type="radio" name="inlineRadioOptions" value="S" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.BloqElemnt" ng-change="$ctrl.CambiaEstatus()"><span>Proceso</span>
 					</label>
             </div>
             <div class="col-md-3">
               <label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" value="E" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.blockEjecutada" ng-change="$ctrl.CambiaEstatus()"><span>Ejecutada</span>
+						<input type="radio" name="inlineRadioOptions" value="E" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.BloqElemnt" ng-change="$ctrl.CambiaEstatus()"><span>Ejecutada</span>
 					</label>
             </div>
             <div class="col-md-3">
               <label class="radio-inline radio-styled">
-						<input type="radio" name="inlineRadioOptions" value="V" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.blockVista" ng-change="$ctrl.CambiaEstatus()"><span>Visita</span>
+						<input type="radio" name="inlineRadioOptions" value="V" ng-model="$ctrl.Estatus" ng-disabled="$ctrl.BloqElemnt" ng-change="$ctrl.CambiaEstatus()"><span>Visita</span>
 					</label>
             </div>
           </div>
@@ -113,8 +114,7 @@
             </p>
           </div>
           <div class="col-md-12">
-            <b style="font-size: 14px;
-    color: #06599a;"><i class="md md-settings-remote"></i> Servicios asignados</b><br>
+            <b style="font-size: 14px;color: #06599a;"><i class="md md-settings-remote"></i> Servicios asignados</b><br>
             <div class="card wrapper scrollDiv2" style="background: #DDEAE9">
               <p style="font-size: 10px;" class="text-center"><span ng-repeat="x in $ctrl.servicioscli">{{ x.Servicio }} <br></span></p>
             </div>
@@ -129,8 +129,7 @@
 
         <div class="col-md-4 " style="font-size:12px;">
 
-          <b style="font-size: 14px;
-    color: #06599a;"><i class="md md-access-time"></i> Fechas de:</b><br>
+          <b style="font-size: 14px; color: #06599a;"><i class="md md-access-time"></i> Fechas de:</b><br>
           <div class="col-md-5 "><b>Fecha solicitud</b></div>
           <div class="col-md-4">
             <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaSolicitud" ng-disabled="true" placeholder="DD/MM/YYYY"
@@ -242,10 +241,16 @@
 
           <div class="col-md-12">
             <div class="col-md-6">
-
               <b>Clasificación del problema</b>
-              <select class="form-control input-sm" ng-model="$ctrl.Problema" ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"
-                name="problema" required-message="'Este campo es obligatorio.'" required validate-on="dirty"></select>
+              <select
+                class="form-control input-sm" 
+                ng-model="$ctrl.Problema" 
+                ng-options="item as item.descripcion for item in $ctrl.Problemas track by item.clvProblema"
+                name="problema" 
+                required-message="'Este campo es obligatorio.'" 
+                required validate-on="dirty"
+                ng-disabled="$ctrl.BloqElemnt">
+              </select>
             </div>
             <div class="col-md-6">
               <b> Prioridad</b>
@@ -269,8 +274,14 @@
           <div class="col-md-12">
             <div class="col-md-6">
               <b>Tipo solución</b>
-              <select class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" required validate-on="dirty"
-                ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO">
+              <select
+                class="form-control input-sm"
+                name="solucion"
+                required-message="'Este campo es obligatorio.'"
+                required validate-on="dirty"
+                ng-model="$ctrl.Trabajo"
+                ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO"
+                ng-disabled="$ctrl.BloqElemnt">
               </select>
             </div>
             <!--<div class="col-md-4">
