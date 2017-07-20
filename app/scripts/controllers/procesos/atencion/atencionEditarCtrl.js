@@ -19,9 +19,6 @@ angular
           param.servicio = datos.CLV_TIPSER;
           param.op = 0;
 
-
-
-
           atencionFactory.buscarCliente(param).then(function (data) {
             var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
             var contrato = detalle.ContratoBueno;
@@ -179,20 +176,11 @@ angular
         vm.PanelCaptura = true;
         GetclasificacionQuejas();
         GetprioridadQueja();
-
       } else {
         abrirDetalleQueja();
         ngNotify.set('No se puede realizar una queja, ya que La llamada ya presenta una queja.', 'error');
-
       }
-
-
-
-
-
-
     }
-
 
     function abrirDetalleCobro() {
       if (vm.GlobalContrato == null) {
@@ -335,6 +323,8 @@ angular
     var vm = this;
     vm.BloquearElementos = true;
     vm.showDatosCliente = true;
+    vm.ShowDetalle = true;
+	  vm.ShowDetalleOnly = false;
     vm.titulo = "Edita atención telefónica";
     vm.NumeroLlamada = $stateParams.id;
     vm.openHistorial = openHistorial;

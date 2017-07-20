@@ -387,7 +387,9 @@ angular
     initialData();
     vm.abrirPagos = abrirPagos;
     vm.tipoAtencion = 'T';
+    vm.ShowDetalle = true;
     vm.showDatosCliente = true;
+    vm.ShowDetalleOnly = false;
     vm.EnterContrato = EnterContrato;
     vm.CambioServicio = CambioServicio;
     vm.generaReporte = generaReporte;

@@ -46,10 +46,10 @@ angular
       {
         name: 'home.procesos.atencionDetalle',
         data: {
-          pageTitle: 'SOFTV | ATENCIÓN',
+          pageTitle: 'SOFTV | DETALLE ATENCIÓN TELEFÓNICA',
         },
-        url: '/atencion/detalle',
-        templateUrl: 'views/procesos/atencionDetalle.html',
+        url: '/atencion/detalle/:id',
+        templateUrl: 'views/procesos/atencionNueva.html',
         controller: 'AtencionDetalleCtrl',
         controllerAs: '$ctrl'
       },
@@ -127,6 +127,16 @@ angular
         url: '/quejas/ejecuta/:id/:contrato/:servicio',
         templateUrl: 'views/procesos/QuejaEjecuta.html',
         controller: 'QuejaEjecutaCtrl',
+        controllerAs: '$ctrl'
+      },
+      {
+        name: 'home.procesos.detallequeja',
+        data: {
+          pageTitle: 'SOFTV | DETALLE REPORTE'
+        },
+        url: '/quejas/detalle/:id/:contrato/:servicio',
+        templateUrl: 'views/procesos/QuejaEjecuta.html',
+        controller: 'QuejaDetalleCtrl',
         controllerAs: '$ctrl'
       }
     ];

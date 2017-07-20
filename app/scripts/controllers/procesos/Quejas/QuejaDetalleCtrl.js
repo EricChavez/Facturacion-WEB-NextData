@@ -1,7 +1,7 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('QuejaEjecutaCtrl', function ($state, ngNotify,DescargarMaterialFactory ,$location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
+  .controller('QuejaDetalleCtrl', function ($state, ngNotify,DescargarMaterialFactory ,$location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
 
     function InitalData() {
       vm.clv_queja = $stateParams.id;
@@ -68,8 +68,8 @@ angular
                   vm.Fechavisita1 = fvisita1[0];
                   vm.Horavisita1 = getTime(detqueja.Visita1);
 
-                  vm.FVisita3 = true;
-                  vm.FVisita2 = true;
+                  /*vm.FVisita3 = true;
+                  vm.FVisita2 = true;*/
                 }
                 if (detqueja.Visita2 != null) {
 
@@ -77,16 +77,16 @@ angular
                   vm.Fechavisita2 = fvisita2[0];
                   vm.Horavisita2 = getTime(detqueja.Visita2);
 
-                  vm.FVisita3 = true;
-                  vm.FVisita1 = true;
+                  /*vm.FVisita3 = true;
+                  vm.FVisita1 = true;*/
                 }
                 if (detqueja.Visita3 != null) {
 
                   var fvisita3 = detqueja.Visita3.split(' ');
                   vm.Fechavisita3 = fvisita3[0];
                   vm.Horavisita3 = getTime(detqueja.Visita3);
-                  vm.FVisita1 = true;
-                  vm.FVisita2 = true;
+                  /*vm.FVisita1 = true;
+                  vm.FVisita2 = true;*/
                 }
                 if (detqueja.EjecucuionReal != null) {
 
@@ -103,7 +103,7 @@ angular
                 vm.Visita = detqueja.Visita;
                 vm.Clv_status = detqueja.Status;
                 vm.Estatus = 'E';
-                Bloqueo(true);
+                //Bloqueo(true);
 
                DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_queja,'Q').then(function(data){
                 if(data.GetchecaBitacoraTecnicoResult!=null){
@@ -247,7 +247,7 @@ angular
 
     }
 
-    function Bloqueo(aplicabloqueo) {
+    /*function Bloqueo(aplicabloqueo) {
       if (vm.Estatus == 'E') {
         vm.FEjecucion = false;
         vm.FVisita1 = true;
@@ -306,11 +306,11 @@ angular
         vm.Ivisita3 = 'input-normal';
         vm.Iproceso = 'input-yellow';
       }
-    }
+    }*/
 
-    function CambiaEstatus() {
+    /*function CambiaEstatus() {
       Bloqueo();
-    }
+    }*/
 
     function Ejecutaqueja() {
       console.log("F2: " + vm.Fechavisita2);
@@ -494,7 +494,7 @@ angular
       Tecnico.CLV_TECNICO =vm.Tecnico.clv_Tecnico;
       Tecnico.Nombre=vm.Tecnico.Nombre;
       var options = {};
-      options.Detalle = false;
+      options.Detalle=false;
       options.ClvOrden = vm.clv_queja;
       options.ClvBitacora=vm.idBitacora;
       options.SctTecnico = Tecnico;
@@ -520,19 +520,24 @@ angular
     var vm = this;
    
     InitalData();
-    vm.Titulo = 'Ejecutar Reporte';
-    vm.ShowEje = true;
-    vm.ShowDet = false;
-    vm.BloqElemnt = false;
+    vm.Titulo = 'Detalle Reporte';
+    vm.ShowEje = false;
+    vm.ShowDet = true;
+    vm.BloqElemnt = true;
+    vm.FEjecucion = true;
+    vm.FVisita1 = true;
+    vm.FVisita2 = true;
+    vm.FVisita3 = true;
+    vm.FProceso = true;
+    vm.BlockTecnico = true;
     vm.abrirBonificacion = abrirBonificacion;
-    vm.CambiaEstatus = CambiaEstatus;
     vm.Ejecutaqueja = Ejecutaqueja;
     vm.DescargaMaterial = DescargaMaterial;
     vm.MuestraAgenda = MuestraAgenda;
     vm.Iprioridad = true;
     vm.IDetProblema = true;
     vm.IClasproblema = true;
-    vm.Iprobreal = false;
+    vm.Iprobreal = true;
     vm.Iobser = true;
     vm.IEstatus = true;
     vm.idBitacora=0;
