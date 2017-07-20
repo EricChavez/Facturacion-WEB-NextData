@@ -21,8 +21,8 @@
   <form angular-validator-submit="$ctrl.Ejecutaqueja()" name="QuejaForm" novalidate angular-validator>
     <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
       <header>
-        <strong style="font-weight:bold; border:none; margin-left:10px;">{{ $ctrl.Titulo}}</strong>
-        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos</a>><a href="#" class="paginaActiva">Reportes</a></small>
+        <strong style="font-weight:bold; border:none; margin-left:10px;">{{ $ctrl.Titulo}} #{{ $ctrl.clv_queja }}</strong>
+        <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Procesos</a>><a href="#" class="paginaActiva">Reporte  #{{ $ctrl.clv_queja }}</a></small>
 
       </header>
       <div class="tools">
@@ -50,9 +50,7 @@
               <small><b># Contrato:</b></small>
             </div>
             <div class="col-md-3">
-
               <input type="text" disabled placeholder="No. contrato" class="form-control input-sm" ng-model="$ctrl.contrato" name="contrato">
-
             </div>
 
           </div>

@@ -90,7 +90,7 @@
         <td> {{D.Tecnico}} </td>
         <td> {{D.metrajeInicio}} </td>
         <td> {{D.metrajeFin}} </td>
-        <td> <button title="Eliminar artículo" class="btn btn-xs btn-danger " ng-click="ctrl.EliminarArticulo(D.Clave)"><i class="fa fa-trash"></i> Eliminar</button> </td>
+        <td> <button title="Eliminar artículo" class="btn btn-xs btn-danger " ng-click="ctrl.EliminarArticulo(D.Clave)" ng-disabled="ctrl.Detalle"><i class="fa fa-trash"></i> Eliminar</button> </td>
       </tbody>
     </table>
   </div>
