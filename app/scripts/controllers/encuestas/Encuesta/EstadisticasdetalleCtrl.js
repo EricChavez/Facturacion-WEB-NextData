@@ -81,7 +81,7 @@ function EstadisticasdetalleCtrl($uibModal, $rootScope, $stateParams, ngNotify, 
 
   function printDiv(divName) {
     var printContents = document.getElementById(divName).innerHTML;
-    var popupWin = window.open('', '_blank', 'width=300,height=300');
+    var popupWin = window.open('', '_blank', 'width=600,height=600');
     popupWin.document.open();
     popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</body></html>');
     popupWin.document.close();

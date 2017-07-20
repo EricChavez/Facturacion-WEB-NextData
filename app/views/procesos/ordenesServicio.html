@@ -216,7 +216,7 @@
 							<td>{{ x.CALLE }}</td>
 							<td>#{{ x.NUMERO}}</td>
 							<td>
-								<button ui-sref="home.procesos.ordendetalle({ id: x.Clv_Orden})" title="Consultar orden de servicio" class="btn ink-reaction btn-xs btn-info" ><i class="fa fa-eye"></i> Detalle</button>
+								<button ui-sref="home.procesos.ordendetalle({ id: x.Clv_Orden})" title="Consultar orden de servicio" class="btn ink-reaction btn-xs btn-info" ><i class="fa fa-eye"></i> COnsulta</button>
 								<a title="Ejecutar orden de servicio" ng-if="x.STATUS !='E'" ng-click="$ctrl.ejecuta(x.Clv_Orden)" class="btn ink-reaction btn-xs btn-warning"><i class="md md-launch"></i> Ejecutar</a>
 							</td>
 						</tr>
