@@ -11,7 +11,6 @@ angular
 					vm.selectedServicio = vm.servicios[0];
 
 					atencionFactory.getUsuarios().then(function (data) {
-						console.log(data);
 						vm.usuarios = data.GetMUESTRAUSUARIOSListResult;
 						vm.selectedUsuario = vm.usuarios[0];
 						var obj = {
@@ -31,7 +30,6 @@ angular
 						};
 						atencionFactory.buscarAtencion(obj).then(function (data) {
 							vm.atenciones = data.GetuspBuscaLLamadasDeInternetListResult;
-							console.log(vm.atenciones);
 							if (vm.atenciones.length == 0) {
 								vm.sinRegistros = true;
 								vm.conRegistros = false;
@@ -141,7 +139,7 @@ angular
 		function buscarContrato() {
 
 			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato))) {
-				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guion intermedio p.e. (1234-1)', 'primary');
 				vm.contrato = "";
 			} else {
 				if (vm.selectedServicio == undefined || vm.selectedServicio == false) {

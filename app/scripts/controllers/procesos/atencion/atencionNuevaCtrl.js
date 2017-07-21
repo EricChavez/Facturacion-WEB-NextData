@@ -43,7 +43,7 @@ angular
 
     function abrirPagos() {
       if (vm.GlobalContrato == null) {
-        ngNotify.set('Establezca el contrato del cliente para obtener información', 'error');
+        ngNotify.set('Establezca el contrato del cliente para obtener la información', 'error');
         return;
       }
       var modalInstance = $uibModal.open({
@@ -174,7 +174,7 @@ angular
 
     function openHistorial() {
       if (vm.GlobalContrato == null) {
-        ngNotify.set('Establezca el contrato del cliente para Obtener información', 'error');
+        ngNotify.set('Establezca el contrato del cliente para obtener la información', 'error');
         return;
       }
       var modalInstance = $uibModal.open({
@@ -271,17 +271,23 @@ angular
       atencionFactory.getServiciosCliente(contrato).then(function (data) {
         vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
       });
+      vm.tipoAtencion = 'T';
+      vm.Problema = vm.Problema[0];
+      vm.DescripcionProblema = "";
+      vm.Trabajo = vm.Trabajo[0];
+      vm.DescripcionSolucion = "";
     })
 
     function MuestraMensajeQueja() {
       vm.MuestraMensajeQueja = true;
-      vm.MensajeQueja = "El cliente cuenta con una Queja pendiente";
+      vm.MensajeQueja = "El cliente cuenta con un Reporte pendiente"
     }
 
     function DetalleContrato() {
 
+
       if (vm.contratoSelected == null || vm.contratoSelected == '' || !(/^\d{1,9}-\d{1,9}$/.test(vm.contratoSelected))) {
-        ngNotify.set('Coloque un contrato válido', 'error');
+        ngNotify.set('Coloque un contrato válido ej. 15-1', 'error');
         return;
       }
       var res = vm.contratoSelected.split("-");
@@ -299,6 +305,7 @@ angular
         console.log(data);
         if (data.GetuspBuscaContratoSeparado2ListResult.length == 0) {
           ngNotify.set('El cliente no tiene contratado el servicio, seleccione otro tipo por favor.', 'error');
+
           return;
         }
 
@@ -380,7 +387,7 @@ angular
 
     function GuardarLlamada() {
       if (vm.GlobalContrato == null) {
-        ngNotify.set('Establezca el contrato del cliente para generar un reporte .', 'error');
+        ngNotify.set('Establezca el contrato del cliente para generar un reporte.', 'error');
         return;
       }
       if (vm.DescripcionProblema == null || vm.DescripcionProblema == '') {
@@ -473,5 +480,7 @@ angular
     vm.CancelaReporte = CancelaReporte;
     vm.BloquearElementos = false;
     vm.cliente_seleccionado = true;
+
     LimpiaInformacion();
   });
+

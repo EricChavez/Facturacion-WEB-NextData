@@ -1,20 +1,20 @@
 <div class="modal-header">
   <button class="close" aria-label="Close" type="button" ng-click="ctrl.cancel()">×</button>
-  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i>Descarga material técnicos</h4>
+  <h4 class="modal-title"><i class="fa fa-thumb-tack"></i> Descarga material técnicos</h4>
 </div>
 <div class="modal-body" style="padding-top:20px;">
   <div class="row">
     <div class="col-sm-2">
-      <p>No.Bitacora:</p>
+      <p>No. Bitácora:</p>
     </div>
     <div class="col-md-2">
       <input type="text" class="form-control" ng-model="ctrl.No_Bitacora" disabled>
     </div>
   </div>
-
+  <br>
   <div class="row">
     <div class="col-md-4">
-      <p>Clasificación del material</p>
+      <p>Clasificación del material:</p>
       <select 
         class="form-control" 
         name="material" 
@@ -25,11 +25,10 @@
       </select>
     </div>
   </div>
-
+  <br>
   <div class="row">
-
     <div class="col-md-4">
-      <p>Descripción de articulo</p>
+      <p>Descripción de artículo:</p>
       <select 
         class="form-control" 
         name="articulo"
@@ -41,7 +40,7 @@
     </div>
     
     <div class="col-md-4">
-      <p ng-show="ctrl.MostrarCD">cantidad</p>
+      <p ng-show="ctrl.MostrarCD">Cantidad</p>
       <input type="number" class="form-control" ng-disabled="ctrl.Detalle" ng-model="ctrl.CantidadDescarga" ng-show="ctrl.MostrarCD">
     </div>
     
@@ -65,7 +64,7 @@
       <!--<input type="number" class="form-control" ng-model="ctrl.MetrajeFE" ng-show="ctrl.MostrarMFE">-->
     </div>
   </div>
-
+  <br>
   <div class="row">
     <div class="col-md-2">
       <button title="Agregar un artículo" class="btn btn-info btn-sm" ng-disabled="ctrl.Detalle" ng-click="ctrl.AgregarArticulo()">Agregar</button>
@@ -78,7 +77,7 @@
         <th>Clave</th>
         <th>Descripción</th>
         <th>Cantidad</th>
-        <th>Tecnico</th>
+        <th>Técnico</th>
         <th>Metraje inicial int.</th>
         <th>Metraje final int.</th>
         <th>Opciones</th>

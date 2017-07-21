@@ -92,7 +92,7 @@
       <div class="col-md-4">
         <div class="col-md-12">
           <div class="col-md-6">
-            <h4 class="text-danger" style="margin-top: 10px;">#Llamada: {{$ctrl.NumeroLlamada}}</h4>
+            <h4 class="text-danger" style="margin-top: 10px;"># Llamada: {{$ctrl.NumeroLlamada}}</h4>
             
           </div>
           <div class="col-md-6">
@@ -103,7 +103,7 @@
 
         <div class="col-md-12" style="font-size:11px;">
           <p><b>Nombre: </b>{{$ctrl.NombreCliente}}</p>
-          <p><b>Direccion : </b>{{$ctrl.Calle}} <b>#:</b>{{$ctrl.Numero}} Col.{{$ctrl.Colonia}} {{$ctrl.Ciudad}}</p>
+          <p><b>Dirección : </b>{{$ctrl.Calle}} <b>#:</b>{{$ctrl.Numero}} Col.{{$ctrl.Colonia}} {{$ctrl.Ciudad}}</p>
           <p><b>Teléfono: </b>{{$ctrl.Telefono}}</p>
         </div>
 
@@ -119,7 +119,7 @@
         </div>
         <div class="col-md-12">
           <label class="radio-inline radio-styled radio-warning">
-					  <input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" ng-disabled="$ctrl.BloquearElementosDetalle" value="T"><span>Via Telefónica</span>
+					  <input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" ng-disabled="$ctrl.BloquearElementosDetalle" value="T"><span>Vía Telefónica</span>
 					</label>
           <label class="radio-inline radio-styled radio-warning">
 					  <input type="radio" name="atencion" ng-model="$ctrl.tipoAtencion" ng-disabled="$ctrl.BloquearElementosDetalle" value="S"><span>En el Sitio</span>
@@ -137,7 +137,7 @@
         <br>
         <div class="row">
           <strong>Reporte del Cliente:</strong>
-          <textarea class="form-control input-sm" placeholder="Describe brevemente la problematica del cliente " ng-model="$ctrl.DescripcionProblema" ng-disabled="$ctrl.BloquearElementosDetalle"></textarea>
+          <textarea class="form-control input-sm" placeholder="Describe brevemente la problemática del cliente" ng-model="$ctrl.DescripcionProblema" ng-disabled="$ctrl.BloquearElementosDetalle"></textarea>
         </div>
         <br>
         <div class="row">
@@ -167,44 +167,24 @@
           <button title="Consultar detalle de cobro" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirDetalleCobro();">
               <i class="fa fa-credit-card"></i> Consultar Cobro
           </button>
-      </div>
-      <div class="col-md-12" ng-show="$ctrl.PanelCaptura">
-      <h3 class="text-danger"><i class="fa fa-flag"></i> Generación de reporte  </h3>
-           
-            
-              <label>Departamento Responsable</label>
-              <select ng-model="$ctrl.Departamento" class="form-control input-sm" ng-options="item as item.Concepto for item in $ctrl.Departamentos track by item.Clave">
-									  <option value="">Selecciona </option>
-									 </select><br>
-              <label>Tipo de prioridad</label>
-              <select ng-model="$ctrl.Prioridad" class="form-control input-sm" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
-										<option value="">Selecciona </option>
-									</select><br>
-              <button class="btn btn-success btn-sm" ng-click="$ctrl.ValidaOrdenQuejas();">Guardar </button>
-              <button class="btn btn-default-bright btn-sm" ng-click="$ctrl.CancelaReporte();">Cancelar</button>
-           
-
-         
+        </div>
+        <div class="col-md-12" ng-show="$ctrl.PanelCaptura">
+          <h3 class="text-danger"><i class="fa fa-flag"></i> Generación de reporte  </h3>
+          <label>Departamento Responsable</label>
+          <select ng-model="$ctrl.Departamento" class="form-control input-sm" ng-options="item as item.Concepto for item in $ctrl.Departamentos track by item.Clave">
+            <option value="">Selecciona </option>
+          </select><br>
+          <label>Tipo de prioridad</label>
+          <select ng-model="$ctrl.Prioridad" class="form-control input-sm" ng-options="item as item.Descripcion for item in $ctrl.Prioridades track by item.clvPrioridadQueja">
+            <option value="">Selecciona </option>
+          </select><br>
+          <button class="btn btn-success btn-sm" ng-click="$ctrl.ValidaOrdenQuejas();">Guardar </button>
+          <button class="btn btn-default-bright btn-sm" ng-click="$ctrl.CancelaReporte();">Cancelar</button>   
         </div>
       </div>
     </div>
-
-
-
-
   </div>
-
 </div>
-
-
-
-
-
-
-
-
-
-
 </div>
 </div>
 <!--end cardbody-->

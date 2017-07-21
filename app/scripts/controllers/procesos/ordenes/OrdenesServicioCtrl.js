@@ -28,8 +28,7 @@
 
       ordenesFactory.GetValidarNuevo(Clv_Orden).then(function (response) {
         if (response.GetValidarNuevoResult.Valor == 1) {
-          ngNotify.set('La orden no se puede ejecutar de forma manual ya que este tipo de orden de servicio al cliente se procesa de forma automatica');
-
+          ngNotify.set('La orden no se puede ejecutar de forma manual ya que este tipo de orden de servicio al cliente se procesa de forma automática');
         } else {
           $state.go('home.procesos.ordenEjecutada', {
             'id': Clv_Orden
@@ -131,7 +130,7 @@
       if (vm.contrato == '' && vm.orden == '') {
         ngNotify.set('Introduce un número de contrato ó un número de orden.', 'warn');
       } else if (!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato)) && vm.contrato != undefined && vm.contrato != '') {
-        ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+        ngNotify.set('El número de contrato está formado por 2 grupos de números con un guion intermedio p.e. (1234-1)', 'primary');
       } else {
         var obj = {
           op: vm.op,

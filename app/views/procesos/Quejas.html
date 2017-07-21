@@ -67,14 +67,14 @@
 
                   <div class="col-md-6">
                    
-                    <input type="number" class="form-control input-sm" placeholder="#Reporte" ng-model="$ctrl.Reporte">
+                    <input type="number" class="form-control input-sm" placeholder="# Reporte" ng-model="$ctrl.Reporte">
                     <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaReporte()">Buscar</button>
                     <br>
                   </div>
                   <div class="col-md-6">
                     <form angular-validator-submit="$ctrl.BuscaContrato()" name="contratoForm" novalidate angular-validator>
                     
-                      <input class="form-control input-sm" ng-model="$ctrl.Contrato" placeholder="#Contrato" type="text" autocomplete="off" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]+([-][0-9]+)?$/" invalid-message="'Formato de contrato inválido.'">
+                      <input class="form-control input-sm" ng-model="$ctrl.Contrato" placeholder="# Contrato" type="text" autocomplete="off" name="contrato" validate-on="dirty" placeholder="Contrato" ng-pattern="/^[0-9]+([-][0-9]+)?$/" invalid-message="'Formato de contrato inválido.'">
                       <button class="btn btn-info btn-xs text-left" type="submit">Buscar</button>
                     </form>
                     <br>
@@ -133,7 +133,7 @@
                     <input class="form-control input-sm" placeholder="" ng-model="$ctrl.Calle">
                   </div>
                   <div class="col-md-3">
-                    <b> Numero:</b>
+                    <b> Número:</b>
                     <input type="number" class="form-control input-sm" placeholder="" ng-model="$ctrl.Numero">
                   </div>
                   <div class="col-md-3">
@@ -171,7 +171,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th>#Reporte</th>
+              <th># Reporte</th>
               <th>Contrato</th>
               <th>Status</th>
               <th>Nombre</th>

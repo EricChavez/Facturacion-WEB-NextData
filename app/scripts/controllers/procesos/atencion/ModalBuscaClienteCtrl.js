@@ -23,7 +23,7 @@ angular
 		function BusquedaporContrato() {
 			if (!(/^\d{1,9}-\d{1,9}$/.test(vm.BUcontrato))) {
 				console.log(false);
-				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guion intermedio p.e. (1234-1)', 'primary');
 			} else {
 				var obje = {};
 				obje.contrato = vm.BUcontrato;
@@ -89,7 +89,6 @@ angular
 			obje.setupbox = vm.BUaparato;
 			obje.op = 5;
 			obje.colonia = 0;
-			console.log("BusquedaAparato: ",obje);
 			atencionFactory.buscarCliente(obje).then(function (data) {
 				vm.Clientes = data.GetuspBuscaContratoSeparado2ListResult;
 				if (vm.Clientes.length == 0) {

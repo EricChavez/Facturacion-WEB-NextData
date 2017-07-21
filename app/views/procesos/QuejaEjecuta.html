@@ -148,7 +148,7 @@
               name="horaEjecucion" required-message="'***'" ng-required="!$ctrl.FEjecucion" validate-on="dirty" ui-mask="99:99 AA"
               model-view-value="true" ng-disabled="$ctrl.FEjecucion">
           </div>
-          <div class="col-md-5"><b>Visita1</b></div>
+          <div class="col-md-5"><b>Visita 1</b></div>
           <div class="col-md-4">
             <input type="text" class="form-control input-sm" ng-model="$ctrl.Fechavisita1" ng-class="$ctrl.Ivisita1" placeholder="DD/MM/YYYY"
               name="Fechav1" required-message="'***'" ng-required="!$ctrl.FVisita1" validate-on="dirty" ui-mask="99/99/9999"
@@ -159,7 +159,7 @@
               name="HoraV1" required-message="'***'" ng-required="!$ctrl.FVisita1" validate-on="dirty" ui-mask="99:99 AA" model-view-value="true"
               ng-disabled="$ctrl.FVisita1">
           </div>
-          <div class="col-md-5"><b>Visita2</b></div>
+          <div class="col-md-5"><b>Visita 2</b></div>
           <div class="col-md-4">
             <input type="text" class="form-control input-sm" ng-model="$ctrl.Fechavisita2" ng-class="$ctrl.Ivisita2" placeholder="DD/MM/YYYY"
               name="FechaV2" required-message="'***'" ng-required="!$ctrl.FVisita2" validate-on="dirty" ui-mask="99/99/9999"
@@ -170,7 +170,7 @@
               name="Horav3" required-message="'***'" ng-required="!$ctrl.FVisita2" validate-on="dirty" ui-mask="99:99 AA" model-view-value="true"
               ng-disabled="$ctrl.FVisita2">
           </div>
-          <div class="col-md-5"><b>Visita3</b></div>
+          <div class="col-md-5"><b>Visita 3</b></div>
           <div class="col-md-4">
             <input type="text" class="form-control input-sm" ng-model="$ctrl.Fechavisita3" ng-class="$ctrl.Ivisita3" placeholder="DD/MM/YYYY"
               ui-mask="99/99/9999" model-view-value="true" ng-disabled="$ctrl.FVisita3" name="Fechav3" required-message="'***'"
@@ -192,7 +192,7 @@
               ui-mask="99:99 AA" model-view-value="true" ng-disabled="$ctrl.FProceso" name="horaproceso" required-message="'***'"
               ng-required="!$ctrl.FProceso" validate-on="dirty">
           </div>
-          <div class="col-md-5">Ejecución real</div>
+          <div class="col-md-5"><b>Ejecución real</b></div>
           <div class="col-md-4">
             <input type="text" class="form-control input-sm" ng-model="$ctrl.FechaEjecucuionReal" placeholder="DD/MM/YYYY" ui-mask="99/99/9999"
               model-view-value="true" ng-disabled="true">
@@ -351,7 +351,7 @@
 
           <select class="form-control input-sm" name="Estatus" ng-model="$ctrl.Estatus" ng-class="$ctrl.ISelectEstatus" ng-change="$ctrl.CambiaEstatus()"
             ng-options="item as item.Nombre for item in $ctrl.Status track by item.Clave">
-                                     <!-- <option value="">Selecciona estatus</option>-->
+                                     <option value="">Selecciona estatus</option>-->
 
 
 

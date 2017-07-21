@@ -34,8 +34,7 @@ angular
 							'SoloNivel2': 0,
 							'NoTicket': 0
 						};
-						quejasFactory.ObtenLista(Parametros).then(function (data) {
-							console.log(data);
+						quejasFactory.ObtenLista(Parametros).then(function (data) {;
 							vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 							if (vm.ListaQuejas.length == 0) {
 								vm.sinRegistros = true;
@@ -98,7 +97,6 @@ angular
 					'NoTicket': 0
 				};
 				quejasFactory.ObtenLista(Parametros).then(function (data) {
-					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 					if (vm.ListaQuejas.length == 0) {
 						vm.sinRegistros = true;
@@ -116,8 +114,7 @@ angular
 			if (vm.Servicio == null || vm.Plaza == null) {
 				ngNotify.set('Por favor seleccione una compañía y un tipo de servicio.', 'warn');
 			} else if (!(/^\d{1,9}-\d{1,9}$/.test(vm.Contrato))) {
-				console.log(false);
-				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guion intermedio p.e. (1234-1)', 'primary');
 			} else {
 				var Parametros = {
 					'Clv_TipSer': vm.Servicio.Clv_TipSerPrincipal,
@@ -197,7 +194,6 @@ angular
 					'NoTicket': 0
 				};
 				quejasFactory.ObtenLista(Parametros).then(function (data) {
-					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 					if (vm.ListaQuejas.length == 0) {
 						vm.sinRegistros = true;
@@ -248,7 +244,6 @@ angular
 					'NoTicket': 0
 				};
 				quejasFactory.ObtenLista(Parametros).then(function (data) {
-					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 					if (vm.ListaQuejas.length == 0) {
 						vm.sinRegistros = true;
@@ -286,9 +281,7 @@ angular
 					'SoloNivel2': 0,
 					'NoTicket': 0
 				};
-				console.log(Parametros);
 				quejasFactory.ObtenLista(Parametros).then(function (data) {
-					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 					if (vm.ListaQuejas.length == 0) {
 						vm.sinRegistros = true;
@@ -321,7 +314,6 @@ angular
 				'NoTicket': 0
 			};
 			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 				if (vm.ListaQuejas.length == 0) {
 					vm.sinRegistros = true;
@@ -354,7 +346,6 @@ angular
 				'NoTicket': 0
 			};
 			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 				if (vm.ListaQuejas.length == 0) {
 					vm.sinRegistros = true;
@@ -387,7 +378,6 @@ angular
 				'NoTicket': 0
 			};
 			quejasFactory.ObtenLista(Parametros).then(function (data) {
-				console.log(data);
 				vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 			});
 		}
@@ -415,7 +405,6 @@ angular
 					'NoTicket': 0
 				};
 				quejasFactory.ObtenLista(Parametros).then(function (data) {
-					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 					if (vm.ListaQuejas.length == 0) {
 						vm.sinRegistros = true;
@@ -453,7 +442,6 @@ angular
 					'NoTicket': vm.Ticket
 				};
 				quejasFactory.ObtenLista(Parametros).then(function (data) {
-					console.log(data);
 					vm.ListaQuejas = data.GetBuscaQuejasSeparado2ListResult;
 					if (vm.ListaQuejas.length == 0) {
 						vm.sinRegistros = true;
@@ -568,7 +556,7 @@ angular
 		},
 		{
 			'Clave': 'V',
-			'Nombre': 'Con visita'
+			'Nombre': 'Con Visita'
 		},
 		{
 			'Clave': 'E',
