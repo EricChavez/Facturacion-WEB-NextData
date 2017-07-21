@@ -18,7 +18,6 @@ angular
           param.contrato = datos.ContratoCom;
           param.servicio = datos.CLV_TIPSER;
           param.op = 0;
-
           atencionFactory.buscarCliente(param).then(function (data) {
             var detalle = data.GetuspBuscaContratoSeparado2ListResult[0];
             var contrato = detalle.ContratoBueno;
@@ -168,7 +167,7 @@ angular
         ngNotify.set('Seleccione la clasificación del problema', 'error');
         return;
       }
-      
+
       if (vm.clv_queja == 0) {
         vm.PanelCaptura = true;
         GetclasificacionQuejas();
@@ -257,15 +256,26 @@ angular
     }
 
     function EditaLlamada() {
+
+      if (vm.DescripcionProblema == null || vm.DescripcionProblema == '') {
+        ngNotify.set('Redacte la descripción del problema', 'error');
+        return;
+      }
+      if (vm.Problema == null) {
+        ngNotify.set('Seleccione la clasificación del problema', 'error');
+        return;
+      }
       var obj = {};
       obj.clv_llamada = vm.NumeroLlamada;
       obj.Descripcion = vm.DescripcionProblema;
       obj.Solucion = vm.DescripcionSolucion;
       obj.clv_queja = vm.clv_queja;
       obj.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
-      obj.Clv_trabajo = (vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;//vm.Trabajo.CLV_TRABAJO;
+
+      obj.Clv_trabajo = (vm.Trabajo == undefined || vm.Trabajo == null) ? 0 : vm.Trabajo.CLV_TRABAJO;
+
       obj.Turno = vm.Turno;
-      obj.ClvProblema = vm.Problema.clvProblema;
+      obj.ClvProblema = (vm.Problema == undefined || vm.Problema == null) ? 0 : vm.Problema.clvProblema;
       atencionFactory.ActualizaLlamada(obj).then(function (data) {
         $state.go('home.procesos.atencion');
         ngNotify.set('La llamada #' + vm.NumeroLlamada + ' se ha editado correctamente', 'grimace');
@@ -274,7 +284,7 @@ angular
 
     }
 
-    function AddLLamadasdeInternet(showDetails) {
+    /*function AddLLamadasdeInternet(showDetails) {
       var atencion = (vm.tipoAtencion == 'telefonica') ? 'S' : 'T';
       var trabajo = (vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;
       var solucion = (vm.DescripcionSolucion == undefined) ? '' : vm.DescripcionSolucion;
@@ -298,7 +308,7 @@ angular
 
       });
 
-    }
+    }*/
 
     function ValidaOrdenQuejas() {
       atencionFactory.ValidaOrdenQuejas(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal)
@@ -321,7 +331,7 @@ angular
     vm.BloquearElementos = true;
     vm.showDatosCliente = true;
     vm.ShowDetalle = true;
-	  vm.ShowDetalleOnly = false;
+    vm.ShowDetalleOnly = false;
     vm.titulo = "Edita atención telefónica";
     vm.NumeroLlamada = $stateParams.id;
     vm.openHistorial = openHistorial;
