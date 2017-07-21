@@ -30,7 +30,7 @@
     </header>
     <div class="tools">
       <button title="Guardar atención telefónica" class="btn btn-primary btn-sm" ng-show="$ctrl.MostrarGuardar" ng-click="$ctrl.GuardarLlamada()">Guardar</button>
-      <button title="Guardar cambios" class="btn btn-primary btn-sm" ng-show="$ctrl.MostrarEditar" ng-click="$ctrl.EditaLlamada()">Editar llamada</button>
+      <button title="Guardar cambios" class="btn btn-primary btn-sm" ng-disabled="$ctrl.clv_queja >0" ng-show="$ctrl.MostrarEditar" ng-click="$ctrl.EditaLlamada()">Editar llamada</button>
       <button title="Cancelar cambios" type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button" ng-show="$ctrl.ShowDetalle">Cancelar</button>
       <button title="Regresar a atenciones telefónicas" type="button" ui-sref="home.procesos.atencion" class="btn btn-default-bright btn-sm" name="button" ng-show="$ctrl.ShowDetalleOnly">Salir</button>
     </div>
@@ -155,7 +155,12 @@
 
       <div class="col-md-3">
         <div class="col-md-12">
-          <button title="Generar reporte" type="button" style="font-size: 10px;" class="btn btn-danger btn-block" ng-click="$ctrl.generaReporte()" ng-show="$ctrl.ShowDetalle">
+          <button title="Generar reporte" 
+          ng-disabled="$ctrl.Trabajo!=null||$ctrl.Trabajo !=undefined || $ctrl.clv_queja >0"
+          type="button" style="font-size: 10px;"
+           class="btn btn-danger btn-block" 
+           ng-click="$ctrl.generaReporte()" 
+           ng-show="$ctrl.ShowDetalle">
             <i class="fa fa-flag"></i> Generar Reporte
           </button>
           <button title="Consultar historial de pagos" type="button" style="font-size: 10px;" class="btn btn-default-bright btn-block" ng-click="$ctrl.abrirPagos()">
