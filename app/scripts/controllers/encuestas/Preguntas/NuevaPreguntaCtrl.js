@@ -41,12 +41,7 @@ angular
           }
         vm.Respuestas.push(object);
         }
-
-
-
-
       }
-
     }
 
     function Elimina(index) {

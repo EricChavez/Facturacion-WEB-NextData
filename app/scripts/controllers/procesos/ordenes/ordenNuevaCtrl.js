@@ -35,9 +35,6 @@
     vm.Cancelar = Cancelar;
     vm.Fec_Sol = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 
-
-
-
     function Cancelar() {
       $state.go('home.procesos.ordenes');
     }
@@ -107,7 +104,7 @@
                          $state.go('home.procesos.ordenes');
                       } else {
                         $state.go('home.procesos.ordenes');
-                        ngNotify.set('Se ha guardado la orden de servicio con exito');
+                        ngNotify.set('Se ha guardado la orden de servicio con éxito');
                         ImprimeOrden(vm.clv_orden);
                       }
 
@@ -133,8 +130,7 @@
 
 
 
-    function Guardar() {      
-      // ngNotify.set('No hay conceptos en el detalle de la orden', 'error')
+    function Guardar() {
       ordenesFactory.GetDime_Que_servicio_Tiene_cliente(vm.contratoBueno).then(function (response) {
         vm.clv_servicio_cliente = response.GetDime_Que_servicio_Tiene_clienteResult.clv_tipser;
         ordenesFactory.GetuspContratoServList(vm.contratoBueno, vm.clv_servicio_cliente).then(function (data) {
@@ -268,11 +264,7 @@
                 }
               }
             });
-
           }
-
-
-
         });
       }
     }

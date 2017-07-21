@@ -19,14 +19,13 @@
       <table class="table">
         <thead>
           <tr>
-            <td><b>IdPregunta</b></td>
+            <td><b>Id Pregunta</b></td>
             <td><b>Pregunta</b> </td>
             <td><b>Tipo Pregunta</b></td>
             <td><b>Opciones</b></td>
           </tr>
         </thead>
         <tbody>
-
           <tr ng-show="$ctrl.Preguntas.length>0" dir-paginate="x in $ctrl.Preguntas|orderBy:$ctrl.sortKey:reverse|filter:$ctrl.search|itemsPerPage:8">
             <td>{{x.IdPregunta}}</td>
             <td>{{x.Pregunta}}</td>

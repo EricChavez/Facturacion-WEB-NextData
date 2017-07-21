@@ -297,7 +297,7 @@ angular
       },
       {
         'Clave': 'V',
-        'Nombre': 'Con visita'
+        'Nombre': 'Con Visita'
       },
       {
         'Clave': 'E',

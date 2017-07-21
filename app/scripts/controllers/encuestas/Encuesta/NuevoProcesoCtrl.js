@@ -73,12 +73,11 @@ angular
         encuestasFactory.GetGet_UniversoEncuestaList(Parametros).then(function (data) {
         if (data.GetGet_UniversoEncuestaListResult[0].IdProcesoEnc==0){
           $state.go('home.encuestas.aplicar');
-          ngNotify.set('El proceso no se ha registrado debido a que no existen clientes que pueden ser encuestados con las caracteristicas  definidas', 'warn');
+          ngNotify.set('El proceso no se ha registrado debido a que no existen clientes que pueden ser encuestados con las características definidas.', 'warn');
 
         }else{
           $state.go('home.encuestas.aplicar');
-          ngNotify.set('El proceso se ha guardado correctamente', 'success');
-
+          ngNotify.set('El proceso se ha guardado correctamente.', 'success');
         }
           
         })
@@ -107,7 +106,7 @@ angular
        
         encuestasFactory.GetGet_UniversoEncuestaList(Parametros).then(function (data) {
           $state.go('home.encuestas.aplicar');
-          ngNotify.set('El proceso se ha guardado correctamente', 'success');
+          ngNotify.set('El proceso se ha guardado correctamente.', 'success');
         })
 
       }
