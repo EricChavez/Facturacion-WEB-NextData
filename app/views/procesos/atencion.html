@@ -16,7 +16,7 @@
 		</header>
 		<div class="tools">
 			<div class="btn-group">
-				<a class="btn btn-success btn-sm" ui-sref="home.procesos.atencionNueva" title="Crear una atención telefónica nueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a>
+				<a class="btn btn-primary btn-sm" ui-sref="home.procesos.atencionNueva" title="Crear una atención telefónica nueva"> nueva atención</a>
 			</div>
 		</div>
 	</div>
@@ -227,9 +227,9 @@
 							<td>{{ x.Contrato }}</td>
 							<td>{{ x.NOMBRE }}</td>
 							<td>{{ x.CALLE }} #{{ x.NUMERO}}</td>
-							<td><a title="Consultar atención telefónica" ui-sref="home.procesos.atencionDetalle({ id: x.llamada})" class="btn ink-reaction btn-floating-action btn-xs btn-info"><i class="fa fa-eye"></i></a>
-								<a title="Editar atención telefónica" ui-sref="home.procesos.atencionEditar({ id: x.llamada})" class="btn ink-reaction btn-floating-action btn-xs btn-warning"
-								 ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-edit"></i></a>
+							<td><a title="Consultar atención telefónica" ui-sref="home.procesos.atencionDetalle({ id: x.llamada})" class="btn ink-reaction  btn-xs btn-info"><i class="md md-content-paste"></i> CONSULTA</a>
+								<a title="Editar atención telefónica" ui-sref="home.procesos.atencionEditar({ id: x.llamada})" class="btn ink-reaction  btn-xs btn-warning"
+								 ng-click="$ctrl.editarEntrada(x.Consecutivo)"><i class="fa fa-edit"></i> Editar</a>
 						</tr>
 					</tbody>
 				</table>
