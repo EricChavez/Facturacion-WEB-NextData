@@ -61,12 +61,12 @@
     }
 
     $rootScope.$on('ChecaMotivoCancelacion', function () {
-      GuardaDetalle();
+      GuardaDetalle(true);
     });
 
 
 
-    function GuardaDetalle() {
+    function GuardaDetalle(redirect) {
 
       ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
         ordenesFactory.AddNueRelOrdenUsuario(vm.clv_orden).then(function (data) {
@@ -101,7 +101,10 @@
                     ordenesFactory.Imprime_Orden(vm.clv_orden).then(function (data) {
                       if (data.GetDeepImprime_OrdenResult.Imprime == 1) {
                         ngNotify.set('La orden es de proceso automático por lo cual no se imprimió', 'warn');
+                        if(redirect==true){
                          $state.go('home.procesos.ordenes');
+                        }
+                        
                       } else {
                         $state.go('home.procesos.ordenes');
                         ngNotify.set('Se ha guardado la orden de servicio con éxito');
@@ -130,7 +133,8 @@
 
 
 
-    function Guardar() {
+    function Guardar(redirect) {
+      // ngNotify.set('No hay conceptos en el detalle de la orden', 'error')
       ordenesFactory.GetDime_Que_servicio_Tiene_cliente(vm.contratoBueno).then(function (response) {
         vm.clv_servicio_cliente = response.GetDime_Que_servicio_Tiene_clienteResult.clv_tipser;
         ordenesFactory.GetuspContratoServList(vm.contratoBueno, vm.clv_servicio_cliente).then(function (data) {
@@ -166,7 +170,7 @@
                           }
                         });
                       } else {
-                        GuardaDetalle();
+                        GuardaDetalle(redirect);
                       }
                     });
 
@@ -203,8 +207,6 @@
             ngNotify.set('El cliente no tiene servicios activos para generarle ordenes de servicio', 'warn');
             return;
           }
-
-
           var fecha = $filter('date')(vm.fecha, 'dd/MM/yyyy');
           var orden = {
             contrato: vm.contratoBueno,
@@ -220,8 +222,6 @@
                 clv_orden: vm.clv_orden,
                 clv_tecnico: vm.clv_tecnico
               };
-
-
               var modalInstance = $uibModal.open({
                 animation: true,
                 ariaLabelledBy: 'modal-title',
@@ -269,63 +269,116 @@
       }
     }
 
-    function buscarContrato(event) {
-     
-      if (event.keyCode === 13) {
-         event.preventDefault();
-        vm.clv_orden = 0;
-        if (vm.contrato == null || vm.contrato == '' || vm.contrato == undefined) {
-          ngNotify.set('Coloque un contrato válido', 'error');
-          return;
-        }
-        if (!vm.contrato.includes('-')) {
-          ngNotify.set('Coloque un contrato válido', 'error');
-          return;
-        }
 
-        ordenesFactory.getContratoReal(vm.contrato).then(function (data) {
-
-          if (data.GetuspBuscaContratoSeparado2ListResult.length > 0) {
-            vm.contratoBueno = data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno;
-            datosContrato(data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno);
-          } else {
-            vm.servicios = '';
-            vm.datosCli = '';
-            new PNotify({
-              title: 'Sin Resultados',
-              type: 'error',
-              text: 'No se encontro resultados con ese contrato.',
-              hide: true
-            });
-            vm.contratoBueno = '';
-            vm.clv_orden = '';
+    function PreguntaAtencion(opcion) {
+      var detalle = {};
+      detalle.Modulo = 'Ordenes';
+      detalle.Clv = vm.clv_orden;
+      detalle.Op = opcion;
+      var modalInstance = $uibModal.open({
+        animation: vm.animationsEnabled,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/procesos/ModalPreguntaAtencion.html',
+        controller: 'ModalPreguntaAtencionCtrl',
+        controllerAs: '$ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        size: 'md',
+        resolve: {
+          detalle: function () {
+            return detalle;;
           }
-        });
+        }
+      });
+    }
+
+
+    $rootScope.$on('verDetalle', function () {
+      ordenesFactory.Getsp_BorraArticulosAsignados(vm.claveOrden).then(function (data) {
+        detalleContrato();
+        vm.clv_orden = 0;
+        vm.servicios = '';
+        vm.datosCli = '';
+        vm.trabajosTabla = [];
+      });
+
+    });
+
+
+    $rootScope.$on('verContratos', function () {
+      ordenesFactory.Getsp_BorraArticulosAsignados(vm.claveOrden).then(function (data) {
+        ModalClientes();
+        vm.clv_orden = 0;
+        vm.servicios = '';
+        vm.datosCli = '';
+        vm.trabajosTabla = [];
+      });
+
+    });
+
+    $rootScope.$on('generarOrden', function () {
+      Guardar(false);
+
+    });
+
+    function detalleContrato() {
+      if (vm.contrato == null || vm.contrato == '' || vm.contrato == undefined) {
+        ngNotify.set('Coloque un contrato válido', 'error');
+        return;
+      }
+      if (!vm.contrato.includes('-')) {
+        ngNotify.set('Coloque un contrato válido', 'error');
+        return;
       }
 
+      ordenesFactory.getContratoReal(vm.contrato).then(function (data) {
+        if (data.GetuspBuscaContratoSeparado2ListResult.length > 0) {
+          vm.contratoBueno = data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno;
+          datosContrato(data.GetuspBuscaContratoSeparado2ListResult[0].ContratoBueno);
+        } else {
+          vm.servicios = '';
+          vm.datosCli = '';
+          new PNotify({
+            title: 'Sin Resultados',
+            type: 'error',
+            text: 'No se encontro resultados con ese contrato.',
+            hide: true
+          });
+          vm.contratoBueno = '';
+          vm.clv_orden = '';
+        }
+      });
+    }
 
+
+    function buscarContrato(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        if (vm.clv_orden == 0) {
+          detalleContrato();
+        } else {
+          PreguntaAtencion(1);
+        }
+      }
     }
 
     $rootScope.$on('cliente_select', function (e, contrato) {
-
       vm.contrato = contrato.CONTRATO;
       vm.contratoBueno = contrato.ContratoBueno;
       datosContrato(contrato.ContratoBueno);
     });
-
 
     $rootScope.$on('detalle_orden', function (e, detalle) {
       vm.clv_detalle = detalle;
     });
 
     $rootScope.$on('actualiza_tablaServicios', function () {
-
       actualizarTablaServicios();
     });
 
     function actualizarTablaServicios() {
       ordenesFactory.consultaTablaServicios(vm.clv_orden).then(function (data) {
-
         vm.trabajosTabla = data.GetBUSCADetOrdSerListResult;
       });
     }
@@ -333,15 +386,16 @@
     function datosContrato(contrato) {
       ordenesFactory.serviciosCliente(contrato).then(function (data) {
         vm.servicios = data.GetDameSerDelCliFacListResult;
-
       });
+
       ordenesFactory.buscarCliPorContrato(contrato).then(function (data) {
         vm.datosCli = data.GetDeepBUSCLIPORCONTRATO_OrdSerResult;
         console.log(vm.datosCli);
       });
     }
 
-    function buscarCliente() {
+
+    function ModalClientes() {
       var modalInstance = $uibModal.open({
         animation: true,
         ariaLabelledBy: 'modal-title',
@@ -353,6 +407,15 @@
         keyboard: false,
         size: 'lg'
       });
+    }
+
+    function buscarCliente() {
+
+      if (vm.clv_orden > 0) {
+        PreguntaAtencion(2);
+      } else {
+        ModalClientes();
+      }
     }
 
     function detalleTrabajo(trabajo, x) {
@@ -405,7 +468,7 @@
               contrato: vm.contratoBueno,
               isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
               datosCamdo: data.GetDeepCAMDOResult,
-              Detalle:true
+              Detalle: true
             };
 
             var modalInstance = $uibModal.open({
@@ -459,7 +522,7 @@
             'Contrato': vm.contratoBueno,
             'ClvTecnico': 0,
             'Clave': vm.Clave,
-            'Detalle':false
+            'Detalle': false
           };
 
 

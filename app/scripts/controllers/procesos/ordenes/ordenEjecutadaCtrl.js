@@ -252,7 +252,7 @@
       });
     }
 
-    function detalleTrabajo(trabajo, x) {   
+    function detalleTrabajo(trabajo, x) {
 
       if (vm.selectedTecnico == undefined) {
         ngNotify.set('Selecciona a un técnico.', 'warn');
@@ -305,7 +305,7 @@
             contrato: vm.contratoBueno,
             isUpdate: (data.GetDeepCAMDOResult == null) ? false : true,
             datosCamdo: data.GetDeepCAMDOResult,
-            Detalle:true
+            Detalle: true
           };
           var modalInstance = $uibModal.open({
             animation: true,
@@ -348,7 +348,7 @@
           'ClvTecnico': vm.selectedTecnico.CLV_TECNICO,
           'Clave': x.Clave,
           'ClvOrden': x.Clv_Orden,
-          'Detalle':false
+          'Detalle': false
         };
         var modalInstance = $uibModal.open({
           animation: true,
@@ -473,7 +473,7 @@
 
 
 
-    function Guardar() {
+    function Guardar(redirect) {
       if (vm.status == 'E') {
         if (ValidaFecha(vm.Fec_Eje, vm.Fec_Sol) == false) {
           ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
@@ -511,14 +511,14 @@
         });
       }
 
-      EjecutaOrden();
+      EjecutaOrden(redirect);
 
     }
 
 
 
 
-    function GuardaDetalle() {
+    function GuardaDetalle(redirect) {
 
       ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
         ordenesFactory.AddNueRelOrdenUsuario(vm.clv_orden).then(function (data) {
@@ -548,9 +548,15 @@
                   ordenesFactory.AddSP_LLena_Bitacora_Ordenes(descripcion, vm.clv_orden).then(function (data) {
                     ordenesFactory.Imprime_Orden(vm.clv_orden).then(function (data) {
                       if (data.GetDeepImprime_OrdenResult.Imprime == 1) {
-                        ngNotify.set('La orden es de proceso automático por lo cual no se imprimió', 'error');
+                        ngNotify.set('La orden es de proceso automático por lo cual no se imprimió', 'warn');
+                        if (redirect) {
+                          $state.go('home.procesos.ordenes')
+                        }
                       } else {
-                        $state.go('home.procesos.ordenes')
+                        if (redirect) {
+                          $state.go('home.procesos.ordenes')
+                        }
+
                         ngNotify.set('La orden se ha ejecutado correctamente', 'success');
                       }
                     })
@@ -617,7 +623,7 @@
 
 
 
-    function EjecutaOrden() {
+    function EjecutaOrden(redirect) {
       if (vm.status == 'P') {
         ngNotify.set('Marque la opción ejecutada o visita para continuar', 'error');
         return;
@@ -662,7 +668,7 @@
                       });
                     } else {
 
-                      GuardaDetalle();
+                      GuardaDetalle(redirect);
                     }
                   });
                 }
