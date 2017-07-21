@@ -26,7 +26,7 @@
 			<div class="card panel" style="font-size: 11px;">
 				<div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1"
 				 aria-expanded="false">
-					<header><i class="fa fa-search"></i> Filtros de busqueda</header>
+					<header><i class="fa fa-search"></i> Filtros de búsqueda</header>
 					<div class="tools">
 						<a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
 					</div>
@@ -195,12 +195,12 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>#Orden</th>
+							<th># Orden</th>
 							<th>Status</th>
 							<th>Contrato</th>
 							<th>Nombre</th>
 							<th>Calle</th>
-							<th>Numero</th>
+							<th>Número</th>
 							<th>Acción</th>
 						</tr>
 					</thead>
@@ -216,7 +216,7 @@
 							<td>{{ x.CALLE }}</td>
 							<td>#{{ x.NUMERO}}</td>
 							<td>
-								<button ui-sref="home.procesos.ordendetalle({ id: x.Clv_Orden})" title="Consultar orden de servicio" class="btn ink-reaction btn-xs btn-info" ><i class="fa fa-eye"></i> COnsulta</button>
+								<button ui-sref="home.procesos.ordendetalle({ id: x.Clv_Orden})" title="Consultar orden de servicio" class="btn ink-reaction btn-xs btn-info" ><i class="fa fa-eye"></i> Cosultar</button>
 								<a title="Ejecutar orden de servicio" ng-if="x.STATUS !='E'" ng-click="$ctrl.ejecuta(x.Clv_Orden)" class="btn ink-reaction btn-xs btn-warning"><i class="md md-launch"></i> Ejecutar</a>
 							</td>
 						</tr>

@@ -263,7 +263,7 @@ angular
       obj.Solucion = vm.DescripcionSolucion;
       obj.clv_queja = vm.clv_queja;
       obj.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
-      obj.Clv_trabajo = vm.Trabajo.CLV_TRABAJO;
+      obj.Clv_trabajo = (vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;//vm.Trabajo.CLV_TRABAJO;
       obj.Turno = vm.Turno;
       obj.ClvProblema = vm.Problema.clvProblema;
       atencionFactory.ActualizaLlamada(obj).then(function (data) {

@@ -35,7 +35,7 @@ angular
         return;
       }
       if (vm.FechaAgenda == null || vm.FechaAgenda == undefined) {
-        ngNotify.set('Selecciona un fecha para continuar', 'error');
+        ngNotify.set('Selecciona una fecha para continuar', 'error');
         return;
       }
       if(fechaIngresada < fechaHoy){
@@ -58,7 +58,6 @@ angular
         'clv_llamada': options.clv_llamada,
         'clvProblema': options.clvProblema
       };
-      console.log("parametrosQUEJA: ", parametrosQUEJA);
       if (options.clv_queja == 0) {
         atencionFactory.AgregaQueja(parametrosQUEJA).then(function (data) {
           vm.clv_queja = data.AddQuejasResult;
@@ -73,9 +72,7 @@ angular
             'Turno': vm.TurnoAgenda.ID,
             'ClvProblema': options.clvProblema
           };
-          console.log("parametrosLlamada: ", parametrosLlamada);
           atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {
-
 
             var Parametrosrel = {
               'clvLlamada': options.clv_llamada,
@@ -83,7 +80,6 @@ angular
               'clvProblema': options.clvProblema,
               'opAccion': 2
             };
-
            
               $uibModalInstance.dismiss('cancel');
               ngNotify.set('El # de reportes es el: ' + vm.clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada,{
@@ -91,8 +87,6 @@ angular
     sticky: true
 });
               $state.go('home.procesos.atencion');
-
-
           });
 
         });
@@ -123,7 +117,6 @@ angular
       });
     }
 
-
     function cancel() {
       $uibModalInstance.dismiss('cancel');
     }
@@ -133,8 +126,6 @@ angular
     vm.ok = ok;
     initialData();
   });
-
-
 /*var iduser = $localStorage.currentUser.idUsuario;
               if (iduser == 53) {
                 atencionFactory.ActualizaLlamada(parametrosLlamada).then(function (data) {

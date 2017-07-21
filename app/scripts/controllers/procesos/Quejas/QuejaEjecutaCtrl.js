@@ -168,12 +168,10 @@ angular
 
             });
 
-
-
           });
         } else {
           $state.go('home.procesos.reportes');
-          ngNotify.set('La Queja pertenece  a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
+          ngNotify.set('El Reporte pertenece a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
         }
       });
     }
@@ -386,7 +384,7 @@ angular
                 
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
-                  ngNotify.set('La queja se aplicó  correctamente', 'success');
+                  ngNotify.set('El Reporte se aplicó  correctamente', 'success');
                   $state.go('home.procesos.reportes');
                 });
               }
@@ -411,7 +409,7 @@ angular
                 obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
-                  ngNotify.set('La queja se aplicó  correctamente', 'success');
+                  ngNotify.set('El Reporte se aplicó  correctamente', 'success');
                   $state.go('home.procesos.reportes');
                 });
 
@@ -439,7 +437,7 @@ angular
                
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
-                  ngNotify.set('La queja se aplicó  correctamente', 'success');
+                  ngNotify.set('El Reporte se aplicó  correctamente', 'success');
                   $state.go('home.procesos.reportes');
                 });
 
@@ -453,7 +451,7 @@ angular
 
         } else {
 
-          ngNotify.set('La Queja pertenece  a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
+          ngNotify.set('El Reporte pertenece a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
         }
       });
     }
@@ -483,10 +481,8 @@ angular
           }
         }
       });
-
     }
     
-        
     function DescargaMaterial() {   
 
       if (vm.Tecnico== null) ngNotify.set('Seleccione un técnico para continuar','warn');

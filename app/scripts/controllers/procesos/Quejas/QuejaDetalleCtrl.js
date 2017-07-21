@@ -57,39 +57,27 @@ angular
                   var fproceso = detqueja.FechaProceso.split(' ');
                   vm.FechaProceso = fproceso[0];
                   vm.HoraProceso = getTime(detqueja.FechaProceso);
-
-
                 }
 
-
                 if (detqueja.Visita1 != null) {
-
                   var fvisita1 = detqueja.Visita1.split(' ');
                   vm.Fechavisita1 = fvisita1[0];
                   vm.Horavisita1 = getTime(detqueja.Visita1);
-
-                  /*vm.FVisita3 = true;
-                  vm.FVisita2 = true;*/
                 }
-                if (detqueja.Visita2 != null) {
 
+                if (detqueja.Visita2 != null) {
                   var fvisita2 = detqueja.Visita2.split(' ');
                   vm.Fechavisita2 = fvisita2[0];
                   vm.Horavisita2 = getTime(detqueja.Visita2);
-
-                  /*vm.FVisita3 = true;
-                  vm.FVisita1 = true;*/
                 }
-                if (detqueja.Visita3 != null) {
 
+                if (detqueja.Visita3 != null) {
                   var fvisita3 = detqueja.Visita3.split(' ');
                   vm.Fechavisita3 = fvisita3[0];
                   vm.Horavisita3 = getTime(detqueja.Visita3);
-                  /*vm.FVisita1 = true;
-                  vm.FVisita2 = true;*/
                 }
-                if (detqueja.EjecucuionReal != null) {
 
+                if (detqueja.EjecucuionReal != null) {
                   var fEjecucuionReal = detqueja.EjecucuionReal.split(' ');
                   vm.FechaEjecucuionReal = fEjecucuionReal[0];
                   vm.HoraEjecucuionReal = getTime(detqueja.EjecucuionReal);
@@ -103,8 +91,7 @@ angular
                 vm.Visita = detqueja.Visita;
                 vm.Clv_status = detqueja.Status;
                 vm.Estatus = 'E';
-                //Bloqueo(true);
-
+                
                DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_queja,'Q').then(function(data){
                 if(data.GetchecaBitacoraTecnicoResult!=null){
                   vm.idBitacora=data.GetchecaBitacoraTecnicoResult.idBitacora;
@@ -122,8 +109,6 @@ angular
                   }
                 });                 
                });
-
-                
 
                 atencionFactory.MuestraTrabajos(vm.Servicio).then(function (data) {
                   vm.Trabajos = data.GetMUESTRATRABAJOSQUEJASListResult;
@@ -165,15 +150,11 @@ angular
                 });
 
               });
-
             });
-
-
-
           });
         } else {
           $state.go('home.procesos.reportes');
-          ngNotify.set('La Queja pertenece  a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
+          ngNotify.set('El Reporte pertenece a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
         }
       });
     }
@@ -188,10 +169,8 @@ angular
       }
     }
 
-
     function getTime(date) {
       var fejecucion = date.split(' ');
-
       if (fejecucion.length == 3) {
         return fejecucion[2];
       } else if (fejecucion.length == 4) {
@@ -205,34 +184,10 @@ angular
       }
     }
 
-
-    function abrirBonificacion() {
-      var detalle = {};
-      detalle.Block = true;
-      detalle.Queja = vm.clv_queja;
-      var modalInstance = $uibModal.open({
-        animation: vm.animationsEnabled,
-        ariaLabelledBy: 'modal-title',
-        ariaDescribedBy: 'modal-body',
-        templateUrl: 'views/procesos/ModalBonificacion.html',
-        controller: 'ModalBonificacionCtrl',
-        controllerAs: 'ctrl',
-        backdrop: 'static',
-        keyboard: false,
-        size: 'md',
-        resolve: {
-          detalle: function () {
-            return detalle;
-          }
-        }
-      });
-    }
-
     function toDate(dateStr) {
       var parts = dateStr.split("/");
       return new Date(parts[2], parts[1] - 1, parts[0]);
     }
-
 
     function ValidaFecha(fechaIngresada, fechasolicitud) {
       var _fechaHoy = new Date();
@@ -247,220 +202,7 @@ angular
 
     }
 
-    /*function Bloqueo(aplicabloqueo) {
-      if (vm.Estatus == 'E') {
-        vm.FEjecucion = false;
-        vm.FVisita1 = true;
-        vm.FVisita2 = true;
-        vm.FVisita3 = true;
-        vm.FProceso = true;
-        vm.Iejecucion = 'input-yellow';
-        vm.Ivisita = 'input-normal';
-        vm.Iproceso = 'input-normal';
-      } else if (vm.Estatus == 'V') {
-
-        vm.FEjecucion = true;
-        vm.FProceso = true;
-
-        if (vm.Fechavisita1 == null) {
-          vm.FVisita1 = false;
-          vm.FVisita2 = true;
-          vm.FVisita3 = true;
-
-          vm.Ivisita1 = 'input-yellow';
-          vm.Ivisita2 = 'input-normal';
-          vm.Ivisita3 = 'input-normal';
-        }
-
-        if (vm.Fechavisita2 == null && vm.Fechavisita1 != null) {
-          vm.FVisita2 = false;
-          vm.FVisita1 = true;
-          vm.FVisita3 = true;
-
-          vm.Ivisita2 = 'input-yellow';
-          vm.Ivisita1 = 'input-normal';
-          vm.Ivisita3 = 'input-normal';
-        }
-
-        if (vm.Fechavisita3 == null && vm.Fechavisita2 != null) {
-          vm.FVisita3 = false;
-          vm.FVisita1 = true;
-          vm.FVisita2 = true;
-
-          vm.Ivisita2 = 'input-normal';
-          vm.Ivisita1 = 'input-normal';
-          vm.Ivisita3 = 'input-yellow';
-        }
-
-      } else if (vm.Estatus == 'S') {
-
-        vm.FEjecucion = true
-        vm.FVisita1 = true;
-        vm.FVisita2 = true;
-        vm.FVisita3 = true;
-        vm.FProceso = false;
-
-        vm.Iejecucion = 'input-normal';
-        vm.Ivisita1 = 'input-normal';
-        vm.Ivisita2 = 'input-normal';
-        vm.Ivisita3 = 'input-normal';
-        vm.Iproceso = 'input-yellow';
-      }
-    }*/
-
-    /*function CambiaEstatus() {
-      Bloqueo();
-    }*/
-
-    function Ejecutaqueja() {
-      console.log("F2: " + vm.Fechavisita2);
-      quejasFactory.ValidaQueja(vm.clv_queja).then(function (data) {
-        if (data.GetDeepValidaQuejaCompaniaAdicResult.Valida == 0) {
-          quejasFactory.BuscaBloqueado(vm.GlobalContrato).then(function (bloqueado) {
-            if (bloqueado.GetDeepBuscaBloqueadoResult.Bloqueado == 0) {
-
-              if (vm.Estatus == 'E') {
-                if (vm.FechaEjecucion == undefined) {
-                  ngNotify.set('Seleccione la fecha de ejecución', 'error');
-                  return;
-                } else {
-                  if (ValidaFecha(vm.FechaEjecucion, vm.FechaSolicitud) == false) {
-                    ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-                    return;
-                  }
-                }
-              } else if (vm.Estatus == 'V') {
-
-                if (vm.Fechavisita1 != undefined &&
-                  vm.Fechavisita2 == undefined &&
-                  vm.Fechavisita3 == undefined) {
-                  if (ValidaFecha(vm.Fechavisita1, vm.FechaSolicitud) == false) {
-                    ngNotify.set('La fecha de ejecución no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-                    return;
-                  }
-                } else if (vm.Fechavisita1 != undefined &&
-                  vm.Fechavisita2 != undefined &&
-                  vm.Fechavisita3 == undefined) {
-
-                  if (ValidaFecha(vm.Fechavisita2, vm.FechaSolicitud) == false) {
-                    ngNotify.set('La fecha de visita no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-                    return;
-                  }
-                } else if (vm.Fechavisita1 != undefined &&
-                  vm.Fechavisita2 != undefined &&
-                  vm.Fechavisita3 != undefined) {
-                  if (ValidaFecha(vm.Fechavisita3, vm.FechaSolicitud) == false) {
-                    ngNotify.set('La fecha de visita no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-                    return;
-                  }
-                }
-
-              } else if (vm.Estatus == 'S') {
-
-                if (ValidaFecha(vm.FechaProceso, vm.FechaSolicitud) == false) {
-                  ngNotify.set('La fecha de proceso no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
-                  return;
-                }
-
-              }
-
-              if (vm.Estatus == 'E') {
-                var obj = {};
-                obj.Clv_Queja = vm.clv_queja;
-                obj.Status = 'E';
-                obj.Fecha_Ejecucion = vm.FechaEjecucion;
-                obj.Visita1 = '';
-                obj.Visita2 = '';
-                obj.Visita3 = '';
-                obj.HV1 = '';
-                obj.HV2 = '';
-                obj.HV3 = '';
-                obj.FechaProceso = '';
-                obj.HP = '';
-                obj.Visita = false;
-                obj.Clv_Tecnico = vm.Tecnico.clv_Tecnico;
-                obj.clvProblema = vm.Problema.clvProblema;
-                obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
-                obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
-                
-                quejasFactory.UpdateQuejas(obj).then(function (data) {
-
-                  ngNotify.set('La queja se aplicó  correctamente', 'success');
-                  $state.go('home.procesos.reportes');
-                });
-              }
-              if (vm.Estatus == 'V') {
-                var obj = {};
-                obj.Clv_Queja = vm.clv_queja;
-                obj.Status = 'V';
-                obj.Fecha_Ejecucion = '';
-                obj.Visita1 = (vm.Fechavisita1 == undefined) ? '' : vm.Fechavisita1;
-                obj.Visita2 = (vm.Fechavisita2 == undefined) ? '' : vm.Fechavisita2;
-                obj.Visita3 = (vm.Fechavisita2 == undefined) ? '' : vm.Fechavisita3;
-                obj.HV1 = (vm.Horavisita1 == undefined) ? '' : vm.Horavisita1;
-                obj.HV2 = (vm.Horavisita2 == undefined) ? '' : vm.Horavisita2;
-                obj.HV3 = (vm.Horavisita3 == undefined) ? '' : vm.Horavisita3;
-                obj.FechaProceso = '';
-                obj.HP = '';
-                obj.Visita = false;
-                obj.Clv_Tecnico = vm.Tecnico.clv_Tecnico;
-                obj.clvProblema = vm.Problema.clvProblema;
-                obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
-                obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
-                quejasFactory.UpdateQuejas(obj).then(function (data) {
-
-                  ngNotify.set('La queja se aplicó  correctamente', 'success');
-                  $state.go('home.procesos.reportes');
-                });
-
-              }
-              if (vm.Estatus == 'S') {
-                var obj = {};
-                obj.Clv_Queja = vm.clv_queja;
-                obj.Status = 'S';
-                obj.Fecha_Ejecucion = '';
-                obj.Visita1 = '';
-                obj.Visita2 = '';
-                obj.Visita3 = '';
-                obj.HV1 = '';
-                obj.HV2 = '';
-                obj.HV3 = '';
-                obj.FechaProceso = vm.FechaProceso;
-                obj.HP = vm.HoraProceso;
-                obj.Visita = false;
-                obj.Clv_Tecnico = vm.Tecnico.clv_Tecnico;
-                obj.clvProblema = vm.Problema.clvProblema;
-                obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
-                obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
-
-               
-                quejasFactory.UpdateQuejas(obj).then(function (data) {
-
-                  ngNotify.set('La queja se aplicó  correctamente', 'success');
-                  $state.go('home.procesos.reportes');
-                });
-
-              }
-
-
-            } else {
-              ngNotify.set('El cliente, ha sido bloqueado, por lo que no se podrá ejecutar la orden', 'error');
-            }
-          });
-
-        } else {
-
-          ngNotify.set('La Queja pertenece  a un contrato de plazas adicionales al usuario, no puede ejecutarla', 'error');
-        }
-      });
-    }
-
-
     function MuestraAgenda() {
-
       var options = {};
       options.TecnicoAgenda = vm.TecnicoAgenda;
       options.TurnoAgenda = vm.TurnoAgenda;
@@ -483,9 +225,7 @@ angular
           }
         }
       });
-
     }
-    
         
     function DescargaMaterial() {   
 
@@ -530,8 +270,6 @@ angular
     vm.FVisita3 = true;
     vm.FProceso = true;
     vm.BlockTecnico = true;
-    vm.abrirBonificacion = abrirBonificacion;
-    vm.Ejecutaqueja = Ejecutaqueja;
     vm.DescargaMaterial = DescargaMaterial;
     vm.MuestraAgenda = MuestraAgenda;
     vm.Iprioridad = true;
