@@ -23,7 +23,7 @@ angular
       var d = _fechaHoy.getDate();
       var m = 1 + _fechaHoy.getMonth();
       var y = _fechaHoy.getFullYear();
-      var fechaHoy = new Date(m+"/"+d+"/"+y);
+      var fechaHoy = new Date(m + "/" + d + "/" + y);
       var fechaIngresada = vm.FechaAgenda;
 
       if (vm.TecnicoAgenda == null || vm.TecnicoAgenda == undefined) {
@@ -38,7 +38,7 @@ angular
         ngNotify.set('Selecciona un fecha para continuar', 'error');
         return;
       }
-      if(fechaIngresada < fechaHoy){
+      if (fechaIngresada < fechaHoy) {
         ngNotify.set('La fecha que selecciono no debe ser menor a la fecha actual', 'error');
         return;
       }
@@ -84,13 +84,13 @@ angular
               'opAccion': 2
             };
 
-           
-              $uibModalInstance.dismiss('cancel');
-              ngNotify.set('El # de reportes es el: ' + vm.clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada,{
-    position: 'bottom',
-    sticky: true
-});
-              $state.go('home.procesos.atencion');
+
+            $uibModalInstance.dismiss('cancel');
+            ngNotify.set('El # de reportes es el: ' + vm.clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada, {
+              position: 'bottom',
+              sticky: true
+            });
+            $state.go('home.procesos.atencion');
 
 
           });
