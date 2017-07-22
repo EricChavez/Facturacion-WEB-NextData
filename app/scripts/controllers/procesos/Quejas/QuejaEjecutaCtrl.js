@@ -3,7 +3,7 @@ angular
   .module('softvApp')
   .controller('QuejaEjecutaCtrl', function ($state, ngNotify,DescargarMaterialFactory ,$location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
 
-    function InitalData() {
+    function InitalData() {     
       vm.clv_queja = $stateParams.id;
       vm.contrato = $stateParams.contrato;
       vm.Servicio = $stateParams.servicio;
@@ -263,6 +263,9 @@ angular
         vm.Iejecucion = 'input-yellow';
         vm.Ivisita = 'input-normal';
         vm.Iproceso = 'input-normal';
+         vm.Ivisita1 = 'input-normal';
+          vm.Ivisita2 = 'input-normal';
+          vm.Ivisita3 = 'input-normal';
       } else if (vm.Estatus == 'V') {
 
         vm.FEjecucion = true;
@@ -276,6 +279,7 @@ angular
           vm.Ivisita1 = 'input-yellow';
           vm.Ivisita2 = 'input-normal';
           vm.Ivisita3 = 'input-normal';
+          vm.Iejecucion = 'input-normal';
         }
 
         if (vm.Fechavisita2 == null && vm.Fechavisita1 != null) {
@@ -286,6 +290,7 @@ angular
           vm.Ivisita2 = 'input-yellow';
           vm.Ivisita1 = 'input-normal';
           vm.Ivisita3 = 'input-normal';
+           vm.Iejecucion = 'input-normal';
         }
 
         if (vm.Fechavisita3 == null && vm.Fechavisita2 != null) {
@@ -296,6 +301,7 @@ angular
           vm.Ivisita2 = 'input-normal';
           vm.Ivisita1 = 'input-normal';
           vm.Ivisita3 = 'input-yellow';
+           vm.Iejecucion = 'input-normal';
         }
 
       } else if (vm.Estatus == 'S') {
