@@ -81,13 +81,13 @@ angular
               'opAccion': 2
             };
 
-           
-              $uibModalInstance.dismiss('cancel');
-              ngNotify.set('El # de reportes es el: ' + vm.clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada,{
-    position: 'bottom',
-    sticky: true
-});
-              $state.go('home.procesos.atencion');
+
+            $uibModalInstance.dismiss('cancel');
+            ngNotify.set('El # de reportes es el: ' + vm.clv_queja + ' y el número de atención telefónica es: ' + options.clv_llamada, {
+              position: 'bottom',
+              sticky: true
+            });
+            $state.go('home.procesos.atencion');
 
           });
 

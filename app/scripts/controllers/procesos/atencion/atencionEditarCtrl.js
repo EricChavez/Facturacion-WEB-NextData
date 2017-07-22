@@ -229,13 +229,14 @@ angular
       var options = {};
       options.Contrato = vm.GlobalContrato;
       options.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
-      options.Descripcion = vm.DescripcionProblema;
-      options.Solucion = vm.DescripcionSolucion;
-      options.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
+      options.Descripcion = (vm.DescripcionProblema==null||vm.DescripcionProblema==undefined)?'':vm.DescripcionProblema;
+      options.Solucion = (vm.DescripcionSolucion==null||vm.DescripcionSolucion==undefined)?'':vm.DescripcionSolucion;
+      options.Clv_Trabajo = (vm.Trabajo==undefined||vm.Trabajo==null)?0:vm.Trabajo.CLV_TRABAJO;
       options.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
       options.clv_llamada = vm.NumeroLlamada;
-      options.clvProblema = vm.Problema.clvProblema;
+      options.clvProblema = (vm.Problema==undefined||vm.Problema==null)?0: vm.Problema.clvProblema;
       options.clv_queja = vm.clv_queja;
+      console.log(options);
       //options.=atencion
       var modalInstance = $uibModal.open({
         animation: true,
@@ -271,9 +272,7 @@ angular
       obj.Solucion = vm.DescripcionSolucion;
       obj.clv_queja = vm.clv_queja;
       obj.CLV_TIPSER = vm.selectedServicio.Clv_TipSerPrincipal;
-
       obj.Clv_trabajo = (vm.Trabajo == undefined || vm.Trabajo == null) ? 0 : vm.Trabajo.CLV_TRABAJO;
-
       obj.Turno = vm.Turno;
       obj.ClvProblema = (vm.Problema == undefined || vm.Problema == null) ? 0 : vm.Problema.clvProblema;
       atencionFactory.ActualizaLlamada(obj).then(function (data) {
@@ -311,6 +310,15 @@ angular
     }*/
 
     function ValidaOrdenQuejas() {
+
+      if (vm.DescripcionProblema == null || vm.DescripcionProblema == '') {
+        ngNotify.set('Redacte la descripción del problema', 'error');
+        return;
+      }
+      if (vm.Problema == null) {
+        ngNotify.set('Seleccione la clasificación del problema', 'error');
+        return;
+      }
       atencionFactory.ValidaOrdenQuejas(vm.GlobalContrato, vm.selectedServicio.Clv_TipSerPrincipal)
         .then(function (data) {
 
