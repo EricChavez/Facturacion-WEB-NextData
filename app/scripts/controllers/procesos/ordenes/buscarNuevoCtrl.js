@@ -48,9 +48,9 @@
 
 		function buscarContrato() {
 			if (vm.contrato == undefined || vm.contrato == '') {
-				ngNotify.set('Introduce un contrato valido.', 'error');
+				ngNotify.set('Introduce un contrato válido.', 'error');
 			} else if (!(/^\d{1,9}-\d{1,9}$/.test(vm.contrato))){
-				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guión intermedio p.e. (1234-1)', 'primary');
+				ngNotify.set('El número de contrato está formado por 2 grupos de números con un guion intermedio p.e. (1234-1)', 'primary');
 			}else{
 				$('.buscarContrato').collapse('hide');
 				var obj = {
@@ -80,9 +80,9 @@
 
 		function buscarNombres() {
 			if (vm.nombre == undefined && vm.paterno == undefined && vm.materno == undefined) {
-				ngNotify.set('Introduce un nombre valido.', 'error');
+				ngNotify.set('Introduce un nombre válido.', 'error');
 			} else if (vm.nombre == '' && vm.paterno == '' && vm.materno == '') {
-				ngNotify.set('Introduce un nombre valido.', 'error');
+				ngNotify.set('Introduce un nombre válido.', 'error');
 			} else {
 				$('.buscarContrato').collapse('hide');
 				// if (vm.paterno == undefined) {
@@ -115,9 +115,9 @@
 
 		function buscarDomicilio() {
 			if (vm.calle == undefined && vm.numero == undefined && vm.colonia == undefined) {
-				ngNotify.set('Introduce un domicilio valido.', 'error');
+				ngNotify.set('Introduce un domicilio válido.', 'error');
 			} else if (vm.calle == '' && vm.numero == '' && vm.colonia == '') {
-				ngNotify.set('Introduce un domicilio valido.', 'error');
+				ngNotify.set('Introduce un domicilio válido.', 'error');
 			} else {
 				$('.buscarContrato').collapse('hide');
 				var obj = {
@@ -147,7 +147,7 @@
 
 		function buscarSetupbox() {
 			if (vm.setupbox == undefined || vm.setupbox == '') {
-				ngNotify.set('Introduce un setupbox valido.', 'error');
+				ngNotify.set('Introduce un setup box válido.', 'error');
 			} else {
 				$('.buscarContrato').collapse('hide');
 				var obj = {

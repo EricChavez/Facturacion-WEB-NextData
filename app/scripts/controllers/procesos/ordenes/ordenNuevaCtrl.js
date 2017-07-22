@@ -35,9 +35,6 @@
     vm.Cancelar = Cancelar;
     vm.Fec_Sol = $filter('date')(vm.fecha, 'dd/MM/yyyy');
 
-
-
-
     function Cancelar() {
       $state.go('home.procesos.ordenes');
     }
@@ -110,7 +107,7 @@
                         
                       } else {
                         $state.go('home.procesos.ordenes');
-                        ngNotify.set('Se ha guardado la orden de servicio con exito');
+                        ngNotify.set('Se ha guardado la orden de servicio con éxito');
                         ImprimeOrden(vm.clv_orden);
                       }
 
@@ -267,11 +264,7 @@
                 }
               }
             });
-
           }
-
-
-
         });
       }
     }

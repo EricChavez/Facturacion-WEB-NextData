@@ -255,7 +255,7 @@
     function detalleTrabajo(trabajo, x) {
 
       if (vm.selectedTecnico == undefined) {
-        ngNotify.set('Selecciona un técnico.', 'warn');
+        ngNotify.set('Selecciona a un técnico.', 'warn');
         return;
       }
       var items = {};
@@ -482,7 +482,7 @@
       } else if (vm.status == 'V') {
         if (vm.Visita1 != null && vm.Visita1 != undefined && (vm.Visita2 == undefined || vm.Visita2 == null)) {
           if (ValidaFecha(vm.Visita1, vm.Fec_Sol) == false) {
-            ngNotify.set('La fecha de visita1 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
+            ngNotify.set('La fecha de visita 1 no puede ser menor a la fecha de solicitud ni mayor a la fecha actual', 'warn');
             return;
           }
           if (vm.Visita1 != null && vm.Visita1 != undefined && (vm.Visita2 != undefined || vm.Visita2 != null)) {
@@ -495,7 +495,7 @@
       }
       console.log(DimeSitengoRetiro());
       if (DimeSitengoRetiro() == 1) {
-        ngNotify.set('Necesita recibir al menos un articulo para generar la orden ', 'warn');
+        ngNotify.set('Necesita recibir al menos un artículo para generar la orden ', 'warn');
         return;
       }
       if (DimeSitengoRetiro() == 2) {
@@ -602,7 +602,7 @@
 
               ordenesFactory.AddMovSist(vm.contratoBueno, 'Se eliminó orden de servicio', 'FrmOrdenes', vm.clv_orden).then(function (response) {
                 $state.go('home.procesos.ordenes');
-                ngNotify.set('La orden se elimino correctamente', 'success');
+                ngNotify.set('La orden se eliminó correctamente', 'success');
               });
 
             });
@@ -625,7 +625,7 @@
 
     function EjecutaOrden(redirect) {
       if (vm.status == 'P') {
-        ngNotify.set('Marque la opcion ejecutada o visita   para continuar', 'error');
+        ngNotify.set('Marque la opción ejecutada o visita para continuar', 'error');
         return;
       }
 

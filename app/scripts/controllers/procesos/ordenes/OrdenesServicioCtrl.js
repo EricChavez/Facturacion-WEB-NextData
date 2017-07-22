@@ -70,7 +70,6 @@
       };
       ordenesFactory.buscarOrdenes(obj).then(function (data) {
         vm.ordenes = data.GetuspBuscaOrdSer_BuscaOrdSerSeparado2ListResult;
-        //console.log(data);
       });
     }
 
@@ -81,7 +80,6 @@
     function AbrirOrden(Clave_Orden) {
       var options = {};
       options.Clave_Orden = Clave_Orden;
-      //console.log(options);
       var modalInstance = $uibModal.open({
         animation: vm.animationsEnabled,
         ariaLabelledBy: 'modal-title',
@@ -148,9 +146,7 @@
           status: '',
           auto: vm.auto
         };
-        console.log(obj);
         ordenesFactory.buscarOrdenes(obj).then(function (data) {
-          console.log(data);
           vm.ordenes = data.GetuspBuscaOrdSer_BuscaOrdSerSeparado2ListResult;
           if (vm.ordenes.length == 0) {
             vm.sinRegistros = true;
@@ -174,7 +170,7 @@
       }
 
       if (vm.selectedPlaza.id_compania == 0) {
-        ngNotify.set('Selecciona una plaza valida.', 'warn');
+        ngNotify.set('Selecciona una plaza válida.', 'warn');
       } else if (vm.calle == '' && vm.numero == '' && vm.selectedColonia.clvColonia == 0) {
         ngNotify.set('Introduce un domicilio válido.', 'warn');
       } else if (vm.calle == undefined && vm.numero == undefined && vm.selectedColonia.clvColonia == 0) {
@@ -262,9 +258,9 @@
       }
 
       if (vm.selectedPlaza.id_compania == 0) {
-        ngNotify.set('Selecciona una plaza valida.', 'warn');
+        ngNotify.set('Selecciona una plaza válida.', 'warn');
       } else if (vm.setupbox == "" || vm.setupbox == undefined) {
-        ngNotify.set('Introduce un SetupBox válido.', 'warn');
+        ngNotify.set('Introduce un Setup Box válido.', 'warn');
       } else {
         var obj = {
           op: 5,

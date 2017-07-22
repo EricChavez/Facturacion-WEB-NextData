@@ -157,13 +157,7 @@
       </div>
       <!--end .panel -->
     </div>
-
-
-
     <div class="row">
-
-
-
       <div class="col-md-12" style="padding-left: 25px; padding-right: 25px;">
         <p class="text-right" style="margin-top: 10px;">
           <!-- <a class="btn btn-success" ui-sref="home.procesos.atencionNueva"><i class="fa fa-plus" aria-hidden="true"></i> NUEVO</a> -->
@@ -176,7 +170,7 @@
               <th>Status</th>
               <th>Nombre</th>
               <th>Calle</th>
-              <th>Numero</th>
+              <th>Número</th>
              
             <!--  <th>Bonificar</th>-->
               <th>Ejecutar</th>
@@ -202,11 +196,9 @@
                 <a title="Ejecutar reporte" ng-if="x.Status!='E'" ng-click="$ctrl.EjecutaQueja(x.Clv_Queja,x.Contrato,x.Clv_TipSer)" class="btn ink-reaction btn-xs btn-success"><i class="md md-launch"></i> Ejecutar</a>
               </td>
               <td>
-                <a title="Consultar reporte" type="button" class="btn ink-reaction btn-xs  btn-info" data-toggle="tooltip" data-placement="top" ui-sref="home.procesos.detallequeja({ id: x.Clv_Queja, contrato: x.Contrato, servicio: x.Clv_TipSer })" data-original-title="Detalle de queja"><i class="md md-content-paste"></i> Consulta</a>
+                <a title="Consultar reporte" type="button" class="btn ink-reaction btn-xs  btn-info" data-toggle="tooltip" data-placement="top" ui-sref="home.procesos.detallequeja({ id: x.Clv_Queja, contrato: x.Contrato, servicio: x.Clv_TipSer })" data-original-title="Detalle de queja"><i class="md md-content-paste"></i> Consultar</a>
                 <button title="Eliminar reporte" ng-if="x.Status!='E'" type="button" class="btn ink-reaction btn-xs  btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Elimina queja" ng-click="$ctrl.EliminaQueja(x);"><i class="md md-delete"></i> Eliminar</button>
               </td>
-
-
             </tr>
           </tbody>
         </table>

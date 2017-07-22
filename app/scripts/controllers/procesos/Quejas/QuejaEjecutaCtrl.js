@@ -30,7 +30,6 @@ angular
               quejasFactory.ConsultaQueja($stateParams.id).then(function (data) {
                 
                 var detqueja = data.GetQuejasListResult[0];
-                console.log(detqueja);
                 vm.UsuarioGenero = detqueja.UsuarioGenero;
                 vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
                 vm.TecnicoAgenda = detqueja.NombreTecAge;
@@ -57,8 +56,6 @@ angular
                   var fproceso = detqueja.FechaProceso.split(' ');
                   vm.FechaProceso = fproceso[0];
                   vm.HoraProceso = getTime(detqueja.FechaProceso);
-
-
                 }
 
 
@@ -94,6 +91,17 @@ angular
                   vm.FechaEjecucuionReal = fEjecucuionReal[0];
                   vm.HoraEjecucuionReal = getTime(detqueja.EjecucuionReal);
                 }
+
+                DateRep.FEjec = vm.FechaEjecucion;
+                DateRep.HEjec = vm.HoraEjecucion;
+                DateRep.FVis1 = vm.Fechavisita1;
+                DateRep.HVis1 = vm.Horavisita1;
+                DateRep.FVis2 = vm.Fechavisita2;
+                DateRep.HVis2 = vm.Horavisita2;
+                DateRep.FVis3 = vm.Fechavisita3;
+                DateRep.HVis3 = vm.Horavisita3;
+                DateRep.FPro = vm.FechaProceso;
+                DateRep.HPro = vm.HoraProceso;
 
                 vm.Departamento = detqueja.Clasificacion;
                 vm.Clv_trabajo = detqueja.Clv_Trabajo;
@@ -291,22 +299,37 @@ angular
         }
 
       } else if (vm.Estatus == 'S') {
-
+        if(vm.FechaProceso != null){
+          vm.FProceso = true;
+          vm.Iproceso = 'input-normal';
+        }else{
+          vm.FProceso = false;
+          vm.Iproceso = 'input-yellow';
+        }
         vm.FEjecucion = true
         vm.FVisita1 = true;
         vm.FVisita2 = true;
         vm.FVisita3 = true;
-        vm.FProceso = false;
 
         vm.Iejecucion = 'input-normal';
         vm.Ivisita1 = 'input-normal';
         vm.Ivisita2 = 'input-normal';
         vm.Ivisita3 = 'input-normal';
-        vm.Iproceso = 'input-yellow';
       }
     }
-
+    
     function CambiaEstatus() {
+      console.log('CambiaEstatus-DateRep: ',DateRep);
+      vm.FechaEjecucion = DateRep.FEjec;
+      vm.HoraEjecucion = DateRep.HEjec;
+      vm.Fechavisita1 = DateRep.FVis1;
+      vm.Horavisita1 = DateRep.HVis1;
+      vm.Fechavisita2 = DateRep.FVis2;
+      vm.Horavisita2 = DateRep.HVis2;
+      vm.Fechavisita3 = DateRep.FVis3;
+      vm.Horavisita3 = DateRep.HVis3;
+      vm.FechaProceso = DateRep.FPro;
+      vm.HoraProceso = DateRep.HPro;
       Bloqueo();
     }
 
@@ -514,7 +537,7 @@ angular
       });
     }    
     var vm = this;
-   
+
     InitalData();
     vm.Titulo = 'Ejecutar Reporte';
     vm.ShowEje = true;
@@ -533,5 +556,7 @@ angular
     vm.IEstatus = true;
     vm.idBitacora=0;
     vm.idTecnicoBitacora=0;
+
+    var DateRep = {};
 
   });

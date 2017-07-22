@@ -1,7 +1,7 @@
 <div class="card" style="margin-top:10px;">
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
-      <strong style="font-weight:bold; border:none; margin-left:10px;">Estadisticas</strong>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Estadísticas</strong>
       <br /><small class="text-muted" style="font-size:14px; margin-left:10px;"> <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Catálogos</a></small>
 
     </header>
@@ -11,19 +11,16 @@
   </div>
 
   <div class="card-body">
-
-    
  </div>
 
     <div class="col-md-12">
-
       <div class="col-md-4">
         <br>
         <button class="btn btn-success btn-flat btn-sm" ng-click="$ctrl.printDiv('print')"><i class="fa fa-print"></i> Imprimir resultados</b<utton>
         </div>
         <div class="col-md-4">
-selecciona el tipo de grafica
-           <select class="form-control input-sm" ng-model="$ctrl.TipoGrafica"
+          <p>Selecciona el tipo de gráfica:</p>
+          <select class="form-control input-sm" ng-model="$ctrl.TipoGrafica"
            ng-change="$ctrl.cambioGrafico()"
            >
            <option value="PieChart" selected>Gráfico circular </option>
@@ -35,11 +32,7 @@ selecciona el tipo de grafica
      
     </div>
 <div class="col-md-12" id="print" style=" ">
-
-
  <div  class="col-md-6" ng-repeat="x in $ctrl.Preguntas" google-chart chart="x" style="height:500px; width:100%;"></div>
-</div>
-
-   
+  </div>
   </div>
 </div>
