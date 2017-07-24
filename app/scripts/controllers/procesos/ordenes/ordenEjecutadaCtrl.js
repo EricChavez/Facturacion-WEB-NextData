@@ -567,7 +567,6 @@
                         if (redirect) {
                           $state.go('home.procesos.ordenes')
                         }
-
                         ngNotify.set('La orden se ha ejecutado correctamente', 'success');
                       }
                     })
@@ -633,35 +632,6 @@
         }
       });
     }
-    /*function Eliminar() {
-
-
-      ordenesFactory.Getsp_validaEliminarOrden().then(function (data) {
-        if (data.Getsp_validaEliminarOrdenserResult.Activo == 1) {
-
-          ordenesFactory.AddGuardaMovSist(vm.clv_orden).then(function (data) {
-            ordenesFactory.DeleteOrdSer(vm.clv_orden).then(function (data) {
-
-              ordenesFactory.AddMovSist(vm.contratoBueno, 'Se eliminó orden de servicio', 'FrmOrdenes', vm.clv_orden).then(function (response) {
-                $state.go('home.procesos.ordenes');
-                ngNotify.set('La orden se eliminó correctamente', 'success');
-              });
-
-            });
-
-
-          });
-
-        } else {
-          ngNotify.set('No tiene permisos para eliminar la orden', 'error');
-        }
-
-      });
-
-
-    }*/
-
-
 
     function EjecutaOrden(redirect) {
       if (vm.status == 'P') {

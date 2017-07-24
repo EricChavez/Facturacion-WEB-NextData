@@ -2,7 +2,7 @@
 
 angular
     .module('softvApp')
-    .controller('modalEliminarOrdSerCtrl', function($uibModalInstance, $uibModal, $rootScope, ngNotify, $localStorage, $state, options, ordenesFactory){
+    .controller('modalEliminarOrdSerCtrl', function($uibModalInstance, $uibModal, $rootScope, ngNotify, $state, options, ordenesFactory){
 
         function ok(){
             ordenesFactory.AddGuardaMovSist(vm.clv_orden).then(function (data) {
