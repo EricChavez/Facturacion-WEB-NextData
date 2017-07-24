@@ -501,9 +501,20 @@
       if (DimeSitengoRetiro() == 2) {
         var ApaNoEntregados = [];
         vm.trabajosTabla.forEach(function (row) {
+      if (row.Descripcion.toLowerCase().includes('rante') ||
+          row.Descripcion.toLowerCase().includes('relnb') ||
+          row.Descripcion.toLowerCase().includes('rcabl') ||
+          row.Descripcion.toLowerCase().includes('rcont') ||
+          row.Descripcion.toLowerCase().includes('rapar') ||
+          row.Descripcion.toLowerCase().includes('rantx') ||
+          row.Descripcion.toLowerCase().includes('riapar') ||
+          row.Descripcion.toLowerCase().includes('retca') ||
+          row.Descripcion.toLowerCase().includes('rradi') ||
+          row.Descripcion.toLowerCase().includes('rrout')) {         
           if (row.recibi == false) {
             ApaNoEntregados.push(row);
           }
+        }          
         });
 
         ordenesFactory.GetSP_InsertaTbl_NoEntregados(ApaNoEntregados).then(function (response) {
@@ -520,7 +531,7 @@
 
     function GuardaDetalle(redirect) {
 
-      ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
+     
         ordenesFactory.AddNueRelOrdenUsuario(vm.clv_orden).then(function (data) {
           var obj = {
             'ClvOrden': vm.clv_orden,
@@ -565,7 +576,7 @@
             }
           });
         });
-      });
+     
     }
 
     function ImprimeOrden(clv_orden) {
@@ -633,7 +644,7 @@
           ngNotify.set(data.GetSP_ValidaGuardaOrdSerAparatosResult, 'warn');
           return;
         } else {
-
+       ordenesFactory.GetValidaOrdSerManuales(vm.clv_orden).then(function (response) {
           ordenesFactory.GetValida_DetOrden(vm.clv_orden).then(function (response) {
 
             if (response.GetValida_DetOrdenResult.Validacion == 0) {
@@ -675,7 +686,7 @@
 
             }
 
-
+          });
           });
         }
 
