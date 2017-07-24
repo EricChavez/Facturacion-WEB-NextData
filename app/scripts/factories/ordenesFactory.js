@@ -68,7 +68,6 @@ angular
       GetSP_InsertaTbl_NoEntregados: '/SP_InsertaTbl_NoEntregados/GetSP_InsertaTbl_NoEntregados',
       GetValidarNuevo: '/ValidarNuevo/GetValidarNuevo',
       Getsp_BorraArticulosAsignados: '/OrdSer/Getsp_BorraArticulosAsignados'
-
     };
 
 
