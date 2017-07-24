@@ -1,0 +1,92 @@
+<style type="text/css">
+	.scrollDiv {
+		height: 500px;
+		overflow: auto;
+		overflow-x: hidden;
+	}
+</style>
+<div class="card animated fadeIn" style="margin-top:20px;">
+    <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+        <header>
+            <strong style="font-weight:bold; border:none; margin-left:10px;">Comisión vendedores</strong>
+			<br>
+            <small class="text-muted" style="font-size:14px; margin-left:10px;">
+                <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Comisiones vendedores</a>
+            </small>
+        </header>
+    </div>
+    <div class="card-body">
+        <div class="panel-group" id="accordion3">
+            <div class="card panel">
+                <div class="card-head card-head-xs collapsed" data-toggle="collapse" data-parent="#accordion3" data-target="#accordion3-1" aria-expanded="false">
+                    <header><i class="fa fa-plus-circle"></i> Nueva Comisión</header>
+                    <div class="tools">
+		                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
+	                </div>
+                </div>
+                <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
+                    <div class="panel-body">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <p>vendedor:</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Tipo de servicio:</p>
+                            </div>
+                            <div class="col-md-2">
+                                <P>Rango:</P>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Comisión:</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="text" class="form-control input-sm" ng-model="$ctrl.Vendedor" placeholder="Ingresa vendedor">
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control input-sm" ng-model="$ctrl.TipoSerbico" ng-options="">
+                                    <option value="">Selecciona tipo de servicio</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select class="form-control input-sm" ng-model="$ctrl.Rango" ng-options="">
+                                    <option value="">Selecciona rango</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control input-sm" ng-model="$ctrl.Comision" placeholder="Ingresa comisión">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-floppy-o"></i> GUARDAR</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><b>Vendedor</b></th>
+                            <th><b>Tipo de servicio</b></th>
+                            <th><b>Rango</b></th>
+                            <th><b>Comisión</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
