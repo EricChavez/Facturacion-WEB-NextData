@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <button class="close" type="button" aria-label="close" ng-click="ctrl.cancel()">x</button>
+    <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Confirmar</h4>
+</div>
+<div class="modal-body">
+    <p>¿Realmente desea eliminar la orden de servicio #{{ctrl.clv_orden}}?</p>
+</div>
+<div class="modal-footer">
+    <button title="Eliminar orden de servicio" class="btn btn-danger btn-sm" type="button" ng-click="ctrl.ok()">Eliminar</button>
+    <button title="Regresar a la orden de servicio" class="btn bnt-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+</div>

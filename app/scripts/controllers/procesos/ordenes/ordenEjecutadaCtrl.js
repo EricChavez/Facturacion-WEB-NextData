@@ -590,8 +590,39 @@
       });
     }
 
-
     function Eliminar() {
+      ordenesFactory.Getsp_validaEliminarOrden().then(function (data) {
+        if (data.Getsp_validaEliminarOrdenserResult.Activo == 1) {
+          ModalConfirmDelete(vm.clv_orden, vm.contratoBueno);
+        } else {
+          ngNotify.set('No tiene permisos para eliminar la orden', 'error');
+        }
+      });
+    }
+
+    function ModalConfirmDelete(clv_orden, contratoBueno){
+      var options = {};
+      options.clv_orden = clv_orden;
+      options.contratoBueno = contratoBueno;
+      var modalInstance = $uibModal.open({
+        animation: true,
+        ariaLabelledBy: 'modal-title',
+        ariaDescribedBy: 'modal-body',
+        templateUrl: 'views/procesos/modalEliminarOrdSer.html',
+        controller: 'modalEliminarOrdSerCtrl',
+        controllerAs: 'ctrl',
+        backdrop: 'static',
+        keyboard: false,
+        class: 'modal-backdrop fade',
+        size: 'sm',
+        resolve: {
+          options: function () {
+            return options;
+          }
+        }
+      });
+    }
+    /*function Eliminar() {
 
 
       ordenesFactory.Getsp_validaEliminarOrden().then(function (data) {
@@ -617,9 +648,7 @@
       });
 
 
-    }
-
-
+    }*/
 
 
 

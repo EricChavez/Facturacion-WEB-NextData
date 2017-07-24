@@ -16,7 +16,6 @@
 		<div class="tools">
 			<div class="btn-group">
 				<a title="Crear una orden de servicio nueva" class="btn btn-primary btn-sm"  ui-sref="home.procesos.ordenNueva">CREAR NUEVA ORDEN </a>
-
 			</div>
 		</div>
 	</div>
@@ -201,7 +200,7 @@
 							<th>Nombre</th>
 							<th>Calle</th>
 							<th>Número</th>
-							<th>Acción</th>
+							<th colspan="2">Acción</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -217,6 +216,8 @@
 							<td>#{{ x.NUMERO}}</td>
 							<td>
 								<button ui-sref="home.procesos.ordendetalle({ id: x.Clv_Orden})" title="Consultar orden de servicio" class="btn ink-reaction btn-xs btn-info" ><i class="md md-content-paste"></i> Consultar</button>
+							</td>
+							<td>
 								<a title="Ejecutar orden de servicio" ng-if="x.STATUS !='E'" ng-click="$ctrl.ejecuta(x.Clv_Orden)" class="btn ink-reaction btn-xs btn-warning"><i class="md md-launch"></i> Ejecutar</a>
 							</td>
 						</tr>
