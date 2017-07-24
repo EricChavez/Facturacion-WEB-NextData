@@ -425,7 +425,7 @@
           <div class="col-md-12">
             <div class="col-md-6">
               <b>Tipo solución</b>
-              <select class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" ng-required="$ctrl.Estatus=='E'"
+              <select  ng-class="(QuejaForm.solucion.$valid==false)?'input-yellow':'input-normal'"    class="form-control input-sm" name="solucion" required-message="'Este campo es obligatorio.'" ng-required="$ctrl.Estatus=='E'"
                 validate-on="dirty" ng-model="$ctrl.Trabajo" ng-options="item as item.DESCRIPCION for item in $ctrl.Trabajos track by item.CLV_TRABAJO"
                 ng-disabled="$ctrl.BloqElemnt">
               </select>
@@ -436,7 +436,11 @@
                                     </label> </div>-->
             <div class="col-md-12">
               <b> Problema real:</b>
-              <textarea class="form-control input-sm" name="Problema" required-message="'Este campo es obligatorio.'" ng-required="$ctrl.Estatus=='E'"
+              <textarea 
+              class="form-control input-sm" 
+              name="Problema"
+              ng-class="(QuejaForm.Problema.$valid==false)?'input-yellow':'input-normal'"
+               required-message="'Este campo es obligatorio.'" ng-required="$ctrl.Estatus=='E'"
                 validate-on="dirty" ng-disabled="$ctrl.Iprobreal" ng-model="$ctrl.ProblemaReal" placeholder="Redacta brevemente el problema real que derivo la queja">
 
                       </textarea>

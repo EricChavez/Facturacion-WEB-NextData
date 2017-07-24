@@ -1,3 +1,65 @@
+<style>
+  .input-yellow {
+
+    background-color: rgba(255, 249, 59, 0.71);
+    animation-name: anim;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+  }
+
+  .input-normal {
+
+    background-color: #ffffff;
+  }
+
+
+  .input-yellow.bezier {
+    animation-timing-function: cubic-bezier(.8, 0, .2, 1);
+  }
+
+  .input-yellow.steps {
+    animation-name: anim-half;
+    animation-timing-function: steps(1, end);
+  }
+
+  @keyframes anim {
+    to {
+      background-color: #ffffff;
+    }
+  }
+
+  @keyframes anim-half {
+    50% {
+      background-color: #f5ff3b;
+    }
+  }
+
+
+
+  .wrapper {
+    height: 140px;
+    overflow: auto;
+  }
+
+  .table>thead>tr>th,
+  .table>tbody>tr>th,
+  .table>tfoot>tr>th,
+  .table>thead>tr>td,
+  .table>tbody>tr>td,
+  .table>tfoot>tr>td {
+    padding: 5px 8px;
+    line-height: 1.846153846;
+    vertical-align: top;
+    border-top: 1px solid rgba(189, 193, 193, 0.2);
+  }
+
+</style>
+
+
+
+
 <style type="text/css">
   .scrollDiv {
     height: 400px;
@@ -45,15 +107,8 @@
             </div>
             <div class="col-md-4">
 
-              <input type="text" placeholder="No. contrato"
-               class="form-control input-sm" 
-               ng-model="$ctrl.contrato"
-                name="contrato" 
-                validate-on="dirty"
-                ng-disabled="$ctrl.block"
-                 ng-pattern="/^[0-9]+([-][0-9]+)?$/"
-                 ng-keydown="$ctrl.buscarContrato($event)"
-                required-message="'Este campo es obligatorio.'" 
+              <input type="text" placeholder="No. contrato" class="form-control input-sm" ng-model="$ctrl.contrato" name="contrato" validate-on="dirty"
+                ng-disabled="$ctrl.block" ng-pattern="/^[0-9]+([-][0-9]+)?$/" ng-keydown="$ctrl.buscarContrato($event)" required-message="'Este campo es obligatorio.'"
                 invalid-message="'Formato de contrato inválido.'">
 
             </div>
@@ -66,9 +121,7 @@
           </div>
         </div>
         <div class="col-md-2">
-          <input type="text" class="form-control input-sm" 
-          placeholder="# Folio de bitácora" 
-          ng-model="$ctrl.bitacora" disabled>
+          <input type="text" class="form-control input-sm" placeholder="# Folio de bitácora" ng-model="$ctrl.bitacora" disabled>
         </div>
         <div class="col-md-5">
           <div class="col-md-12">
@@ -124,7 +177,59 @@
         <div class="col-md-3 text-center">
           <b style="font-size: 14px;
     color: #06599a;"><i class="md md-access-time"></i> Fechas de:</b><br><br>
-          <div class="form-horizontal" role="form">
+          <table class="table" id="tfechas">
+            <tr>
+              <td> <label for="regular13" class=" control-label">Solicitud</label></td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.Fec_Sol" style="font-size:12px;" ng-disabled="$ctrl.blockSolicitud"
+                  placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+
+              </td>
+            </tr>
+            <tr ng-class="(QuejaForm.fejecucion.$valid==false  )?'input-yellow':'input-normal'">
+              <td> <label for="regular13" class=" control-label">Ejecución</label></td>
+              <td>
+                <input type="text" name='fejecucion' class="form-control input-sm" ng-model="$ctrl.Fec_Eje" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucion"
+                  placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockEjecucion" model-view-value="true" validate-on="dirty"
+                  required-message="' La Fecha es obligatoria.'">
+
+              </td>
+            </tr>
+            <tr ng-class="(QuejaForm.fechavisita1.$valid==false  )?'input-yellow':'input-normal'">
+              <td>
+                <label for="regular13" class="control-label">Visita 1</label>
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" name="fechavisita1" ng-model="$ctrl.Visita1" style="font-size:12px;" model-view-value="true"
+                  ng-disabled="$ctrl.blockVista1" placeholder="" ui-mask="99/99/9999" ng-required="!$ctrl.blockVista1" validate-on="dirty"
+                  required-message="'La fecha es obligatoria.'" model-view-value="true">
+              </td>
+            </tr>
+            <tr ng-class="(QuejaForm.fechavisita2.$valid==false  )?'input-yellow':'input-normal'">
+              <td>
+                <label for="regular13" class=" control-label">Visita 2</label>
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.Visita2" model-view-value="true" style="font-size:12px;"
+                  ng-disabled="$ctrl.blockVista2" placeholder="" ui-mask="99/99/9999" name="fechavisita2" ng-required="!$ctrl.blockVista2"
+                  validate-on="dirty" required-message="'La fecha es obligatoria.'">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="regular13" class=" control-label">Ejecución real</label>
+              </td>
+              <td>
+                <input type="text" class="form-control input-sm" ng-model="$ctrl.datosOrden.FechaEjecucionReal" style="font-size:12px;" ng-disabled="$ctrl.blockEjecucionReal"
+                  placeholder="DD/MM/YYYY" ui-mask="99/99/9999">
+              </td>
+            </tr>
+
+          </table>
+
+
+
+          <!-- <div class="form-horizontal" role="form">
             <div class="form-group">
               <label for="regular13" class="col-sm-4 control-label">Solicitud</label>
               <div class="col-sm-8">
@@ -152,8 +257,8 @@
               </div>
             </div>
 
-          </div>
-          <div class="form-horizontal" role="form">
+          </div>-->
+          <!--  <div class="form-horizontal" role="form">
             <div class="form-group">
               <label for="regular13" class="col-sm-4 control-label">Visita 2</label>
               <div class="col-sm-8">
@@ -171,17 +276,26 @@
                 <div class="form-control-line"></div>
               </div>
             </div>
-          </div>
+          </div>-->
 
           <div class="row">
-            <button title="Consultar agenda" type="button" class="btn btn-info btn-sm" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
+            <div class="col-md-6">
+              <button title="Consultar agenda" type="button" class="btn btn-info btn-sm btn-block" ng-click="$ctrl.MuestraAgenda()"><i class="fa fa-calendar"></i> Agenda</button>
+            </div>
+            <div class="col-md-6">
+              <button title="Realizar descarga de material" type="button" class="btn btn-sm btn-warning btn-block" ng-if="$ctrl.soyEjecucion==true"
+                ng-click="$ctrl.ValidarDescargaMaterialOrden()"><i class="fa fa-wrench"></i> Descar. Material</button>
+            </div>
+
 
           </div>
         </div>
         <div class="col-md-6">
           <div class="col-md-6">
             <small><b>Técnico:</b></small>
-            <select name="tecnico" class="form-control input-sm" ng-model="$ctrl.selectedTecnico" ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
+            <select name="tecnico"
+            ng-class="(QuejaForm.tecnico.$valid==false  )?'input-yellow':'input-normal'"
+             class="form-control input-sm" ng-model="$ctrl.selectedTecnico" ng-options="v.NOMBRE for v in $ctrl.tecnico track by v.CLV_TECNICO"
               validate-on="dirty" required-message="'Error!, Este campo es obligatorio.'" ng-required="!$ctrl.blockTecnico"
               ng-disabled="$ctrl.blockTecnico">
 					<option value=""  selected>Seleccione el técnico</option>
@@ -226,10 +340,7 @@
             </table>
           </div>
 
-          <div class="col-md-6">
-            <button title="Realizar descarga de material" type="button" class="btn btn-xs btn-warning" ng-if="$ctrl.soyEjecucion==true"
-              ng-click="$ctrl.ValidarDescargaMaterialOrden()"><i class="fa fa-wrench"></i> Descar. Material</button>
-          </div>
+
 
         </div>
 
