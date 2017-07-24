@@ -21,6 +21,20 @@ angular
                 templateUrl: 'views/comisiones/ComisionVendedor.html',
                 controller: 'ComisionVendedorCtrl',
                 controllerAs: '$ctrl'
+            },{
+                name: 'home.comisiones.tecnicos',
+                data: {
+                    pageTitle: 'SOFTV | COMISIÓN TECNICOS',
+                    permissions: {
+                        options: {
+                            reload: false
+                        }
+                    }
+                },
+                url: '/comision/tecnicos',
+                templateUrl: 'views/comisiones/ComisionTecnico.html',
+                controller: 'ComisionTecnicoCtrl',
+                controllerAs: '$ctrl'
             }
         ];
         states.forEach(function (state) {
