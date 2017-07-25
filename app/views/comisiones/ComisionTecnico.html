@@ -1,0 +1,94 @@
+<style type="text/css">
+  .scrollDiv {
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+</style>
+<div class="card animated fadeIn" style="margin-top:20px;">
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Comisiónes Técnicos</strong>
+      <br>
+      <small class="text-muted" style="font-size:14px; margin-left:10px;">
+                <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Comisiones</a>
+            </small>
+    </header>
+  </div>
+  <div class="card-body">
+      <div class="col-md-12">
+       <form angular-validator-submit="$ctrl.Agregar()" name="ComisionForm" novalidate angular-validator>
+      
+         <div class="col-md-2">Selecciona un rango de puntos</div>
+        <div class="col-md-2">
+
+            <input type="number" 
+            name="inicio" 
+            ng-model="$ctrl.inicio"
+            class="form-control sm"
+             min="1"  
+            max="{{$ctrl.fin}}"
+             validate-on="dirty"
+            required required-message="'Este campo es obligatorio'">
+        </div>
+          <div class="col-md-2">
+
+            <input type="number"
+             name="fin" 
+             ng-model="$ctrl.fin"
+             class="form-control sm" 
+             min="{{$ctrl.inicio+1}}"
+             max="10000"     
+              validate-on="dirty"        
+             required 
+             required-message="'Este campo es obligatorio'" >
+        </div>
+         <div class="col-md-1">Comisión:</div>
+         <div class="col-md-2">
+
+            <input type="number"
+             name="comision" 
+             ng-model="$ctrl.comision"
+             class="form-control sm"  
+              validate-on="dirty"
+              placeholder="$ monto de comisión"                        
+             required 
+             required-message="'Este campo es obligatorio'" >
+        </div>
+
+<div class="col-md-3">
+
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+        </div>
+
+       </form>
+
+
+      </div>
+   
+
+        <div class="col-md-12">
+          <div class="col-md-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><b>Vendedor</b></th>
+                  <th><b>Tipo de servicio</b></th>
+                  <th><b>Rango</b></th>
+                  <th><b>Comisión</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
