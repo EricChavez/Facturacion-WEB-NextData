@@ -5,7 +5,7 @@ angular.module('softvApp')
     var paths = {
       GetcomisiontecnicoList: '/ComisionesTecnicosWeb/GetComisionesTecnicosWebList',
       Addcomisiontecnico: '/ComisionesTecnicosWeb/AddComisionesTecnicosWeb',
-     
+      GetDeleteComisionesTecnicosWeb:'/ComisionesTecnicosWeb/GetDeleteComisionesTecnicosWeb'
     };   
 
 
@@ -54,6 +54,37 @@ angular.module('softvApp')
       return deferred.promise;
 
     };
+
+
+     factory.GetDeleteComisionesTecnicosWeb = function (IdComision) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+        'objComisionesTecnicosWeb': {
+          'RangoInicialPuntos': 0,
+          'RangoFinalPuntos': 0,
+          'Comision': 0,
+          'IdComision':IdComision
+        }
+
+      };
+
+      $http.post(globalService.getUrl() + paths.GetDeleteComisionesTecnicosWeb, JSON.stringify(parametros), config).then(function (response) {
+
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+
+    };
+
+
+
 
 
     

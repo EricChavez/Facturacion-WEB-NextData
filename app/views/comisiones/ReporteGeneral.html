@@ -1,0 +1,144 @@
+<style type="text/css">
+  .scrollDiv {
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+</style>
+<style>
+  .dualmultiselect label {
+    margin: 10px;
+  }
+
+  .dualmultiselect .btn {
+    margin: 10px;
+  }
+
+  .dualmultiselect .pool {
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px;
+    height: 250px;
+    overflow-y: scroll;
+  }
+
+  .dualmultiselect .pool ul {
+    list-style: none;
+    padding-left: 0px;
+  }
+
+  .dualmultiselect .pool ul li {
+    width: 100%;
+    padding: 4px 8px 4px 4px;
+    border-bottom: 1px dotted #CFCFCF;
+  }
+
+  .dualmultiselect .pool ul li a:hover {
+    text-decoration: none;
+  }
+
+</style>
+<div class="card animated fadeIn" style="margin-top:20px;">
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Reporte General</strong>
+      <br>
+      <small class="text-muted" style="font-size:14px; margin-left:10px;">
+                <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Comisiones</a>
+            </small>
+    </header>
+  </div>
+  <div class="card-body">
+
+    <div class="col-md-4">
+      <div class="col-md-12 ">
+        <b>Reportes</b><br>
+        <label class="radio-inline radio-styled">
+														<input type="radio" ng-model="$ctrl.Reporte" name="inlineRadioOptions" value="C"><span>Comisiones</span>
+                                                    </label><br>
+        <label class="radio-inline radio-styled">
+														<input type="radio" ng-model="$ctrl.Reporte" name="inlineRadioOptions" value="S"><span>Status de ventas</span>
+                                                    </label><br>
+        <label class="radio-inline radio-styled">
+														<input type="radio" ng-model="$ctrl.Reporte" name="inlineRadioOptions" value="V"><span>Número de ventas</span>
+													</label>
+
+
+
+      </div>
+
+      <div class="col-md-12">
+        <b> Grupos de ventas </b>
+        <select ng-model="$ctrl.grupoventa" class="form-control input-sm">
+              <option value=""> Selecciona </option>
+          </select>
+      </div>
+
+      <div class="col-md-12">
+        <b> Tipo de servicio </b>
+        <select ng-model="$ctrl.servicio" class="form-control input-sm">
+              <option value=""> Selecciona </option>
+          </select>
+      </div>
+      <div class="col-md-12">
+        <b> Rangos de Fechas </b><br>
+        <div class="col-md-6">
+          De <input type="date" class="form-control input-sm" ng-model="$ctrl.fechainicio">
+        </div>
+        <div class="col-md-6">
+          Al <input type="date" class="form-control input-sm" ng-model="$ctrl.fechafin">
+        </div>
+      </div>
+      <div class="col-md-12">
+        <b>Status</b><br>
+        <div class="col-md-6" ng-repeat="x in $ctrl.Estatus">
+
+          <label class="checkbox-inline checkbox-styled checkbox-warning">
+														<input type="checkbox" ng-model="x.checked"  
+                                     
+                            checked=""><span>{{x.Nombre}}</span>
+													</label>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-8">
+   <div class="col-md-12 ">
+       {{$ctrl.tituloSelect}}
+          <div class="dualmultiselect">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 text">
+                <h6 class="text-center"><b>Preguntas disponibles</b></h6>
+                <div class="pool">
+                  <ul>
+                    <li ng-repeat="item in $ctrl.objDistribuidores.items" ng-click="$ctrl.transfer($ctrl.objDistribuidores.items, $ctrl.objDistribuidores.selectedItems, $ctrl.objDistribuidores.items.indexOf(item))">
+                      <a href=""><b>{{ item.Nombre }}</b> </a>
+
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <h6 class="text-center"><b>Preguntas seleccionadas</b></h6>                
+                <div class="pool">
+                  <ul>
+                    <li ng-repeat="item in $ctrl.objDistribuidores.selectedItems" ng-click="$ctrl.transfer($ctrl.objDistribuidores.selectedItems, $ctrl.objDistribuidores.items, $ctrl.objDistribuidores.selectedItems.indexOf(item))">
+                      <a href=""><b>{{ item.Nombre }}</b></a>
+                     
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+    </div>
+
+  </div>
+</div>
