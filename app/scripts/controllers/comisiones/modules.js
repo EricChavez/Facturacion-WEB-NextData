@@ -36,6 +36,66 @@ angular
                 templateUrl: 'views/comisiones/ComisionTecnico.html',
                 controller: 'ComisionTecnicoCtrl',
                 controllerAs: '$ctrl'
+            },
+            {
+                name: 'home.comisiones.reportegeneral',
+                data: {
+                    pageTitle: 'SOFTV | REPORTE GENERAL',
+                    permissions: {
+                        options: {
+                            reload: false
+                        }
+                    }
+                },
+                url: '/comision/reportegeneral',
+                templateUrl: 'views/comisiones/ReporteGeneral.html',
+                controller: 'ReporteGeneralCtrl',
+                controllerAs: '$ctrl'
+            },
+            {
+                name: 'home.comisiones.resumensucursal',
+                data: {
+                    pageTitle: 'SOFTV | RESUMEN SUCURSAL',
+                    permissions: {
+                        options: {
+                            reload: false
+                        }
+                    }
+                },
+                url: '/comision/resumensucursal',
+                templateUrl: 'views/comisiones/ResumenSucursal.html',
+                controller: 'ResumenSucursalCtrl',
+                controllerAs: '$ctrl'
+            },
+             {
+                name: 'home.comisiones.resumenvendedores',
+                data: {
+                    pageTitle: 'SOFTV | RESUMEN VENDEDORES',
+                    permissions: {
+                        options: {
+                            reload: false
+                        }
+                    }
+                },
+                url: '/comision/resumenvendedores',
+                templateUrl: 'views/comisiones/ResumenVendedores.html',
+                controller: 'ResumenVendedoresCtrl',
+                controllerAs: '$ctrl'
+            },
+             {
+                name: 'home.comisiones.graficas',
+                data: {
+                    pageTitle: 'SOFTV | GRAFICAS',
+                    permissions: {
+                        options: {
+                            reload: false
+                        }
+                    }
+                },
+                url: '/comision/graficas',
+                templateUrl: 'views/comisiones/Graficas.html',
+                controller: 'GraficasCtrl',
+                controllerAs: '$ctrl'
             }
         ];
         states.forEach(function (state) {

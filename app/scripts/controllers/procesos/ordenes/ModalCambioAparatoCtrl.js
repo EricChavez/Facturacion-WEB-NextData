@@ -49,11 +49,11 @@
             vm.listastatus = data.GetSP_StatusAparatosResult;
 
             if (items.Trabajo == 'CANTX') {
-              vm.label1 = 'Antena asignada Acualmente';
+              vm.label1 = 'Antena asignada Actualmente';
               vm.label2 = 'Seleccione el status de la antena';
               vm.label3 = 'Seleccione la antena a instalar';
             } else if (items.Trabajo == 'CCABM') {
-              vm.label1 = 'Aparato asignado Acualmente';
+              vm.label1 = 'Aparato asignado Actualmente';
               vm.label2 = 'Seleccione el status del aparato';
               vm.label3 = 'Seleccione el aparato a instalar';
             } else {
