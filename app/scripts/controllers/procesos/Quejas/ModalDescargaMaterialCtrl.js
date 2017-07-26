@@ -5,14 +5,12 @@ angular
 
 
     function initialData(objDesMat) {
-       console.log(options);
       vm.articulos_ = [];
       DescargarMaterialFactory.GetMuestra_Detalle_Bitacora(objDesMat.SctTecnico.CLV_TECNICO, vm.IAlma).then(function (data) {
         vm.Material = data.GetMuestra_Detalle_Bitacora_2ListResult;
         DescargarMaterialFactory.GetSoftv_GetDescargaMaterialEstaPagado(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
           vm.pagado = data.GetSoftv_GetDescargaMaterialEstaPagadoResult.Pagado
           DescargarMaterialFactory.GetSoftv_DimeSiTieneBitacora(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
-            console.log(data);
             if (data.GetSoftv_DimeSiTieneBitacoraResult == null) {} else {
               vm.No_Bitacora = data.GetSoftv_DimeSiTieneBitacoraResult.NoBitacora;
               DescargarMaterialFactory.GetDescargaMaterialArticulosByIdClvOrden(objDesMat.ClvOrden, objDesMat.Tipo_Descargar).then(function (data) {
@@ -54,6 +52,12 @@ angular
         DescargarMaterialFactory.GetMuestra_Descripcion_Articulo_2List(options.SctTecnico.CLV_TECNICO, vm.SlctMaterial.catTipoArticuloClave, vm.IAlma).then(function (data) {
           vm.DescripcionArticulo = data.GetMuestra_Descripcion_Articulo_2ListResult;
           vm.SlctArticulo.IdArticulo = "";
+          vm.MostrarCD = false;
+          vm.MostrarMII = false;
+          vm.MostrarMIE = false;
+          vm.MostrarMFI = false;
+          vm.MostrarMFE = false;
+          vm.MostrarTM = false;
         });
 
       }
@@ -63,12 +67,21 @@ angular
       DescargarMaterialFactory.GetSoftv_ObtenTipoMaterial(catUnidadClave, Tipo, Articulo, vm.SlctArticulo.IdArticulo).then(function (data) {
         vm.TipoArticulo = data.GetSoftv_ObtenTipoMaterialResult.Tipo;
         if (vm.TipoArticulo == 'Metros') {
-          vm.MostrarCD = false;
-          vm.MostrarMII = true;
-          vm.MostrarMIE = true;
-          vm.MostrarMFI = true;
-          vm.MostrarMFE = true;
-          vm.MostrarTM = true;
+          if(vm.TipoMetraje == 'I'){
+            vm.MostrarCD = false;
+            vm.MostrarMII = true;
+            vm.MostrarMIE = false;
+            vm.MostrarMFI = true;
+            vm.MostrarMFE = false;
+            vm.MostrarTM = true;
+          }else if(vm.TipoMetraje == 'E'){
+            vm.MostrarCD = false;
+            vm.MostrarMII = false;
+            vm.MostrarMIE = true;
+            vm.MostrarMFI = false;
+            vm.MostrarMFE = true;
+            vm.MostrarTM = true;
+          }
         } else if (vm.TipoArticulo == 'Piezas') {
           vm.MostrarCD = true;
           vm.MostrarMII = false;
@@ -101,33 +114,29 @@ angular
             var TArt = false;
 
             if (vm.TipoArticulo == 'Metros') {
-              /*if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
-                vm.MetrajeIE != undefined && vm.MetrajeIE > 0 &&
-                vm.MetrajeFI != undefined && vm.MetrajeFI > 0 &&
-                vm.MetrajeFE != undefined && vm.MetrajeFE > 0) {*/
-              if (vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
-                vm.MetrajeFI != undefined && vm.MetrajeFI > 0) {
+              if ((vm.MetrajeII != undefined && vm.MetrajeII > 0 &&
+                vm.MetrajeFI != undefined && vm.MetrajeFI > 0 ) ||
+                (vm.MetrajeIE != undefined && vm.MetrajeIE > 0 &&
+                vm.MetrajeFE != undefined && vm.MetrajeFE > 0)) {
+                
 
-                /*ncluyendo metraje exterior
-                if (vm.MetrajeFI > vm.MetrajeII && vm.MetrajeFE > vm.MetrajeIE) {*/
-                if (vm.MetrajeFI > vm.MetrajeII) {
-                  /*if (vm.MetrajeIE > vm.MetrajeFI) {*/
+                if (vm.MetrajeFI > vm.MetrajeII || vm.MetrajeFE > vm.MetrajeIE) {
 
+                    if(vm.TipoMetraje == 'I'){
+                      vMII = vm.MetrajeII;
+                      vMFI = vm.MetrajeFI;
+                      vMIE = 0;
+                      vMFE = 0;
+                      CantidadArticulo = (vMFI - vMII);
+                    }else if(vm.TipoMetraje == 'E'){
+                      vMII = 0;
+                      vMFI = 0;
+                      vMIE = vm.MetrajeIE;
+                      vMFE = vm.MetrajeFE;
+                      CantidadArticulo = (vMFE - vMIE);
+                    }
                     vCD = 0;
-                    vMII = vm.MetrajeII;
-                    vMFI = vm.MetrajeFI;
-                    vMIE = 0;
-                    vMFE = 0;
-                    /*vMIE = vm.MetrajeIE;
-                    vMFE = vm.MetrajeFE;
-                    CantidadArticulo = (vMFI - vMII) + (vMFE - vMIE);*/
-                    CantidadArticulo = vMII + vMFI;
                     TArt = true;
-
-                  /*} else {
-                    CantidadArticulo = 0;
-                    ngNotify.set('No se pueden intercalar los valores del metraje final con el metraje inicial.', 'error');
-                  }*/
 
                 } else {
                   CantidadArticulo = 0;
@@ -260,9 +269,22 @@ angular
       }
       return (count > 0) ? true : false;
     }
-
     function cancel() {
       $uibModalInstance.dismiss('cancel');
+    }
+
+    function SlctTipoMetraje(){
+      if(vm.TipoMetraje == 'I'){
+        vm.MostrarMFE = false;
+        vm.MostrarMIE = false;
+        vm.MostrarMII = true;
+        vm.MostrarMFI = true;
+      }else if(vm.TipoMetraje == 'E'){
+        vm.MostrarMII = false;
+        vm.MostrarMFI = false;
+        vm.MostrarMIE = true;
+        vm.MostrarMFE = true;
+      }
     }
 
     var IdArticulo = "";
@@ -277,6 +299,7 @@ angular
     vm.AgregarArticulo = AgregarArticulo;
     vm.BuscarTipoArticulo = BuscarTipoArticulo;
     vm.EliminarArticulo = EliminarArticulo;
+    vm.SlctTipoMetraje = SlctTipoMetraje;
     vm.IAlma = 0;
     vm.MostrarCD = false;
     vm.MostrarMII = false;
@@ -291,7 +314,7 @@ angular
     }else if(options.Tipo_Descargar == 'O'){
       var msj = 'la Orden'
     }
-    console.log(options);
+    vm.TipoMetraje = 'I';
     //vm.Tipo = options.Tipo_Descargar;
     initialData(options);
 
