@@ -111,29 +111,33 @@
 								<br/>
 								<form ng-submit="$ctrl.buscarColonia()">
 									<div class="row">
-										<div class="col-md-4 form-group">
+										<div class="col-md-3">
+									<label class="text-muted">Plaza</label>
+									<select id="idplaza" ng-change="$ctrl.cambioPlaza()" class="form-control input-sm" ng-model="$ctrl.selectedPlaza" ng-options="v.razon_social for v in $ctrl.plazas track by v.id_compania"></select>
+								</div>
+										<div class="col-md-3 form-group">
 											<label>Colonia</label>
 											<select class="form-control input-sm" ng-model="$ctrl.selectedColonia" ng-options="v.nombre for v in $ctrl.colonias|orderBy:'nombre' track by v.clvColonia">
  												<option value="">Seleccione</option>
 											</select>
 										</div>
-										<div class="col-md-4 form-group">
+										<div class="col-md-3 form-group">
 											<label>Calle</label>
 											<input type="text" class="form-control input-sm" ng-model="$ctrl.calle">
 										</div>
-										<div class="col-md-2 form-group">
+										<div class="col-md-1 form-group">
 											<label>Número</label>
 											<input type="text" class="form-control input-sm" placeholder="#" ng-model="$ctrl.numero">
 										</div>
-										
-									</div>								
-									<footer>
-										<p class="text-right">
-											<button type="submit" class="btn btn-sm btn-info">
+										<div class="col-md-2">
+											<br>
+                                              <button type="submit" class="btn btn-xs btn-info">
 	 											 <i class="fa fa-search"></i> Buscar
 	 											 </button>
-										</p>
-									</footer>
+										</div>
+										
+									</div>								
+									
 								</form>
 							</uib-tab>
 							<uib-tab index="3">

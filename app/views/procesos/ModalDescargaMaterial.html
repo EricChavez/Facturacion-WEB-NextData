@@ -22,6 +22,7 @@
         ng-model="ctrl.SlctMaterial" 
         ng-options="M.Descripcion for M in ctrl.Material track by M.catTipoArticuloClave"
         ng-change="ctrl.BuscarNombreArticulo()">
+        <option value="">---Selecciona----</option>
       </select>
     </div>
   </div>
@@ -36,6 +37,7 @@
         ng-model="ctrl.SlctArticulo"
         ng-options="A.Nombre for A in ctrl.DescripcionArticulo track by A.IdArticulo"
         ng-change="ctrl.BuscarTipoArticulo()">
+        <option value="">---Selecciona----</option>
       </select>
     </div>
     
@@ -44,7 +46,7 @@
       <input type="number" class="form-control" ng-disabled="ctrl.Detalle" ng-model="ctrl.CantidadDescarga" ng-show="ctrl.MostrarCD">
       <p ng-show="ctrl.MostrarTM">Metraje:</p>
       <select class="form-control" ng-model="ctrl.TipoMetraje" ng-change="ctrl.SlctTipoMetraje()" ng-show="ctrl.MostrarTM">
-        <option value="I">Inferior</option>
+        <option value="I">Interior</option>
         <option value="E">Exterior</option>
       </select>
     </div>

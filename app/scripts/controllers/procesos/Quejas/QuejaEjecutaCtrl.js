@@ -1,9 +1,9 @@
 'use strict';
 angular
   .module('softvApp')
-  .controller('QuejaEjecutaCtrl', function ($state, ngNotify,DescargarMaterialFactory ,$location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
+  .controller('QuejaEjecutaCtrl', function ($state, ngNotify, DescargarMaterialFactory, $location, $uibModal, ordenesFactory, $stateParams, atencionFactory, quejasFactory) {
 
-    function InitalData() {     
+    function InitalData() {
       vm.clv_queja = $stateParams.id;
       vm.contrato = $stateParams.contrato;
       vm.Servicio = $stateParams.servicio;
@@ -28,7 +28,7 @@ angular
               vm.ServiciosCliente = data.GetDameSerDelCliFacListResult;
 
               quejasFactory.ConsultaQueja($stateParams.id).then(function (data) {
-                
+
                 var detqueja = data.GetQuejasListResult[0];
                 vm.UsuarioGenero = detqueja.UsuarioGenero;
                 vm.UsuarioEjecuto = detqueja.UsuarioEjecuto;
@@ -113,25 +113,25 @@ angular
                 vm.Estatus = 'E';
                 Bloqueo(true);
 
-               DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_queja,'Q').then(function(data){
-                if(data.GetchecaBitacoraTecnicoResult!=null){
-                  vm.idBitacora=data.GetchecaBitacoraTecnicoResult.idBitacora;
-                  vm.idTecnicoBitacora=data.GetchecaBitacoraTecnicoResult.clvTecnico;
-                }
-                quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function (data) {
-                  vm.Tecnicos = data.GetMuestra_Tecnicos_AlmacenListResult;
-                  if (detqueja.Clave_Tecnico != null && vm.idTecnicoBitacora>0) {
-                    for (var a = 0; a < vm.Tecnicos.length; a++) {
-                      if (vm.Tecnicos[a].clv_Tecnico == vm.idTecnicoBitacora) {
-                        vm.Tecnico = vm.Tecnicos[a];
-                        vm.BlockTecnico=true;
+                DescargarMaterialFactory.GetchecaBitacoraTecnico(vm.clv_queja, 'Q').then(function (data) {
+                  if (data.GetchecaBitacoraTecnicoResult != null) {
+                    vm.idBitacora = data.GetchecaBitacoraTecnicoResult.idBitacora;
+                    vm.idTecnicoBitacora = data.GetchecaBitacoraTecnicoResult.clvTecnico;
+                  }
+                  quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function (data) {
+                    vm.Tecnicos = data.GetMuestra_Tecnicos_AlmacenListResult;
+                    if (detqueja.Clave_Tecnico != null && vm.idTecnicoBitacora > 0) {
+                      for (var a = 0; a < vm.Tecnicos.length; a++) {
+                        if (vm.Tecnicos[a].clv_Tecnico == vm.idTecnicoBitacora) {
+                          vm.Tecnico = vm.Tecnicos[a];
+                          vm.BlockTecnico = true;
+                        }
                       }
                     }
-                  }
-                });                 
-               });
+                  });
+                });
 
-                
+
 
                 atencionFactory.MuestraTrabajos(vm.Servicio).then(function (data) {
                   vm.Trabajos = data.GetMUESTRATRABAJOSQUEJASListResult;
@@ -243,11 +243,11 @@ angular
     function ValidaFecha(fechaIngresada, fechasolicitud) {
       var _fechaHoy = new Date();
       var _fechaIngresada = toDate(fechaIngresada);
-      var _fechasolicitud = toDate(fechasolicitud);     
+      var _fechasolicitud = toDate(fechasolicitud);
 
       if ((_fechaIngresada > _fechasolicitud && _fechaIngresada < _fechaHoy) || _fechasolicitud.toDateString() === _fechaIngresada.toDateString()) {
-      return true;
-      } else {        
+        return true;
+      } else {
         return false;
       }
 
@@ -263,9 +263,9 @@ angular
         vm.Iejecucion = 'input-yellow';
         vm.Ivisita = 'input-normal';
         vm.Iproceso = 'input-normal';
-         vm.Ivisita1 = 'input-normal';
-          vm.Ivisita2 = 'input-normal';
-          vm.Ivisita3 = 'input-normal';
+        vm.Ivisita1 = 'input-normal';
+        vm.Ivisita2 = 'input-normal';
+        vm.Ivisita3 = 'input-normal';
       } else if (vm.Estatus == 'V') {
 
         vm.FEjecucion = true;
@@ -290,7 +290,7 @@ angular
           vm.Ivisita2 = 'input-yellow';
           vm.Ivisita1 = 'input-normal';
           vm.Ivisita3 = 'input-normal';
-           vm.Iejecucion = 'input-normal';
+          vm.Iejecucion = 'input-normal';
         }
 
         if (vm.Fechavisita3 == null && vm.Fechavisita2 != null) {
@@ -301,14 +301,14 @@ angular
           vm.Ivisita2 = 'input-normal';
           vm.Ivisita1 = 'input-normal';
           vm.Ivisita3 = 'input-yellow';
-           vm.Iejecucion = 'input-normal';
+          vm.Iejecucion = 'input-normal';
         }
 
       } else if (vm.Estatus == 'S') {
-        if(vm.FechaProceso != null){
+        if (vm.FechaProceso != null) {
           vm.FProceso = true;
           vm.Iproceso = 'input-normal';
-        }else{
+        } else {
           vm.FProceso = false;
           vm.Iproceso = 'input-yellow';
         }
@@ -323,9 +323,9 @@ angular
         vm.Ivisita3 = 'input-normal';
       }
     }
-    
+
     function CambiaEstatus() {
-      console.log('CambiaEstatus-DateRep: ',DateRep);
+      console.log('CambiaEstatus-DateRep: ', DateRep);
       vm.FechaEjecucion = DateRep.FEjec;
       vm.HoraEjecucion = DateRep.HEjec;
       vm.Fechavisita1 = DateRep.FVis1;
@@ -409,7 +409,7 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = (vm.Trabajo==null||vm.Trabajo==undefined)?0:vm.Trabajo.CLV_TRABAJO;
+                obj.Clv_Trabajo = (vm.Trabajo == null || vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;
                 console.log(obj);
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
@@ -435,7 +435,7 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = (vm.Trabajo==null||vm.Trabajo==undefined)?0:vm.Trabajo.CLV_TRABAJO;
+                obj.Clv_Trabajo = (vm.Trabajo == null || vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('El Reporte se aplicó  correctamente', 'success');
@@ -461,9 +461,9 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = (vm.Trabajo==null||vm.Trabajo==undefined)?0:vm.Trabajo.CLV_TRABAJO;
+                obj.Clv_Trabajo = (vm.Trabajo == null || vm.Trabajo == undefined) ? 0 : vm.Trabajo.CLV_TRABAJO;
 
-               
+
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('El Reporte se aplicó  correctamente', 'success');
@@ -511,17 +511,17 @@ angular
         }
       });
     }
-    
-    function DescargaMaterial() {   
 
-      if (vm.Tecnico== null) ngNotify.set('Seleccione un técnico para continuar','warn');
-      var Tecnico={};
-      Tecnico.CLV_TECNICO =vm.Tecnico.clv_Tecnico;
-      Tecnico.Nombre=vm.Tecnico.Nombre;
+    function DescargaMaterial() {
+
+      if (vm.Tecnico == null) ngNotify.set('Seleccione un técnico para continuar', 'warn');
+      var Tecnico = {};
+      Tecnico.CLV_TECNICO = vm.Tecnico.clv_Tecnico;
+      Tecnico.Nombre = vm.Tecnico.Nombre;
       var options = {};
       options.Detalle = false;
       options.ClvOrden = vm.clv_queja;
-      options.ClvBitacora=vm.idBitacora;
+      options.ClvBitacora = vm.idBitacora;
       options.SctTecnico = Tecnico;
       options.Tipo_Descargar = "Q";
 
@@ -536,12 +536,12 @@ angular
         keyboard: false,
         size: 'lg',
         resolve: {
-          options: function() {
-           	return options;
+          options: function () {
+            return options;
           }
         }
       });
-    }    
+    }
     var vm = this;
 
     InitalData();
@@ -560,8 +560,8 @@ angular
     vm.Iprobreal = false;
     vm.Iobser = true;
     vm.IEstatus = true;
-    vm.idBitacora=0;
-    vm.idTecnicoBitacora=0;
+    vm.idBitacora = 0;
+    vm.idTecnicoBitacora = 0;
 
     var DateRep = {};
 

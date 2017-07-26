@@ -97,7 +97,7 @@
                 <uib-tab-heading>
                   <i class="fa fa-user"></i> Nombre
                 </uib-tab-heading>
-
+<br/>
                 <div class="row">
 
                   <div class="col-md-3">
@@ -115,7 +115,7 @@
                   </div>
                   <div class="col-md-3">
                     <br>
-                    <button class="btn btn-info btn-sm" ng-click="$ctrl.BuscaporNombre()">Buscar</button>
+                    <button class="btn btn-info btn-xs " ng-click="$ctrl.BuscaporNombre()"><i class="fa fa-search"></i> Buscar</button>
                   </div>
 
                 </div>
@@ -126,25 +126,32 @@
                 <uib-tab-heading>
                   <i class="fa fa-home"></i> Dirección
                 </uib-tab-heading>
-                <div class="form-group">
-
+                <div class="col-md-12">
                   <div class="col-md-3">
-                    <b>Calle:</b>
-                    <input class="form-control input-sm" placeholder="" ng-model="$ctrl.Calle">
-                  </div>
-                  <div class="col-md-3">
-                    <b> Número:</b>
-                    <input type="number" class="form-control input-sm" placeholder="" ng-model="$ctrl.Numero">
-                  </div>
-                  <div class="col-md-3">
+                      <b>Plaza:</b>
+                      <select class="form-control input-sm" ng-options=" item.razon_social for item in $ctrl.Plazas track by item.id_compania" ng-model="$ctrl.Plaza" ng-change="$ctrl.CambioPlaza($ctrl.Plaza);">
+                                              <option value="">Selecciona plaza</option>
+                                               </select>
+                    </div>
+                    <div class="col-md-3">
                     <b>Colonia</b>
                     <select class="form-control input-sm" placeholder ng-model="$ctrl.Colonia" ng-options=" item.nombre for item in $ctrl.Colonias track by item.clvColonia">
                                      <option value="">Selecciona colonia</option>
                                     </select>
                   </div>
-                  <div class="col-md-3">
+
+                  <div class="col-md-2">
+                    <b>Calle:</b>
+                    <input class="form-control input-sm" placeholder="" ng-model="$ctrl.Calle">
+                  </div>
+                  <div class="col-md-2">
+                    <b> Número:</b>
+                    <input type="number" class="form-control input-sm" placeholder="" ng-model="$ctrl.Numero">
+                  </div>
+                  
+                  <div class="col-md-2">
                     <br>
-                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporDireccion()">Buscar</button>
+                    <button class="btn btn-info btn-xs" ng-click="$ctrl.BuscaporDireccion()"><i class="fa fa-search" ></i> Buscar</button>
                   </div>
 
                 </div>

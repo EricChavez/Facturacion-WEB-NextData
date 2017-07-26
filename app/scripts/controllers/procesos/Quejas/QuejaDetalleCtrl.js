@@ -99,9 +99,9 @@ angular
                 }
                 quejasFactory.ObtenTecnicos(vm.GlobalContrato).then(function (data) {
                   vm.Tecnicos = data.GetMuestra_Tecnicos_AlmacenListResult;
-                  if (detqueja.Clave_Tecnico != null && vm.idTecnicoBitacora>0) {
+                  if (detqueja.Clave_Tecnico != null || vm.idTecnicoBitacora>0) {
                     for (var a = 0; a < vm.Tecnicos.length; a++) {
-                      if (vm.Tecnicos[a].clv_Tecnico == vm.idTecnicoBitacora) {
+                      if (vm.Tecnicos[a].clv_Tecnico == vm.idTecnicoBitacora || detqueja.Clave_Tecnico ==vm.Tecnicos[a].clv_Tecnico) {
                         vm.Tecnico = vm.Tecnicos[a];
                         vm.BlockTecnico=true;
                       }
