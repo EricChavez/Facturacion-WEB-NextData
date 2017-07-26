@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <button class="close" type="button" aria-label="close" ng-click="ctrl.cancel()">x</button>
+    <h4 class="modal-title"><i class="fa fa-exclamation-triangle"></i> Confirmar</h4>
+</div>
+<div class="modal-body">
+    <p>¿Realmente desea eliminar la comisión con el ID: {{ctrl.IdComision}}?</p>
+</div>
+<div class="modal-footer">
+    <button title="Eliminar comisión" class="btn btn-danger btn-sm" type="button" ng-click="ctrl.Eliminar()">Eliminar</button>
+    <button title="Regresar a comisiones" class="btn bnt-default btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>
+</div>

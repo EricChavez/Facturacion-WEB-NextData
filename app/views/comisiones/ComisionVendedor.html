@@ -11,7 +11,7 @@
             <strong style="font-weight:bold; border:none; margin-left:10px;">Comisión vendedores</strong>
 			<br>
             <small class="text-muted" style="font-size:14px; margin-left:10px;">
-                <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Comisiones vendedores</a>
+                <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Comisión vendedores</a>
             </small>
         </header>
     </div>
@@ -24,44 +24,50 @@
 		                <a class="btn btn-icon-toggle"><i class="fa fa-angle-down"></i></a>
 	                </div>
                 </div>
-                <div id="accordion3-1" class="collapse buscarContrato" aria-expanded="false" style="height: 0px;">
+                <div id="accordion3-1" class="collapse" aria-expanded="false" style="height: 0px;">
                     <div class="panel-body">
                         <hr>
                         <div class="row">
                             <div class="col-md-2">
-                                <p>vendedor:</p>
-                            </div>
-                            <div class="col-md-2">
                                 <p>Tipo de servicio:</p>
                             </div>
-                            <div class="col-md-2">
-                                <P>Rango:</P>
+                            <div class="col-md-3">
+                                <p>Servicio:</p>
+                            </div>
+                            <div class="col-md-4">
+                                <P>Rango de comisión:</P>
                             </div>
                             <div class="col-md-2">
                                 <p>Comisión:</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <input type="text" class="form-control input-sm" ng-model="$ctrl.Vendedor" placeholder="Ingresa vendedor">
+                        <form angular-validator-submit="$ctrl.AgregarComisionVendedor()" name="FormAgreComVendedor" novalidate angular-validator>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <select class="form-control input-sm" ng-model="$ctrl.TipoServico" ng-options="TS.Concepto for TS in $ctrl.TipoServiciosLista track by TS.Clv_TipSerPrincipal" ng-change="$ctrl.BuscarServicio()" validate-on="dirty" required required-message="'Este campo es obligatorio'" name="TipoServico">
+                                        <option value="">Selecciona</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control input-sm" ng-model="$ctrl.Servicio" ng-options="S.Descripcion for S in $ctrl.ServiciosLista track by S.Clv_Servicio" validate-on="dirty" required required-message="'Este campo es obligatorio'" name="Servico">
+                                        <option value="">Selecciona</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="number" class="form-control input-sm" ng-model="$ctrl.RangoInicial" placeholder="Rango inicial" validate-on="dirty" required required-message="'Este campo es obligatorio'" name="RangoInicial">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="number" class="form-control input-sm" ng-model="$ctrl.RangoFinal" placeholder="Rango final" validate-on="dirty" required required-message="'Este campo es obligatorio'" name="RangoFinal">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="number" class="form-control input-sm" ng-model="$ctrl.Comision" placeholder="Comisión" validate-on="dirty" required required-message="'Este campo es obligatorio'" name="Comision">
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <select class="form-control input-sm" ng-model="$ctrl.TipoSerbico" ng-options="">
-                                    <option value="">Selecciona tipo de servicio</option>
-                                </select>
+                            <br>
+                            <div style="text-align:right">
+                                <button type="submit" class="btn btn-primary btn-sm" title="Guardar comisión"><i class="fa fa-floppy-o"></i> GUARDAR</button>
                             </div>
-                            <div class="col-md-2">
-                                <select class="form-control input-sm" ng-model="$ctrl.Rango" ng-options="">
-                                    <option value="">Selecciona rango</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control input-sm" ng-model="$ctrl.Comision" placeholder="Ingresa comisión">
-                            </div>
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-floppy-o"></i> GUARDAR</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -71,21 +77,32 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><b>Vendedor</b></th>
+                            <th><b>Id Comisión</b></th>
                             <th><b>Tipo de servicio</b></th>
+                            <th><b>Servicio</b></th>
                             <th><b>Rango</b></th>
                             <th><b>Comisión</b></th>
+                            <th><b>Eliminar</b></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr ng-show="$ctrl.sinRegistros">
+							<td class="text-center" colspan="9">SIN REGISTROS</td>
+						</tr>
+                        <tr dir-paginate="X in $ctrl.ComisionVLista|itemsPerPage:7" ng-show="$ctrl.conRegistros">
+                            <td>{{ X.IdComision }}</td>
+                            <td>{{ X.TipServ }}</td>
+                            <td>{{ X.Servicio }}</td>
+                            <td>{{ X.RangoInicial }} - {{ X.RangoFinal }}</td>
+                            <td>${{ X.Comsion }}</td>
+                            <td><button type="button" class="btn btn-danger btn-xs" ng-click="$ctrl.ConfirmarEliminar(X.IdComision)" title="Eliminar comisión"><i class="fa fa-trash"></i> ELIMINAR</button></td>
                         </tr>
                     </tbody>
                 </table>
+                <div style="margin-top:-40px;">
+					<dir-pagination-controls max-size="7" direction-links="true" boundary-links="true" ng-if="$ctrl.ComisionVLista.length > 0">
+					</dir-pagination-controls>
+				</div>
             </div>
         </div>
     </div>
