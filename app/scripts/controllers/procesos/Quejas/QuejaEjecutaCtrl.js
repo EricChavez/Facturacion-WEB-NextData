@@ -409,8 +409,8 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
-                
+                obj.Clv_Trabajo = (vm.Trabajo==null||vm.Trabajo==undefined)?0:vm.Trabajo.CLV_TRABAJO;
+                console.log(obj);
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('El Reporte se aplicó  correctamente', 'success');
@@ -435,7 +435,7 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
+                obj.Clv_Trabajo = (vm.Trabajo==null||vm.Trabajo==undefined)?0:vm.Trabajo.CLV_TRABAJO;
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
 
                   ngNotify.set('El Reporte se aplicó  correctamente', 'success');
@@ -461,7 +461,7 @@ angular
                 obj.clvProblema = vm.Problema.clvProblema;
                 obj.clvPrioridadQueja = vm.Prioridad.clvPrioridadQueja;
                 obj.Solucion = vm.ProblemaReal;
-                obj.Clv_Trabajo = vm.Trabajo.CLV_TRABAJO;
+                obj.Clv_Trabajo = (vm.Trabajo==null||vm.Trabajo==undefined)?0:vm.Trabajo.CLV_TRABAJO;
 
                
                 quejasFactory.UpdateQuejas(obj).then(function (data) {
