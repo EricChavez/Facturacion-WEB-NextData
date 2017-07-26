@@ -8,7 +8,8 @@ angular.module('softvApp')
       GetComisionesVendedoresWebList: '/ComisionesVendedoresWeb/GetComisionesVendedoresWebList',
       AddComisionesVendedoresWeb: '/ComisionesVendedoresWeb/AddComisionesVendedoresWeb',
       GetServiciosWebList: '/ServiciosWeb/GetServiciosWebList',
-      DeleteComisionesVendedoresWeb: '/ComisionesVendedoresWeb/DeleteComisionesVendedoresWeb'
+      DeleteComisionesVendedoresWeb: '/ComisionesVendedoresWeb/DeleteComisionesVendedoresWeb',
+      GetAddComisionesVendedoresWeb: '/ComisionesVendedoresWeb/GetAddComisionesVendedoresWeb'
     }; 
 
      factory.GetcomisiontecnicoList = function () {
@@ -126,6 +127,28 @@ angular.module('softvApp')
       };
       console.log(parametros);
       $http.post(globalService.getUrl() + paths.DeleteComisionesVendedoresWeb, JSON.stringify(parametros), config).then(function (response) {
+        deferred.resolve(response.data);
+      }).catch(function (response) {
+        deferred.reject(response);
+      });
+      return deferred.promise;
+    };
+
+    factory.GetAddComisionesVendedoresWeb = function (Clv_Tipservicios, Clv_Servicio, RangoInicial, RangoFinal, Comsion) {
+      var deferred = $q.defer();
+      var config = {
+        headers: {
+          'Authorization': $localStorage.currentUser.token
+        }
+      };
+      var parametros = {
+          'Clv_Tipservicios': Clv_Tipservicios,
+          'Clv_Servicio': Clv_Servicio,
+          'RangoInicial': RangoInicial,
+          'RangoFinal': RangoFinal,
+          'Comsion': Comsion
+      };
+      $http.post(globalService.getUrl() + paths.GetAddComisionesVendedoresWeb, JSON.stringify(parametros), config).then(function (response) {
         deferred.resolve(response.data);
       }).catch(function (response) {
         deferred.reject(response);

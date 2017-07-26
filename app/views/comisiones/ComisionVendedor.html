@@ -91,8 +91,8 @@
 						</tr>
                         <tr dir-paginate="X in $ctrl.ComisionVLista|itemsPerPage:7" ng-show="$ctrl.conRegistros">
                             <td>{{ X.IdComision }}</td>
-                            <td>{{ X.Clv_Tipservicios }}</td>
-                            <td>{{ X.Clv_Servicio }}</td>
+                            <td>{{ X.TipServ }}</td>
+                            <td>{{ X.Servicio }}</td>
                             <td>{{ X.RangoInicial }} - {{ X.RangoFinal }}</td>
                             <td>${{ X.Comsion }}</td>
                             <td><button type="button" class="btn btn-danger btn-xs" ng-click="$ctrl.ConfirmarEliminar(X.IdComision)" title="Eliminar comisión"><i class="fa fa-trash"></i> ELIMINAR</button></td>

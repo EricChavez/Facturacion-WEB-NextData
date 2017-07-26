@@ -42,26 +42,33 @@
     <div class="col-md-4">
       <p ng-show="ctrl.MostrarCD">Cantidad</p>
       <input type="number" class="form-control" ng-disabled="ctrl.Detalle" ng-model="ctrl.CantidadDescarga" ng-show="ctrl.MostrarCD">
+      <p ng-show="ctrl.MostrarTM">Metraje:</p>
+      <select class="form-control" ng-model="ctrl.TipoMetraje" ng-change="ctrl.SlctTipoMetraje()" ng-show="ctrl.MostrarTM">
+        <option value="I">Inferior</option>
+        <option value="E">Exterior</option>
+      </select>
     </div>
-    
+    <!--
     <div class="col-md-1">
       <br>
       <p ng-show="ctrl.MostrarTM">Metraje Interior</p>
-      <!--
       <br>
       <p ng-show="ctrl.MostrarTM">Exterior</p>
-      -->
     </div>
-
-    <div class="col-md-1">
+    -->
+    <div class="col-md-2">
       <p ng-show="ctrl.MostrarTM">Inicial</p>
-      <input type="number" class="form-control" ng-model="ctrl.MetrajeII" ng-show="ctrl.MostrarMII">
-      <!--<input type="number" class="form-control" ng-model="ctrl.MetrajeIE" ng-show="ctrl.MostrarMIE">-->
+      <div>
+      <input type="number" class="form-control" ng-model="ctrl.MetrajeII" ng-show="ctrl.MostrarMII" placeholder="II">
+      <input type="number" class="form-control" ng-model="ctrl.MetrajeIE" ng-show="ctrl.MostrarMIE" placeholder="IE">
+      </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
       <p ng-show="ctrl.MostrarTM">Final</p>
-      <input type="number" class="form-control" ng-model="ctrl.MetrajeFI" ng-show="ctrl.MostrarMFI">
-      <!--<input type="number" class="form-control" ng-model="ctrl.MetrajeFE" ng-show="ctrl.MostrarMFE">-->
+      <div>
+      <input type="number" class="form-control" ng-model="ctrl.MetrajeFI" ng-show="ctrl.MostrarMFI" placeholder="FI">
+      <input type="number" class="form-control" ng-model="ctrl.MetrajeFE" ng-show="ctrl.MostrarMFE" placeholder="FE">
+      </div>
     </div>
   </div>
   <br>
@@ -71,6 +78,7 @@
     </div>
   </div>
   <br>
+  <!--inculyendo metraje exterior
   <div class="row">
     <table class="table">
       <thead>
@@ -93,7 +101,8 @@
       </tbody>
     </table>
   </div>
-  <!--inculyendo metraje exterior
+  
+  -->
   <div class="row">
     <table class="table">
       <thead>
@@ -120,7 +129,6 @@
       </tbody>
     </table>
   </div>
-  -->
 </div>
 <div class="modal-footer">
   <button title="Cancelar cambios" class="btn btn-default-bright btn-sm" type="button" ng-click="ctrl.cancel()">Cancelar</button>

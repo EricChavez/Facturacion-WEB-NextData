@@ -7,6 +7,7 @@ angular
         function InitialData(){
             ComisionFactory.GetComisionesVendedoresWebList().then(function(data){
                 vm.ComisionVLista = data.GetComisionesVendedoresWebListResult;
+                console.log(vm.ComisionVLista);
                 if (vm.ComisionVLista.length == 0) {
 				    vm.sinRegistros = true;
 					vm.conRegistros = false;
@@ -29,8 +30,18 @@ angular
         function AgregarComisionVendedor(){
             if(vm.RangoFinal > vm.RangoInicial && vm.RangoInicial > 0 && vm.RangoFinal > 0){
                 if(vm.Comision > 0){
-                    ComisionFactory.AddComisionesVendedoresWeb(vm.TipoServico.Clv_TipSerPrincipal, vm.Servicio.Clv_Servicio, vm.RangoInicial, vm.RangoFinal, vm.Comision).then(function(data){
-                        ngNotify.set('Se ha guardado la comisión con éxito','success');
+                    ComisionFactory.GetAddComisionesVendedoresWeb(vm.TipoServico.Clv_TipSerPrincipal, vm.Servicio.Clv_Servicio, vm.RangoInicial, vm.RangoFinal, vm.Comision).then(function(data){
+                        vm.ComisionError = data.GetAddComisionesVendedoresWebResult[0].Error;
+                        var MsjTipo = '';
+                        var MsjText = '';
+                        if(vm.ComisionError == 400){
+                            MsjTipo = 'warn';
+                            MsjText = 'El rango que ingresó es inválido para este servicio';
+                        }else{
+                            MsjTipo = 'success';
+                            MsjText = 'Se ha guardado la comisión con éxito';
+                        }
+                        ngNotify.set(MsjText,MsjTipo);
                         $state.reload('home.comisiones.vendedores');
                     });
                 }else{
