@@ -9,7 +9,7 @@ angular.module('softvApp')
       AddComisionesVendedoresWeb: '/ComisionesVendedoresWeb/AddComisionesVendedoresWeb',
       GetServiciosWebList: '/ServiciosWeb/GetServiciosWebList',
       DeleteComisionesVendedoresWeb: '/ComisionesVendedoresWeb/DeleteComisionesVendedoresWeb',
-      GetAddComisionesVendedoresWeb: '/ComisionesVendedoresWeb/GetAddComisionesVendedoresWeb'
+      GetAddComisionesVendedoresWeb: '/ComisionesVendedoresWeb/GetAddComisionesVendedoresWeb',
       GetDeleteComisionesTecnicosWeb:'/ComisionesTecnicosWeb/GetDeleteComisionesTecnicosWeb'
     };   
 
