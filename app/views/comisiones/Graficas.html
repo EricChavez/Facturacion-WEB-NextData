@@ -6,6 +6,40 @@
   }
 
 </style>
+<style>
+  .dualmultiselect label {
+    margin: 10px;
+  }
+
+  .dualmultiselect .btn {
+    margin: 10px;
+  }
+
+  .dualmultiselect .pool {
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px;
+    height: 200px;
+    overflow-y: scroll;
+  }
+
+  .dualmultiselect .pool ul {
+    list-style: none;
+    padding-left: 0px;
+  }
+
+  .dualmultiselect .pool ul li {
+    width: 100%;
+    padding: 4px 8px 4px 4px;
+    border-bottom: 1px dotted #CFCFCF;
+  }
+
+  .dualmultiselect .pool ul li a:hover {
+    text-decoration: none;
+  }
+
+</style>
 <div class="card animated fadeIn" style="margin-top:20px;">
   <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
     <header>
@@ -17,24 +51,289 @@
     </header>
   </div>
   <div class="card-body">
-<div class="col-md-4">
-<div class="col-md-12">
-<b>Reportes</b>
-<div class="checkbox checkbox-styled"><label><input type="checkbox" value=""><span>Sucursales </span></label></div>
-<div class="checkbox checkbox-styled"><label><input type="checkbox" value=""><span>Depto. de ventas </span></label></div>
-</div>
+    <div class="col-md-4">
+      <form angular-validator-submit="$ctrl.IniciarSeleccion()" name="FormAgreComVendedor" novalidate angular-validator>
+        <fieldset ng-disabled="$ctrl.pfiltros">
+          <div class="col-md-12">
+            <b>Reportes</b>
+            <div class="checkbox checkbox-styled">
+              <label><input type="checkbox" ng-model="$ctrl.ReporteS" value="S"><span>Sucursales </span></label>
+            </div>
+            <div class="checkbox checkbox-styled">
+              <label>
+                <input type="checkbox" ng-model="$ctrl.ReporteV" value="V">
+              <span>Depto. de ventas </span></label>
+            </div>
+          </div>
 
-<div class="col-md-12">
-<b>Tipo de servicio</b>
-<select class="form-control input-sm">
-    <option value="">Selecciona</option>
-</select>
-</div>
 
-</div>
-<div class="col-md-8">
+          <div class="col-md-12">
+            <b> Tipo de servicio </b>
+            <select ng-disabled="$ctrl.pservicios" ng-required="!$ctrl.pservicios" required-message="'Este campo es obligatorio'" name="servicios"
+              ng-model="$ctrl.servicio" ng-options="v.Concepto for v in $ctrl.servicios track by v.Clv_TipSerPrincipal" class="form-control input-sm">
+              
+          </select>
+          </div>
 
-</div>
- 
+          <div class="col-md-12">
+
+            <h5 class="text-center"> Rangos de Fechas </h5>
+            <div class="col-md-6">
+              De <input type="date" required required-message="'Este campo es obligatorio'" name="fechaInicio" class="form-control input-sm"
+                ng-model="$ctrl.fechainicio">
+            </div>
+            <div class="col-md-6">
+              Al <input type="date" required required-message="'Este campo es obligatorio'" name="fechaFin" class="form-control input-sm"
+                ng-model="$ctrl.fechafin">
+            </div>
+
+
+          </div>
+          <div class="col-md-12">
+            <br>
+
+            <button class="btn btn-warning btn-sm btn-block"> Generar reporte </button>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+    <div class="col-md-8">
+      <!--distribuidores-->
+      <fieldset ng-disabled="$ctrl.pdistribuidores">
+        <div class="col-md-12 " ng-show="$ctrl.Selectdistribuidores">
+         
+          <div class="dualmultiselect">
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6 text">
+                <h6 class="text-center"><b>Distribuidores disponibles</b></h6>
+                <div class="pool">
+                  <ul>
+                    <li ng-repeat="item in $ctrl.objDistribuidores.items" ng-click="$ctrl.transfer($ctrl.objDistribuidores.items, $ctrl.objDistribuidores.selectedItems, $ctrl.objDistribuidores.items.indexOf(item))">
+                      <a href=""><b>{{ item.Nombre }}</b> </a>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="btn-group text-left">
+                  <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.transferAll($ctrl.objDistribuidores.items,$ctrl.objDistribuidores.selectedItems)">agregar todo>></button>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <h6 class="text-center"><b>Distribuidores seleccionadas</b></h6>
+                <div class="pool">
+                  <ul>
+                    <li ng-repeat="item in $ctrl.objDistribuidores.selectedItems" ng-click="$ctrl.transfer($ctrl.objDistribuidores.selectedItems, $ctrl.objDistribuidores.items, $ctrl.objDistribuidores.selectedItems.indexOf(item))">
+                      <a href=""><b>{{ item.Nombre }}</b></a>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="button-group text-right">
+                  <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.removeAll($ctrl.objDistribuidores.selectedItems,$ctrl.objDistribuidores.items)"> << quitar todo </button>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 text-center">
+              <button class="btn btn-info btn-sm " ng-disabled="!$ctrl.objDistribuidores.selectedItems.length>0" ng-click="$ctrl.Getplazas()"> Aceptar </button>
+              <button class="btn btn-danger btn-sm ">Cancelar todo</button>
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+      <!--distribuidores-->
+      <!--plazas-->
+      <div class="col-md-12" ng-show="$ctrl.Selectplazas">
+        
+        <div class="dualmultiselect">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 text">
+              <h6 class="text-center"><b>Plazas disponibles</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objPlaza.items" ng-click="$ctrl.transfer($ctrl.objPlaza.items, $ctrl.objPlaza.selectedItems, $ctrl.objPlaza.items.indexOf(item))">
+                    <a href=""><b>{{ item.razon_social }}</b> </a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="text-left">
+                <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.transferAll($ctrl.objPlaza.items,$ctrl.objPlaza.selectedItems)">agregar todo >></button>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <h6 class="text-center"><b>Plazas seleccionadas</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objPlaza.selectedItems" ng-click="$ctrl.transfer($ctrl.objPlaza.selectedItems, $ctrl.objPlaza.items, $ctrl.objPlaza.selectedItems.indexOf(item))">
+                    <a href=""><b>{{ item.razon_social }}</b></a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="text-right">
+                <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.removeAll($ctrl.objPlaza.selectedItems,$ctrl.objPlaza.items)"> << quitar todo </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+            <button ng-if="$ctrl.ReporteV==true && $ctrl.ReporteS==false" ng-disabled="!$ctrl.objPlaza.selectedItems.length>0" class="btn btn-info  btn-sm"
+              ng-click="$ctrl.GetVendedores()"> Aceptar </button>
+            <button ng-if="$ctrl.ReporteS==true && $ctrl.ReporteV==false" ng-disabled="!$ctrl.objPlaza.selectedItems.length>0" class="btn btn-info  btn-sm"
+              ng-click="$ctrl.GetSucursales()"> Aceptar </button>
+            <button ng-if="$ctrl.ReporteS==true && $ctrl.ReporteV==true" ng-disabled="!$ctrl.objPlaza.selectedItems.length>0" class="btn btn-info  btn-sm"
+              ng-click="$ctrl.GetSucursales()"> Aceptar </button>
+            <button class="btn btn-danger btn-sm ">Cancelar todo</button>
+          </div>
+        </div>
+
+      </div>
+      <!--plazas-->
+      <!--vendedores-->
+      <div class="col-md-12 " ng-show="$ctrl.Selectvendedores">
+        
+        <div class="dualmultiselect">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 text">
+              <h6 class="text-center"><b>Vendedores</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objvendedores.items" ng-click="$ctrl.transfer($ctrl.objvendedores.items, $ctrl.objvendedores.selectedItems, $ctrl.objvendedores.items.indexOf(item))">
+                    <a href=""><b>{{ item.Nombre }}</b> </a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="text-left">
+                <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.transferAll($ctrl.objvendedores.items,$ctrl.objvendedores.selectedItems)">agregar todo >></button>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <h6 class="text-center"><b>vendedores seleccionadas</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objvendedores.selectedItems" ng-click="$ctrl.transfer($ctrl.objvendedores.selectedItems, $ctrl.objvendedores.items, $ctrl.objvendedores.selectedItems.indexOf(item))">
+                    <a href=""><b>{{ item.Nombre }}</b></a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="text-right">
+                <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.removeAll($ctrl.objvendedores.selectedItems,$ctrl.objvendedores.items)"> << quitar todo </button>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+            <button class="btn btn-info btn-sm " ng-disabled="!$ctrl.objvendedores.selectedItems.length>0" ng-click="$ctrl.GetPaquetes()"> Aceptar </button>
+            <button class="btn btn-danger btn-sm ">Cancelar todo</button>
+          </div>
+        </div>
+
+      </div>
+      <!--vendedores-->
+
+
+      <!--sucursales-->
+      <div class="col-md-12 " ng-show="$ctrl.Selectsucursales">
+        
+        <div class="dualmultiselect">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 text">
+              <h6 class="text-center"><b>Sucursales</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objsucursales.items" ng-click="$ctrl.transfer($ctrl.objsucursales.items, $ctrl.objsucursales.selectedItems, $ctrl.objsucursales.items.indexOf(item))">
+                    <a href=""><b>{{ item.Nombre }}</b> </a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="text-left">
+                <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.transferAll($ctrl.objsucursales.items,$ctrl.objsucursales.selectedItems)">agregar todo >></button>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <h6 class="text-center"><b>Sucursales seleccionadas</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objsucursales.selectedItems" ng-click="$ctrl.transfer($ctrl.objsucursales.selectedItems, $ctrl.objsucursales.items, $ctrl.objvendedores.selectedItems.indexOf(item))">
+                    <a href=""><b>{{ item.Nombre }}</b></a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="text-right">
+                <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.removeAll($ctrl.objsucursales.selectedItems,$ctrl.objsucursales.items)"> << quitar todo </button>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+
+            <button class="btn btn-info btn-sm " ng-disabled="!$ctrl.objsucursales.selectedItems.length>0" ng-if="$ctrl.ReporteS==true && $ctrl.ReporteV==false"
+              ng-click="$ctrl.GetPaquetes()"> Aceptar </button>
+            <button class="btn btn-info btn-sm " ng-disabled="!$ctrl.objsucursales.selectedItems.length>0" ng-if="$ctrl.ReporteS==false && $ctrl.ReporteV==true"
+              ng-click="$ctrl.GetPaquetes()"> Aceptar </button>
+            <button class="btn btn-info btn-sm " ng-disabled="!$ctrl.objsucursales.selectedItems.length>0" ng-if="$ctrl.ReporteS==true && $ctrl.ReporteV==true"
+              ng-click="$ctrl.GetVendedores()"> Aceptar </button>
+            <button class="btn btn-danger btn-sm ">Cancelar todo</button>
+          </div>
+        </div>
+
+      </div>
+      <!--sucursales-->
+
+      <!--paquetes-->
+      <div class="col-md-12 " ng-show="$ctrl.Selectpaquetes">
+        
+        <div class="dualmultiselect">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 text">
+              <h6 class="text-center"><b>Paquetes</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objpaquetes.items" ng-click="$ctrl.transfer($ctrl.objpaquetes.items, $ctrl.objpaquetes.selectedItems, $ctrl.objpaquetes.items.indexOf(item))">
+                    <a href=""><b>{{ item.Descripcion }}</b> </a>
+
+                  </li>
+                </ul>
+              </div>
+              <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.transferAll($ctrl.objpaquetes.items,$ctrl.objpaquetes.selectedItems)">agregar todo >></button>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <h6 class="text-center"><b>Paquetes seleccionadas</b></h6>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objpaquetes.selectedItems" ng-click="$ctrl.transfer($ctrl.objpaquetes.selectedItems, $ctrl.objpaquetes.items, $ctrl.objpaquetes.selectedItems.indexOf(item))">
+                    <a href=""><b>{{ item.Descripcion }}</b></a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="text-right">
+                <button class="btn ink-reaction btn-xs btn-flat btn-primary" ng-click="$ctrl.removeAll($ctrl.objpaquetes.selectedItems,$ctrl.objpaquetes.items)"> << quitar todo </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+            <button class="btn btn-success  btn-sm" ng-disabled="!$ctrl.objpaquetes.selectedItems.length>0" ng-click="$ctrl.GetReporte()"> Aceptar </button>
+            <button class="btn btn-danger btn-sm ">Cancelar todo</button>
+          </div>
+        </div>
+
+      </div>
+      <!--vendedores-->
+
+
+    </div>
+
   </div>
 </div>

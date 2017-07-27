@@ -44,7 +44,11 @@
                         <form angular-validator-submit="$ctrl.AgregarComisionVendedor()" name="FormAgreComVendedor" novalidate angular-validator>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <select class="form-control input-sm" ng-model="$ctrl.TipoServico" ng-options="TS.Concepto for TS in $ctrl.TipoServiciosLista track by TS.Clv_TipSerPrincipal" ng-change="$ctrl.BuscarServicio()" validate-on="dirty" required required-message="'Este campo es obligatorio'" name="TipoServico">
+                                    <select class="form-control input-sm"
+                                     ng-model="$ctrl.TipoServico" 
+                                     ng-options="TS.Concepto for TS in $ctrl.TipoServiciosLista track by TS.Clv_TipSerPrincipal"
+                                      ng-change="$ctrl.BuscarServicio()" validate-on="dirty" 
+                                      required required-message="'Este campo es obligatorio'" name="TipoServico">
                                         <option value="">Selecciona</option>
                                     </select>
                                 </div>

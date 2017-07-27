@@ -1,0 +1,156 @@
+<style type="text/css">
+  .scrollDiv {
+    height: 500px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
+</style>
+<style>
+  .dualmultiselect label {
+    margin: 10px;
+  }
+
+  .dualmultiselect .btn {
+    margin: 10px;
+  }
+
+  .dualmultiselect .pool {
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px;
+    height: 250px;
+    overflow-y: scroll;
+  }
+
+  .dualmultiselect .pool ul {
+    list-style: none;
+    padding-left: 0px;
+  }
+
+  .dualmultiselect .pool ul li {
+    width: 100%;
+    padding: 4px 8px 4px 4px;
+    border-bottom: 1px dotted #CFCFCF;
+  }
+
+  .dualmultiselect .pool ul li a:hover {
+    text-decoration: none;
+  }
+
+</style>
+<div class="card animated fadeIn" style="margin-top:20px;">
+  <div class="card-head style-default-light" style="padding-top:10px; padding-left:10px;">
+    <header>
+      <strong style="font-weight:bold; border:none; margin-left:10px;">Resumen de vendedores</strong>
+      <br>
+      <small class="text-muted" style="font-size:14px; margin-left:10px;">
+                <a href="#"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a>><a href="#" class="paginaActiva">Comisiones</a>
+            </small>
+    </header>
+  </div>
+  <div class="card-body">
+
+
+    <div class="col-md-8">
+      <!--distribuidores-->
+
+      <div class="col-md-12 " ng-show="$ctrl.Selectdistribuidores">
+        {{$ctrl.tituloSelect}}
+        <div class="dualmultiselect">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 text">
+              <h5 class="text-center">Distribuidores disponibles</h5>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objDistribuidores.items" ng-click="$ctrl.transfer($ctrl.objDistribuidores.items, $ctrl.objDistribuidores.selectedItems, $ctrl.objDistribuidores.items.indexOf(item))">
+                    <a href=""><b>{{ item.Nombre }}</b> </a>
+
+                  </li>
+                </ul>
+              </div>
+              <button class="btn btn-default btn-sm" ng-click="$ctrl.transferAll($ctrl.objDistribuidores.items,$ctrl.objDistribuidores.selectedItems)">agregar todo>></button>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <h5 class="text-center">Distribuidores seleccionados</h5>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objDistribuidores.selectedItems" ng-click="$ctrl.transfer($ctrl.objDistribuidores.selectedItems, $ctrl.objDistribuidores.items, $ctrl.objDistribuidores.selectedItems.indexOf(item))">
+                    <a href=""><b>{{ item.Nombre }}</b></a>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="button-group">
+                <button class="btn btn-default btn-sm" ng-click="$ctrl.removeAll($ctrl.objDistribuidores.selectedItems,$ctrl.objDistribuidores.items)"> << quitar todo </button>
+                <button class="btn btn-info btn-sm " ng-click="$ctrl.Getplazas()"> Aceptar </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!--distribuidores-->
+      <!--plazas-->
+      <div class="col-md-12" ng-show="$ctrl.Selectplazas">
+     
+        <div class="dualmultiselect">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 text">
+               <h5 class="text-center">Plazas disponibles</h5>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objPlaza.items" ng-click="$ctrl.transfer($ctrl.objPlaza.items, $ctrl.objPlaza.selectedItems, $ctrl.objPlaza.items.indexOf(item))">
+                    <a href=""><b>{{ item.razon_social }}</b> </a>
+
+                  </li>
+                </ul>
+              </div>
+              <button class="btn btn-default btn-sm" ng-click="$ctrl.transferAll($ctrl.objPlaza.items,$ctrl.objPlaza.selectedItems)">agregar todo >></button>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <h5 class="text-center">Plazas Seleccionada</h5>
+              <div class="pool">
+                <ul>
+                  <li ng-repeat="item in $ctrl.objPlaza.selectedItems" ng-click="$ctrl.transfer($ctrl.objPlaza.selectedItems, $ctrl.objPlaza.items, $ctrl.objPlaza.selectedItems.indexOf(item))">
+                    <a href=""><b>{{ item.razon_social }}</b></a>
+
+                  </li>
+                </ul>
+              </div>
+              <button class="btn btn-default btn-sm" ng-click="$ctrl.removeAll($ctrl.objPlaza,$ctrl.objPlaza.items)"> << quitar todo </button>
+              <button class="btn btn-info  btn-sm" ng-click="$ctrl.GetRangos()"> Aceptar </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!--plazas-->
+
+
+
+    </div>
+    <div class="col-md-4" ng-show="$ctrl.pFechas">
+      <form angular-validator-submit="$ctrl.getReporte()" name="FormAgreComVendedor" novalidate angular-validator>
+        <h5 class="text-center"> Rangos de Fechas </h5><br><br>
+        <div class="col-md-6">
+          De <input type="date" required required-message="'Este campo es obligatorio'" name="fechaInicio" class="form-control input-sm"
+            ng-model="$ctrl.fechainicio">
+        </div>
+        <div class="col-md-6">
+          Al <input type="date" required required-message="'Este campo es obligatorio'" name="fechaFin" class="form-control input-sm"
+            ng-model="$ctrl.fechafin">
+        </div>
+        <div class="col-md-12">
+            <br>
+            <button class="btn btn-warning btn-block  btn-sm" type="submit"> Generar Reporte</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
